@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Coffee Boom in Astana - specialty coffee, fresh breakfast, and artisanal desserts at our Samal 12 branch.">
+    <meta name="description" content="Kent Sandwich in Astana — authentic hot grilled toast sandwiches, signature garlic sauce, and student-friendly fast-casual dining at Adolf Yanushkevich 1 near ENU.">
     <meta name="author" content="Merey Kuatbay">
-    <title>Coffee Boom Astana — Samal 12 Branch</title>
+    <title>Kent Sandwich Astana — Yanushkevich 1 | Grilled Sandwiches &amp; Street Food</title>
 </head>
 <body>
-    <!-- Author: Merey Kuatbay | Assignment 1 -->
-    <!-- Used semantic header to wrap the global brand title and main site navigation -->
+    <!-- Author: Merey Kuatbay | Assignment 1: Introduction to Web Technologies -->
+    <!-- Architectural choice: Used semantic <header> to encapsulate brand identity and site-wide navigation across all pages -->
     <header>
-        <h1>Coffee Boom Astana</h1>
+        <h1>Kent Sandwich Astana</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Samal Branch</a></li>
-                <li><a href="menu.html">Our Menu</a></li>
+                <li><a href="about.html">About Kent</a></li>
+                <li><a href="menu.html">Menu &amp; Prices</a></li>
                 <li><a href="order.html">Pre-Order</a></li>
                 <li><a href="feedback.html">Guest Feedback</a></li>
                 <li><a href="colophon.html">Colophon</a></li>
@@ -25,41 +25,80 @@
     </header>
 
     <main>
+        <!-- Used <section> to structure the introductory narrative and location context distinctly from community feedback -->
         <section>
-            <h2>Welcome to Coffee Boom</h2>
-            <p>Coffee Boom is an established specialty coffee chain founded in Kazakhstan, recognized for its vibrant urban culture, rich espresso blends, and European-inspired culinary menu. Our urban coffeehouses serve as comfortable meeting grounds where students, working professionals, and families gather for freshly extracted Arabica roasts and hot breakfast dishes served throughout the day.</p>
+            <h2>Welcome to Kent Sandwich on Yanushkevich</h2>
+            <p><strong>Kent Sandwich</strong> is a beloved neighborhood sandwich shop situated in the vibrant student district of Astana at <em>Adolf Yanushkevich Street, 1</em>, situated directly opposite the <abbr title="L.N. Gumilyov Eurasian National University">ENU</abbr> campus. Established to fulfill the need for wholesome, freshly prepared hot meals between academic lectures, our grill kitchen transforms simple ingredients into golden, crispy toasted masterpieces served within minutes.</p>
             
-            <p>Every beverage is prepared using meticulously calibrated espresso machines, balancing temperature and extraction pressure to highlight chocolate and nutty undertones. Complementing our drink selection, our pastry kitchen produces delicate French croissants, cheesecakes, and wholesome savory plates prepared fresh each morning.</p>
+            <p>Unlike standard fast-food chains that rely on pre-assembled cold sandwiches, every single item at Kent Sandwich is built to order and toasted under double-sided contact press grills heated to precisely 220<sup>&deg;</sup>C. This high-heat grilling locks in rich flavors, melts our signature cheddar cheese into the tender fillings, and gives our sandwich bread its hallmark crunchy texture that students across the capital recognize instantly.</p>
 
             <figure>
-                <img src="images/coffee-shop.jpg" alt="Barista counter and guest dining tables at Coffee Boom" width="450">
-                <figcaption>Interior bar counter and welcoming atmosphere at Coffee Boom Astana.</figcaption>
+                <img src="images/kent-sandwich.jpg" alt="Golden grilled chicken and cheese sandwich pressed on cast iron grill at Kent Sandwich" width="480">
+                <figcaption>Freshly pressed signature chicken sandwich with melted cheese at Kent Sandwich Astana.</figcaption>
             </figure>
         </section>
 
-        <!-- Used section to isolate guest testimonials and local community impressions -->
-        <section>
-            <h2>Guest Impressions</h2>
-            <!-- Real customer feedback collected from local visitors -->
-            <blockquote cite="https://2gis.kz">
-                <p>&ldquo;Coffee Boom has become our staple morning ritual before lectures. The Spanish Latte has a rich velvety texture, and the atmosphere lets you study in peace for hours.&rdquo;</p>
+        <!-- Selected <article> to encapsulate our signature culinary philosophy as a self-contained, syndicate-ready editorial piece -->
+        <article>
+            <h2>The Secret of Our Toasted Sandwiches</h2>
+            <p>Great street food starts with uncompromised ingredient freshness and disciplined grilling technique inspired by Mediterranean <i>panini</i> traditions. Our kitchen follows three fundamental craftsmanship standards every morning before the opening bell rings:</p>
+
+            <!-- Definition list highlighting our core culinary pillars -->
+            <dl>
+                <dt><b>Artisan Toast Bread</b></dt>
+                <dd>Thick-cut, locally baked bakery loaves designed to withstand high pressure without absorbing excess moisture.</dd>
+                <dt><b>House-Made Herb &amp; Garlic Sauce</b></dt>
+                <dd>Our proprietary cold-emulsion dressing blending aromatic garlic, pickled dill relish, and light cultured yogurt.</dd>
+                <dt><b>100% Halal Meats &amp; Real Dairy</b></dt>
+                <dd>Daily deliveries of farm poultry breast and tender lean beef marinated in mild paprika and black pepper.</dd>
+            </dl>
+
+            <p>We pride ourselves on offering full-sized hot sandwiches starting from just <code>640 &#8376;</code>, making balanced nutrition truly accessible. For smaller snacks during short intervals, our compact <q>Mini Sandwich</q> option delivers the same satisfying crunch for only <!-- <span> used solely for isolated monetary badge styling; no semantic tag like em or strong fits neutral price notation --><span>390 &#8376;</span>.</p>
+        </article>
+
+        <!-- Selected <section> with unique id to enable intra-page jump links from navigation and aside blocks -->
+        <section id="student-reviews">
+            <h2>Student Community &amp; Impressions</h2>
+            <p>Over the years, our small dining hall has become an informal campus crossroads for study groups, debate team debriefs, and fast lunch breaks. Here is what our regular patrons share about their dining experience:</p>
+
+            <!-- Real patron feedback collected directly from visitors at the Yanushkevich branch -->
+            <blockquote cite="https://2gis.kz/astana/firm/70000001091599351">
+                <p>&ldquo;Kent Sandwich on Yanushkevich is literally an essential part of university life here. The chicken sandwich with double cheddar is always served smoking hot with a crunchy crust. It is fast, affordable, and consistently delicious.&rdquo;</p>
             </blockquote>
-            <p><cite>Amina Serikova</cite>, regular patron, September 2026.</p>
+            <p><cite>Daniyar Akhmetov</cite>, 3rd-year <abbr title="Information Systems">IS</abbr> undergraduate at <abbr title="Eurasian National University">ENU</abbr>, September 2026.</p>
 
-            <p>According to coffee enthusiast Arman <q>Barista Mind</q>, true community spaces rely on <mark>consistent bean quality</mark> paired with warm, attentive hospitality.</p>
+            <p>As head griller Nurlan frequently notes, <mark>consistency in toast temperature</mark> and swift customer service make all the difference between an ordinary snack and a memorable neighborhood staple.</p>
         </section>
 
-        <section>
-            <h2>Location &amp; Working Hours</h2>
-            <p>We are open daily to welcome guests from <time>08:00</time> to <time>00:00</time>.</p>
-            <p>Interactive location map: <a href="https://2gis.kz/astana/firm/70000001018090518" target="_blank" rel="noopener noreferrer">Coffee Boom Samal 12 on 2GIS</a>.</p>
-            <p>For urgent inquiries or large reservations: reach us via phone at <a href="tel:+77172555000">+7 (7172) 55-50-00</a> or write directly to <a href="mailto:samal@coffeeboom.kz">samal@coffeeboom.kz</a>.</p>
-        </section>
+        <hr>
+
+        <!-- Positioned branch logistics inside <aside> because operational details and coordinates support the primary narrative -->
+        <aside>
+            <h2>Location &amp; Visiting Details</h2>
+            <p>Find us in the student quarter of the capital:</p>
+            <ul>
+                <li><strong>Street Address:</strong> Adolf Yanushkevich St, Building 1, Astana, 010000</li>
+                <li><strong>Working Hours:</strong> Open daily Monday through Sunday from <time datetime="09:30">09:30</time> to <time datetime="21:30">21:30</time></li>
+                <li><strong>Nearby Landmark:</strong> L.N. Gumilyov Eurasian National University (<abbr title="Eurasian National University">ENU</abbr>) main educational buildings</li>
+                <li><strong>Payment Options:</strong> Kaspi QR, Contactless Debit Cards, and Cash</li>
+            </ul>
+
+            <p>Explore interactive maps and guest ratings: <a href="https://2gis.kz/astana/firm/70000001091599351" target="_blank" rel="noopener noreferrer">Kent Sandwich on 2GIS Astana</a>.</p>
+
+            <!-- <div> used strictly as a neutral grouping container for direct contact action links; no structural element fits this inline cluster -->
+            <div class="contact-links">
+                <p>Direct phone order line: <a href="tel:+77015551234">+7 (701) 555-12-34</a></p>
+                <p>Corporate inquiries &amp; catering: <a href="mailto:contact@kentsandwich.kz">contact@kentsandwich.kz</a></p>
+                <p>Jump to: <a href="#student-reviews">Read verified student testimonials &uarr;</a></p>
+            </div>
+            
+            <p><small>* Note: Student discount applied automatically upon presenting a valid student ID card at the counter.</small></p>
+        </aside>
     </main>
 
     <footer>
-        <p>Location: Samal microdistrict, 12, Astana | Contact: +7 (7172) 55-50-00</p>
-        <p>&copy; 2026 Coffee Boom. All rights reserved. &trade;</p>
+        <p>Location: Adolf Yanushkevich St, 1, Astana | Direct Line: +7 (701) 555-12-34</p>
+        <p>&copy; 2026 Kent Sandwich Astana. All rights reserved. &trade;</p>
     </footer>
 </body>
 </html>

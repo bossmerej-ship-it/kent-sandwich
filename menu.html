@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore the handcrafted coffee, artisanal teas, and fresh breakfast pastries at Coffee Boom Samal 12 branch.">
+    <meta name="description" content="Explore the authentic menu and student-friendly prices at Kent Sandwich Astana: classic grilled sandwiches, chicken melt, beef specials, and refreshing drinks.">
     <meta name="author" content="Merey Kuatbay">
-    <title>Menu &amp; Pricing — Coffee Boom Samal 12</title>
+    <title>Menu &amp; Prices — Kent Sandwich Astana | Grilled Toast &amp; Drinks</title>
 </head>
 <body>
-    <!-- Author: Merey Kuatbay | Assignment 1 -->
+    <!-- Author: Merey Kuatbay | Assignment 1: Introduction to Web Technologies -->
     <header>
-        <h1>Coffee Boom Astana — Samal Branch</h1>
+        <h1>Kent Sandwich Astana — Menu &amp; Specials</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Samal Branch</a></li>
-                <li><a href="menu.html">Our Menu</a></li>
+                <li><a href="about.html">About Kent</a></li>
+                <li><a href="menu.html">Menu &amp; Prices</a></li>
                 <li><a href="order.html">Pre-Order</a></li>
                 <li><a href="feedback.html">Guest Feedback</a></li>
                 <li><a href="colophon.html">Colophon</a></li>
@@ -24,116 +24,166 @@
     </header>
 
     <main>
+        <!-- Used <section> to enclose the core menu overview and photography before the detailed price tables -->
         <section>
-            <h2>Artisanal Drinks &amp; Fresh Pastries</h2>
-            <p>Our kitchen and brewing counter at Samal 12 focus on uncompromising product freshness, balanced extraction formulas, and locally sourced ingredients. Whether stopping by for an energizing morning double shot or relaxing during an afternoon study break, our guests choose from a diverse catalog of espresso creations, botanical herbal blends, and freshly baked European sweets.</p>
+            <h2>Fresh Fast-Casual Grille Menu</h2>
+            <p>Every sandwich served at our Adolf Yanushkevich counter is prepared using fresh ingredients, seasoned halal poultry and beef, melted cheddar cheese, and crisp garden vegetables. We toast our sandwiches to order on heavy cast-iron dual contact grills, ensuring an unbeatable crunch that stays hot during your walk across the university campus.</p>
 
             <figure>
-                <img src="images/barista-counter.jpg" alt="Coffee Boom barista bar and fresh dessert showcase at Samal 12" width="450">
-                <figcaption>Barista bar and dessert vitrine prepared for daily service at Samal 12.</figcaption>
+                <img src="images/kent-grill.jpg" alt="Dual contact press grill station at Kent Sandwich Astana" width="480">
+                <figcaption>Dual-surface contact grill station where each sandwich is pressed to order at 220<sup>&deg;</sup>C.</figcaption>
             </figure>
 
-            <p>Every espresso foundation relies on selected medium-dark roast beans roasted weekly to preserve subtle aromas of roasted hazelnut and dark cocoa. Guests can customize each order with alternative dairy options, sugar-free syrups, and temperature adjustments suited to individual preferences.</p>
+            <p>Check our complete offerings below. Guests can customize any sandwich with extra cheese toppings, spicy jalape&ntilde;o peppers, or our house garlic dip.</p>
         </section>
 
         <!-- Semantic data table displaying authentic branch menu pricing -->
-        <section>
-            <h2>Seasonal Price List</h2>
-            <table border="1">
-                <caption>Current beverage and bakery pricing at Coffee Boom Samal 12 (Fall 2026)</caption>
+        <!-- Chosen semantic <table> to present multidimensional pricing data with rowgroup headers, ensuring high accessibility for screen readers -->
+        <section id="price-table-section">
+            <h2>Authentic Price List (Fall 2026)</h2>
+            <table>
+                <caption>Current beverage, sandwich, and side dish pricing at Kent Sandwich Astana (Yanushkevich 1)</caption>
                 <thead>
                     <tr>
                         <th scope="col">Category</th>
                         <th scope="col">Item Description</th>
-                        <th scope="col">Portion Size</th>
+                        <th scope="col">Portion / Weight</th>
                         <th scope="col">Price (KZT)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="rowgroup" rowspan="4">Espresso Bar</th>
-                        <td>Espresso Classic</td>
-                        <td>30 ml</td>
-                        <td>950</td>
+                        <th scope="rowgroup" rowspan="5">Grilled Sandwiches</th>
+                        <td>Classic Grilled Sandwich (Ham &amp; Cheddar)</td>
+                        <td>190 g</td>
+                        <td>640 &#8376;</td>
                     </tr>
                     <tr>
-                        <td>Americano</td>
+                        <td>Chicken Special Sandwich (Spiced Breast &amp; Garlic Sauce)</td>
+                        <td>220 g</td>
+                        <td>640 &#8376;</td>
+                    </tr>
+                    <tr>
+                        <td>Beef &amp; Jalape&ntilde;o Sandwich (Lean Beef &amp; Melted Cheese)</td>
+                        <td>230 g</td>
+                        <td>780 &#8376;</td>
+                    </tr>
+                    <tr>
+                        <td>Kent Signature Club (Triple Toast, Beef, Chicken, Cheddar)</td>
+                        <td>280 g</td>
+                        <td>920 &#8376;</td>
+                    </tr>
+                    <tr>
+                        <td>Student Mini Sandwich (Budget Toast with Cheddar &amp; Butter)</td>
+                        <td>120 g</td>
+                        <td>390 &#8376;</td>
+                    </tr>
+                    <tr>
+                        <th scope="rowgroup" rowspan="3">Sides &amp; Extras</th>
+                        <td>Crispy Golden French Fries</td>
+                        <td>150 g</td>
+                        <td>550 &#8376;</td>
+                    </tr>
+                    <tr>
+                        <td>Extra Melted Cheddar Cheese Topping</td>
+                        <td>40 g</td>
+                        <td>150 &#8376;</td>
+                    </tr>
+                    <tr>
+                        <td>Pickled Sliced Jalape&ntilde;o Peppers</td>
+                        <td>30 g</td>
+                        <td>100 &#8376;</td>
+                    </tr>
+                    <tr>
+                        <th scope="rowgroup" rowspan="3">Hot &amp; Cold Drinks</th>
+                        <td>Tashkent Lemon &amp; Mint Hot Tea</td>
+                        <td>400 ml</td>
+                        <td>350 &#8376;</td>
+                    </tr>
+                    <tr>
+                        <td>Classic Americano Espresso Coffee</td>
                         <td>250 ml</td>
-                        <td>1,150</td>
+                        <td>500 &#8376;</td>
                     </tr>
                     <tr>
-                        <td>Cappuccino Standard</td>
-                        <td>300 ml</td>
-                        <td>1,450</td>
-                    </tr>
-                    <tr>
-                        <td>Spanish Latte (Signature)</td>
-                        <td>350 ml</td>
-                        <td>1,850</td>
-                    </tr>
-                    <tr>
-                        <th scope="rowgroup" rowspan="3">Specialty Teas</th>
-                        <td>Sea Buckthorn &amp; Ginger Tea</td>
-                        <td>600 ml pot</td>
-                        <td>2,100</td>
-                    </tr>
-                    <tr>
-                        <td>Moroccan Mint Infusion</td>
-                        <td>600 ml pot</td>
-                        <td>2,000</td>
-                    </tr>
-                    <tr>
-                        <td>Classic Earl Grey</td>
-                        <td>500 ml pot</td>
-                        <td>1,400</td>
-                    </tr>
-                    <tr>
-                        <th scope="rowgroup" rowspan="3">Bakery &amp; Sweets</th>
-                        <td>Butter Croissant</td>
-                        <td>110 g</td>
-                        <td>1,200</td>
-                    </tr>
-                    <tr>
-                        <td>San Sebastian Cheesecake</td>
-                        <td>180 g</td>
-                        <td>2,400</td>
-                    </tr>
-                    <tr>
-                        <td>Honey Layer Cake (Medovik)</td>
-                        <td>160 g</td>
-                        <td>1,800</td>
+                        <td>Chilled House Berry Lemonade</td>
+                        <td>500 ml</td>
+                        <td>450 &#8376;</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th scope="row" colspan="3">Standard Dairy Alternatives (Oat / Almond / Coconut)</th>
-                        <td>+350</td>
+                        <th scope="row" colspan="3">Campus Combo Special (Any Sandwich + Hot Tea)</th>
+                        <td><!-- <span> used strictly to highlight the discount badge inline; no phrasing element fits promotional markup --><span>Save 100 &#8376;</span></td>
                     </tr>
                 </tfoot>
             </table>
+            <p><small>All beverage preparations utilize purified H<sub>2</sub>O filtered in-house.</small></p>
         </section>
 
+        <!-- Employed nested lists to logically display layered customization hierarchies for sandwich ingredients and sauce pairings -->
         <section>
-            <h2>Beverage Customization Steps</h2>
-            <ol>
-                <li>Choose your baseline drink temperature: hot or iced over filtered cubes.</li>
-                <li>Select preferred dairy base:
+            <h2>How to Build Your Custom Meal</h2>
+            <p>Follow our straightforward ordering formula for dine-in or express takeout:</p>
+            
+            <!-- Nested list of ingredient options -->
+            <ul>
+                <li><strong>Step 1: Select your main protein &amp; filling</strong>
                     <ul>
-                        <li>Farm Whole Milk (default)</li>
-                        <li>Barista Oat Milk</li>
-                        <li>Roasted Almond Milk</li>
-                        <li>Lactose-Free Milk</li>
+                        <li>Marinated tender chicken breast</li>
+                        <li>Seasoned slow-cooked minced beef</li>
+                        <li>Smoked turkey ham with double mozzarella</li>
                     </ul>
                 </li>
-                <li>Specify natural sweetener or house-made vanilla bean syrup.</li>
+                <li><strong>Step 2: Choose your signature dressing</strong>
+                    <ul>
+                        <li>House Herb &amp; Garlic Cream Sauce</li>
+                        <li>Spicy Smoked Paprika Dressing</li>
+                        <li>Classic Creamy Mayonnaise &amp; Mustard</li>
+                    </ul>
+                </li>
+                <li><strong>Step 3: Add sides and refreshments</strong></li>
+            </ul>
+
+            <!-- Ordered list with attribute detailing preparation steps -->
+            <h3>Kitchen Preparation Protocol</h3>
+            <ol type="1" start="1">
+                <li>Order ticket printed at the kitchen display screen</li>
+                <li>Sandwich layered with chilled ingredients on bakery bread</li>
+                <li>Double contact grill pressed for exactly 4 to 5 minutes until core reaches 75<sup>&deg;</sup>C</li>
+                <li>Sandwich sliced diagonally, wrapped in thermal foil, and delivered hot</li>
             </ol>
-            <p>Ready to place your request ahead of arrival? Proceed straight to our <a href="order.html">online pre-order page</a>.</p>
+
+            <p>Diagnostics preview for register staff: <samp>Grill Station #1 Status: ONLINE (220&deg;C)</samp></p>
+            <p>To cancel an active ticket, press <kbd>Esc</kbd> and input supervisor override code <code>KENT-CLEAR-2026</code>.</p>
+
+            <!-- <div> used strictly as a non-semantic layout wrapper for grouping receipt and terminal diagnostic samples; no semantic tag applies to preformatted receipt wrappers -->
+            <div class="sample-receipt-box">
+                <h4>Sample Digital Order Receipt</h4>
+                <pre>
+====================================
+KENT SANDWICH ASTANA — BRANCH #1
+Adolf Yanushkevich St, 1
+Order: #2026-KS-1042
+------------------------------------
+1x Chicken Special Sandwich  640 KZT
+1x Extra Cheddar Topping     150 KZT
+1x Tashkent Tea (400 ml)     350 KZT
+Combo Discount              -100 KZT
+------------------------------------
+TOTAL PAID (Kaspi QR):      1040 KZT
+THANK YOU FOR DINING WITH US!
+====================================
+                </pre>
+            </div>
+
+            <p>Ready to skip the counter queue? Head directly to our <a href="order.html">express pre-order page &rarr;</a></p>
         </section>
     </main>
 
     <footer>
-        <p>Location: Samal microdistrict, 12, Astana | Contact: +7 (7172) 55-50-00</p>
-        <p>&copy; 2026 Coffee Boom. All rights reserved. &trade;</p>
+        <p>Location: Adolf Yanushkevich St, 1, Astana | Direct Line: +7 (701) 555-12-34</p>
+        <p>&copy; 2026 Kent Sandwich Astana. All rights reserved. &trade;</p>
     </footer>
 </body>
 </html>

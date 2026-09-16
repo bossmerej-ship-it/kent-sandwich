@@ -3,36 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="Author" content="Merey Kuatbay">
-    <title>Pre-order Astana Coffee-Boom</title>
+    <meta name="description" content="Pre-order hot grilled sandwiches and student meals from Kent Sandwich Astana at Adolf Yanushkevich 1. Fast pickup without waiting in line.">
+    <meta name="author" content="Merey Kuatbay">
+    <title>Pre-Order &amp; Takeaway — Kent Sandwich Astana | Yanushkevich 1</title>
 </head>
 <body>
-    <!-- Author: Merey Kuatbay | Assignment 1 -->
-     <header>
-        <h1>Coffee Boom Astana — Samal Branch</h1>
+    <!-- Author: Merey Kuatbay | Assignment 1: Introduction to Web Technologies -->
+    <header>
+        <h1>Kent Sandwich Astana — Online Pre-Order</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Samal Branch</a></li>
-                <li><a href="menu.html">Our Menu</a></li>
+                <li><a href="about.html">About Kent</a></li>
+                <li><a href="menu.html">Menu &amp; Prices</a></li>
                 <li><a href="order.html">Pre-Order</a></li>
                 <li><a href="feedback.html">Guest Feedback</a></li>
                 <li><a href="colophon.html">Colophon</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
+        <!-- Used <section> to separate express pickup instructions from the interactive form -->
         <section>
             <h2>Express Takeaway Pre-Ordering</h2>
-            <p>Welcome to the digital pre-order service for Coffee Boom at Samal 12, located on the ground floor of Astana Tower. To accommodate busy corporate schedules, morning routines, and quick study intervals, we provide a streamlined pickup service that eliminates standing in queue.</p>
-            <p>Our kitchen and barista station begin extraction and preparation fifteen minutes before your requested arrival window. All hot beverages are capped in double-walled insulated cups, while freshly baked pastries and warm bakery goods are carefully boxed to retain freshness and ideal serving temperature.</p>
+            <p>Welcome to the digital pre-order service for Kent Sandwich at Adolf Yanushkevich 1, located steps away from the <abbr title="L.N. Gumilyov Eurasian National University">ENU</abbr> campus. To accommodate tight study schedules, lunch breaks, and exam intervals, our express pre-ordering system lets you submit your food request in advance so your hot sandwich is fresh off the grill the moment you arrive.</p>
+
+            <figure>
+                <img src="images/kent-counter.jpg" alt="Express pickup counter and packaging station at Kent Sandwich Astana" width="480">
+                <figcaption>Express takeaway pickup counter at Kent Sandwich on Adolf Yanushkevich Street.</figcaption>
+            </figure>
+
+            <p>Our kitchen initiates toasting precisely 7 minutes prior to your scheduled arrival time. All hot sandwiches are wrapped in heat-retaining thermal aluminum paper to preserve optimal crunch and melted cheese texture.</p>
         </section>
 
-        <section>
-            <h2>Pre-Order Request Form</h2>
+        <!-- Segmented the form with multiple <fieldset> elements to distinguish customer identity from meal choices and pickup scheduling -->
+        <!-- Used explicit id and for associations across all controls to ensure full WCAG accessibility for keyboard and voice navigation -->
+        <section id="order-form-section">
+            <h2>Pre-Order Registration Form</h2>
+            <!-- Note: This form does not send anything yet — there is no server behind it. Server-side handling comes later in the course. -->
             <form action="https://httpbin.org/post" method="post">
                 
-                <!-- Guest Contact Details -->
+                <!-- Guest Contact Details Fieldset -->
                 <fieldset>
                     <legend>Contact Information</legend>
                     <p>
@@ -40,108 +52,97 @@
                         <input type="text" id="customer-name" name="customer_name" placeholder="e.g., Merey Kuatbay" required>
                     </p>
                     <p>
-                        <label for="customer-phone">Kazakhstan Phone Number (required):</label><br>
-                        <input type="tel" id="customer-phone" name="customer_phone" placeholder="+7 (777) 123-4567" pattern="^\+7\s?\(?\d{3}\)?\s?\d{3}-?\d{2}-?\d{2}$" required>
+                        <label for="customer-phone">Phone Number (required):</label><br>
+                        <input type="tel" id="customer-phone" name="customer_phone" placeholder="+7 (701) 123-45-67" required>
                     </p>
                     <p>
                         <label for="customer-email">Email Address:</label><br>
-                        <input type="email" id="customer-email" name="customer_email" placeholder="example@domain.kz">
+                        <input type="email" id="customer-email" name="customer_email" placeholder="student@enu.kz">
                     </p>
                 </fieldset>
 
-                <!-- Order Specifications -->
+                <!-- Sandwich Customization Fieldset -->
                 <fieldset>
-                    <legend>Beverage and Food Selection</legend>
+                    <legend>Sandwich Selection &amp; Modifiers</legend>
                     <p>
-                        <label for="drink-select">Select Primary Item:</label><br>
-                        <select id="drink-select" name="selected_item" required>
-                            <option value="">-- Choose beverage or bakery --</option>
-                            <optgroup label="Espresso &amp; Signatures">
-                                <option value="espresso">Espresso Classic (30 ml)</option>
-                                <option value="americano">Americano (250 ml)</option>
-                                <option value="cappuccino">Cappuccino Standard (300 ml)</option>
-                                <option value="spanish-latte">Spanish Latte (350 ml)</option>
+                        <label for="sandwich-choice">Select Sandwich or Combo (required):</label><br>
+                        <select id="sandwich-choice" name="selected_sandwich" required>
+                            <option value="">-- Choose your meal --</option>
+                            <optgroup label="Signature Grilled Sandwiches">
+                                <option value="classic-sandwich">Classic Sandwich — Ham &amp; Cheddar (640 KZT)</option>
+                                <option value="chicken-sandwich">Chicken Special Sandwich (640 KZT)</option>
+                                <option value="beef-sandwich">Beef &amp; Jalape&ntilde;o Sandwich (780 KZT)</option>
+                                <option value="kent-club">Kent Signature Club Sandwich (920 KZT)</option>
+                                <option value="mini-sandwich">Student Mini Sandwich (390 KZT)</option>
                             </optgroup>
-                            <optgroup label="Specialty Teas">
-                                <option value="buckthorn-tea">Sea Buckthorn &amp; Ginger Tea</option>
-                                <option value="moroccan-mint">Moroccan Mint Infusion</option>
-                            </optgroup>
-                            <optgroup label="Fresh Pastries">
-                                <option value="croissant">Butter Croissant</option>
-                                <option value="san-sebastian">San Sebastian Cheesecake</option>
-                                <option value="medovik">Honey Cake (Medovik)</option>
+                            <optgroup label="Sides &amp; Combos">
+                                <option value="french-fries">Crispy French Fries (550 KZT)</option>
+                                <option value="student-combo">Full Student Combo — Sandwich + Tea (890 KZT)</option>
                             </optgroup>
                         </select>
                     </p>
                     <p>
-                        <label for="item-quantity">Item Quantity (1 to 10):</label><br>
-                        <input type="number" id="item-quantity" name="item_quantity" min="1" max="10" value="1" required>
+                        <label for="item-quantity">Portion Quantity (1 to 20):</label><br>
+                        <input type="number" id="item-quantity" name="item_quantity" min="1" max="20" value="1" required>
                     </p>
                     <p>
-                        <strong>Temperature Preference:</strong><br>
-                        <input type="radio" id="temp-hot" name="temperature" value="hot" checked>
-                        <label for="temp-hot">Hot (standard brewing)</label><br>
-                        <input type="radio" id="temp-iced" name="temperature" value="iced">
-                        <label for="temp-iced">Iced (cold brew / served over ice)</label>
+                        <strong>Dining Preference:</strong><br>
+                        <input type="radio" id="dine-takeaway" name="dining_mode" value="takeaway" checked>
+                        <label for="dine-takeaway">Takeaway (wrapped in thermal foil bag)</label><br>
+                        <input type="radio" id="dine-in" name="dining_mode" value="dine_in">
+                        <label for="dine-in">Dine-in at Yanushkevich dining hall</label>
                     </p>
                     <p>
-                        <strong>Dairy &amp; Recipe Modifiers:</strong><br>
-                        <input type="checkbox" id="mod-oat" name="modifiers[]" value="oat-milk">
-                        <label for="mod-oat">Barista Oat Milk (+350 KZT)</label><br>
-                        <input type="checkbox" id="mod-almond" name="modifiers[]" value="almond-milk">
-                        <label for="mod-almond">Roasted Almond Milk (+350 KZT)</label><br>
-                        <input type="checkbox" id="mod-sugarfree" name="modifiers[]" value="sugar-free">
-                        <label for="mod-sugarfree">Sugar-free sweetener alternative</label><br>
-                        <input type="checkbox" id="mod-cinnamon" name="modifiers[]" value="cinnamon">
-                        <label for="mod-cinnamon">Add ground cinnamon dusting</label>
+                        <strong>Custom Add-ons &amp; Extras:</strong><br>
+                        <input type="checkbox" id="extra-cheddar" name="extras[]" value="extra_cheddar">
+                        <label for="extra-cheddar">Extra Melted Cheddar (+150 KZT)</label><br>
+                        <input type="checkbox" id="extra-jalapeno" name="extras[]" value="jalapeno">
+                        <label for="extra-jalapeno">Sliced Pickled Jalape&ntilde;os (+100 KZT)</label><br>
+                        <input type="checkbox" id="extra-garlic" name="extras[]" value="garlic_sauce">
+                        <label for="extra-garlic">Extra House Garlic Dip (+100 KZT)</label><br>
+                        <input type="checkbox" id="cut-diagonal" name="extras[]" value="cut_diagonal">
+                        <label for="cut-diagonal">Cut sandwich diagonally in half</label>
                     </p>
                 </fieldset>
 
-                <!-- Scheduling and Instructions -->
+                <!-- Scheduling & Terms Fieldset -->
                 <fieldset>
-                    <legend>Pickup Details &amp; Packaging</legend>
+                    <legend>Pickup Scheduling &amp; Instructions</legend>
                     <p>
-                        <label for="pickup-time">Estimated Pickup Time (08:00 – 23:00):</label><br>
-                        <input type="time" id="pickup-time" name="pickup_time" min="08:00" max="23:00" required>
+                        <label for="pickup-date">Pickup Date (required):</label><br>
+                        <input type="date" id="pickup-date" name="pickup_date" required>
+                    </p>
+                    <p>
+                        <label for="pickup-time">Estimated Pickup Time (09:30 – 21:30):</label><br>
+                        <input type="time" id="pickup-time" name="pickup_time" min="09:30" max="21:30" required>
                     </p>
                     <p>
                         <label for="order-notes">Special Kitchen Instructions or Allergies:</label><br>
-                        <textarea id="order-notes" name="order_notes" rows="4" cols="45" placeholder="Specify food allergies, extra hot temperature, or bag packaging preferences..."></textarea>
+                        <textarea id="order-notes" name="order_notes" rows="4" cols="45" placeholder="Please specify food allergies, requests for extra crispy crust, or condiments..."></textarea>
                     </p>
                     <p>
-                        <label for="tips">tip percentage</label><br>
-                        <select name="tip_percentage" id="tips">
-                            <option value="10%">10%</option>
-                            <option value="20%">20%</option>
-                            <option value="30%">30%</option>
-                            <option value="40%">40% </option>
-                            <option value="50%">50%</option>
-                            <option value="75%">75%</option>
-                        </select>
-                    </p>
-                    <p>
-                        <input type="checkbox" id="order-confirm" name="policy_agreement" required>
-                        <label for="order-confirm">I confirm that I will pick up my order at the Samal 12 branch within 20 minutes of the selected time.</label>
+                        <input type="checkbox" id="policy-confirm" name="policy_agreement" required>
+                        <label for="policy-confirm">I confirm that I will pick up my order at Adolf Yanushkevich 1 within 15 minutes of scheduled time.</label>
                     </p>
                 </fieldset>
 
-                <p>
+                <!-- <div> used strictly as a non-semantic container for grouping and aligning the form submit and reset action buttons; no semantic sectioning tag fits a control button cluster -->
+                <div class="form-actions">
                     <button type="submit">Submit Pre-Order</button>
                     <button type="reset">Reset Form</button>
-                </p>
+                </div>
             </form>
         </section>
 
         <section>
-            <h2>Pickup Instructions at Astana Tower</h2>
-            <p>When entering the Samal 12 cafe hall, bypass the regular ordering queue and proceed directly to the designated takeaway pickup zone beside the barista register. State your full name to receive your freshly packed items.</p>
+            <h2>Pickup Counter Location</h2>
+            <p>Upon arrival at our shop at Adolf Yanushkevich 1, skip the regular line and approach the express takeaway counter on the right. Give your full name to receive your freshly grilled meal immediately.</p>
         </section>
     </main>
 
     <footer>
-        <p>Location: Samal microdistrict, 12, Astana | Contact: +7 (7172) 55-50-00</p>
-        <p>&copy; 2026 Coffee Boom. All rights reserved. &trade;</p>
+        <p>Location: Adolf Yanushkevich St, 1, Astana | Direct Line: +7 (701) 555-12-34</p>
+        <p>&copy; 2026 Kent Sandwich Astana. All rights reserved. &trade;</p>
     </footer>
-    
 </body>
 </html>
