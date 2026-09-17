@@ -1,148 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pre-order hot grilled sandwiches and student meals from Kent Sandwich Astana at Adolf Yanushkevich 1. Fast pickup without waiting in line.">
+    <meta name="description" content="Choose a Kent Sandwich and prepare pickup details before contacting the shop.">
     <meta name="author" content="Merey Kuatbay">
-    <title>Pre-Order &amp; Takeaway — Kent Sandwich Astana | Yanushkevich 1</title>
-</head>
-<body>
-    <!-- Author: Merey Kuatbay | Assignment 1: Introduction to Web Technologies -->
-    <header>
-        <h1>Kent Sandwich Astana — Online Pre-Order</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Kent</a></li>
-                <li><a href="menu.html">Menu &amp; Prices</a></li>
-                <li><a href="order.html">Pre-Order</a></li>
-                <li><a href="feedback.html">Guest Feedback</a></li>
-                <li><a href="colophon.html">Colophon</a></li>
-            </ul>
-        </nav>
+    <title>Kent Sandwich Astana | Order Form</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/merey.css">
+  </head>
+  <body class="page page-order">
+    <!-- Author: Merey Kuatbay -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
+        <span class="brand-mark" aria-hidden="true">
+          <img src="images/kent-logo.jpg" alt="">
+        </span>
+        <span class="brand-name">Kent<br>Sandwich</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="menu.html">Menu</a>
+          </li>
+          <li>
+            <a href="about.html">Our place</a>
+          </li>
+          <li>
+            <a href="order.html" aria-current="page">Order</a>
+          </li>
+          <li>
+            <a href="feedback.html">Feedback</a>
+          </li>
+          <li>
+            <a href="colophon.html">Colophon</a>
+          </li>
+        </ul>
+      </nav>
+      <p class="header-note">Astana · daily 09:30–21:30</p>
     </header>
-
-    <main>
-        <!-- Used <section> to separate express pickup instructions from the interactive form -->
-        <section>
-            <h2>Express Takeaway Pre-Ordering</h2>
-            <p>Welcome to the digital pre-order service for Kent Sandwich at Adolf Yanushkevich 1, located steps away from the <abbr title="L.N. Gumilyov Eurasian National University">ENU</abbr> campus. To accommodate tight study schedules, lunch breaks, and exam intervals, our express pre-ordering system lets you submit your food request in advance so your hot sandwich is fresh off the grill the moment you arrive.</p>
-
-            <figure>
-                <img src="images/kent-counter.jpg" alt="Express pickup counter and packaging station at Kent Sandwich Astana" width="480">
-                <figcaption>Express takeaway pickup counter at Kent Sandwich on Adolf Yanushkevich Street.</figcaption>
-            </figure>
-
-            <p>Our kitchen initiates toasting precisely 7 minutes prior to your scheduled arrival time. All hot sandwiches are wrapped in heat-retaining thermal aluminum paper to preserve optimal crunch and melted cheese texture.</p>
-        </section>
-
-        <!-- Segmented the form with multiple <fieldset> elements to distinguish customer identity from meal choices and pickup scheduling -->
-        <!-- Used explicit id and for associations across all controls to ensure full WCAG accessibility for keyboard and voice navigation -->
-        <section id="order-form-section">
-            <h2>Pre-Order Registration Form</h2>
-            <!-- Note: This form does not send anything yet — there is no server behind it. Server-side handling comes later in the course. -->
-            <form action="https://httpbin.org/post" method="post">
-                
-                <!-- Guest Contact Details Fieldset -->
-                <fieldset>
-                    <legend>Contact Information</legend>
-                    <p>
-                        <label for="customer-name">Full Name (required):</label><br>
-                        <input type="text" id="customer-name" name="customer_name" placeholder="e.g., Merey Kuatbay" required>
-                    </p>
-                    <p>
-                        <label for="customer-phone">Phone Number (required):</label><br>
-                        <input type="tel" id="customer-phone" name="customer_phone" placeholder="+7 (701) 123-45-67" required>
-                    </p>
-                    <p>
-                        <label for="customer-email">Email Address:</label><br>
-                        <input type="email" id="customer-email" name="customer_email" placeholder="student@enu.kz">
-                    </p>
-                </fieldset>
-
-                <!-- Sandwich Customization Fieldset -->
-                <fieldset>
-                    <legend>Sandwich Selection &amp; Modifiers</legend>
-                    <p>
-                        <label for="sandwich-choice">Select Sandwich or Combo (required):</label><br>
-                        <select id="sandwich-choice" name="selected_sandwich" required>
-                            <option value="">-- Choose your meal --</option>
-                            <optgroup label="Signature Grilled Sandwiches">
-                                <option value="classic-sandwich">Classic Sandwich — Ham &amp; Cheddar (640 KZT)</option>
-                                <option value="chicken-sandwich">Chicken Special Sandwich (640 KZT)</option>
-                                <option value="beef-sandwich">Beef &amp; Jalape&ntilde;o Sandwich (780 KZT)</option>
-                                <option value="kent-club">Kent Signature Club Sandwich (920 KZT)</option>
-                                <option value="mini-sandwich">Student Mini Sandwich (390 KZT)</option>
-                            </optgroup>
-                            <optgroup label="Sides &amp; Combos">
-                                <option value="french-fries">Crispy French Fries (550 KZT)</option>
-                                <option value="student-combo">Full Student Combo — Sandwich + Tea (890 KZT)</option>
-                            </optgroup>
-                        </select>
-                    </p>
-                    <p>
-                        <label for="item-quantity">Portion Quantity (1 to 20):</label><br>
-                        <input type="number" id="item-quantity" name="item_quantity" min="1" max="20" value="1" required>
-                    </p>
-                    <p>
-                        <strong>Dining Preference:</strong><br>
-                        <input type="radio" id="dine-takeaway" name="dining_mode" value="takeaway" checked>
-                        <label for="dine-takeaway">Takeaway (wrapped in thermal foil bag)</label><br>
-                        <input type="radio" id="dine-in" name="dining_mode" value="dine_in">
-                        <label for="dine-in">Dine-in at Yanushkevich dining hall</label>
-                    </p>
-                    <p>
-                        <strong>Custom Add-ons &amp; Extras:</strong><br>
-                        <input type="checkbox" id="extra-cheddar" name="extras[]" value="extra_cheddar">
-                        <label for="extra-cheddar">Extra Melted Cheddar (+150 KZT)</label><br>
-                        <input type="checkbox" id="extra-jalapeno" name="extras[]" value="jalapeno">
-                        <label for="extra-jalapeno">Sliced Pickled Jalape&ntilde;os (+100 KZT)</label><br>
-                        <input type="checkbox" id="extra-garlic" name="extras[]" value="garlic_sauce">
-                        <label for="extra-garlic">Extra House Garlic Dip (+100 KZT)</label><br>
-                        <input type="checkbox" id="cut-diagonal" name="extras[]" value="cut_diagonal">
-                        <label for="cut-diagonal">Cut sandwich diagonally in half</label>
-                    </p>
-                </fieldset>
-
-                <!-- Scheduling & Terms Fieldset -->
-                <fieldset>
-                    <legend>Pickup Scheduling &amp; Instructions</legend>
-                    <p>
-                        <label for="pickup-date">Pickup Date (required):</label><br>
-                        <input type="date" id="pickup-date" name="pickup_date" required>
-                    </p>
-                    <p>
-                        <label for="pickup-time">Estimated Pickup Time (09:30 – 21:30):</label><br>
-                        <input type="time" id="pickup-time" name="pickup_time" min="09:30" max="21:30" required>
-                    </p>
-                    <p>
-                        <label for="order-notes">Special Kitchen Instructions or Allergies:</label><br>
-                        <textarea id="order-notes" name="order_notes" rows="4" cols="45" placeholder="Please specify food allergies, requests for extra crispy crust, or condiments..."></textarea>
-                    </p>
-                    <p>
-                        <input type="checkbox" id="policy-confirm" name="policy_agreement" required>
-                        <label for="policy-confirm">I confirm that I will pick up my order at Adolf Yanushkevich 1 within 15 minutes of scheduled time.</label>
-                    </p>
-                </fieldset>
-
-                <!-- <div> used strictly as a non-semantic container for grouping and aligning the form submit and reset action buttons; no semantic sectioning tag fits a control button cluster -->
-                <div class="form-actions">
-                    <button type="submit">Submit Pre-Order</button>
-                    <button type="reset">Reset Form</button>
-                </div>
-            </form>
-        </section>
-
-        <section>
-            <h2>Pickup Counter Location</h2>
-            <p>Upon arrival at our shop at Adolf Yanushkevich 1, skip the regular line and approach the express takeaway counter on the right. Give your full name to receive your freshly grilled meal immediately.</p>
-        </section>
+    <main class="site-main" id="main-content">
+      <header class="page-intro order-intro">
+        <p class="eyebrow">Order</p>
+        <h1>Choose your sandwich</h1>
+        <p>Fill in the form to prepare your order details. Choose a sandwich, quantity and pickup time, then check everything before contacting the shop. Add a note if you have a simple request, and leave the contact box unticked if you do not want a reply. Online ordering is not connected yet.</p>
+      </header>
+      <section class="order-layout" aria-labelledby="order-form-title">
+        <form class="order-form" action="#" method="post">
+          <!-- This form demonstrates HTML controls only; no server is connected to receive an order. -->
+          <h2 id="order-form-title">Your selection</h2>
+          <fieldset>
+            <legend>1. Choose a sandwich</legend>
+            <!-- This div has no content meaning; it arranges the related radio choices as a grid. -->
+            <div class="choice-grid">
+              <!-- Each span keeps a sandwich name and price together inside its label. -->
+              <label class="choice-card" for="sandwich-mini">
+                <input id="sandwich-mini" type="radio" name="sandwich" value="mini" required>
+                <span>Mini sandwich <strong>390 ₸</strong>
+                </span>
+              </label>
+              <label class="choice-card" for="sandwich-chicken">
+                <input id="sandwich-chicken" type="radio" name="sandwich" value="chicken">
+                <span>Chicken <strong>640 ₸</strong>
+                </span>
+              </label>
+              <label class="choice-card" for="sandwich-classic">
+                <input id="sandwich-classic" type="radio" name="sandwich" value="classic">
+                <span>Classic <strong>640 ₸</strong>
+                </span>
+              </label>
+              <label class="choice-card" for="sandwich-cheese">
+                <input id="sandwich-cheese" type="radio" name="sandwich" value="cheese">
+                <span>Cheese <strong>640 ₸</strong>
+                </span>
+              </label>
+              <label class="choice-card" for="sandwich-cutlet">
+                <input id="sandwich-cutlet" type="radio" name="sandwich" value="cutlet">
+                <span>Cutlet <strong>690 ₸</strong>
+                </span>
+              </label>
+              <label class="choice-card" for="sandwich-spicy-cutlet">
+                <input id="sandwich-spicy-cutlet" type="radio" name="sandwich" value="spicy-cutlet">
+                <span>Spicy cutlet <strong>740 ₸</strong>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>2. Pickup details</legend>
+            <!-- This div has no semantic role; it aligns related contact and pickup fields in columns. -->
+            <div class="field-grid">
+              <label for="customer-name">Name<input id="customer-name" name="customer-name" type="text" autocomplete="name" minlength="2" required>
+              </label>
+              <label for="customer-phone">Phone<input id="customer-phone" name="customer-phone" type="tel" autocomplete="tel" placeholder="+7 700 000 00 00" pattern="\+?[0-9 ()-]{10,18}" required>
+              </label>
+              <label for="customer-email">Email<input id="customer-email" name="customer-email" type="email" autocomplete="email" required>
+              </label>
+              <label for="pickup-date">Pickup date<input id="pickup-date" name="pickup-date" type="date" required>
+              </label>
+              <label for="pickup-time">Pickup time<input id="pickup-time" name="pickup-time" type="time" min="09:30" max="21:15" required>
+              </label>
+              <label for="quantity">Quantity<input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required>
+              </label>
+              <label for="contact-method">Preferred contact<select id="contact-method" name="contact-method">
+                  <option value="phone">Phone call</option>
+                  <option value="whatsapp">WhatsApp</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>3. Notes</legend>
+            <label class="full-field" for="order-note">Anything the team should know?<textarea id="order-note" name="order-note" rows="4" maxlength="240" placeholder="For example: no spicy sauce">
+              </textarea>
+            </label>
+            <label class="check-line" for="contact-request">
+              <input id="contact-request" type="checkbox" name="contact-request">
+              <!-- This span keeps the checkbox text as one inline label phrase. -->
+              <span>Please contact me to confirm the order.</span>
+            </label>
+          </fieldset>
+          <p class="form-note">Thanks for your order!</p>
+          <button class="button button-dark" type="submit">Check details</button>
+          <button class="button button-light" type="reset">Clear form</button>
+        </form>
+        <aside class="order-summary">
+          <p class="eyebrow">Pickup point</p>
+          <h2>Adolfa Yanushkevicha, 1</h2>
+          <dl>
+            <dt>Hours</dt>
+            <dd>Daily, 09:30–21:30</dd>
+            <dt>Online form</dt>
+            <dd>Not connected yet</dd>
+            <dt>Orders</dt>
+            <dd>Use the shop’s official contact channels</dd>
+          </dl>
+          <img src="images/kent-packaging.jpg" alt="Kent Sandwich kraft paper sleeves with toasted sandwiches">
+          <a class="text-link" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">Check official contacts in 2GIS →</a>
+        </aside>
+      </section>
     </main>
-
-    <footer>
-        <p>Location: Adolf Yanushkevich St, 1, Astana | Direct Line: +7 (701) 555-12-34</p>
-        <p>&copy; 2026 Kent Sandwich Astana. All rights reserved. &trade;</p>
+    <footer class="site-footer">
+      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
+      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p>
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
+      </p>
     </footer>
-</body>
+    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  </body>
 </html>

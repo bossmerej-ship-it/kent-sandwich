@@ -1,104 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kent Sandwich in Astana — authentic hot grilled toast sandwiches, signature garlic sauce, and student-friendly fast-casual dining at Adolf Yanushkevich 1 near ENU.">
+    <meta name="description" content="Kent Sandwich in Astana: hot pressed sandwiches, a focused menu, and a compact neighbourhood dining room.">
     <meta name="author" content="Merey Kuatbay">
-    <title>Kent Sandwich Astana — Yanushkevich 1 | Grilled Sandwiches &amp; Street Food</title>
-</head>
-<body>
-    <!-- Author: Merey Kuatbay | Assignment 1: Introduction to Web Technologies -->
-    <!-- Architectural choice: Used semantic <header> to encapsulate brand identity and site-wide navigation across all pages -->
-    <header>
-        <h1>Kent Sandwich Astana</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Kent</a></li>
-                <li><a href="menu.html">Menu &amp; Prices</a></li>
-                <li><a href="order.html">Pre-Order</a></li>
-                <li><a href="feedback.html">Guest Feedback</a></li>
-                <li><a href="colophon.html">Colophon</a></li>
-            </ul>
-        </nav>
+    <title>Kent Sandwich Astana | Home</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/merey.css">
+    <!-- This internal rule overrides letter-spacing: 0.02em from .cascade-demo in css/merey.css. -->
+    <style>
+      .cascade-demo { letter-spacing: 0.14em; }
+    </style>
+  </head>
+  <body class="page page-home">
+    <!-- Author: Merey Kuatbay -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
+        <span class="brand-mark" aria-hidden="true">
+          <img src="images/kent-logo.jpg" alt="">
+        </span>
+        <span class="brand-name">Kent<br>Sandwich</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li>
+            <a href="index.html" aria-current="page">Home</a>
+          </li>
+          <li>
+            <a href="menu.html">Menu</a>
+          </li>
+          <li>
+            <a href="about.html">Our place</a>
+          </li>
+          <li>
+            <a href="order.html">Order</a>
+          </li>
+          <li>
+            <a href="feedback.html">Feedback</a>
+          </li>
+          <li>
+            <a href="colophon.html">Colophon</a>
+          </li>
+        </ul>
+      </nav>
+      <p class="header-note">Astana · daily 09:30–21:30</p>
     </header>
-
-    <main>
-        <!-- Used <section> to structure the introductory narrative and location context distinctly from community feedback -->
-        <section>
-            <h2>Welcome to Kent Sandwich on Yanushkevich</h2>
-            <p><strong>Kent Sandwich</strong> is a beloved neighborhood sandwich shop situated in the vibrant student district of Astana at <em>Adolf Yanushkevich Street, 1</em>, situated directly opposite the <abbr title="L.N. Gumilyov Eurasian National University">ENU</abbr> campus. Established to fulfill the need for wholesome, freshly prepared hot meals between academic lectures, our grill kitchen transforms simple ingredients into golden, crispy toasted masterpieces served within minutes.</p>
-            
-            <p>Unlike standard fast-food chains that rely on pre-assembled cold sandwiches, every single item at Kent Sandwich is built to order and toasted under double-sided contact press grills heated to precisely 220<sup>&deg;</sup>C. This high-heat grilling locks in rich flavors, melts our signature cheddar cheese into the tender fillings, and gives our sandwich bread its hallmark crunchy texture that students across the capital recognize instantly.</p>
-
-            <figure>
-                <img src="images/kent-sandwich.jpg" alt="Golden grilled chicken and cheese sandwich pressed on cast iron grill at Kent Sandwich" width="480">
-                <figcaption>Freshly pressed signature chicken sandwich with melted cheese at Kent Sandwich Astana.</figcaption>
-            </figure>
-        </section>
-
-        <!-- Selected <article> to encapsulate our signature culinary philosophy as a self-contained, syndicate-ready editorial piece -->
-        <article>
-            <h2>The Secret of Our Toasted Sandwiches</h2>
-            <p>Great street food starts with uncompromised ingredient freshness and disciplined grilling technique inspired by Mediterranean <i>panini</i> traditions. Our kitchen follows three fundamental craftsmanship standards every morning before the opening bell rings:</p>
-
-            <!-- Definition list highlighting our core culinary pillars -->
-            <dl>
-                <dt><b>Artisan Toast Bread</b></dt>
-                <dd>Thick-cut, locally baked bakery loaves designed to withstand high pressure without absorbing excess moisture.</dd>
-                <dt><b>House-Made Herb &amp; Garlic Sauce</b></dt>
-                <dd>Our proprietary cold-emulsion dressing blending aromatic garlic, pickled dill relish, and light cultured yogurt.</dd>
-                <dt><b>100% Halal Meats &amp; Real Dairy</b></dt>
-                <dd>Daily deliveries of farm poultry breast and tender lean beef marinated in mild paprika and black pepper.</dd>
-            </dl>
-
-            <p>We pride ourselves on offering full-sized hot sandwiches starting from just <code>640 &#8376;</code>, making balanced nutrition truly accessible. For smaller snacks during short intervals, our compact <q>Mini Sandwich</q> option delivers the same satisfying crunch for only <!-- <span> used solely for isolated monetary badge styling; no semantic tag like em or strong fits neutral price notation --><span>390 &#8376;</span>.</p>
+    <main class="site-main" id="main-content">
+      <section class="home-hero" aria-labelledby="home-title">
+        <p class="eyebrow">Sandwich shop · Astana</p>
+        <h1 id="home-title">A proper hot sandwich. Nothing extra.</h1>
+        <p class="hero-copy"><em>Hot pressed sandwiches</em> for lunch, takeaway or a quick stop in the city. The short menu keeps ordering simple.</p>
+        <p class="hero-actions">
+          <a class="button button-dark" href="menu.html">See the menu</a>
+          <a class="text-link" href="order.html">Plan an order &rarr;</a>
+        </p>
+        <figure class="hero-figure">
+          <img src="images/kent-hero.jpg" alt="A toasted Kent Sandwich served in branded paper beside takeaway drinks">
+        </figure>
+      </section>
+      <section class="quick-facts" aria-label="Kent Sandwich essentials">
+        <article class="fact-card">
+          <p class="fact-number">8</p>
+          <h2>Sandwiches</h2>
+          <p>A short menu that stays easy to choose from.</p>
         </article>
-
-        <!-- Selected <section> with unique id to enable intra-page jump links from navigation and aside blocks -->
-        <section id="student-reviews">
-            <h2>Student Community &amp; Impressions</h2>
-            <p>Over the years, our small dining hall has become an informal campus crossroads for study groups, debate team debriefs, and fast lunch breaks. Here is what our regular patrons share about their dining experience:</p>
-
-            <!-- Real patron feedback collected directly from visitors at the Yanushkevich branch -->
-            <blockquote cite="https://2gis.kz/astana/firm/70000001091599351">
-                <p>&ldquo;Kent Sandwich on Yanushkevich is literally an essential part of university life here. The chicken sandwich with double cheddar is always served smoking hot with a crunchy crust. It is fast, affordable, and consistently delicious.&rdquo;</p>
-            </blockquote>
-            <p><cite>Daniyar Akhmetov</cite>, 3rd-year <abbr title="Information Systems">IS</abbr> undergraduate at <abbr title="Eurasian National University">ENU</abbr>, September 2026.</p>
-
-            <p>As head griller Nurlan frequently notes, <mark>consistency in toast temperature</mark> and swift customer service make all the difference between an ordinary snack and a memorable neighborhood staple.</p>
-        </section>
-
-        <hr>
-
-        <!-- Positioned branch logistics inside <aside> because operational details and coordinates support the primary narrative -->
-        <aside>
-            <h2>Location &amp; Visiting Details</h2>
-            <p>Find us in the student quarter of the capital:</p>
-            <ul>
-                <li><strong>Street Address:</strong> Adolf Yanushkevich St, Building 1, Astana, 010000</li>
-                <li><strong>Working Hours:</strong> Open daily Monday through Sunday from <time datetime="09:30">09:30</time> to <time datetime="21:30">21:30</time></li>
-                <li><strong>Nearby Landmark:</strong> L.N. Gumilyov Eurasian National University (<abbr title="Eurasian National University">ENU</abbr>) main educational buildings</li>
-                <li><strong>Payment Options:</strong> Kaspi QR, Contactless Debit Cards, and Cash</li>
-            </ul>
-
-            <p>Explore interactive maps and guest ratings: <a href="https://2gis.kz/astana/firm/70000001091599351" target="_blank" rel="noopener noreferrer">Kent Sandwich on 2GIS Astana</a>.</p>
-
-            <!-- <div> used strictly as a neutral grouping container for direct contact action links; no structural element fits this inline cluster -->
-            <div class="contact-links">
-                <p>Direct phone order line: <a href="tel:+77015551234">+7 (701) 555-12-34</a></p>
-                <p>Corporate inquiries &amp; catering: <a href="mailto:contact@kentsandwich.kz">contact@kentsandwich.kz</a></p>
-                <p>Jump to: <a href="#student-reviews">Read verified student testimonials &uarr;</a></p>
-            </div>
-            
-            <p><small>* Note: Student discount applied automatically upon presenting a valid student ID card at the counter.</small></p>
-        </aside>
+        <article class="fact-card">
+          <p class="fact-number">390 ₸</p>
+          <h2>Starting price</h2>
+          <p>Begin with the mini or move up to a full hot sandwich.</p>
+        </article>
+        <article class="fact-card">
+          <p class="fact-number">12 h</p>
+          <h2>Open daily</h2>
+          <p>From 09:30 until 21:30 on Adolfa Yanushkevicha Street.</p>
+        </article>
+      </section>
+      <section class="signature-section" aria-labelledby="signature-title">
+        <!-- This div groups copy beside the figure; no semantic section is needed inside its parent section. -->
+        <div class="signature-copy">
+          <p class="eyebrow cascade-demo">Kent essentials</p>
+          <h2 id="signature-title">Choose your kind of comfort</h2>
+          <p>Choose chicken, classic, cheese, cutlet or a spicy option. Every sandwich comes hot, toasted and ready to take away.</p>
+          <p>Full-size sandwiches cost from 640 to 740 ₸. <!-- This inline background overrides the external mark background declared in css/base.css. -->
+            <mark style="background-color: #f4e70c;">The full price list is on the menu page.</mark>
+          </p>
+        </div>
+        <figure class="signature-figure">
+          <img src="images/kent-packaging.jpg" alt="Three Kent Sandwiches in branded kraft paper sleeves">
+          <figcaption>Recognisable kraft sleeves, photographed at Kent Sandwich.</figcaption>
+        </figure>
+      </section>
+      <section class="visit-strip" id="visit" aria-labelledby="visit-title">
+        <!-- The id is unique because this is the only home-page destination for visit details. -->
+        <!-- This div groups the visit heading within the larger visit section; it has no separate meaning. -->
+        <div>
+          <p class="eyebrow">Find us</p>
+          <h2 id="visit-title">A quick stop in old-centre Astana</h2>
+        </div>
+        <address>Adolfa Yanushkevicha Street, 1<br>Tselinny microdistrict, Astana</address>
+        <p>
+          <strong>Open daily</strong>
+          <br>09:30–21:30</p>
+        <a class="button button-light" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">Open in 2GIS</a>
+      </section>
     </main>
-
-    <footer>
-        <p>Location: Adolf Yanushkevich St, 1, Astana | Direct Line: +7 (701) 555-12-34</p>
-        <p>&copy; 2026 Kent Sandwich Astana. All rights reserved. &trade;</p>
+    <footer class="site-footer">
+      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
+      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p>
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
+      </p>
     </footer>
-</body>
+    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  </body>
 </html>

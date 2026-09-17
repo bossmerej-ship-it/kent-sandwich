@@ -1,189 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore the authentic menu and student-friendly prices at Kent Sandwich Astana: classic grilled sandwiches, chicken melt, beef specials, and refreshing drinks.">
+    <meta name="description" content="Kent Sandwich menu with eight current sandwich choices and prices in Astana.">
     <meta name="author" content="Merey Kuatbay">
-    <title>Menu &amp; Prices — Kent Sandwich Astana | Grilled Toast &amp; Drinks</title>
-</head>
-<body>
-    <!-- Author: Merey Kuatbay | Assignment 1: Introduction to Web Technologies -->
-    <header>
-        <h1>Kent Sandwich Astana — Menu &amp; Specials</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Kent</a></li>
-                <li><a href="menu.html">Menu &amp; Prices</a></li>
-                <li><a href="order.html">Pre-Order</a></li>
-                <li><a href="feedback.html">Guest Feedback</a></li>
-                <li><a href="colophon.html">Colophon</a></li>
-            </ul>
-        </nav>
+    <title>Kent Sandwich Astana | Menu</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/merey.css">
+  </head>
+  <body class="page page-menu">
+    <!-- Author: Merey Kuatbay -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
+        <span class="brand-mark" aria-hidden="true">
+          <img src="images/kent-logo.jpg" alt="">
+        </span>
+        <span class="brand-name">Kent<br>Sandwich</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="menu.html" aria-current="page">Menu</a>
+          </li>
+          <li>
+            <a href="about.html">Our place</a>
+          </li>
+          <li>
+            <a href="order.html">Order</a>
+          </li>
+          <li>
+            <a href="feedback.html">Feedback</a>
+          </li>
+          <li>
+            <a href="colophon.html">Colophon</a>
+          </li>
+        </ul>
+      </nav>
+      <p class="header-note">Astana · daily 09:30–21:30</p>
     </header>
-
-    <main>
-        <!-- Used <section> to enclose the core menu overview and photography before the detailed price tables -->
-        <section>
-            <h2>Fresh Fast-Casual Grille Menu</h2>
-            <p>Every sandwich served at our Adolf Yanushkevich counter is prepared using fresh ingredients, seasoned halal poultry and beef, melted cheddar cheese, and crisp garden vegetables. We toast our sandwiches to order on heavy cast-iron dual contact grills, ensuring an unbeatable crunch that stays hot during your walk across the university campus.</p>
-
-            <figure>
-                <img src="images/kent-grill.jpg" alt="Dual contact press grill station at Kent Sandwich Astana" width="480">
-                <figcaption>Dual-surface contact grill station where each sandwich is pressed to order at 220<sup>&deg;</sup>C.</figcaption>
-            </figure>
-
-            <p>Check our complete offerings below. Guests can customize any sandwich with extra cheese toppings, spicy jalape&ntilde;o peppers, or our house garlic dip.</p>
-        </section>
-
-        <!-- Semantic data table displaying authentic branch menu pricing -->
-        <!-- Chosen semantic <table> to present multidimensional pricing data with rowgroup headers, ensuring high accessibility for screen readers -->
-        <section id="price-table-section">
-            <h2>Authentic Price List (Fall 2026)</h2>
-            <table>
-                <caption>Current beverage, sandwich, and side dish pricing at Kent Sandwich Astana (Yanushkevich 1)</caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Category</th>
-                        <th scope="col">Item Description</th>
-                        <th scope="col">Portion / Weight</th>
-                        <th scope="col">Price (KZT)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="rowgroup" rowspan="5">Grilled Sandwiches</th>
-                        <td>Classic Grilled Sandwich (Ham &amp; Cheddar)</td>
-                        <td>190 g</td>
-                        <td>640 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <td>Chicken Special Sandwich (Spiced Breast &amp; Garlic Sauce)</td>
-                        <td>220 g</td>
-                        <td>640 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <td>Beef &amp; Jalape&ntilde;o Sandwich (Lean Beef &amp; Melted Cheese)</td>
-                        <td>230 g</td>
-                        <td>780 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <td>Kent Signature Club (Triple Toast, Beef, Chicken, Cheddar)</td>
-                        <td>280 g</td>
-                        <td>920 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <td>Student Mini Sandwich (Budget Toast with Cheddar &amp; Butter)</td>
-                        <td>120 g</td>
-                        <td>390 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <th scope="rowgroup" rowspan="3">Sides &amp; Extras</th>
-                        <td>Crispy Golden French Fries</td>
-                        <td>150 g</td>
-                        <td>550 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <td>Extra Melted Cheddar Cheese Topping</td>
-                        <td>40 g</td>
-                        <td>150 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <td>Pickled Sliced Jalape&ntilde;o Peppers</td>
-                        <td>30 g</td>
-                        <td>100 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <th scope="rowgroup" rowspan="3">Hot &amp; Cold Drinks</th>
-                        <td>Tashkent Lemon &amp; Mint Hot Tea</td>
-                        <td>400 ml</td>
-                        <td>350 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <td>Classic Americano Espresso Coffee</td>
-                        <td>250 ml</td>
-                        <td>500 &#8376;</td>
-                    </tr>
-                    <tr>
-                        <td>Chilled House Berry Lemonade</td>
-                        <td>500 ml</td>
-                        <td>450 &#8376;</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th scope="row" colspan="3">Campus Combo Special (Any Sandwich + Hot Tea)</th>
-                        <td><!-- <span> used strictly to highlight the discount badge inline; no phrasing element fits promotional markup --><span>Save 100 &#8376;</span></td>
-                    </tr>
-                </tfoot>
-            </table>
-            <p><small>All beverage preparations utilize purified H<sub>2</sub>O filtered in-house.</small></p>
-        </section>
-
-        <!-- Employed nested lists to logically display layered customization hierarchies for sandwich ingredients and sauce pairings -->
-        <section>
-            <h2>How to Build Your Custom Meal</h2>
-            <p>Follow our straightforward ordering formula for dine-in or express takeout:</p>
-            
-            <!-- Nested list of ingredient options -->
-            <ul>
-                <li><strong>Step 1: Select your main protein &amp; filling</strong>
-                    <ul>
-                        <li>Marinated tender chicken breast</li>
-                        <li>Seasoned slow-cooked minced beef</li>
-                        <li>Smoked turkey ham with double mozzarella</li>
-                    </ul>
-                </li>
-                <li><strong>Step 2: Choose your signature dressing</strong>
-                    <ul>
-                        <li>House Herb &amp; Garlic Cream Sauce</li>
-                        <li>Spicy Smoked Paprika Dressing</li>
-                        <li>Classic Creamy Mayonnaise &amp; Mustard</li>
-                    </ul>
-                </li>
-                <li><strong>Step 3: Add sides and refreshments</strong></li>
-            </ul>
-
-            <!-- Ordered list with attribute detailing preparation steps -->
-            <h3>Kitchen Preparation Protocol</h3>
-            <ol type="1" start="1">
-                <li>Order ticket printed at the kitchen display screen</li>
-                <li>Sandwich layered with chilled ingredients on bakery bread</li>
-                <li>Double contact grill pressed for exactly 4 to 5 minutes until core reaches 75<sup>&deg;</sup>C</li>
-                <li>Sandwich sliced diagonally, wrapped in thermal foil, and delivered hot</li>
-            </ol>
-
-            <p>Diagnostics preview for register staff: <samp>Grill Station #1 Status: ONLINE (220&deg;C)</samp></p>
-            <p>To cancel an active ticket, press <kbd>Esc</kbd> and input supervisor override code <code>KENT-CLEAR-2026</code>.</p>
-
-            <!-- <div> used strictly as a non-semantic layout wrapper for grouping receipt and terminal diagnostic samples; no semantic tag applies to preformatted receipt wrappers -->
-            <div class="sample-receipt-box">
-                <h4>Sample Digital Order Receipt</h4>
-                <pre>
-====================================
-KENT SANDWICH ASTANA — BRANCH #1
-Adolf Yanushkevich St, 1
-Order: #2026-KS-1042
-------------------------------------
-1x Chicken Special Sandwich  640 KZT
-1x Extra Cheddar Topping     150 KZT
-1x Tashkent Tea (400 ml)     350 KZT
-Combo Discount              -100 KZT
-------------------------------------
-TOTAL PAID (Kaspi QR):      1040 KZT
-THANK YOU FOR DINING WITH US!
-====================================
-                </pre>
-            </div>
-
-            <p>Ready to skip the counter queue? Head directly to our <a href="order.html">express pre-order page &rarr;</a></p>
-        </section>
+    <main class="site-main" id="main-content">
+      <header class="page-intro menu-intro">
+        <p class="eyebrow">Menu</p>
+        <h1>Pick your sandwich</h1>
+        <p>Eight hot sandwiches, from the mini to the spicy cutlet. Choose a filling and check the price below.</p>
+        <a class="jump-link" href="#menu-table">Jump to price table ↓</a>
+      </header>
+      <section class="menu-board" aria-labelledby="menu-board-title">
+        <h2 id="menu-board-title" class="visually-hidden">Sandwich menu cards</h2>
+        <article class="menu-card menu-card-featured">
+          <p class="menu-number">01</p>
+          <h3>Mini sandwich</h3>
+          <p class="menu-note">The smallest sandwich on the menu.</p>
+          <p class="menu-price">390 ₸</p>
+          <!-- This span is an inline badge inside the card, not a separate content section. -->
+          <span class="menu-badge">Small</span>
+        </article>
+        <article class="menu-card">
+          <p class="menu-number">02</p>
+          <h3>Chicken</h3>
+          <p class="menu-note">Hot sandwich with chicken.</p>
+          <p class="menu-price">640 ₸</p>
+        </article>
+        <article class="menu-card">
+          <p class="menu-number">03</p>
+          <h3>Classic</h3>
+          <p class="menu-note">The classic Kent Sandwich option.</p>
+          <p class="menu-price">640 ₸</p>
+        </article>
+        <article class="menu-card">
+          <p class="menu-number">04</p>
+          <h3>Cheese</h3>
+          <p class="menu-note">Hot sandwich with cheese.</p>
+          <p class="menu-price">640 ₸</p>
+        </article>
+        <article class="menu-card">
+          <p class="menu-number">05</p>
+          <h3>Cutlet</h3>
+          <p class="menu-note">Hot sandwich with a cutlet.</p>
+          <p class="menu-price">690 ₸</p>
+        </article>
+        <article class="menu-card">
+          <p class="menu-number">06</p>
+          <h3>Spicy cutlet</h3>
+          <p class="menu-note">Cutlet sandwich with a spicy taste.</p>
+          <p class="menu-price">740 ₸</p>
+        </article>
+        <article class="menu-card">
+          <p class="menu-number">07</p>
+          <h3>Hot dog</h3>
+          <p class="menu-note">Kent Sandwich hot dog.</p>
+          <p class="menu-price">640 ₸</p>
+        </article>
+        <article class="menu-card">
+          <p class="menu-number">08</p>
+          <h3>Spicy</h3>
+          <p class="menu-note">A spicy hot sandwich.</p>
+          <p class="menu-price">690 ₸</p>
+        </article>
+      </section>
+      <section class="menu-photo-band" aria-label="Kent Sandwich serving photo">
+        <figure>
+          <img src="images/kent-hero2.jpg" alt="A long toasted chicken sandwich in a Kent paper sleeve">
+          <figcaption>Made to eat in or carry out.</figcaption>
+        </figure>
+        <!-- This div groups the heading and list beside the figure; it has no independent semantic role. -->
+        <div>
+          <p class="eyebrow">How to choose</p>
+          <h2>How to choose</h2>
+          <ol type="1">
+            <li>Choose mini or full size.</li>
+            <li>Pick a filling:
+              <ul>
+                <li>chicken, classic or cheese for a familiar taste;</li>
+                <li>cutlet or spicy cutlet for a more filling option.</li>
+              </ul>
+            </li>
+            <li>Go spicy only when you want the extra kick.</li>
+          </ol>
+        </div>
+      </section>
+      <section class="table-section" id="menu-table" aria-labelledby="price-title">
+        <!-- The id is unique because the page has one canonical price table destination. -->
+        <h2 id="price-title">Price list</h2>
+        <!-- This div has no content meaning; it only lets the wide table scroll when space is limited. -->
+        <div class="table-scroll">
+          <table>
+            <caption>Kent Sandwich menu listed on 2GIS, July 2026<sup>1</sup></caption>
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Sandwich</th>
+                <th scope="col">Profile</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">01</th>
+                <td>Mini sandwich</td>
+                <td>Compact</td>
+                <td>390 ₸</td>
+              </tr>
+              <tr>
+                <th scope="row">02</th>
+                <td>Chicken</td>
+                <td>Classic</td>
+                <td>640 ₸</td>
+              </tr>
+              <tr>
+                <th scope="row">03</th>
+                <td>Classic</td>
+                <td>Classic</td>
+                <td>640 ₸</td>
+              </tr>
+              <tr>
+                <th scope="row">04</th>
+                <td>Cheese</td>
+                <td>Rich</td>
+                <td>640 ₸</td>
+              </tr>
+              <tr>
+                <th scope="row">05</th>
+                <td>Cutlet</td>
+                <td>Filling</td>
+                <td>690 ₸</td>
+              </tr>
+              <tr>
+                <th scope="row">06</th>
+                <td>Spicy cutlet</td>
+                <td>Hot</td>
+                <td>740 ₸</td>
+              </tr>
+              <tr>
+                <th scope="row">07</th>
+                <td>Hot dog</td>
+                <td>Classic</td>
+                <td>640 ₸</td>
+              </tr>
+              <tr>
+                <th scope="row">08</th>
+                <td>Spicy</td>
+                <td>Hot</td>
+                <td>690 ₸</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="source-note"><sup>1</sup> Availability and prices may change. Confirm the current menu with the shop before ordering.</p>
+      </section>
     </main>
-
-    <footer>
-        <p>Location: Adolf Yanushkevich St, 1, Astana | Direct Line: +7 (701) 555-12-34</p>
-        <p>&copy; 2026 Kent Sandwich Astana. All rights reserved. &trade;</p>
+    <footer class="site-footer">
+      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
+      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p>
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
+      </p>
     </footer>
-</body>
+    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  </body>
 </html>
