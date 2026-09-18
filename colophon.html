@@ -1,84 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Colophon document detailing the architecture and development of the Coffee Boom Samal-12 website.">
-  <meta name="author" content="Timur Naumov">
-  <title>Colophon — Coffee Boom Samal-12 Website Development</title>
-</head>
-<body>
-  <!-- Page author: Timur Naumov -->
-
-  <header>
-    <h1>Coffee Boom — Samal-12</h1>
-    <p>Official website for the coffee shop branch in Samal-12 microdistrict</p>
-  </header>
-
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Samal Branch</a></li>
-      <li><a href="menu.html">Our Menu</a></li>
-      <li><a href="order.html">Pre-Order</a></li>
-      <li><a href="feedback.html">Guest Feedback</a></li>
-      <li><a href="colophon.html">Colophon</a></li>
-    </ul>
-  </nav>
-
-  <main>
-    <section>
-      <h2>Website Architecture and Construction</h2>
-
-      <!-- Semantic rationale: The article element is chosen here because this technical overview forms an independent composition with standalone value. -->
-      <article>
-        <h3>Technical Standards</h3>
-        <p>
-          This website was created as part of an academic web technologies course for <strong>Coffee Boom</strong> in Samal-12, Astana. Our core objective is establishing a rigorous semantic skeleton without external stylesheets or client-side scripts. We avoided site builders to guarantee maximum accessibility and search engine readability.
-        </p>
-        <p>
-          Content is structured using <abbr title="HyperText Markup Language 5">HTML5</abbr> landmark elements. We maintain strict heading levels, eliminate presentation wrappers, and supply metadata validated against <abbr title="World Wide Web Consortium">W3C</abbr> standards.
-        </p>
-      </article>
-
-      <article>
-        <h3>Tooling and Syntax Verification</h3>
-        <p>
-          All pages were authored in Visual Studio Code and tracked using Git. Files are saved via <kbd>Ctrl</kbd> + <kbd>S</kbd> (or <kbd>Cmd</kbd> + <kbd>S</kbd> on macOS).
-        </p>
-
-        <!-- Semantic rationale: The pre and code combination preserves literal indentation and whitespace, essential for displaying code syntax. -->
-        <p>Core semantic document structure used across our branch website:</p>
-        <pre><code>&lt;header&gt;
-  &lt;h1&gt;Coffee Boom Samal-12&lt;/h1&gt;
-&lt;/header&gt;
-&lt;main&gt;
-  &lt;section&gt;Branch Content&lt;/section&gt;
-&lt;/main&gt;</code></pre>
-
-        <!-- Semantic rationale: The samp tag represents verbatim terminal output from our validator tool, distinguishing compiler output from user input. -->
-        <p>Running the W3C automated syntax validator produces this benchmark:</p>
-        <p><samp>Document checking completed. No errors or warnings to show.</samp></p>
-
-        <!-- Semantic rationale: The span element is applied solely to label an arbitrary build version where no semantic phrasing tag like strong or mark is applicable. -->
-        <p>Build status: <span>v1.0-alpha (unformatted build)</span></p>
-      </article>
-    </section>
-
-    <hr>
-
-    <aside>
-      <h2>Typography Advisory</h2>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Project structure, design choices, sources and image credits for the Kent Sandwich website.">
+    <meta name="author" content="Timur Naumov">
+    <title>Kent Sandwich Astana | Colophon</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/timur.css">
+  </head>
+  <body class="page page-colophon">
+    <!-- Author: Timur Naumov -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
+        <span class="brand-mark" aria-hidden="true">
+          <img src="images/kent-logo.jpg" alt="">
+        </span>
+        <span class="brand-name">Kent<br>Sandwich</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="menu.html">Menu</a>
+          </li>
+          <li>
+            <a href="about.html">Our place</a>
+          </li>
+          <li>
+            <a href="order.html">Order</a>
+          </li>
+          <li>
+            <a href="feedback.html">Feedback</a>
+          </li>
+          <li>
+            <a href="colophon.html" aria-current="page">Colophon</a>
+          </li>
+        </ul>
+      </nav>
+      <p class="header-note">Astana · daily 09:30–21:30</p>
+    </header>
+    <main class="site-main" id="main-content">
+      <header class="page-intro colophon-intro">
+        <p class="eyebrow">Project details</p>
+        <h1>About this website</h1>
+        <p>We built this six-page website with HTML and CSS. This page lists the files, sources and main design choices.</p>
+      </header>
+      <section class="audit-grid" aria-labelledby="build-title">
+        <header>
+          <p class="eyebrow">Project structure</p>
+          <h2 id="build-title">What the website uses</h2>
+        </header>
+        <article>
+          <p class="audit-number">06</p>
+          <h3>HTML pages</h3>
+          <p>Home, menu, place, order, feedback and colophon.</p>
+        </article>
+        <article>
+          <p class="audit-number">03</p>
+          <h3>Stylesheets</h3>
+          <p>One shared base plus one personal file for each student.</p>
+        </article>
+        <article>
+          <p class="audit-number">00</p>
+          <h3>Scripts</h3>
+          <p>No JavaScript, framework or site builder is included at this stage.</p>
+        </article>
+        <article>
+          <p class="audit-number">01</p>
+          <h3>Local branch</h3>
+          <p>Every page describes the same Kent Sandwich location in Astana.</p>
+        </article>
+      </section>
+      <section class="principles" aria-labelledby="principles-title">
+        <!-- This div groups the heading beside the ordered list; it has no independent semantic role. -->
+        <div>
+          <p class="eyebrow">Design choices</p>
+          <h2 id="principles-title">Why the site looks this way</h2>
+        </div>
+        <ol start="1">
+          <li>
+            <strong>Colours.</strong> Black, warm white and yellow match the shop’s packaging and interior.</li>
+          <li>
+            <strong>Structure.</strong> Headings, lists, tables, figures and fieldsets keep the content organised.</li>
+          <li>
+            <strong>Layout.</strong> The pages are made for a normal desktop window. Responsive styles can be added later.</li>
+          <li>
+            <strong>Forms.</strong> The order and feedback forms are ready for JavaScript, but they do not send data yet.</li>
+        </ol>
+      </section>
+      <section class="source-section" id="sources" aria-labelledby="sources-title">
+        <!-- The id is unique because this is the only source and licensing destination. -->
+        <!-- This div groups the source heading above three articles; it is not a separate content section. -->
+        <div>
+          <p class="eyebrow">Sources</p>
+          <h2 id="sources-title">Content &amp; image credits</h2>
+        </div>
+        <article>
+          <h3>Business information</h3>
+          <p>Name, category, address, opening hours and menu prices were checked against the <a href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">Kent Sandwich listing on 2GIS</a>. The official social link is <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">@kentsandwich.kz</a>.</p>
+        </article>
+        <article>
+          <h3>Photography</h3>
+          <p>The Kent Sandwich photographs used on these pages were sourced from the business gallery on 2GIS. Ownership remains with the photographers and rights holders.</p>
+        </article>
+        <article>
+          <h3>Technical constraints</h3>
+          <p>The site uses local <abbr title="HyperText Markup Language"><b>HTML</b></abbr> and <abbr title="Cascading Style Sheets">CSS</abbr> only. There are no external libraries, templates, analytics or scripts.</p>
+        </article>
+      </section>
+      <hr>
+      <aside class="file-guide">
+        <h2>File guide</h2>
+        <p>The shared styles are in <code>base.css</code>. Each student also has a separate stylesheet for their pages. Press <kbd>Tab</kbd> to check the links and form controls with a keyboard. A browser may show <samp>Please fill out this field.</samp> when a required input is empty.</p>
+        <pre>
+          <code>base.css → shared visual system
+            merey.css → home, menu, order
+            timur.css → about, feedback, colophon</code>
+        </pre>
+      </aside>
+      <p>Questions about this student project can be sent to <a href="mailto:timurabishev13@gmail.com">Timur by email</a>.</p>
+    </main>
+    <footer class="site-footer">
+      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
+      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
       <p>
-        No <abbr title="Cascading Style Sheets">CSS</abbr> stylesheets are attached.<br>
-        All margins and typography are rendered by browser defaults.
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="#sources">Sources &amp; credits</a>
       </p>
-    </aside>
-  </main>
-
-  <footer>
-    <p>Coffee Boom, Astana, Samal-12 (Astana Tower) &bull; Tel: <a href="tel:+77073130202">+7 (707) 313-02-02</a></p>
-    <p>&copy; 2026 Coffee Boom Samal-12. All rights reserved. Author: Timur Naumov.</p>
-  </footer>
-</body>
+    </footer>
+    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  </body>
 </html>
