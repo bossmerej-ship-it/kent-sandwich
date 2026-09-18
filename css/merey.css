@@ -1,0 +1,327 @@
+/* Merey Kuatbay — home, menu and order */
+
+.home-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto auto 1fr auto;
+  gap: 1.5rem;
+  min-height: 44rem;
+  padding: 5rem 0;
+  border-bottom: 2px solid var(--ink);
+}
+
+.home-hero .eyebrow {
+  grid-column: 1 / 6;
+}
+
+.home-hero h1 {
+  z-index: 2;
+  grid-column: 1 / 8;
+  grid-row: 2;
+}
+
+.hero-copy {
+  z-index: 2;
+  grid-column: 1 / 5;
+  grid-row: 3;
+  align-self: start;
+  max-width: 35ch;
+  font-size: 1.15rem;
+}
+
+.hero-actions {
+  z-index: 2;
+  display: flex;
+  grid-column: 1 / 6;
+  grid-row: 4;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin: 0;
+}
+
+.hero-figure {
+  position: relative;
+  grid-column: 7 / 13;
+  grid-row: 1 / 5;
+  min-height: 36rem;
+  overflow: hidden;
+  background: var(--taupe);
+}
+
+.hero-figure img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.quick-facts {
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 2px solid var(--ink);
+}
+
+.fact-card {
+  flex: 1 1 15rem;
+  padding: 2.3rem;
+  border-right: 1px solid var(--ink);
+}
+
+.fact-card:last-child {
+  border-right: 0;
+}
+
+.fact-card h2 {
+  font-size: 1.25rem;
+}
+
+.fact-number,
+.menu-price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+.signature-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4rem;
+  align-items: center;
+  padding: 6rem 0;
+}
+
+.signature-copy {
+  max-width: 34rem;
+}
+
+.signature-figure {
+  position: relative;
+  height: 36rem;
+}
+
+.signature-figure img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.signature-figure figcaption {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  max-width: 18rem;
+  padding: 0.75rem;
+  background: var(--cream);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.cascade-demo {
+  letter-spacing: 0.02em;
+}
+
+.visit-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem;
+  background: var(--ink);
+  color: var(--white);
+}
+
+.visit-strip > * {
+  flex: 1 1 12rem;
+}
+
+.visit-strip h2,
+.visit-strip .eyebrow {
+  color: var(--white);
+}
+
+/* Grid fits the menu better than Flexbox because cards must align in both rows and columns. */
+.menu-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 4rem;
+  border-top: 2px solid var(--ink);
+  border-left: 2px solid var(--ink);
+}
+
+.menu-card {
+  position: relative;
+  min-height: 16rem;
+  padding: 1.6rem;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  background: var(--white);
+}
+
+.menu-card-featured {
+  grid-column: span 2;
+  background: var(--yellow);
+}
+
+.menu-card h3 {
+  max-width: 8ch;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+}
+
+.menu-number {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.menu-note {
+  max-width: 20ch;
+}
+
+.menu-price {
+  position: absolute;
+  left: 1.6rem;
+  bottom: 0.8rem;
+  margin: 0;
+}
+
+/* Absolute + transform centering keeps the badge inside the lower part of the card. */
+.menu-badge {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  padding: 0.35rem 0.7rem;
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.menu-photo-band {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4rem;
+  align-items: center;
+  padding: 6rem 0;
+  border-bottom: 2px solid var(--ink);
+}
+
+.menu-photo-band figure {
+  position: relative;
+  height: 34rem;
+}
+
+.menu-photo-band img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center 70%;
+}
+
+.menu-photo-band figcaption {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.7rem;
+  background: var(--yellow);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.menu-photo-band li + li {
+  margin-top: 1rem;
+}
+
+.order-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+  gap: 3rem;
+  padding: 4rem 0;
+}
+
+.order-form {
+  padding: 2.5rem;
+  border: 2px solid var(--ink);
+}
+
+.choice-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.choice-card {
+  flex: 1 1 12rem;
+}
+
+.choice-card input {
+  position: absolute;
+  opacity: 0;
+}
+
+.choice-card span {
+  display: flex;
+  min-height: 4.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--ink);
+}
+
+.choice-card input:checked + span {
+  background: var(--yellow);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.choice-card input:focus + span {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.order-summary {
+  position: relative;
+  align-self: start;
+  padding: 2rem;
+  border: 2px solid var(--ink);
+  background: var(--yellow);
+}
+
+.order-summary h2 {
+  font-size: 2rem;
+  overflow-wrap: anywhere;
+}
+
+.order-summary dt {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.order-summary dd {
+  margin: 0 0 1rem;
+}
+
+.order-summary img {
+  height: 20rem;
+  margin: 1.5rem 0;
+  object-fit: cover;
+}

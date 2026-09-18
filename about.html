@@ -1,144 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Information about Coffee Boom coffeehouse located at Samal 12 in Astana Tower, Astana.">
-  <meta name="author" content="Timur Naumov">
-  <title>About Samal Branch — Coffee Boom Astana</title>
-</head>
-<body>
-  <!-- Page author: Timur Naumov -->
-
-  <header>
-    <h1>Coffee Boom Astana — Samal Branch</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Samal Branch</a></li>
-        <li><a href="menu.html">Our Menu</a></li>
-        <li><a href="order.html">Pre-Order</a></li>
-        <li><a href="feedback.html">Guest Feedback</a></li>
-        <li><a href="colophon.html">Colophon</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <p>Jump to: <a href="#branch-zones">Zones</a> &bull; <a href="#branch-capacity">Capacity</a></p>
-
-    <!-- Semantic rationale: The section wraps the branch introduction, physical location, and exterior photography. -->
-    <section>
-      <h2>Location &amp; Atmosphere</h2>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About the Kent Sandwich shop, interior, service format, location and opening hours in Astana.">
+    <meta name="author" content="Timur Naumov">
+    <title>Kent Sandwich Astana | Our Place</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/timur.css">
+  </head>
+  <body class="page page-about">
+    <!-- Author: Timur Naumov -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
+        <span class="brand-mark" aria-hidden="true">
+          <img src="images/kent-logo.jpg" alt="">
+        </span>
+        <span class="brand-name">Kent<br>Sandwich</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="menu.html">Menu</a>
+          </li>
+          <li>
+            <a href="about.html" aria-current="page">Our place</a>
+          </li>
+          <li>
+            <a href="order.html">Order</a>
+          </li>
+          <li>
+            <a href="feedback.html">Feedback</a>
+          </li>
+          <li>
+            <a href="colophon.html">Colophon</a>
+          </li>
+        </ul>
+      </nav>
+      <p class="header-note">Astana · daily 09:30–21:30</p>
+    </header>
+    <main class="site-main" id="main-content">
+      <header class="page-intro about-intro">
+        <p class="eyebrow">Our place</p>
+        <h1>Hot sandwiches in the centre of Astana</h1>
+        <p><img class="about-intro-photo" src="images/kent-interior.jpg" alt="Interior of Kent Sandwich with mustard seating and wooden tables">Kent Sandwich is a small sandwich shop in the Tselinny microdistrict. You can eat inside or take your order with you.</p>
+        <nav class="page-jumps" aria-label="On this page">
+          <a href="#story">Story</a>
+          <a href="#space">Space</a>
+          <a href="#details">Details</a>
+        </nav>
+      </header>
+      <article class="about-story" id="story">
+        <!-- The id is unique because this is the only long-form brand story on the page. -->
+        <p class="eyebrow">The format</p>
+        <h2>Simple enough to remember</h2>
+        <p class="story-copy">
+          <img class="story-photo" src="images/kent-packaging.jpg" alt="Kent Sandwiches presented in branded paper sleeves">Kent Sandwich serves toasted sandwiches in kraft paper sleeves. The packaging is simple, easy to carry and matches the shop’s black and yellow style.</p>
+        <h3>What defines the experience</h3>
+        <ul class="value-list">
+          <li>
+            <strong>Focused menu</strong>
+            <!-- Each span keeps a short inline description beside its bold label; it is not a section. -->
+            <span>Eight sandwich choices.</span>
+          </li>
+          <li>
+            <strong>Fast format</strong>
+            <!-- This span is an inline description paired with the label above. -->
+            <span>Eat inside or take the order with you.</span>
+          </li>
+          <li>
+            <strong>Warm interior</strong>
+            <!-- This span is an inline description paired with the label above. -->
+            <span>Mustard seating, wood surfaces and soft vertical lighting.</span>
+          </li>
+        </ul>
+      </article>
+      <section class="space-gallery" id="space" aria-labelledby="space-title">
+        <!-- The id is unique because it anchors the only interior gallery. -->
+        <!-- This div groups the gallery heading; it does not form a separate section from the gallery. -->
+        <div class="gallery-heading">
+          <p class="eyebrow">Inside Kent</p>
+          <h2 id="space-title">Compact, warm and graphic</h2>
+        </div>
+        <figure class="gallery-main">
+          <img src="images/kent-interior.jpg" alt="Mustard upholstered bench and round wood tables inside Kent Sandwich">
+          <figcaption>Mustard banquettes create the room’s strongest colour accent.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/kent-seating.jpg" alt="Wood chairs and small round tables inside Kent Sandwich">
+          <figcaption>Small tables keep the layout suited to quick visits.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/kent-gallery.jpg" alt="Framed photographs above tables inside Kent Sandwich">
+          <figcaption>A wall of photographs gives the compact room personality.</figcaption>
+        </figure>
+      </section>
+      <section class="details-grid" id="details" aria-labelledby="details-title">
+        <!-- The id is unique because this is the canonical branch-information block. -->
+        <header>
+          <p class="eyebrow">Visit details</p>
+          <h2 id="details-title">Know before you go</h2>
+        </header>
+        <article>
+          <h3>Address</h3>
+          <p>Adolfa Yanushkevicha Street, 1<br>Tselinny microdistrict<br>Baikonyr district, Astana</p>
+        </article>
+        <article>
+          <h3>Hours</h3>
+          <p>Daily<br>
+            <time datetime="09:30">09:30</time>–<time datetime="21:30">21:30</time>
+          </p>
+        </article>
+        <article>
+          <h3>Links</h3>
+          <p>
+            <a href="tel:+77083461899">+7 708 346 18 99</a>
+            <br>
+            <a href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS listing</a>
+            <br>
+            <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram profile</a>
+          </p>
+        </article>
+        <aside>
+          <h3>Good to know</h3>
+          <p>The shop has seating inside, a takeaway option and a short menu of hot sandwiches. In Kazakh, a satisfied guest might simply say <i lang="kk">дәмді</i>: tasty.</p>
+        </aside>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
+      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
       <p>
-        Our coffee bar, located on the first floor of the Astana Tower <abbr title="Business Center">BC</abbr> in the bustling Samal 12 neighborhood, offers a cozy space for studying, business meetings, and family brunch. The cafe accommodates guests with 12 seats inside and 12 on the terrace. Guests can enjoy fast, free <i><abbr title="Wireless Fidelity">Wi-Fi</abbr></i> and tables for working on laptops, as well as a seasonal summer terrace.
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
       </p>
-
-      <figure>
-        <img src="images/coffee-shop.jpg" alt="Front entrance and exterior illuminated signboard of Coffee Boom at Samal 12" width="400">
-        <figcaption>Main entrance at Samal 12.</figcaption>
-      </figure>
-    </section>
-
-    <!-- Semantic rationale: The article forms an independent guide describing hall areas, daily service workflow, and zone definitions. -->
-    <article id="branch-zones">
-      <h2>Branch Spaces and Standards</h2>
-
-      <!-- Nested list -->
-      <ul>
-        <li>
-          <strong>Indoor Hall:</strong>
-          <ul>
-            <li>Laptop desks with sockets</li>
-          </ul>
-        </li>
-        <li>
-          <strong>Summer Terrace:</strong>
-          <ul>
-            <li>Open-air tables</li>
-          </ul>
-        </li>
-      </ul>
-
-      <!-- Ordered list with attribute -->
-      <h3>Service Steps</h3>
-      <ol type="1" start="1">
-        <li>Order taken at counter.</li>
-        <li>Beverage prepared at 65<sup>&deg;</sup>C.</li>
-      </ol>
-
-      <!-- Definition list -->
-      <h3>Branch Zones</h3>
-      <dl>
-        <dt><b>Indoor Hall</b></dt>
-        <dd>12 seats for guests.</dd>
-        <dt><b>Summer Veranda</b></dt>
-        <dd>12 outdoor seats.</dd>
-      </dl>
-
-      <figure>
-        <img src="images/hall.jpeg" alt="Interior dining hall with guest seating tables and modern decor at Samal 12" width="400">
-        <figcaption>Guest hall at Samal 12.</figcaption>
-      </figure>
-    </article>
-
-    <section id="branch-capacity">
-      <h2>Hall Zones &amp; Capacity</h2>
-
-      <!-- Real data table with caption, thead, tbody, th scope -->
-      <table>
-        <caption>Seating Capacity and Features at Samal 12</caption>
-        <thead>
-          <tr>
-            <th scope="col">Zone</th>
-            <th scope="col">Seats</th>
-            <th scope="col">Power Sockets</th>
-            <th scope="col">Features</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Indoor Hall</th>
-            <td>12</td>
-            <td>Available</td>
-            <td>Laptop tables, Wi-Fi</td>
-          </tr>
-          <tr>
-            <th scope="row">Summer Terrace</th>
-            <td>12</td>
-            <td>None</td>
-            <td>Scenic view, pleasant atmosphere</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <figure>
-        <img src="images/cozy.jpg" alt="Comfortable sofa seating area and inspirational wall inscription inside the coffeehouse" width="400">
-      </figure>
-    </section>
-
-    <aside>
-      <h2>Senior Barista Note</h2>
-      <!-- Real quote from Senior Barista Miras Baitileu -->
-      <blockquote cite="https://coffeeboom.kz">
-        <p>&ldquo;At Samal 12, we serve office workers and neighborhood guests. With twelve seats inside and twelve on the terrace, our space stays cozy.&rdquo;</p>
-      </blockquote>
-      <p>&mdash; <cite>Miras Baitileu</cite>, Senior Barista at Samal 12, September 2026.</p>
-      <p>Miras values <em><q><mark>hospitable service</mark></q></em>.</p>
-
-      <!-- Semantic rationale: The div acts strictly as a non-semantic container for external location links where no sectioning tag is suitable. -->
-      <div>
-        <p><small>Map:</small> <a href="https://go.2gis.com/3NTY2" target="_blank" rel="noopener noreferrer">2GIS</a></p>
-        <p>Email: <a href="mailto:samal@coffeeboom.kz">samal@coffeeboom.kz</a></p>
-      </div>
-    </aside>
-  </main>
-
-  <hr>
-
-  <footer>
-    <p>Coffee Boom, Samal 12, Astana &bull; Tel: <a href="tel:+77073130202">+7 (707) 313-02-02</a><br>
-    &copy; 2026 Coffee Boom Samal Branch. All rights reserved. Author: Timur Naumov.</p>
-  </footer>
-</body>
+    </footer>
+    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  </body>
 </html>

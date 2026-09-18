@@ -1,54 +1,47 @@
-# Kent Sandwich Astana (Yanushkevich 1) — Web Technologies Assignment
+# Kent Sandwich Astana — Web Development Coursework
 
-A multi-page, pure semantic HTML5 website developed as a coursework assignment for **Introduction to Web Technologies (Assignment 1)**. The website serves as the missing web portal for **Kent Sandwich**, an authentic local sandwich and street food shop located at **Adolf Yanushkevich Street, 1, Astana** (directly across from the L.N. Gumilyov Eurasian National University campus).
+A six-page, semantic HTML5 and CSS website for **Kent Sandwich**, located at Adolfa Yanushkevicha Street 1 in Astana. The project continues the same repository and page structure from Assignment 1, then applies the selector, cascade, layout and positioning requirements from Assignment 2.
 
-> **Note on Theme Transition:** The project was transitioned from Coffee Boom to Kent Sandwich to strictly comply with course guidelines requiring an independent, physically existing local establishment without an existing official website.
+## Authors and page ownership
 
----
+- **Merey Kuatbay:** `index.html`, `menu.html`, `order.html`, `css/merey.css`
+- **Timur Naumov:** `about.html`, `feedback.html`, `colophon.html`, `css/timur.css`
+- **Shared:** `css/base.css`
 
-## 👥 Project Authors & Division of Work
+## Pages
 
-This project is built collaboratively by a two-student team:
+| File | Purpose |
+| --- | --- |
+| `index.html` | Brand introduction, key facts and visit information |
+| `menu.html` | Eight-item menu, prices, cards and semantic price table |
+| `about.html` | Service format, floated story image, interior gallery and branch details |
+| `order.html` | Sandwich selection and pickup details form |
+| `feedback.html` | Visit feedback form with rating controls |
+| `colophon.html` | Technical decisions, sources and image credits |
 
-* **Merey Kuatbay**
-  * `index.html` — Homepage: street-food heritage, grilling philosophy at 220°C, definition list, authentic 2GIS review, location aside, and contacts.
-  * `menu.html` — Authentic price list: complete semantic data table with `th[scope]`, row groups, customization hierarchy, receipt sample (`pre`, `code`, `kbd`, `samp`), and campus combo discounts.
-  * `order.html` — Online pre-order workflow: accessible semantic form with multiple fieldsets, `text`, `tel`, `email`, `number`, `date`, `time`, radio buttons, checkboxes, `<select>` with `<optgroup>`, `textarea`, required constraints, submit & reset controls, and WCAG label bindings.
+## CSS structure
 
-* **Timur Naumov**
-  * `about.html` — In-depth profile of the establishment branch, seating capacity, and hall specifications.
-  * `feedback.html` — Guest experience review page with full feedback questionnaire form.
-  * `colophon.html` — Technical report, validator outcomes, accessibility self-audit, and asset licensing.
+Every page loads `base.css` first and its author stylesheet second. `base.css` owns the five-colour palette, typography, header, Flexbox navigation, shared form/table treatments, footer and fixed 2GIS source tab. The personal stylesheets own page-specific Grid, Flexbox, positioning and float demonstrations.
 
----
+The project contains exactly one internal `<style>` block and one inline `style` attribute, both in `index.html`, solely to demonstrate cascade priority. There is no `!important`, JavaScript, framework, library, template or media query.
 
-## 🛠 Project Structure & File Hierarchy
+## Data and photography
+
+Address, opening hours and menu prices were checked against the [Kent Sandwich 2GIS listing](https://2gis.kz/astana/firm/70000001114376342). The six gallery photographs were acquired from that listing for educational coursework. The local `images/kent-logo.jpg` file comes from the supplied [@kentsandwich.kz](https://www.instagram.com/kentsandwich.kz/) profile image.
+
+The order and feedback forms use native browser validation. Short notes beside the buttons explain that the forms do not transmit real orders or feedback yet.
+
+## Coursework evidence
+
+- `checklist.md` maps Assignment 1 semantic HTML requirements.
+- `CSS_CHECKLIST.md` maps Assignment 2 selectors, cascade, Flexbox, Grid, positioning, float and centring to exact line numbers.
+- `REPORT.md` remains the existing written coursework report and should be revised by the students before submission.
+- `AI_USAGE_TIMUR.md` records the actual AI assistance used during the redesign.
+
+Run locally from the project directory with a simple static server, for example:
 
 ```text
-Coffee-Boom/
-├── images/
-│   ├── kent-sandwich.jpg      # Fresh pressed signature sandwich
-│   ├── kent-grill.jpg         # Dual contact press grill station
-│   ├── kent-counter.jpg       # Express takeaway pickup counter
-│   ├── coffee-shop.jpg        # Legacy branch asset
-│   ├── barista-counter.jpg    # Legacy branch asset
-│   └── interior.jpg           # Legacy branch asset
-├── index.html                 # Main landing page (Kent Sandwich)
-├── about.html                 # Branch details and seating table
-├── menu.html                  # Product catalog and authentic pricing (Kent Sandwich)
-├── order.html                 # Pre-order form (Kent Sandwich)
-├── feedback.html              # Customer feedback and rating form
-├── colophon.html              # Technical audit and project colophon
-├── checklist.md               # Comprehensive HTML tag checklist with line numbers
-├── AI_USAGE_MEREY.md          # Transparent AI assistance log for Merey Kuatbay
-├── AI_USAGE_TIMUR.md          # AI assistance log for Timur Naumov
-└── README.md                  # Project overview and Git documentation
+python3 -m http.server 8765
 ```
 
----
-
-## ✅ Course Standard Compliance Highlights
-- **100% Valid HTML5**: Zero presentation attributes, zero `<style>`, zero inline `style=""`, zero JavaScript.
-- **Strict Semantic Skeleton**: Exactly one `<h1>` per page, hierarchically nested `<h2>` / `<h3>`, semantic `header`, `nav`, `main`, and `footer`.
-- **Full Form Input Coverage**: `text`, `email`, `tel`, `number`, `date`, `time`, radio group, checkboxes, `select`, `textarea`, `required`, `placeholder`, `submit`, and `reset`.
-- **Accessible Tables**: `caption`, `thead`, `tbody`, `tfoot`, `<th scope="col">`, `<th scope="row">`, and `<th scope="rowgroup">`.
+Then open `http://127.0.0.1:8765/index.html`.

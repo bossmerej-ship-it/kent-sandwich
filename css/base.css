@@ -1,0 +1,542 @@
+/*
+  KENT SANDWICH PALETTE — five colours only
+  #F4E70C — electric yellow recalls the shop sign and mustard seating.
+  #141414 — near-black gives the packaging-inspired graphic contrast.
+  #F7F3E9 — warm cream keeps large reading areas softer than pure white.
+  #D8D2C4 — taupe separates quiet surfaces without adding a new hue.
+  white — named colour is reserved for high-contrast text and form fields.
+*/
+
+:root {
+  --yellow: #f4e70c;
+  --ink: #141414;
+  --cream: #f7f3e9;
+  --taupe: #d8d2c4;
+  --white: white;
+  --font-display: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --font-body: Georgia, "Times New Roman", Times, serif;
+  --font-ui: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Universal selector: predictable box-model maths for every element. */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+}
+
+img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+figure,
+blockquote {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+h1 {
+  max-width: 12ch;
+  margin-bottom: 2rem;
+  font-size: 4.7rem;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin-bottom: 1.25rem;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+h3 {
+  margin-bottom: 0.65rem;
+  font-size: 1.35rem;
+  letter-spacing: -0.025em;
+}
+
+/* Adjacent-sibling selector: only consecutive paragraphs receive rhythm. */
+p + p {
+  margin-top: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.22em;
+}
+
+a:hover {
+  text-decoration-thickness: 0.2em;
+}
+
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid var(--yellow);
+  outline-offset: 4px;
+}
+
+/* Attribute selector: identifies external links without adding a class. */
+a[href^="https://"] {
+  text-decoration-style: dotted;
+}
+
+mark {
+  padding: 0.08em 0.22em;
+  background: var(--taupe);
+  color: var(--ink);
+}
+
+address {
+  font-style: normal;
+}
+
+abbr[title] {
+  text-decoration-style: dotted;
+  cursor: help;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.skip-link {
+  position: absolute;
+  z-index: 20;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-weight: 800;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 1fr) 13rem;
+  align-items: center;
+  gap: 2rem;
+  min-height: 7.5rem;
+  padding: 1.25rem 3.5rem;
+  border-bottom: 2px solid var(--ink);
+  background: var(--cream);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+  line-height: 0.88;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* Flex centering keeps the round logo aligned in the header. */
+.brand-mark {
+  display: flex;
+  width: 3.2rem;
+  height: 3.2rem;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 3.2rem;
+  border: 2px solid var(--ink);
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--cream);
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-name {
+  font-size: 1rem;
+  letter-spacing: -0.055em;
+}
+
+.site-nav > ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav a {
+  display: block;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid transparent;
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.site-nav a:hover {
+  border-color: var(--ink);
+}
+
+/* aria-current is unique to the active page and wins over the regular nav rule. */
+.site-nav a[aria-current="page"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--white);
+}
+
+.header-note {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.09em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+/* Static positioning is correct here: main content remains in normal flow. */
+.site-main {
+  position: static;
+  width: min(100% - 7rem, 1240px);
+  /* Margin auto centering: the whole page column is centred in the viewport. */
+  margin: 0 auto;
+}
+
+#main-content {
+  scroll-margin-top: 1rem;
+}
+
+.page-intro {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+  padding: 6rem 0 5rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.page-intro .eyebrow {
+  grid-column: 1 / 4;
+}
+
+.page-intro h1 {
+  grid-column: 1 / 9;
+}
+
+.page-intro > p:not(.eyebrow) {
+  grid-column: 9 / 13;
+  align-self: end;
+  margin-bottom: 1.5rem;
+  font-size: 1.08rem;
+}
+
+.eyebrow {
+  margin-bottom: 1rem;
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* Pseudo-element: a short rule consistently introduces every eyebrow. */
+.eyebrow::before {
+  display: inline-block;
+  width: 1.6rem;
+  height: 0.6rem;
+  margin-right: 0.55rem;
+  border-top: 2px solid currentColor;
+  content: "";
+}
+
+.button {
+  display: inline-block;
+  padding: 0.85rem 1.2rem;
+  border: 2px solid var(--ink);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.075em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.button-dark {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.button-dark:hover,
+.button-dark:focus {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.button-light {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.button-light:hover,
+.button-light:focus {
+  background: var(--white);
+}
+
+.text-link,
+.jump-link {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.jump-link {
+  grid-column: 9 / 13;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.table-section {
+  padding: 5rem 0;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  border: 2px solid var(--ink);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+}
+
+caption {
+  padding: 0.8rem 1rem;
+  border-bottom: 2px solid var(--ink);
+  background: var(--yellow);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+th,
+td {
+  padding: 1rem 1.15rem;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  text-align: left;
+}
+
+thead th {
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* nth-child selector: alternating rows make the data table easier to scan. */
+tbody tr:nth-child(even) {
+  background: var(--cream);
+}
+
+.source-note,
+.required-note {
+  margin-top: 0.8rem;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+form {
+  background: var(--white);
+}
+
+fieldset {
+  margin: 0 0 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--ink);
+}
+
+legend {
+  padding: 0 0.6rem;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+label {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.8rem;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--white);
+  color: var(--ink);
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto;
+  accent-color: var(--ink);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.full-field {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.check-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin: 1.25rem 0;
+  line-height: 1.45;
+}
+
+.check-line input {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
+.form-note {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border-left: 4px solid var(--yellow);
+  background: var(--taupe);
+  font-size: 0.9rem;
+}
+
+.site-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 4rem;
+  padding: 2.5rem 3.5rem;
+  border-top: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer p:first-child {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.source-tab {
+  position: fixed;
+  z-index: 10;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.6rem 0.8rem;
+  border: 2px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* Margin-collapse note: section padding keeps the first child margin inside each band. */
+section {
+  padding-top: 0.01rem;
+}

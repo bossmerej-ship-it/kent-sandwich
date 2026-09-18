@@ -1,120 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Guest feedback and service evaluation form for Coffee Boom Samal 12 branch in Astana.">
-  <meta name="author" content="Timur Naumov">
-  <title>Guest Feedback — Coffee Boom Astana</title>
-</head>
-<body>
-  <!-- Page author: Timur Naumov -->
-
-  <header>
-    <h1>Coffee Boom Astana — Samal Branch</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Samal Branch</a></li>
-        <li><a href="menu.html">Our Menu</a></li>
-        <li><a href="order.html">Pre-Order</a></li>
-        <li><a href="feedback.html">Guest Feedback</a></li>
-        <li><a href="colophon.html">Colophon</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <!-- Semantic rationale: The section groups the introductory invitation and instructions for completing the quality review. -->
-    <section>
-      <h2>Guest Feedback &amp; Service Review</h2>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Share feedback about a visit to Kent Sandwich in Astana.">
+    <meta name="author" content="Timur Naumov">
+    <title>Kent Sandwich Astana | Feedback</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/timur.css">
+  </head>
+  <body class="page page-feedback">
+    <!-- Author: Timur Naumov -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
+        <span class="brand-mark" aria-hidden="true">
+          <img src="images/kent-logo.jpg" alt="">
+        </span>
+        <span class="brand-name">Kent<br>Sandwich</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="menu.html">Menu</a>
+          </li>
+          <li>
+            <a href="about.html">Our place</a>
+          </li>
+          <li>
+            <a href="order.html">Order</a>
+          </li>
+          <li>
+            <a href="feedback.html" aria-current="page">Feedback</a>
+          </li>
+          <li>
+            <a href="colophon.html">Colophon</a>
+          </li>
+        </ul>
+      </nav>
+      <p class="header-note">Astana · daily 09:30–21:30</p>
+    </header>
+    <main class="site-main" id="main-content">
+      <header class="page-intro feedback-intro">
+        <p class="eyebrow">Feedback</p>
+        <h1>How was your visit?</h1>
+        <p>Tell us what you ordered, when you visited and what stood out. A few clear details about the food, service or room make the feedback more useful.</p>
+      </header>
+      <section class="feedback-layout" aria-labelledby="feedback-title">
+        <article class="feedback-prompt">
+          <p class="eyebrow">Your visit</p>
+          <h2>What should we know?</h2>
+          <p>You can write about your sandwich, waiting time, service or the seating area.</p>
+          <blockquote>
+              <p><q lang="ru">Классное место с приятными ценами и оригинальным решением в интерьере) Для студентов самое то</q></p>
+              <cite>Диас Турлугулов, <time datetime="2026-07-20">20 July 2026</time> &mdash; <a href="https://2gis.kz/astana/firm/70000001114376342/tab/reviews" target="_blank" rel="noopener noreferrer">2GIS review</a></cite>
+          </blockquote>
+          <img src="images/kent-table.jpg" alt="Kent Sandwich package and drinks arranged on a wood table">
+        </article>
+        <form class="feedback-form" action="#" method="post">
+          <!-- This form demonstrates HTML controls only; no server is connected to receive feedback. -->
+          <h2 id="feedback-title">Leave feedback</h2>
+          <p class="required-note">Fields marked * are required.</p>
+          <!-- This div has no content meaning; it only aligns the related form fields in columns. -->
+          <div class="feedback-fields">
+            <label for="guest-name">Name *<input id="guest-name" name="guest-name" type="text" autocomplete="name" minlength="2" required>
+            </label>
+            <label for="guest-email">Email *<input id="guest-email" name="guest-email" type="email" autocomplete="email" required>
+            </label>
+            <label for="guest-phone">Phone<input id="guest-phone" name="guest-phone" type="tel" autocomplete="tel" placeholder="+7 700 000 00 00" pattern="\+?[0-9 ()-]{10,18}">
+            </label>
+            <label for="group-size">People in your group<input id="group-size" name="group-size" type="number" min="1" max="20" value="1">
+            </label>
+            <label for="visit-date">Visit date *<input id="visit-date" name="visit-date" type="date" required>
+            </label>
+            <label for="ordered-item">What did you order?<select id="ordered-item" name="ordered-item">
+                <option value="">Choose one</option>
+                <option>Mini sandwich</option>
+                <option>Chicken</option>
+                <option>Classic</option>
+                <option>Cheese</option>
+                <option>Cutlet</option>
+                <option>Spicy cutlet</option>
+                <option>Hot dog</option>
+                <option>Spicy</option>
+              </select>
+            </label>
+          </div>
+          <fieldset class="rating-fieldset">
+            <legend>Overall rating *</legend>
+            <!-- This div has no content meaning; it keeps the five related rating choices in one row. -->
+            <div class="rating-row">
+              <!-- Each span combines a rating number with its short inline description. -->
+              <label for="rating-1">
+                <input id="rating-1" type="radio" name="rating" value="1" required>
+                <span>1<small>Poor</small>
+                </span>
+              </label>
+              <label for="rating-2">
+                <input id="rating-2" type="radio" name="rating" value="2">
+                <span>2<small>Fair</small>
+                </span>
+              </label>
+              <label for="rating-3">
+                <input id="rating-3" type="radio" name="rating" value="3">
+                <span>3<small>Good</small>
+                </span>
+              </label>
+              <label for="rating-4">
+                <input id="rating-4" type="radio" name="rating" value="4">
+                <span>4<small>Great</small>
+                </span>
+              </label>
+              <label for="rating-5">
+                <input id="rating-5" type="radio" name="rating" value="5">
+                <span>5<small>Excellent</small>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+          <label class="full-field" for="guest-message">Your feedback *<textarea id="guest-message" name="guest-message" rows="7" minlength="20" maxlength="600" required placeholder="Tell us what happened during your visit">
+            </textarea>
+          </label>
+          <label class="check-line" for="contact-permission">
+            <input id="contact-permission" type="checkbox" name="contact-permission">
+            <!-- This span keeps the checkbox text as one inline label phrase. -->
+            <span>You may contact me about this feedback.</span>
+          </label>
+          <p class="form-note">Thanks for your feedback.</p>
+          <button class="button button-dark" type="submit">Check feedback</button>
+          <button class="button button-light" type="reset">Clear form</button>
+        </form>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
+      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
       <p>
-        We value feedback from every guest visiting our Samal 12 branch at Astana Tower. Whether you enjoyed working at our indoor tables or relaxing on the summer terrace, your impressions help our team maintain consistent service and pleasant hospitality. Please complete this brief form to share your experience with us.
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
       </p>
-      <p>
-        Our branch management reviews customer comments weekly to improve seating comfort, beverage quality, and hospitality standards. If you encountered any issue during your visit, your honest feedback helps us improve.
-      </p>
-    </section>
-
-    <!-- Semantic rationale: The article encapsulates the feedback submission form as an independent transactional component of the document. -->
-    <article>
-      <h2>Service Evaluation Form</h2>
-
-      <form method="post" action="#">
-        <!-- Form notice: This form does not send anything yet because there is no server-side backend configured. Backend data handling will be introduced in future coursework. -->
-
-        <fieldset>
-          <legend>Guest Contact Details</legend>
-          <p><small>Please provide your contact information so our branch management can follow up if needed.</small></p>
-          <p>
-            <label for="guest-name">Full Name:</label>
-            <input type="text" id="guest-name" name="guest_name" placeholder="e.g. Timur" required>
-          </p>
-          <p>
-            <label for="guest-email">Email Address:</label>
-            <input type="email" id="guest-email" name="guest_email" placeholder="name@example.com" required>
-          </p>
-          <p>
-            <label for="guest-phone">Phone Number:</label>
-            <input type="tel" id="guest-phone" name="guest_phone" placeholder="+7 (707) 000-00-00">
-          </p>
-        </fieldset>
-
-        <fieldset>
-          <legend>Visit Experience</legend>
-          <p>
-            <label for="visit-date">Date of Visit:</label>
-            <input type="date" id="visit-date" name="visit_date" required>
-          </p>
-          <p>
-            <label for="visit-rating">Overall Rating (1 to 10):</label>
-            <input type="number" id="visit-rating" name="visit_rating" min="1" max="10" placeholder="10" required>
-          </p>
-          <p>
-            <label for="seating-zone">Seating Zone:</label>
-            <select id="seating-zone" name="seating_zone" required>
-              <option value="">Select an area</option>
-              <option value="indoor">Indoor Hall (12 seats)</option>
-              <option value="terrace">Summer Terrace (12 seats)</option>
-            </select>
-          </p>
-
-          <p>Purpose of Visit:</p>
-          <p>
-            <input type="radio" id="purpose-work" name="purpose" value="work" required>
-            <label for="purpose-work">Laptop Study / Work</label>
-            <br>
-            <input type="radio" id="purpose-meeting" name="purpose" value="meeting">
-            <label for="purpose-meeting">Business Meeting</label>
-            <br>
-            <input type="radio" id="purpose-leisure" name="purpose" value="leisure">
-            <label for="purpose-leisure">Casual Coffee</label>
-          </p>
-
-          <p>
-            <label for="feedback-comments">Your Comments:</label><br>
-            <textarea id="feedback-comments" name="feedback_comments" rows="4" cols="35" placeholder="Share your thoughts on coffee quality and atmosphere..." required></textarea>
-          </p>
-
-          <p>
-            <input type="checkbox" id="data-consent" name="data_consent" required>
-            <label for="data-consent">I agree to the processing of personal data.</label>
-          </p>
-
-          <p>
-            <button type="submit">Submit Feedback</button>
-            <button type="reset">Clear Form</button>
-          </p>
-        </fieldset>
-      </form>
-    </article>
-  </main>
-
-  <hr>
-
-  <footer>
-    <p>Coffee Boom, Samal 12, Astana &bull; Tel: <a href="tel:+77073130202">+7 (707) 313-02-02</a><br>
-    &copy; 2026 Coffee Boom Samal Branch. All rights reserved. Author: Timur Naumov.</p>
-  </footer>
-</body>
+    </footer>
+    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  </body>
 </html>

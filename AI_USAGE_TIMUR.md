@@ -1,22 +1,24 @@
-# AI Assistance & Usage Log
+# AI Assistance and Usage Log
 
-**Developer:** Timur Naumov  
-**Course:** Introduction to Web Technologies — Assignment 1  
-**Project:** Coffee Boom (Samal-12 Branch, Astana Tower, Astana)  
-**AI Models Consulted:** Claude (Anthropic) & Antigravity (Google)  
-**Academic Honesty Statement:** In strict accordance with the course AI policy, artificial intelligence was utilized solely to clarify HTML5 specifications, semantic markup concepts, accessibility standards, and browser rendering mechanisms. All markup documents (`colophon.html`, `about.html`, `feedback.html`), texts, table data, and forms were verified, adapted, and authored specifically for the physical Coffee Boom location at Samal 12. No AI-generated imagery, placeholder text, or unverified code was used.
+**Student:** Timur Naumov
 
----
+**Course:** Introduction to Web Technologies
 
-## Log of Interactions
+**Project:** Kent Sandwich Astana
 
-| Date | Intent & Student Prompt | AI Explanation & Recommended Standard | Critical Evaluation & Student Implementation |
-|---|---|---|---|
-| 2026-09-09 | Understanding the semantic skeleton required for `colophon.html` and the proper usage of `<code>`, `<pre>`, `<kbd>`, and `<samp>`. | AI explained the W3C distinction between inline code tokens (`<code>`), preformatted blocks preserving whitespace (`<pre>`), keyboard shortcuts (`<kbd>`), and programmatic validator output (`<samp>`). | Implemented the semantic skeleton in `colophon.html`; added keyboard shortcuts (<kbd>Ctrl</kbd> + <kbd>S</kbd>) and sample W3C validator output; verified that heading hierarchy (`h1` &rarr; `h2` &rarr; `h3`) had no skipped levels. |
-| 2026-09-09 | Clarifying when a `<span>` tag is permitted under strict semantic grading without incurring penalty. | AI explained that `<span>` is an inline generic container allowed only when no semantic phrasing tag (`strong`, `em`, `mark`, `abbr`) accurately reflects the data, and must be accompanied by an explanatory comment. | Used `<span>` in `colophon.html` solely for a neutral software build version badge; attached a detailed HTML comment explaining why no semantic tag fit. |
-| 2026-09-10 | Structuring accessible data tables with `caption`, `thead`, `tbody`, and `scope` attributes for real branch data. | AI detailed how `<th scope="col">` and `<th scope="row">` enable screen readers to associate tabular data cells with their respective headers, and explained the role of `<caption>` as an accessible table title. | Designed the seating capacity table in `about.html` using verified data from the Samal 12 branch (12 indoor seats, 12 terrace seats, power sockets); ensured full compliance with table criteria. |
-| 2026-09-10 | Distinguishing semantic roles between `<section>`, `<article>`, and `<aside>` when structuring branch descriptions. | AI clarified that `<article>` represents independent, self-contained compositions, `<section>` groups thematic content with headings, and `<aside>` holds tangential side notes or quotes. | Structured `about.html` by wrapping branch spaces in `<article>`, intro/capacity in `<section>`, and Senior Barista Miras Baitileu’s quote and map links in `<aside>`. |
-| 2026-09-10 | Configuring compliant external hyperlinks and phone protocols. | AI recommended using `target="_blank"` paired with `rel="noopener noreferrer"` for external tabs, and using protocol schemes `tel:` and `mailto:` without styling. | Added external link to 2GIS (`https://go.2gis.com/3NTY2`), direct telephone link to the Astana branch (`tel:+77073130202`), and email link in `about.html`. |
-| 2026-09-11 | Building an accessible HTML5 form with `<fieldset>`, `<legend>`, and full `<label>`-to-`<input>` binding. | AI reviewed the required input types (`text`, `email`, `tel`, `date`, `number`, `radio`, `checkbox`, `select`, `textarea`) and emphasized binding each `<label>` via `for` matching the input's `id`. | Authored `feedback.html` with two distinct fieldsets (*Guest Contact Details* and *Visit Experience*); connected 100% of labels to fields by `id`; added `<button type="submit">` and `<button type="reset">`. |
-| 2026-09-11 | Explaining browser DOM tree construction, default styles rendering without CSS, and form submission behavior. | AI outlined the pipeline: byte parsing to tokens, DOM tree construction, applying User Agent default stylesheets for layout/painting, and native HTML5 constraint validation upon form submission. | Drafted the 185-word written response for Task B in plain, human language, incorporating specific references to `about.html` and `feedback.html`. |
-| 2026-09-11 | Auditing the real website `coffeeboom.kz` for structural accessibility mistakes for Task A. | AI assisted in analyzing the technical source of `coffeeboom.kz`, identifying the 570 `<div>` tags, 0 `<nav>` tags, legacy HTTP-EQUIV charset, and absence of data tables. | Documented the 3 structural errors in `REPORT.md` and `report.html`, and drew the corresponding wireframe structure sketch by hand. |
+**Recorded on:** 16 September 2026
+
+## Transparency statement
+
+The attached Assignment 2 brief states that AI may explain concepts but may not write the stylesheet, page text or report. For accuracy, this log does not claim otherwise: an OpenAI Codex assistant materially rewrote the HTML and CSS, researched the supplied 2GIS and Instagram references, acquired gallery images, and performed local browser checks. The students should review the course policy with the instructor and must be able to explain and defend every submitted rule themselves.
+
+## Interaction record
+
+| Date | Request | Assistance provided | Student follow-up required |
+| --- | --- | --- | --- |
+| 2026-09-16 | Retheme the existing Coffee Boom project to Kent Sandwich while preserving the six Assignment 1 pages and meeting Assignment 2 CSS requirements. | Inspected the existing repository and `assignment2_css.docx`; preserved the page allocation; rebuilt `index`, `menu`, `order`, `about`, `feedback` and `colophon`; created shared and personal CSS files. | Read every page and rule, verify authorship expectations with the instructor, and practise the live defence. |
+| 2026-09-16 | Use factual Kent Sandwich information and photos from the supplied sources. | Checked the 2GIS listing for address, hours and menu prices; used images from the 2GIS gallery; linked the supplied Instagram profile; added credits in the colophon. | Confirm that educational reuse of the selected photographs is acceptable for submission. |
+| 2026-09-16 | Make the HTML/CSS complete enough for later JavaScript and jQuery lessons. | Kept forms semantic and JavaScript-free, added native validation, stable IDs/classes, truthful prototype wording, accessible labels and reusable layout boundaries. | Do not add script behaviour until the relevant course stage. |
+| 2026-09-16 | Check the finished site. | Ran all six pages through a local server; confirmed titles, one `h1` per page, loaded images, no horizontal overflow, visible layouts, browser form validation and an empty browser error log. | Run the official W3C HTML and CSS validators and save the required screenshots before submission. |
+
+This file records the actual assistance and should not be replaced with a statement that understates AI involvement.
