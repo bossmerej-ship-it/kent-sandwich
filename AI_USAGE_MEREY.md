@@ -1,12 +1,17 @@
 # AI Assistance & Usage Log
 
 **Developer:** Merey Kuatbay  
-**AI Model Used:** Claude 3.5 Sonnet (Anthropic)  
-**Academic Honesty Statement:** Claude was employed as a technical reference and workflow assistant for semantic validation, Git recovery, CSS architecture, accessibility compliance, and layout planning. All code output and style rules were manually evaluated, integrated, tested against course constraints, and checked via official W3C validators.
+**AI Tools Used:** Claude 3.5 Sonnet (Anthropic), as recorded in the earlier log; OpenAI Codex for the Assignment 3 work described below.
+
+**Academic Honesty Statement:** The earlier entries record Claude assistance with semantic HTML, Git recovery, CSS architecture, accessibility and layout planning. For Assignment 3, Codex generated and edited HTML and CSS, ran local browser and structural checks, and prepared and pushed selected changes at the developer's request. The final local Assignment 3 version was not sent to W3C validators because local-only checks were requested. Earlier validation claims below concern the previous assignments.
 
 ---
 
 ## Log of Interactions
+
+### Assignments 1 and 2
+
+The entries below are retained from the developer's earlier log.
 
 | Date | Intent & User Prompt | AI Output & Recommended Solution | Critical Evaluation & Student Implementation |
 | :--- | :--- | :--- | :--- |
@@ -22,3 +27,16 @@
 | **2026-09-18** | Implementing modern layout techniques (CSS Grid & Flexbox) for menu items and order forms. | Suggested using Flexbox for horizontal navigation and button groups, and CSS Grid for responsive menu cards and dual-column form fields. | Applied Flexbox alignment to navigation headers and form submission actions; styled pre-order fieldsets using clean multi-column CSS Grid. |
 | **2026-09-19** | Resolving CSS specificity conflicts and styling form focus states for WCAG accessibility. | Advised avoiding `!important`, relying on clean descendant selectors, and creating prominent `:focus-visible` outlines for interactive inputs. | Removed redundant class overrides, added accessible high-contrast outline states for all inputs and buttons, and verified styling across viewports. |
 | **2026-09-19** | Planning hand-drawn wireframe sketches and preparing W3C CSS validation evidence. | Recommended sketching responsive box-model layouts showing Flexbox/Grid boundaries, landmark tags, and documenting W3C CSS Validator passes. | Drew layout wireframes on paper with explicit semantic annotations, signatures, and dates; validated `base.css` and `merey.css` on jigsaw.w3.org without errors. |
+
+### Assignment 3
+
+The browser checks below apply to the complete local project. At the developer's request, only `index.html`, `menu.html`, `order.html` and `css/merey.css` were uploaded in the first Assignment 3 code commit. The branch still contains the earlier `base.css` and `timur.css`, so those local results do not establish that the partially updated branch renders identically.
+
+| Date | Intent & User Prompt | AI Output & Recommended Solution | Review, Checks & Applied Changes |
+| :--- | :--- | :--- | :--- |
+| **2026-09-24** | Prepare Assignment 3 with Bootstrap while keeping the initial work local and preserving the site's content. | Codex generated and edited the local six-page version using Bootstrap 5.3.8 CSS and its JavaScript bundle from the CDN, followed by shared and personal stylesheets. | Existing page names, content images, semantic landmarks, IDs and form control names were retained. The developer requested a Desktop folder and ZIP before any upload. |
+| **2026-09-24** | Replace the old custom layout rules with Bootstrap grids, components and utilities. | Codex applied `container`, `container-fluid`, `row`, responsive column classes, spacing utilities, form controls, table classes and menu cards. | Home, menu and order layouts were updated. The responsive navbar uses Bootstrap Collapse and `aria-expanded`; no accordion, modal or custom JavaScript was added. |
+| **2026-09-24** | Keep separate Merey and Timur stylesheets and restore the original visual identity. | After developer feedback, Codex revised the local design to use the original colours and typography, square edges and three custom CSS files. | In the complete local version, `base.css`, `merey.css` and `timur.css` contain 42, 10 and 10 lines respectively, including comments and blank lines. Bootstrap supplies layout rules; remaining custom rules set brand colours and typography. These totals do not describe the partially updated remote branch. |
+| **2026-09-24** | Diagnose missing assets and verify responsive behaviour using local checks only. | Codex identified that opening HTML directly from the ZIP left local CSS and images unavailable, then opened the complete project through a local server. | Codex checked all six local pages at 375, 768 and 1440px: 18 combinations passed without horizontal overflow, broken images or console errors. Navbar toggling, phone constraints, radio selection and reset were checked. Submit buttons remain disabled because there is no backend. W3C validation was not rerun for the final version. |
+| **2026-09-26** | Push only Merey's three pages and personal stylesheet to the existing `Assigment-3` branch, leaving `main` unchanged. | Codex fetched the branch, prepared an isolated checkout and committed exactly `index.html`, `menu.html`, `order.html` and `css/merey.css`. | Commit `a0a0137` was pushed to `Assigment-3`. Remote branch hashes confirmed that `main` remained at `ea383b4`. The developer was informed that the older shared stylesheet would affect the partial branch's appearance. |
+| **2026-09-26** | Remove checklists from the previous assignments. | Codex removed `checklist.md` and `CSS_CHECKLIST.md` and their two references in README. | Commit `c39a453` was pushed to `Assigment-3`; the remote `main` branch was checked and remained unchanged. |
