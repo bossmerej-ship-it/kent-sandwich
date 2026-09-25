@@ -1,12 +1,15 @@
 # AI Assistance & Usage Log
 
 **Developer:** Merey Kuatbay  
-**AI Model Used:** Claude 3.5 Sonnet (Anthropic)  
-**Academic Honesty Statement:** Claude was employed as a technical reference and workflow assistant for semantic validation, Git recovery, CSS architecture, accessibility compliance, and layout planning. All code output and style rules were manually evaluated, integrated, tested against course constraints, and checked via official W3C validators.
+
 
 ---
 
 ## Log of Interactions
+
+### Assignments 1 and 2
+
+The entries below are retained from the developer's earlier log.
 
 | Date | Intent & User Prompt | AI Output & Recommended Solution | Critical Evaluation & Student Implementation |
 | :--- | :--- | :--- | :--- |
@@ -22,3 +25,10 @@
 | **2026-09-18** | Implementing modern layout techniques (CSS Grid & Flexbox) for menu items and order forms. | Suggested using Flexbox for horizontal navigation and button groups, and CSS Grid for responsive menu cards and dual-column form fields. | Applied Flexbox alignment to navigation headers and form submission actions; styled pre-order fieldsets using clean multi-column CSS Grid. |
 | **2026-09-19** | Resolving CSS specificity conflicts and styling form focus states for WCAG accessibility. | Advised avoiding `!important`, relying on clean descendant selectors, and creating prominent `:focus-visible` outlines for interactive inputs. | Removed redundant class overrides, added accessible high-contrast outline states for all inputs and buttons, and verified styling across viewports. |
 | **2026-09-19** | Planning hand-drawn wireframe sketches and preparing W3C CSS validation evidence. | Recommended sketching responsive box-model layouts showing Flexbox/Grid boundaries, landmark tags, and documenting W3C CSS Validator passes. | Drew layout wireframes on paper with explicit semantic annotations, signatures, and dates; validated `base.css` and `merey.css` on jigsaw.w3.org without errors. |
+
+### Assignment 3
+
+The browser checks below apply to the complete local project. At the developer's request, only `index.html`, `menu.html`, `order.html` and `css/merey.css` were uploaded in the first Assignment 3 code commit. The branch still contains the earlier `base.css` and `timur.css`, so those local results do not establish that the partially updated branch renders identically.
+
+| Date | Intent & User Prompt | AI Output & Recommended Solution | Review, Checks & Applied Changes |
+| :--- | :--- | :--- | :--- |
