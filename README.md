@@ -33,8 +33,6 @@ The order and feedback forms use native browser validation. Short notes beside t
 
 ## Coursework evidence
 
-- `checklist.md` maps Assignment 1 semantic HTML requirements.
-- `CSS_CHECKLIST.md` maps Assignment 2 selectors, cascade, Flexbox, Grid, positioning, float and centring to exact line numbers.
 - `REPORT.md` remains the existing written coursework report and should be revised by the students before submission.
 - `AI_USAGE_TIMUR.md` records the actual AI assistance used during the redesign.
 
