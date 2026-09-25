@@ -1,119 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kent Sandwich in Astana: hot pressed sandwiches, a focused menu, and a compact neighbourhood dining room.">
-    <meta name="author" content="Merey Kuatbay">
-    <title>Kent Sandwich Astana | Home</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/merey.css">
-    <!-- This internal rule overrides letter-spacing: 0.02em from .cascade-demo in css/merey.css. -->
-    <style>
-      .cascade-demo { letter-spacing: 0.14em; }
-    </style>
-  </head>
-  <body class="page page-home">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Kent Sandwich in Astana: hot pressed sandwiches, a focused menu, and a compact neighbourhood dining room.">
+<meta name="author" content="Merey Kuatbay">
+<title>Kent Sandwich Astana | Home</title>
+<!-- Bootstrap 5.3.8 via CDN; shared styles follow it, then the page owner’s correction stylesheet. --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/merey.css">
+</head>
+<body class="page page-home">
     <!-- Author: Merey Kuatbay -->
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+    <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
+    <!-- container-fluid lets the navigation use the full width, unlike the reading-width container in main. --><header class="site-header navbar navbar-expand-lg border-bottom border-dark bg-body py-4 border-2"><div class="container-fluid px-3 px-md-4 px-xl-5">
+<a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
         <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
         <span class="brand-mark" aria-hidden="true">
-          <img src="images/kent-logo.jpg" alt="">
-        </span>
-        <span class="brand-name">Kent<br>Sandwich</span>
+          <img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover border-2" width="52" height="52"></span>
+        <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
       </a>
-      <nav class="site-nav" aria-label="Main navigation">
-        <ul>
-          <li>
-            <a href="index.html" aria-current="page">Home</a>
+      <!-- Bootstrap Navbar / Collapse: documentation markup adapted to the existing six page links; expands at lg (992px). --><button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler rounded-0 border-dark border-2"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
+<li class="nav-item">
+            <a href="index.html" aria-current="page" class="nav-link rounded-0 px-3 fw-semibold active bg-dark text-white text-uppercase small fw-bold">Home</a>
           </li>
-          <li>
-            <a href="menu.html">Menu</a>
+          <li class="nav-item">
+            <a href="menu.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Menu</a>
           </li>
-          <li>
-            <a href="about.html">Our place</a>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Our place</a>
           </li>
-          <li>
-            <a href="order.html">Order</a>
+          <li class="nav-item">
+            <a href="order.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Order</a>
           </li>
-          <li>
-            <a href="feedback.html">Feedback</a>
+          <li class="nav-item">
+            <a href="feedback.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Feedback</a>
           </li>
-          <li>
-            <a href="colophon.html">Colophon</a>
+          <li class="nav-item">
+            <a href="colophon.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Colophon</a>
           </li>
-        </ul>
-      </nav>
-      <p class="header-note">Astana · daily 09:30–21:30</p>
-    </header>
-    <main class="site-main" id="main-content">
-      <section class="home-hero" aria-labelledby="home-title">
-        <p class="eyebrow">Sandwich shop · Astana</p>
-        <h1 id="home-title">A proper hot sandwich. Nothing extra.</h1>
-        <p class="hero-copy"><em>Hot pressed sandwiches</em> for lunch, takeaway or a quick stop in the city. The short menu keeps ordering simple.</p>
-        <p class="hero-actions">
-          <a class="button button-dark" href="menu.html">See the menu</a>
-          <a class="text-link" href="order.html">Plan an order &rarr;</a>
+        </ul></nav><!-- Responsive display: hide the extra hours note below xl so navigation retains space. --><p class="header-note d-none d-xl-block small text-end mb-0 ms-3 text-uppercase">Astana · daily 09:30–21:30</p>
+    </div></header><!-- container caps the content width on large screens and keeps readable gutters on phones. --><main class="site-main container px-lg-5" id="main-content"><section class="home-hero py-4 py-lg-5 border-bottom border-2 border-dark" aria-labelledby="home-title"><div class="row g-4 g-lg-5 align-items-center">
+<div class="col-12 col-lg-6">
+<p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">Sandwich shop · Astana</p>
+        <h1 id="home-title" class="fw-bold text-uppercase display-2 lh-1 mb-4">A proper hot sandwich. Nothing extra.</h1>
+        <p class="hero-copy lead mb-4 fw-normal"><em>Hot pressed sandwiches</em> for lunch, takeaway or a quick stop in the city. The short menu keeps ordering simple.</p>
+        <p class="hero-actions d-flex flex-wrap gap-3 mb-0">
+          <a class="btn btn-dark rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" href="menu.html">See the menu</a>
+          <a class="text-link link-dark text-uppercase fw-bold small align-self-center" href="order.html">Plan an order →</a>
         </p>
-        <figure class="hero-figure">
-          <img src="images/kent-hero.jpg" alt="A toasted Kent Sandwich served in branded paper beside takeaway drinks">
-        </figure>
-      </section>
-      <section class="quick-facts" aria-label="Kent Sandwich essentials">
-        <article class="fact-card">
-          <p class="fact-number">8</p>
-          <h2>Sandwiches</h2>
+        </div>
+<div class="col-12 col-lg-6"><figure class="hero-figure mb-0"><div class="ratio rounded-0 overflow-hidden ratio-1x1"><img src="images/kent-hero.jpg" alt="Kent Sandwich storefront and sign on Adolfa Yanushkevicha Street" class="w-100 h-100 object-fit-cover"></div></figure></div>
+</div></section><!-- Responsive block 1: facts stack on phones, use two columns at md and three at lg. --><section class="quick-facts py-0 border-bottom border-2 border-dark" aria-label="Kent Sandwich essentials"><div class="row g-0">
+<div class="col-12 col-md-6 col-lg-4"><article class="fact-card h-100 border-dark p-4 border-end"><p class="fact-number fw-bold mb-2 fs-2">8</p>
+          <h2 class="fw-bold mb-3 text-uppercase lh-1 h5">Sandwiches</h2>
           <p>A short menu that stays easy to choose from.</p>
-        </article>
-        <article class="fact-card">
-          <p class="fact-number">390 ₸</p>
-          <h2>Starting price</h2>
+        </article></div>
+<div class="col-12 col-md-6 col-lg-4"><article class="fact-card h-100 border-dark p-4 border-end"><p class="fact-number fw-bold mb-2 fs-2">390 ₸</p>
+          <h2 class="fw-bold mb-3 text-uppercase lh-1 h5">Starting price</h2>
           <p>Begin with the mini or move up to a full hot sandwich.</p>
-        </article>
-        <article class="fact-card">
-          <p class="fact-number">12 h</p>
-          <h2>Open daily</h2>
+        </article></div>
+<div class="col-12 col-md-6 col-lg-4"><article class="fact-card h-100 border-dark p-4 border-end border-end-0"><p class="fact-number fw-bold mb-2 fs-2">12 h</p>
+          <h2 class="fw-bold mb-3 text-uppercase lh-1 h5">Open daily</h2>
           <p>From 09:30 until 21:30 on Adolfa Yanushkevicha Street.</p>
-        </article>
-      </section>
-      <section class="signature-section" aria-labelledby="signature-title">
-        <!-- This div groups copy beside the figure; no semantic section is needed inside its parent section. -->
-        <div class="signature-copy">
-          <p class="eyebrow cascade-demo">Kent essentials</p>
-          <h2 id="signature-title">Choose your kind of comfort</h2>
+        </article></div>
+</div></section><section class="signature-section py-5" aria-labelledby="signature-title"><div class="row g-4 align-items-center">
+<!-- This div groups copy beside the figure; no semantic section is needed inside its parent section. --><div class="col-12 col-md-6"><div class="signature-copy">
+          <p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">Kent essentials</p>
+          <h2 id="signature-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Choose your kind of comfort</h2>
           <p>Choose chicken, classic, cheese, cutlet or a spicy option. Every sandwich comes hot, toasted and ready to take away.</p>
-          <p>Full-size sandwiches cost from 640 to 740 ₸. <!-- This inline background overrides the external mark background declared in css/base.css. -->
-            <mark style="background-color: #f4e70c;">The full price list is on the menu page.</mark>
-          </p>
-        </div>
-        <figure class="signature-figure">
-          <img src="images/kent-packaging.jpg" alt="Three Kent Sandwiches in branded kraft paper sleeves">
-          <figcaption>Recognisable kraft sleeves, photographed at Kent Sandwich.</figcaption>
-        </figure>
-      </section>
-      <section class="visit-strip" id="visit" aria-labelledby="visit-title">
-        <!-- The id is unique because this is the only home-page destination for visit details. -->
-        <!-- This div groups the visit heading within the larger visit section; it has no separate meaning. -->
-        <div>
-          <p class="eyebrow">Find us</p>
-          <h2 id="visit-title">A quick stop in old-centre Astana</h2>
-        </div>
-        <address>Adolfa Yanushkevicha Street, 1<br>Tselinny microdistrict, Astana</address>
-        <p>
+          <p>Full-size sandwiches cost from 640 to 740 ₸. <mark class="bg-warning">The full price list is on the menu page.</mark></p>
+        </div></div>
+        <div class="col-12 col-md-6"><figure class="signature-figure"><div class="ratio rounded-0 overflow-hidden ratio-1x1"><img src="images/kent-packaging.jpg" alt="Three Kent Sandwiches in branded kraft paper sleeves" class="w-100 h-100 object-fit-cover"></div>
+<figcaption class="figure-caption mt-2">Recognisable kraft sleeves, photographed at Kent Sandwich.</figcaption></figure></div>
+</div></section><!-- Responsive block 2: visit information uses one, two and four columns at phone, md and lg widths. --><section class="visit-strip bg-dark text-white rounded-0 p-4 p-lg-5 my-4" id="visit" aria-labelledby="visit-title"><div class="row g-4 align-items-center">
+<!-- The id is unique because this is the only home-page destination for visit details. --><!-- This div groups the visit heading within the larger visit section; it has no separate meaning. --><div class="col-12 col-md-6 col-lg-4"><div>
+          <p class="eyebrow small text-uppercase text-warning mb-2 mb-0 fw-bold">Find us</p>
+          <h2 id="visit-title" class="fw-bold mb-3 h3 text-uppercase lh-1">A quick stop in old-centre Astana</h2>
+        </div></div>
+        <div class="col-12 col-md-6 col-lg-3"><address class="mb-0">Adolfa Yanushkevicha Street, 1<br>Tselinny microdistrict, Astana</address></div>
+        <div class="col-12 col-md-6 col-lg-2"><p class="mb-0">
           <strong>Open daily</strong>
-          <br>09:30–21:30</p>
-        <a class="button button-light" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">Open in 2GIS</a>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
-      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
-      <p>
-        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
+          <br>09:30–21:30</p></div>
+        <div class="col-12 col-md-6 col-lg-3"><a class="btn btn-warning rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">Open in 2GIS</a></div>
+      </div></section></main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5 border-top border-2 border-dark"><div class="row g-3 align-items-center text-center text-md-start">
+<p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
+      <p class="col-12 col-md-4 mb-0 small">Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p class="col-12 col-md-4 mb-0 small text-md-end">
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a>
       </p>
-    </footer>
-    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
-  </body>
+    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 z-3 d-none d-lg-block rounded-0 border-2 text-uppercase fw-bold" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
 </html>
