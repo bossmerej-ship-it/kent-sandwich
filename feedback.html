@@ -1,148 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Share feedback about a visit to Kent Sandwich in Astana.">
-    <meta name="author" content="Timur Naumov">
-    <title>Kent Sandwich Astana | Feedback</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/timur.css">
-  </head>
-  <body class="page page-feedback">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Share feedback about a visit to Kent Sandwich in Astana.">
+<meta name="author" content="Timur Naumov">
+<title>Kent Sandwich Astana | Feedback</title>
+<!-- Bootstrap 5.3.8 via CDN; shared styles follow it, then the page owner’s correction stylesheet. --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/timur.css">
+</head>
+<body class="page page-feedback">
     <!-- Author: Timur Naumov -->
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+    <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
+    <!-- container-fluid lets the navigation use the full width, unlike the reading-width container in main. --><header class="site-header navbar navbar-expand-lg bg-body-tertiary border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
+<a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
         <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
         <span class="brand-mark" aria-hidden="true">
-          <img src="images/kent-logo.jpg" alt="">
-        </span>
-        <span class="brand-name">Kent<br>Sandwich</span>
+          <img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover" width="44" height="44"></span>
+        <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
       </a>
-      <nav class="site-nav" aria-label="Main navigation">
-        <ul>
-          <li>
-            <a href="index.html">Home</a>
+      <!-- Bootstrap Navbar / Collapse: documentation markup adapted to the existing six page links; expands at lg (992px). --><button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
+<li class="nav-item">
+            <a href="index.html" class="nav-link rounded-3 px-3 fw-semibold">Home</a>
           </li>
-          <li>
-            <a href="menu.html">Menu</a>
+          <li class="nav-item">
+            <a href="menu.html" class="nav-link rounded-3 px-3 fw-semibold">Menu</a>
           </li>
-          <li>
-            <a href="about.html">Our place</a>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link rounded-3 px-3 fw-semibold">Our place</a>
           </li>
-          <li>
-            <a href="order.html">Order</a>
+          <li class="nav-item">
+            <a href="order.html" class="nav-link rounded-3 px-3 fw-semibold">Order</a>
           </li>
-          <li>
-            <a href="feedback.html" aria-current="page">Feedback</a>
+          <li class="nav-item">
+            <a href="feedback.html" aria-current="page" class="nav-link rounded-3 px-3 fw-semibold active bg-dark text-white">Feedback</a>
           </li>
-          <li>
-            <a href="colophon.html">Colophon</a>
+          <li class="nav-item">
+            <a href="colophon.html" class="nav-link rounded-3 px-3 fw-semibold">Colophon</a>
           </li>
-        </ul>
-      </nav>
-      <p class="header-note">Astana · daily 09:30–21:30</p>
-    </header>
-    <main class="site-main" id="main-content">
-      <header class="page-intro feedback-intro">
-        <p class="eyebrow">Feedback</p>
-        <h1>How was your visit?</h1>
-        <p>Tell us what you ordered, when you visited and what stood out. A few clear details about the food, service or room make the feedback more useful.</p>
-      </header>
-      <section class="feedback-layout" aria-labelledby="feedback-title">
-        <article class="feedback-prompt">
-          <p class="eyebrow">Your visit</p>
-          <h2>What should we know?</h2>
+        </ul></nav><!-- Responsive display: hide the extra hours note below xl so navigation retains space. --><p class="header-note d-none d-xl-block small text-end mb-0 ms-3">Astana · daily 09:30–21:30</p>
+    </div></header><!-- container caps the content width on large screens and keeps readable gutters on phones. --><main class="site-main container" id="main-content"><header class="page-intro feedback-intro py-4 py-lg-5 border-bottom mb-4"><div class="row g-4 align-items-center">
+<div class="col-12 col-lg-7">
+<p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Feedback</p>
+        <h1 class="display-4 fw-bold text-uppercase mb-3">How was your visit?</h1>
+        </div>
+<div class="col-12 col-lg-5">
+<p class="lead mb-3">Tell us what you ordered, when you visited and what stood out. A few clear details about the food, service or room make the feedback more useful.</p>
+      </div>
+</div></header><section class="feedback-layout py-4" aria-labelledby="feedback-title"><div class="row g-4">
+<div class="col-12 col-lg-4"><article class="feedback-prompt bg-body-tertiary rounded-4 p-4"><p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Your visit</p>
+          <h2 class="h2 fw-bold mb-3">What should we know?</h2>
           <p>You can write about your sandwich, waiting time, service or the seating area.</p>
-          <blockquote>
+          <blockquote class="border-top border-dark pt-3 my-4">
               <p><q lang="ru">Классное место с приятными ценами и оригинальным решением в интерьере) Для студентов самое то</q></p>
-              <cite>Диас Турлугулов, <time datetime="2026-07-20">20 July 2026</time> &mdash; <a href="https://2gis.kz/astana/firm/70000001114376342/tab/reviews" target="_blank" rel="noopener noreferrer">2GIS review</a></cite>
+              <cite class="small">Диас Турлугулов, <time datetime="2026-07-20">20 July 2026</time> — <a href="https://2gis.kz/astana/firm/70000001114376342/tab/reviews" target="_blank" rel="noopener noreferrer">2GIS review</a></cite>
           </blockquote>
-          <img src="images/kent-table.jpg" alt="Kent Sandwich package and drinks arranged on a wood table">
-        </article>
-        <form class="feedback-form" action="#" method="post">
+          <div class="ratio ratio-4x3 rounded-4 overflow-hidden"><img src="images/kent-table.jpg" alt="Kent Sandwich package and drinks arranged on a wood table" class="w-100 h-100 object-fit-cover"></div></article></div>
+<div class="col-12 col-lg-8">
+<!-- The disabled submit button represents the unavailable online service; native reset remains functional. No custom JavaScript is used. --><form class="feedback-form bg-white border rounded-4 p-3 p-md-4" action="#" method="post">
           <!-- This form demonstrates HTML controls only; no server is connected to receive feedback. -->
-          <h2 id="feedback-title">Leave feedback</h2>
-          <p class="required-note">Fields marked * are required.</p>
+          <h2 id="feedback-title" class="h2 fw-bold mb-3">Leave feedback</h2>
+          <p class="required-note small text-body-secondary">Fields marked * are required.</p>
           <!-- This div has no content meaning; it only aligns the related form fields in columns. -->
-          <div class="feedback-fields">
-            <label for="guest-name">Name *<input id="guest-name" name="guest-name" type="text" autocomplete="name" minlength="2" required>
-            </label>
-            <label for="guest-email">Email *<input id="guest-email" name="guest-email" type="email" autocomplete="email" required>
-            </label>
-            <label for="guest-phone">Phone<input id="guest-phone" name="guest-phone" type="tel" autocomplete="tel" placeholder="+7 700 000 00 00" pattern="\+?[0-9 ()-]{10,18}">
-            </label>
-            <label for="group-size">People in your group<input id="group-size" name="group-size" type="number" min="1" max="20" value="1">
-            </label>
-            <label for="visit-date">Visit date *<input id="visit-date" name="visit-date" type="date" required>
-            </label>
-            <label for="ordered-item">What did you order?<select id="ordered-item" name="ordered-item">
-                <option value="">Choose one</option>
-                <option>Mini sandwich</option>
-                <option>Chicken</option>
-                <option>Classic</option>
-                <option>Cheese</option>
-                <option>Cutlet</option>
-                <option>Spicy cutlet</option>
-                <option>Hot dog</option>
-                <option>Spicy</option>
-              </select>
-            </label>
+          <!-- Nested grid: this row is inside the form column; fields become two columns at md. --><div class="feedback-fields row g-3 mb-4 pb-2">
+            <label for="guest-name" class="col-12 col-md-6 form-label mb-0">Name *<input id="guest-name" name="guest-name" type="text" autocomplete="name" minlength="2" required class="form-control mt-1"></label>
+            <label for="guest-email" class="col-12 col-md-6 form-label mb-0">Email *<input id="guest-email" name="guest-email" type="email" autocomplete="email" required class="form-control mt-1"></label>
+            <label for="guest-phone" class="col-12 col-md-6 form-label mb-0">Phone<input id="guest-phone" name="guest-phone" type="tel" autocomplete="tel" placeholder="+7 700 000 00 00" pattern="\+?[0-9](?:[ \(\)\-]*[0-9]){9,14}" class="form-control mt-1" title="Use 10 to 15 digits, with optional +, spaces, brackets or hyphens." aria-describedby="guest-phone-hint"><span id="guest-phone-hint" class="form-text d-block">Use 10–15 digits; spaces, brackets and hyphens are allowed.</span></label>
+            <label for="group-size" class="col-12 col-md-6 form-label mb-0">People in your group<input id="group-size" name="group-size" type="number" min="1" max="20" value="1" class="form-control mt-1"></label>
+            <label for="visit-date" class="col-12 col-md-6 form-label mb-0">Visit date *<input id="visit-date" name="visit-date" type="date" required class="form-control mt-1"></label>
+            <label for="ordered-item" class="col-12 col-md-6 form-label mb-0">What did you order?<select id="ordered-item" name="ordered-item" class="form-select mt-1"><option value="">Choose one</option>
+<option>Mini sandwich</option>
+<option>Chicken</option>
+<option>Classic</option>
+<option>Cheese</option>
+<option>Cutlet</option>
+<option>Spicy cutlet</option>
+<option>Hot dog</option>
+<option>Spicy</option></select></label>
           </div>
-          <fieldset class="rating-fieldset">
-            <legend>Overall rating *</legend>
+          <fieldset class="rating-fieldset border rounded-3 p-3 mb-4">
+<legend class="float-none w-auto px-2 fs-6 fw-semibold">Overall rating *</legend>
             <!-- This div has no content meaning; it keeps the five related rating choices in one row. -->
-            <div class="rating-row">
+            <div class="rating-row row g-2">
               <!-- Each span combines a rating number with its short inline description. -->
-              <label for="rating-1">
-                <input id="rating-1" type="radio" name="rating" value="1" required>
-                <span>1<small>Poor</small>
+              <div class="col-6 col-md-4 col-xl"><div class="border rounded-3 p-3 h-100"><label for="rating-1" class="form-check-label d-block">
+                <input id="rating-1" type="radio" name="rating" value="1" required class="form-check-input me-2"><span>1<small class="d-block text-body-secondary">Poor</small>
                 </span>
-              </label>
-              <label for="rating-2">
-                <input id="rating-2" type="radio" name="rating" value="2">
-                <span>2<small>Fair</small>
+              </label></div></div>
+              <div class="col-6 col-md-4 col-xl"><div class="border rounded-3 p-3 h-100"><label for="rating-2" class="form-check-label d-block">
+                <input id="rating-2" type="radio" name="rating" value="2" class="form-check-input me-2"><span>2<small class="d-block text-body-secondary">Fair</small>
                 </span>
-              </label>
-              <label for="rating-3">
-                <input id="rating-3" type="radio" name="rating" value="3">
-                <span>3<small>Good</small>
+              </label></div></div>
+              <div class="col-6 col-md-4 col-xl"><div class="border rounded-3 p-3 h-100"><label for="rating-3" class="form-check-label d-block">
+                <input id="rating-3" type="radio" name="rating" value="3" class="form-check-input me-2"><span>3<small class="d-block text-body-secondary">Good</small>
                 </span>
-              </label>
-              <label for="rating-4">
-                <input id="rating-4" type="radio" name="rating" value="4">
-                <span>4<small>Great</small>
+              </label></div></div>
+              <div class="col-6 col-md-4 col-xl"><div class="border rounded-3 p-3 h-100"><label for="rating-4" class="form-check-label d-block">
+                <input id="rating-4" type="radio" name="rating" value="4" class="form-check-input me-2"><span>4<small class="d-block text-body-secondary">Great</small>
                 </span>
-              </label>
-              <label for="rating-5">
-                <input id="rating-5" type="radio" name="rating" value="5">
-                <span>5<small>Excellent</small>
+              </label></div></div>
+              <div class="col-6 col-md-4 col-xl"><div class="border rounded-3 p-3 h-100"><label for="rating-5" class="form-check-label d-block">
+                <input id="rating-5" type="radio" name="rating" value="5" class="form-check-input me-2"><span>5<small class="d-block text-body-secondary">Excellent</small>
                 </span>
-              </label>
+              </label></div></div>
             </div>
           </fieldset>
-          <label class="full-field" for="guest-message">Your feedback *<textarea id="guest-message" name="guest-message" rows="7" minlength="20" maxlength="600" required placeholder="Tell us what happened during your visit">
-            </textarea>
+<label class="full-field form-label d-block mb-3" for="guest-message">Your feedback *<textarea id="guest-message" name="guest-message" rows="7" minlength="20" maxlength="600" required placeholder="Tell us what happened during your visit" class="form-control mt-1"></textarea></label>
+          <label class="check-line form-check-label d-block my-3" for="contact-permission">
+            <input id="contact-permission" type="checkbox" name="contact-permission" class="form-check-input me-2"><!-- This span keeps the checkbox text as one inline label phrase. --><span>You may contact me about this feedback.</span>
           </label>
-          <label class="check-line" for="contact-permission">
-            <input id="contact-permission" type="checkbox" name="contact-permission">
-            <!-- This span keeps the checkbox text as one inline label phrase. -->
-            <span>You may contact me about this feedback.</span>
-          </label>
-          <p class="form-note">Thanks for your feedback.</p>
-          <button class="button button-dark" type="submit">Check feedback</button>
-          <button class="button button-light" type="reset">Clear form</button>
+          <p class="form-note small text-body-secondary mb-3" id="submission-note">This local form does not send feedback. Sending is unavailable; use the shop’s official contact channels.</p>
+          <button class="btn btn-dark me-2 mb-2" type="submit" disabled aria-describedby="submission-note">Send feedback (unavailable)</button>
+          <button class="btn btn-outline-dark mb-2" type="reset">Clear form</button>
         </form>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
-      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
-      <p>
-        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
+</div>
+      </div></section></main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
+<p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
+      <p class="col-12 col-md-4 mb-0 small">Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p class="col-12 col-md-4 mb-0 small text-md-end">
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a>
       </p>
-    </footer>
-    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
-  </body>
+    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 shadow z-3 d-none d-lg-block" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
 </html>

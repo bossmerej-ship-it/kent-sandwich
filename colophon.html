@@ -1,137 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Project structure, design choices, sources and image credits for the Kent Sandwich website.">
-    <meta name="author" content="Timur Naumov">
-    <title>Kent Sandwich Astana | Colophon</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/timur.css">
-  </head>
-  <body class="page page-colophon">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Project structure, design choices, sources and image credits for the Kent Sandwich website.">
+<meta name="author" content="Timur Naumov">
+<title>Kent Sandwich Astana | Colophon</title>
+<!-- Bootstrap 5.3.8 via CDN; shared styles follow it, then the page owner’s correction stylesheet. --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/timur.css">
+</head>
+<body class="page page-colophon">
     <!-- Author: Timur Naumov -->
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
+    <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
+    <!-- container-fluid lets the navigation use the full width, unlike the reading-width container in main. --><header class="site-header navbar navbar-expand-lg bg-body-tertiary border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
+<a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
         <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
         <span class="brand-mark" aria-hidden="true">
-          <img src="images/kent-logo.jpg" alt="">
-        </span>
-        <span class="brand-name">Kent<br>Sandwich</span>
+          <img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover" width="44" height="44"></span>
+        <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
       </a>
-      <nav class="site-nav" aria-label="Main navigation">
-        <ul>
-          <li>
-            <a href="index.html">Home</a>
+      <!-- Bootstrap Navbar / Collapse: documentation markup adapted to the existing six page links; expands at lg (992px). --><button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
+<li class="nav-item">
+            <a href="index.html" class="nav-link rounded-3 px-3 fw-semibold">Home</a>
           </li>
-          <li>
-            <a href="menu.html">Menu</a>
+          <li class="nav-item">
+            <a href="menu.html" class="nav-link rounded-3 px-3 fw-semibold">Menu</a>
           </li>
-          <li>
-            <a href="about.html">Our place</a>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link rounded-3 px-3 fw-semibold">Our place</a>
           </li>
-          <li>
-            <a href="order.html">Order</a>
+          <li class="nav-item">
+            <a href="order.html" class="nav-link rounded-3 px-3 fw-semibold">Order</a>
           </li>
-          <li>
-            <a href="feedback.html">Feedback</a>
+          <li class="nav-item">
+            <a href="feedback.html" class="nav-link rounded-3 px-3 fw-semibold">Feedback</a>
           </li>
-          <li>
-            <a href="colophon.html" aria-current="page">Colophon</a>
+          <li class="nav-item">
+            <a href="colophon.html" aria-current="page" class="nav-link rounded-3 px-3 fw-semibold active bg-dark text-white">Colophon</a>
           </li>
-        </ul>
-      </nav>
-      <p class="header-note">Astana · daily 09:30–21:30</p>
-    </header>
-    <main class="site-main" id="main-content">
-      <header class="page-intro colophon-intro">
-        <p class="eyebrow">Project details</p>
-        <h1>About this website</h1>
-        <p>We built this six-page website with HTML and CSS. This page lists the files, sources and main design choices.</p>
-      </header>
-      <section class="audit-grid" aria-labelledby="build-title">
-        <header>
-          <p class="eyebrow">Project structure</p>
-          <h2 id="build-title">What the website uses</h2>
-        </header>
-        <article>
-          <p class="audit-number">06</p>
-          <h3>HTML pages</h3>
+        </ul></nav><!-- Responsive display: hide the extra hours note below xl so navigation retains space. --><p class="header-note d-none d-xl-block small text-end mb-0 ms-3">Astana · daily 09:30–21:30</p>
+    </div></header><!-- container caps the content width on large screens and keeps readable gutters on phones. --><main class="site-main container" id="main-content"><header class="page-intro colophon-intro py-4 py-lg-5 border-bottom mb-4"><div class="row g-4 align-items-center">
+<div class="col-12 col-lg-7">
+<p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Project details</p>
+        <h1 class="display-4 fw-bold text-uppercase mb-3">About this website</h1>
+        </div>
+<div class="col-12 col-lg-5">
+<p class="lead mb-3">We built this six-page website with HTML and CSS. This page lists the files, sources and main design choices.</p>
+      </div>
+</div></header><section class="audit-grid py-4" aria-labelledby="build-title"><div class="row g-4">
+<div class="col-12"><header><p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Project structure</p>
+          <h2 id="build-title" class="h2 fw-bold mb-3">What the website uses</h2>
+        </header></div>
+<div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">06</p>
+          <h3 class="h5 fw-bold">HTML pages</h3>
           <p>Home, menu, place, order, feedback and colophon.</p>
-        </article>
-        <article>
-          <p class="audit-number">03</p>
-          <h3>Stylesheets</h3>
-          <p>One shared base plus one personal file for each student.</p>
-        </article>
-        <article>
-          <p class="audit-number">00</p>
-          <h3>Scripts</h3>
-          <p>No JavaScript, framework or site builder is included at this stage.</p>
-        </article>
-        <article>
-          <p class="audit-number">01</p>
-          <h3>Local branch</h3>
+        </article></div>
+<div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">03</p>
+          <h3 class="h5 fw-bold">Local stylesheets</h3>
+          <p>A shared base plus separate page styles for Merey and Timur. Bootstrap loads from a CDN.</p>
+        </article></div>
+<div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">01</p>
+          <h3 class="h5 fw-bold">Scripts</h3>
+          <p>The Bootstrap bundle powers the mobile menu. There is no custom JavaScript.</p>
+        </article></div>
+<div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">01</p>
+          <h3 class="h5 fw-bold">Local branch</h3>
           <p>Every page describes the same Kent Sandwich location in Astana.</p>
-        </article>
-      </section>
-      <section class="principles" aria-labelledby="principles-title">
-        <!-- This div groups the heading beside the ordered list; it has no independent semantic role. -->
-        <div>
-          <p class="eyebrow">Design choices</p>
-          <h2 id="principles-title">Why the site looks this way</h2>
-        </div>
-        <ol start="1">
-          <li>
+        </article></div>
+</div></section><section class="principles py-4" aria-labelledby="principles-title"><div class="row g-4">
+<!-- This div groups the heading beside the ordered list; it has no independent semantic role. --><div class="col-12 col-lg-5"><div>
+          <p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Design choices</p>
+          <h2 id="principles-title" class="h2 fw-bold mb-3">Why the site looks this way</h2>
+        </div></div>
+        <div class="col-12 col-lg-7"><ol start="1">
+<li class="mb-3">
             <strong>Colours.</strong> Black, warm white and yellow match the shop’s packaging and interior.</li>
-          <li>
+          <li class="mb-3">
             <strong>Structure.</strong> Headings, lists, tables, figures and fieldsets keep the content organised.</li>
-          <li>
-            <strong>Layout.</strong> The pages are made for a normal desktop window. Responsive styles can be added later.</li>
-          <li>
-            <strong>Forms.</strong> The order and feedback forms are ready for JavaScript, but they do not send data yet.</li>
-        </ol>
-      </section>
-      <section class="source-section" id="sources" aria-labelledby="sources-title">
-        <!-- The id is unique because this is the only source and licensing destination. -->
-        <!-- This div groups the source heading above three articles; it is not a separate content section. -->
-        <div>
-          <p class="eyebrow">Sources</p>
-          <h2 id="sources-title">Content &amp; image credits</h2>
-        </div>
-        <article>
-          <h3>Business information</h3>
+          <li class="mb-3">
+            <strong>Layout.</strong> Bootstrap columns stack on phones, split at md and expand at lg. Navigation collapses below 992px.</li>
+          <li class="mb-3">
+            <strong>Forms.</strong> Native controls support selection, validation and reset. Sending is disabled because no online service is connected.</li>
+        </ol></div>
+</div></section><section class="source-section py-4" id="sources" aria-labelledby="sources-title"><div class="row g-4">
+<!-- The id is unique because this is the only source and licensing destination. --><!-- This div groups the source heading above three articles; it is not a separate content section. --><div class="col-12"><div>
+          <p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Sources</p>
+          <h2 id="sources-title" class="h2 fw-bold mb-3">Content &amp; image credits</h2>
+        </div></div>
+        <div class="col-12 col-md-6 col-lg-4"><article><h3 class="h5 fw-bold">Business information</h3>
           <p>Name, category, address, opening hours and menu prices were checked against the <a href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">Kent Sandwich listing on 2GIS</a>. The official social link is <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">@kentsandwich.kz</a>.</p>
-        </article>
-        <article>
-          <h3>Photography</h3>
+        </article></div>
+<div class="col-12 col-md-6 col-lg-4"><article><h3 class="h5 fw-bold">Photography</h3>
           <p>The Kent Sandwich photographs used on these pages were sourced from the business gallery on 2GIS. Ownership remains with the photographers and rights holders.</p>
-        </article>
-        <article>
-          <h3>Technical constraints</h3>
-          <p>The site uses local <abbr title="HyperText Markup Language"><b>HTML</b></abbr> and <abbr title="Cascading Style Sheets">CSS</abbr> only. There are no external libraries, templates, analytics or scripts.</p>
-        </article>
-      </section>
-      <hr>
-      <aside class="file-guide">
-        <h2>File guide</h2>
-        <p>The shared styles are in <code>base.css</code>. Each student also has a separate stylesheet for their pages. Press <kbd>Tab</kbd> to check the links and form controls with a keyboard. A browser may show <samp>Please fill out this field.</samp> when a required input is empty.</p>
-        <pre>
-          <code>base.css → shared visual system
-            merey.css → home, menu, order
-            timur.css → about, feedback, colophon</code>
+        </article></div>
+<div class="col-12 col-md-6 col-lg-4"><article><h3 class="h5 fw-bold">Technical constraints</h3>
+          <p>The site keeps local <abbr title="HyperText Markup Language"><b>HTML</b></abbr> and <abbr title="Cascading Style Sheets">CSS</abbr> with Bootstrap 5.3.8 loaded from a CDN. No theme, template, site builder or custom JavaScript is used.</p>
+        </article></div>
+</div></section><hr>
+<aside class="file-guide bg-dark text-white rounded-4 p-4 my-4"><h2 class="h2 fw-bold mb-3">File guide</h2>
+        <p>The shared styles are in <code>base.css</code>; <code>merey.css</code> and <code>timur.css</code> hold each author’s page corrections. Bootstrap handles the layout, spacing, buttons and responsive navigation. Press <kbd>Tab</kbd> to check the links and form controls with a keyboard. A browser may show <samp>Please fill out this field.</samp> when a required input is empty.</p>
+        <pre class="bg-body text-body p-3 rounded-3 mb-0 text-wrap text-break"><code><span class="d-block">Bootstrap CDN → layout and components</span><span class="d-block">css/base.css → shared palette, wordmark and button colours</span><span class="d-block">css/merey.css → headings on home, menu and order</span><span class="d-block">css/timur.css → headings on about, feedback and colophon</span><span class="d-block">CSS_CLEANUP.md → removed rules and replacements</span></code>
         </pre>
-      </aside>
-      <p>Questions about this student project can be sent to <a href="mailto:timurabishev13@gmail.com">Timur by email</a>.</p>
-    </main>
-    <footer class="site-footer">
-      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
-      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
-      <p>
-        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="#sources">Sources &amp; credits</a>
+      </aside><p>Questions about this student project can be sent to <a href="mailto:timurabishev13@gmail.com">Timur by email</a>.</p>
+    </main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
+<p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
+      <p class="col-12 col-md-4 mb-0 small">Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p class="col-12 col-md-4 mb-0 small text-md-end">
+        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="#sources" class="link-light">Sources &amp; credits</a>
       </p>
-    </footer>
-    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
-  </body>
+    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 shadow z-3 d-none d-lg-block" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
 </html>
