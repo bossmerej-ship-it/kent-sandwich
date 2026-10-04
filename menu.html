@@ -13,33 +13,19 @@
 <body class="page page-menu">
     <!-- Author: Merey Kuatbay -->
     <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
-    <!-- container-fluid lets the navigation use the full width, unlike the reading-width container in main. --><header class="site-header navbar navbar-expand-lg border-bottom border-dark bg-body py-4 border-2"><div class="container-fluid px-3 px-md-4 px-xl-5">
+    <header class="site-header navbar navbar-expand-lg bg-body-tertiary border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
 <a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
-        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
-        <span class="brand-mark" aria-hidden="true">
-          <img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover border-2" width="52" height="52"></span>
+        <span class="brand-mark" aria-hidden="true"><img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover" width="44" height="44"></span>
         <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
       </a>
-      <!-- Bootstrap Navbar / Collapse: documentation markup adapted to the existing six page links; expands at lg (992px). --><button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler rounded-0 border-dark border-2"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
-<li class="nav-item">
-            <a href="index.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="menu.html" aria-current="page" class="nav-link rounded-0 px-3 fw-semibold active bg-dark text-white text-uppercase small fw-bold">Menu</a>
-          </li>
-          <li class="nav-item">
-            <a href="about.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Our place</a>
-          </li>
-          <li class="nav-item">
-            <a href="order.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Order</a>
-          </li>
-          <li class="nav-item">
-            <a href="feedback.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Feedback</a>
-          </li>
-          <li class="nav-item">
-            <a href="colophon.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Colophon</a>
-          </li>
-        </ul></nav><!-- Responsive display: hide the extra hours note below xl so navigation retains space. --><p class="header-note d-none d-xl-block small text-end mb-0 ms-3 text-uppercase">Astana · daily 09:30–21:30</p>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
+          <li class="nav-item"><a href="index.html" class="nav-link rounded-3 px-3 fw-semibold">Home</a></li>
+          <li class="nav-item"><a href="menu.html" aria-current="page" class="nav-link rounded-3 px-3 fw-semibold active bg-dark text-white">Menu</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link rounded-3 px-3 fw-semibold">Our place</a></li>
+          <li class="nav-item"><a href="order.html" class="nav-link rounded-3 px-3 fw-semibold">Order</a></li>
+          <li class="nav-item"><a href="feedback.html" class="nav-link rounded-3 px-3 fw-semibold">Feedback</a></li>
+          <li class="nav-item"><a href="colophon.html" class="nav-link rounded-3 px-3 fw-semibold">Colophon</a></li>
+        </ul></nav><p class="header-note d-none d-xl-block small text-end mb-0 ms-3">Astana · daily 09:30–21:30</p>
     </div></header><!-- container caps the content width on large screens and keeps readable gutters on phones. --><main class="site-main container px-lg-5" id="main-content"><header class="page-intro menu-intro py-4 py-lg-5 border-bottom mb-4 border-dark border-2"><div class="row g-4 align-items-center">
 <div class="col-12 col-lg-7">
 <p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">Menu</p>
@@ -47,11 +33,12 @@
         </div>
 <div class="col-12 col-lg-5">
 <p class="lead mb-3 fw-normal">Eight hot sandwiches, from the mini to the spicy cutlet. Choose a filling and check the price below.</p>
-        <a class="jump-link btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold" href="#menu-table">Jump to price table ↓</a>
+        <a class="jump-link btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold me-2 mb-2" href="#menu-table">Jump to price table ↓</a>
+        <a id="start-order-link" class="btn btn-dark btn-sm rounded-0 border-2 text-uppercase fw-bold mb-2" href="order.html">Prepare a pickup order</a>
       </div>
 </div></header><!-- Bootstrap Card: adapted from https://getbootstrap.com/docs/5.3/components/card/ using the existing sandwich titles, descriptions and prices; width is controlled by grid columns, with no inline style. --><section class="menu-board py-4" aria-labelledby="menu-board-title"><h2 id="menu-board-title" class="visually-hidden fw-bold mb-3 display-6 text-uppercase lh-1">Sandwich menu cards</h2>
         <!-- Responsive block 3: one card per row on phones, two at md and four at lg. --><div class="row g-0">
-<div class="col-12 col-md-6 col-lg-3"><article class="menu-card card h-100 border-dark bg-warning border-2  rounded-0"><div class="card-body d-flex flex-column p-4">
+<div class="col-12 col-md-6 col-lg-3"><article id="menu-item-mini" class="menu-card card h-100 border-dark bg-warning border-2 rounded-0" data-menu-item="mini" data-price="390"><div class="card-body d-flex flex-column p-4">
 <p class="menu-number small text-body-secondary mb-3">01</p>
           <h3 class="h5 fw-bold card-title text-uppercase lh-1">Mini sandwich</h3>
           <p class="menu-note card-text text-body-secondary">The smallest sandwich on the menu.</p>
@@ -59,43 +46,43 @@
           <!-- This span is an inline badge inside the card, not a separate content section. -->
           <span class="menu-badge badge text-bg-dark align-self-start mt-2">Small</span>
         </div></article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="menu-card card h-100 border-dark border-2 bg-white rounded-0"><div class="card-body d-flex flex-column p-4">
+<div class="col-12 col-md-6 col-lg-3"><article id="menu-item-chicken" class="menu-card card h-100 border-dark border-2 bg-white rounded-0" data-menu-item="chicken" data-price="640"><div class="card-body d-flex flex-column p-4">
 <p class="menu-number small text-body-secondary mb-3">02</p>
           <h3 class="h5 fw-bold card-title text-uppercase lh-1">Chicken</h3>
           <p class="menu-note card-text text-body-secondary">Hot sandwich with chicken.</p>
           <p class="menu-price mt-auto fs-3 fw-bold mb-0">640 ₸</p>
         </div></article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="menu-card card h-100 border-dark border-2 bg-white rounded-0"><div class="card-body d-flex flex-column p-4">
+<div class="col-12 col-md-6 col-lg-3"><article id="menu-item-classic" class="menu-card card h-100 border-dark border-2 bg-white rounded-0" data-menu-item="classic" data-price="640"><div class="card-body d-flex flex-column p-4">
 <p class="menu-number small text-body-secondary mb-3">03</p>
           <h3 class="h5 fw-bold card-title text-uppercase lh-1">Classic</h3>
           <p class="menu-note card-text text-body-secondary">The classic Kent Sandwich option.</p>
           <p class="menu-price mt-auto fs-3 fw-bold mb-0">640 ₸</p>
         </div></article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="menu-card card h-100 border-dark border-2 bg-white rounded-0"><div class="card-body d-flex flex-column p-4">
+<div class="col-12 col-md-6 col-lg-3"><article id="menu-item-cheese" class="menu-card card h-100 border-dark border-2 bg-white rounded-0" data-menu-item="cheese" data-price="640"><div class="card-body d-flex flex-column p-4">
 <p class="menu-number small text-body-secondary mb-3">04</p>
           <h3 class="h5 fw-bold card-title text-uppercase lh-1">Cheese</h3>
           <p class="menu-note card-text text-body-secondary">Hot sandwich with cheese.</p>
           <p class="menu-price mt-auto fs-3 fw-bold mb-0">640 ₸</p>
         </div></article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="menu-card card h-100 border-dark border-2 bg-white rounded-0"><div class="card-body d-flex flex-column p-4">
+<div class="col-12 col-md-6 col-lg-3"><article id="menu-item-cutlet" class="menu-card card h-100 border-dark border-2 bg-white rounded-0" data-menu-item="cutlet" data-price="690"><div class="card-body d-flex flex-column p-4">
 <p class="menu-number small text-body-secondary mb-3">05</p>
           <h3 class="h5 fw-bold card-title text-uppercase lh-1">Cutlet</h3>
           <p class="menu-note card-text text-body-secondary">Hot sandwich with a cutlet.</p>
           <p class="menu-price mt-auto fs-3 fw-bold mb-0">690 ₸</p>
         </div></article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="menu-card card h-100 border-dark border-2 bg-white rounded-0"><div class="card-body d-flex flex-column p-4">
+<div class="col-12 col-md-6 col-lg-3"><article id="menu-item-spicy-cutlet" class="menu-card card h-100 border-dark border-2 bg-white rounded-0" data-menu-item="spicy-cutlet" data-price="740"><div class="card-body d-flex flex-column p-4">
 <p class="menu-number small text-body-secondary mb-3">06</p>
           <h3 class="h5 fw-bold card-title text-uppercase lh-1">Spicy cutlet</h3>
           <p class="menu-note card-text text-body-secondary">Cutlet sandwich with a spicy taste.</p>
           <p class="menu-price mt-auto fs-3 fw-bold mb-0">740 ₸</p>
         </div></article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="menu-card card h-100 border-dark border-2 bg-white rounded-0"><div class="card-body d-flex flex-column p-4">
+<div class="col-12 col-md-6 col-lg-3"><article id="menu-item-hot-dog" class="menu-card card h-100 border-dark border-2 bg-white rounded-0" data-menu-item="hot-dog" data-price="640"><div class="card-body d-flex flex-column p-4">
 <p class="menu-number small text-body-secondary mb-3">07</p>
           <h3 class="h5 fw-bold card-title text-uppercase lh-1">Hot dog</h3>
           <p class="menu-note card-text text-body-secondary">Kent Sandwich hot dog.</p>
           <p class="menu-price mt-auto fs-3 fw-bold mb-0">640 ₸</p>
         </div></article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="menu-card card h-100 border-dark border-2 bg-white rounded-0"><div class="card-body d-flex flex-column p-4">
+<div class="col-12 col-md-6 col-lg-3"><article id="menu-item-spicy" class="menu-card card h-100 border-dark border-2 bg-white rounded-0" data-menu-item="spicy" data-price="690"><div class="card-body d-flex flex-column p-4">
 <p class="menu-number small text-body-secondary mb-3">08</p>
           <h3 class="h5 fw-bold card-title text-uppercase lh-1">Spicy</h3>
           <p class="menu-note card-text text-body-secondary">A spicy hot sandwich.</p>
@@ -130,50 +117,50 @@
                 <th scope="col">Profile</th>
                 <th scope="col">Price</th>
               </tr></thead>
-<tbody>
-<tr>
+<tbody id="menu-price-rows">
+<tr id="price-row-mini" data-menu-item="mini" data-price="390">
 <th scope="row">01</th>
                 <td>Mini sandwich</td>
                 <td>Compact</td>
                 <td>390 ₸</td>
               </tr>
-<tr>
+<tr id="price-row-chicken" data-menu-item="chicken" data-price="640">
 <th scope="row">02</th>
                 <td>Chicken</td>
                 <td>Classic</td>
                 <td>640 ₸</td>
               </tr>
-<tr>
+<tr id="price-row-classic" data-menu-item="classic" data-price="640">
 <th scope="row">03</th>
                 <td>Classic</td>
                 <td>Classic</td>
                 <td>640 ₸</td>
               </tr>
-<tr>
+<tr id="price-row-cheese" data-menu-item="cheese" data-price="640">
 <th scope="row">04</th>
                 <td>Cheese</td>
                 <td>Rich</td>
                 <td>640 ₸</td>
               </tr>
-<tr>
+<tr id="price-row-cutlet" data-menu-item="cutlet" data-price="690">
 <th scope="row">05</th>
                 <td>Cutlet</td>
                 <td>Filling</td>
                 <td>690 ₸</td>
               </tr>
-<tr>
+<tr id="price-row-spicy-cutlet" data-menu-item="spicy-cutlet" data-price="740">
 <th scope="row">06</th>
                 <td>Spicy cutlet</td>
                 <td>Hot</td>
                 <td>740 ₸</td>
               </tr>
-<tr>
+<tr id="price-row-hot-dog" data-menu-item="hot-dog" data-price="640">
 <th scope="row">07</th>
                 <td>Hot dog</td>
                 <td>Classic</td>
                 <td>640 ₸</td>
               </tr>
-<tr>
+<tr id="price-row-spicy" data-menu-item="spicy" data-price="690">
 <th scope="row">08</th>
                 <td>Spicy</td>
                 <td>Hot</td>
@@ -183,13 +170,19 @@
 </table>
 </div>
         <p class="source-note small text-body-secondary mt-2"><sup>1</sup> Availability and prices may change. Confirm the current menu with the shop before ordering.</p>
-      </section></main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5 border-top border-2 border-dark"><div class="row g-3 align-items-center text-center text-md-start">
+      </section>
+      <section class="menu-order-cta d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 border-top border-dark border-2 mt-5 pt-4" aria-labelledby="menu-order-cta-title">
+        <div>
+          <p class="eyebrow small text-uppercase fw-bold mb-2">Ready when you are</p>
+          <h2 id="menu-order-cta-title" class="fw-bold mb-0 display-6 text-uppercase lh-1">Planning to order?</h2>
+        </div>
+        <a class="btn btn-dark rounded-0 border-2 text-uppercase fw-bold px-4 py-3" href="order.html">Build your order →</a>
+      </section>
+      </main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
 <p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
       <p class="col-12 col-md-4 mb-0 small">Adolfa Yanushkevicha Street, 1 · Astana</p>
-      <p class="col-12 col-md-4 mb-0 small text-md-end">
-        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a>
-      </p>
-    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 z-3 d-none d-lg-block rounded-0 border-2 text-uppercase fw-bold" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+      <p class="col-12 col-md-4 mb-0 small text-md-end"><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a></p>
+    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 shadow z-3 d-none d-lg-block" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

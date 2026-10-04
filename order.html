@@ -13,77 +13,84 @@
 <body class="page page-order">
     <!-- Author: Merey Kuatbay -->
     <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
-    <!-- container-fluid lets the navigation use the full width, unlike the reading-width container in main. --><header class="site-header navbar navbar-expand-lg border-bottom border-dark bg-body py-4 border-2"><div class="container-fluid px-3 px-md-4 px-xl-5">
+    <header class="site-header navbar navbar-expand-lg bg-body-tertiary border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
 <a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
-        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
-        <span class="brand-mark" aria-hidden="true">
-          <img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover border-2" width="52" height="52"></span>
+        <span class="brand-mark" aria-hidden="true"><img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover" width="44" height="44"></span>
         <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
       </a>
-      <!-- Bootstrap Navbar / Collapse: documentation markup adapted to the existing six page links; expands at lg (992px). --><button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler rounded-0 border-dark border-2"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
-<li class="nav-item">
-            <a href="index.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="menu.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Menu</a>
-          </li>
-          <li class="nav-item">
-            <a href="about.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Our place</a>
-          </li>
-          <li class="nav-item">
-            <a href="order.html" aria-current="page" class="nav-link rounded-0 px-3 fw-semibold active bg-dark text-white text-uppercase small fw-bold">Order</a>
-          </li>
-          <li class="nav-item">
-            <a href="feedback.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Feedback</a>
-          </li>
-          <li class="nav-item">
-            <a href="colophon.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Colophon</a>
-          </li>
-        </ul></nav><!-- Responsive display: hide the extra hours note below xl so navigation retains space. --><p class="header-note d-none d-xl-block small text-end mb-0 ms-3 text-uppercase">Astana · daily 09:30–21:30</p>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
+          <li class="nav-item"><a href="index.html" class="nav-link rounded-3 px-3 fw-semibold">Home</a></li>
+          <li class="nav-item"><a href="menu.html" class="nav-link rounded-3 px-3 fw-semibold">Menu</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link rounded-3 px-3 fw-semibold">Our place</a></li>
+          <li class="nav-item"><a href="order.html" aria-current="page" class="nav-link rounded-3 px-3 fw-semibold active bg-dark text-white">Order</a></li>
+          <li class="nav-item"><a href="feedback.html" class="nav-link rounded-3 px-3 fw-semibold">Feedback</a></li>
+          <li class="nav-item"><a href="colophon.html" class="nav-link rounded-3 px-3 fw-semibold">Colophon</a></li>
+        </ul></nav><p class="header-note d-none d-xl-block small text-end mb-0 ms-3">Astana · daily 09:30–21:30</p>
     </div></header><!-- container caps the content width on large screens and keeps readable gutters on phones. --><main class="site-main container px-lg-5" id="main-content"><header class="page-intro order-intro py-4 py-lg-5 border-bottom mb-4 border-dark border-2"><div class="row g-4 align-items-center">
 <div class="col-12 col-lg-7">
 <p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">Order</p>
         <h1 class="fw-bold text-uppercase display-2 lh-1 mb-4">Choose your sandwich</h1>
         </div>
 <div class="col-12 col-lg-5">
-<p class="lead mb-3 fw-normal">Fill in the form to prepare your order details. Choose a sandwich, quantity and pickup time, then check everything before contacting the shop. Add a note if you have a simple request, and leave the contact box unticked if you do not want a reply. Online ordering is not connected yet.</p>
+<p class="lead mb-3 fw-normal">Fill in the form to prepare your order details. Choose one or more sandwiches and a quantity for each, then check everything before contacting the shop. Add a note if you have a simple request, and leave the contact box unticked if you do not want a reply. Online ordering is not connected yet.</p>
       </div>
 </div></header><section class="order-layout py-4" aria-labelledby="order-form-title"><div class="row g-4">
 <div class="col-12 col-lg-8">
-<!-- The disabled submit button represents the unavailable online service; native reset remains functional. No custom JavaScript is used. --><form class="order-form bg-white border rounded-0 p-3 p-md-4 border-2" action="#" method="post">
+<!-- Item checkboxes and quantities allow a multi-item draft without sending personal details. No custom JavaScript is used. --><form id="order-form" class="order-form bg-white border rounded-0 p-3 p-md-4 border-2">
           <!-- This form demonstrates HTML controls only; no server is connected to receive an order. -->
           <h2 id="order-form-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Your selection</h2>
           <fieldset class="border rounded-0 p-3 mb-4">
-<legend class="float-none w-auto px-2 fs-6 fw-semibold">1. Choose a sandwich</legend>
-            <!-- This div has no content meaning; it arranges the related radio choices as a grid. -->
+<legend class="float-none w-auto px-2 fs-6 fw-semibold">1. Choose sandwiches</legend>
+            <p id="item-selection-hint" class="form-text mt-0 mb-3">Choose any items you want.</p>
+            <!-- This div arranges the item checkbox and quantity controls as a grid. -->
             <div class="choice-grid row g-2">
-              <!-- Each span keeps a sandwich name and price together inside its label. -->
-              <div class="col-12 col-md-6"><div class="border rounded-0 p-3 h-100"><label class="choice-card form-check-label d-block" for="sandwich-mini">
-                <input id="sandwich-mini" type="radio" name="sandwich" value="mini" required class="form-check-input me-2"><span>Mini sandwich <strong>390 ₸</strong>
-                </span>
-              </label></div></div>
-              <div class="col-12 col-md-6"><div class="border rounded-0 p-3 h-100"><label class="choice-card form-check-label d-block" for="sandwich-chicken">
-                <input id="sandwich-chicken" type="radio" name="sandwich" value="chicken" class="form-check-input me-2"><span>Chicken <strong>640 ₸</strong>
-                </span>
-              </label></div></div>
-              <div class="col-12 col-md-6"><div class="border rounded-0 p-3 h-100"><label class="choice-card form-check-label d-block" for="sandwich-classic">
-                <input id="sandwich-classic" type="radio" name="sandwich" value="classic" class="form-check-input me-2"><span>Classic <strong>640 ₸</strong>
-                </span>
-              </label></div></div>
-              <div class="col-12 col-md-6"><div class="border rounded-0 p-3 h-100"><label class="choice-card form-check-label d-block" for="sandwich-cheese">
-                <input id="sandwich-cheese" type="radio" name="sandwich" value="cheese" class="form-check-input me-2"><span>Cheese <strong>640 ₸</strong>
-                </span>
-              </label></div></div>
-              <div class="col-12 col-md-6"><div class="border rounded-0 p-3 h-100"><label class="choice-card form-check-label d-block" for="sandwich-cutlet">
-                <input id="sandwich-cutlet" type="radio" name="sandwich" value="cutlet" class="form-check-input me-2"><span>Cutlet <strong>690 ₸</strong>
-                </span>
-              </label></div></div>
-              <div class="col-12 col-md-6"><div class="border rounded-0 p-3 h-100"><label class="choice-card form-check-label d-block" for="sandwich-spicy-cutlet">
-                <input id="sandwich-spicy-cutlet" type="radio" name="sandwich" value="spicy-cutlet" class="form-check-input me-2"><span>Spicy cutlet <strong>740 ₸</strong>
-                </span>
-              </label></div></div>
+              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="mini" data-price="390">
+                <label class="choice-card form-check-label d-block" for="item-mini"><input id="item-mini" type="checkbox" name="items" value="mini" data-price="390" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Mini sandwich <strong>390 ₸</strong></span></label>
+                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-mini">Quantity<input id="quantity-mini" name="quantity-mini" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="mini"></label>
+              </div></div>
+              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="chicken" data-price="640">
+                <label class="choice-card form-check-label d-block" for="item-chicken"><input id="item-chicken" type="checkbox" name="items" value="chicken" data-price="640" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Chicken <strong>640 ₸</strong></span></label>
+                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-chicken">Quantity<input id="quantity-chicken" name="quantity-chicken" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="chicken"></label>
+              </div></div>
+              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="classic" data-price="640">
+                <label class="choice-card form-check-label d-block" for="item-classic"><input id="item-classic" type="checkbox" name="items" value="classic" data-price="640" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Classic <strong>640 ₸</strong></span></label>
+                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-classic">Quantity<input id="quantity-classic" name="quantity-classic" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="classic"></label>
+              </div></div>
+              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="cheese" data-price="640">
+                <label class="choice-card form-check-label d-block" for="item-cheese"><input id="item-cheese" type="checkbox" name="items" value="cheese" data-price="640" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Cheese <strong>640 ₸</strong></span></label>
+                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-cheese">Quantity<input id="quantity-cheese" name="quantity-cheese" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="cheese"></label>
+              </div></div>
+              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="cutlet" data-price="690">
+                <label class="choice-card form-check-label d-block" for="item-cutlet"><input id="item-cutlet" type="checkbox" name="items" value="cutlet" data-price="690" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Cutlet <strong>690 ₸</strong></span></label>
+                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-cutlet">Quantity<input id="quantity-cutlet" name="quantity-cutlet" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="cutlet"></label>
+              </div></div>
+              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="spicy-cutlet" data-price="740">
+                <label class="choice-card form-check-label d-block" for="item-spicy-cutlet"><input id="item-spicy-cutlet" type="checkbox" name="items" value="spicy-cutlet" data-price="740" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Spicy cutlet <strong>740 ₸</strong></span></label>
+                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-spicy-cutlet">Quantity<input id="quantity-spicy-cutlet" name="quantity-spicy-cutlet" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="spicy-cutlet"></label>
+              </div></div>
+              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="hot-dog" data-price="640">
+                <label class="choice-card form-check-label d-block" for="item-hot-dog"><input id="item-hot-dog" type="checkbox" name="items" value="hot-dog" data-price="640" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Hot dog <strong>640 ₸</strong></span></label>
+                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-hot-dog">Quantity<input id="quantity-hot-dog" name="quantity-hot-dog" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="hot-dog"></label>
+              </div></div>
+              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="spicy" data-price="690">
+                <label class="choice-card form-check-label d-block" for="item-spicy"><input id="item-spicy" type="checkbox" name="items" value="spicy" data-price="690" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Spicy <strong>690 ₸</strong></span></label>
+                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-spicy">Quantity<input id="quantity-spicy" name="quantity-spicy" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="spicy"></label>
+              </div></div>
             </div>
           </fieldset>
+          <!-- JavaScript can reveal this prepared basket and render item rows into its list after the HTML/CSS freeze. -->
+          <section id="order-cart" class="order-cart border rounded-0 p-3 mb-4 is-hidden" aria-labelledby="order-cart-title">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+              <h2 id="order-cart-title" class="h4 fw-bold text-uppercase mb-0">Your basket</h2>
+              <span id="cart-count" class="badge text-bg-dark">0 items</span>
+            </div>
+            <p id="cart-empty-state" class="mb-3" role="status" aria-live="polite">Your basket is empty.</p>
+            <ul id="cart-items" class="list-unstyled mb-3"></ul>
+            <p class="d-flex justify-content-between border-top pt-3 mb-0">
+              <strong>Total</strong>
+              <output id="cart-total" aria-live="polite">0 ₸</output>
+            </p>
+          </section>
 <fieldset class="border rounded-0 p-3 mb-4">
 <legend class="float-none w-auto px-2 fs-6 fw-semibold">2. Pickup details</legend>
             <!-- This div has no semantic role; it aligns related contact and pickup fields in columns. -->
@@ -93,7 +100,6 @@
               <label for="customer-email" class="col-12 col-md-6 form-label mb-0">Email<input id="customer-email" name="customer-email" type="email" autocomplete="email" required class="form-control mt-1 rounded-0 bg-white"></label>
               <label for="pickup-date" class="col-12 col-md-6 form-label mb-0">Pickup date<input id="pickup-date" name="pickup-date" type="date" required class="form-control mt-1 rounded-0 bg-white"></label>
               <label for="pickup-time" class="col-12 col-md-6 form-label mb-0">Pickup time<input id="pickup-time" name="pickup-time" type="time" min="09:30" max="21:15" required class="form-control mt-1 rounded-0 bg-white"></label>
-              <label for="quantity" class="col-12 col-md-6 form-label mb-0">Quantity<input id="quantity" name="quantity" type="number" min="1" max="10" value="1" required class="form-control mt-1 rounded-0 bg-white"></label>
               <label for="contact-method" class="col-12 col-md-6 form-label mb-0">Preferred contact<select id="contact-method" name="contact-method" class="form-select mt-1 rounded-0 bg-white"><option value="phone">Phone call</option>
 <option value="whatsapp">WhatsApp</option></select></label>
             </div>
@@ -105,12 +111,13 @@
               <input id="contact-request" type="checkbox" name="contact-request" class="form-check-input me-2"><!-- This span keeps the checkbox text as one inline label phrase. --><span>Please contact me to confirm the order.</span>
             </label>
           </fieldset>
-<p class="form-note small text-body-secondary mb-3" id="submission-note">This local form does not send orders. Sending is unavailable; use the shop’s official contact channels.</p>
-          <button class="btn btn-dark me-2 mb-2 rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="submit" disabled aria-describedby="submission-note">Send order (unavailable)</button>
-          <button class="btn btn-outline-dark mb-2 rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="reset">Clear form</button>
+          <div id="order-error" class="form-message is-hidden is-error" role="alert" aria-live="assertive"></div>
+          <div id="order-confirmation" class="form-message is-hidden is-success" role="status" aria-live="polite"></div>
+          <button id="submit-order" class="btn btn-dark me-2 mb-2 rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="button">Send order</button>
+          <button id="reset-order" class="btn btn-outline-dark mb-2 rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="reset">Clear form</button>
         </form>
 </div>
-        <div class="col-12 col-lg-4"><aside class="order-summary rounded-0 p-4 bg-warning border border-2 border-dark"><p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">Pickup point</p>
+        <div class="col-12 col-lg-4"><aside class="order-summary rounded-0 p-4 border border-2 border-dark"><p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">Pickup point</p>
           <h2 class="fw-bold mb-3 text-break display-6 text-uppercase lh-1">Adolfa Yanushkevicha, 1</h2>
           <dl>
 <dt class="small text-uppercase">Hours</dt>
@@ -123,13 +130,11 @@
 <div class="ratio ratio-4x3 rounded-0 overflow-hidden"><img src="images/kent-packaging.jpg" alt="Kent Sandwich kraft paper sleeves with toasted sandwiches" class="w-100 h-100 object-fit-cover"></div>
 <a class="text-link fw-semibold link-dark d-inline-block mt-3" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">Check official contacts in 2GIS →</a>
         </aside></div>
-</div></section></main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5 border-top border-2 border-dark"><div class="row g-3 align-items-center text-center text-md-start">
+</div></section></main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
 <p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
       <p class="col-12 col-md-4 mb-0 small">Adolfa Yanushkevicha Street, 1 · Astana</p>
-      <p class="col-12 col-md-4 mb-0 small text-md-end">
-        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a>
-      </p>
-    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 z-3 d-none d-lg-block rounded-0 border-2 text-uppercase fw-bold" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+      <p class="col-12 col-md-4 mb-0 small text-md-end"><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a></p>
+    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 shadow z-3 d-none d-lg-block" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
