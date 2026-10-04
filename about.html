@@ -1,116 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="About the Kent Sandwich shop, interior, service format, location and opening hours in Astana.">
-<meta name="author" content="Timur Naumov">
-<title>Kent Sandwich Astana | Our Place</title>
-<!-- Bootstrap 5.3.8 via CDN; shared styles follow it, then the page owner’s correction stylesheet. --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/timur.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About the Kent Sandwich shop, interior, service format, location and opening hours in Astana.">
+  <meta name="author" content="Timur Naumov">
+  <title>Kent Sandwich Astana | Our Place</title>
+  <!-- Bootstrap 5.3.8: framework styles precede the small local correction layers. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/timur.css">
 </head>
-<body class="page page-about">
-    <!-- Author: Timur Naumov -->
-    <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
-    <!-- container-fluid lets the navigation use the full width, unlike the reading-width container in main. --><header class="site-header navbar navbar-expand-lg bg-body-tertiary border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
-<a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
-        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
-        <span class="brand-mark" aria-hidden="true">
-          <img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover" width="44" height="44"></span>
+<body class="page page-about" data-page="about">
+  <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
+  <header class="site-header navbar navbar-expand-lg border-bottom border-dark bg-body py-4 border-2">
+    <!-- Bootstrap owns the responsive navigation; page scripts reuse these hooks. -->
+    <div class="container-fluid px-3 px-md-4 px-xl-5">
+      <a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
+        <span class="brand-mark" aria-hidden="true"><img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover border-2" width="52" height="52"></span>
         <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
       </a>
-      <!-- Bootstrap Navbar / Collapse: documentation markup adapted to the existing six page links; expands at lg (992px). --><button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
-<li class="nav-item">
-            <a href="index.html" class="nav-link rounded-3 px-3 fw-semibold">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="menu.html" class="nav-link rounded-3 px-3 fw-semibold">Menu</a>
-          </li>
-          <li class="nav-item">
-            <a href="about.html" aria-current="page" class="nav-link rounded-3 px-3 fw-semibold active bg-dark text-white">Our place</a>
-          </li>
-          <li class="nav-item">
-            <a href="order.html" class="nav-link rounded-3 px-3 fw-semibold">Order</a>
-          </li>
-          <li class="nav-item">
-            <a href="feedback.html" class="nav-link rounded-3 px-3 fw-semibold">Feedback</a>
-          </li>
-          <li class="nav-item">
-            <a href="colophon.html" class="nav-link rounded-3 px-3 fw-semibold">Colophon</a>
-          </li>
-        </ul></nav><!-- Responsive display: hide the extra hours note below xl so navigation retains space. --><p class="header-note d-none d-xl-block small text-end mb-0 ms-3">Astana · daily 09:30–21:30</p>
-    </div></header><!-- container caps the content width on large screens and keeps readable gutters on phones. --><main class="site-main container" id="main-content"><header class="page-intro about-intro py-4 py-lg-5 border-bottom mb-4"><div class="row g-4 align-items-center">
-<div class="col-12 col-lg-7">
-<p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Our place</p>
-        <h1 class="display-4 fw-bold text-uppercase mb-3">Hot sandwiches in the centre of Astana</h1>
+      <button id="main-nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler rounded-0 border-dark border-2"><span class="navbar-toggler-icon"></span></button>
+      <nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar">
+        <ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
+          <li class="nav-item"><a href="index.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Home</a></li>
+          <li class="nav-item"><a href="menu.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Menu</a></li>
+          <li class="nav-item"><a href="about.html" aria-current="page" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold active bg-dark text-white">Our place</a></li>
+          <li class="nav-item"><a href="order.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Order</a></li>
+          <li class="nav-item"><a href="feedback.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Feedback</a></li>
+          <li class="nav-item"><a href="colophon.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Colophon</a></li>
+        </ul>
+      </nav>
+      <p class="header-note d-none d-xl-block small text-end mb-0 ms-3 text-uppercase">Astana · daily 09:30–21:30</p>
+    </div>
+  </header>
+  <!-- Bootstrap container and grid keep the content readable at phone and desktop widths. -->
+  <main class="site-main container px-lg-5" id="main-content">
+    <header class="page-intro about-intro py-4 py-lg-5 border-bottom mb-4 border-dark border-2">
+      <div class="row g-4 align-items-center">
+        <div class="col-12 col-lg-7">
+          <p class="eyebrow small text-uppercase fw-bold mb-3">Our place</p>
+          <h1 class="fw-bold text-uppercase display-2 lh-1 mb-4">Hot sandwiches in the centre of Astana</h1>
         </div>
-<div class="col-12 col-lg-5">
-<p class="lead mb-3"><img class="about-intro-photo img-fluid rounded-4 d-block mb-3" src="images/kent-interior.jpg" alt="Interior of Kent Sandwich with mustard seating and wooden tables" width="480">Kent Sandwich is a small sandwich shop in the Tselinny microdistrict. You can eat inside or take your order with you.</p>
-        <nav class="page-jumps d-flex flex-wrap gap-2" aria-label="On this page"><a href="#story" class="btn btn-outline-dark btn-sm">Story</a>
-          <a href="#space" class="btn btn-outline-dark btn-sm">Space</a>
-          <a href="#details" class="btn btn-outline-dark btn-sm">Details</a>
-        </nav>
-</div>
-</div></header><article class="about-story py-4" id="story"><!-- The id is unique because this is the only long-form brand story on the page. --><p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">The format</p>
-        <h2 class="h2 fw-bold mb-3">Simple enough to remember</h2>
-        <p class="story-copy lead row g-4 align-items-center mb-4">
-          <span class="col-12 col-md-5"><img class="story-photo img-fluid w-100 rounded-4" src="images/kent-packaging.jpg" alt="Kent Sandwiches presented in branded paper sleeves"></span><span class="col-12 col-md-7">Kent Sandwich serves toasted sandwiches in kraft paper sleeves. The packaging is simple, easy to carry and matches the shop’s black and yellow style.</span></p>
-        <h3 class="h5 fw-bold">What defines the experience</h3>
-        <ul class="value-list row g-3 list-unstyled">
-<li class="col-12 col-md-6 col-lg-4"><div class="border rounded-3 p-3 h-100 bg-white">
-            <strong class="d-block mb-2">Focused menu</strong>
-            <!-- Each span keeps a short inline description beside its bold label; it is not a section. -->
-            <span>Eight sandwich choices.</span>
-          </div></li>
-          <li class="col-12 col-md-6 col-lg-4"><div class="border rounded-3 p-3 h-100 bg-white">
-            <strong class="d-block mb-2">Fast format</strong>
-            <!-- This span is an inline description paired with the label above. -->
-            <span>Eat inside or take the order with you.</span>
-          </div></li>
-          <li class="col-12 col-md-6 col-lg-4"><div class="border rounded-3 p-3 h-100 bg-white">
-            <strong class="d-block mb-2">Warm interior</strong>
-            <!-- This span is an inline description paired with the label above. -->
-            <span>Mustard seating, wood surfaces and soft vertical lighting.</span>
-          </div></li>
-        </ul></article><section class="space-gallery py-4" id="space" aria-labelledby="space-title"><div class="row g-4">
-<!-- The id is unique because it anchors the only interior gallery. --><!-- This div groups the gallery heading; it does not form a separate section from the gallery. --><div class="col-12"><div class="gallery-heading">
-          <p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Inside Kent</p>
-          <h2 id="space-title" class="h2 fw-bold mb-3">Compact, warm and graphic</h2>
-        </div></div>
-        <div class="col-12"><figure class="gallery-main"><div class="ratio ratio-16x9 rounded-4 overflow-hidden"><img src="images/kent-interior.jpg" alt="Mustard upholstered bench and round wood tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover"></div>
-<figcaption class="figure-caption mt-2">Mustard banquettes create the room’s strongest colour accent.</figcaption></figure></div>
-<div class="col-12 col-md-6"><figure><div class="ratio ratio-16x9 rounded-4 overflow-hidden"><img src="images/kent-seating.jpg" alt="Wood chairs and small round tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover"></div>
-<figcaption class="figure-caption mt-2">Small tables keep the layout suited to quick visits.</figcaption></figure></div>
-<div class="col-12 col-md-6"><figure><div class="ratio ratio-16x9 rounded-4 overflow-hidden"><img src="images/kent-gallery.jpg" alt="Framed photographs above tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover"></div>
-<figcaption class="figure-caption mt-2">A wall of photographs gives the compact room personality.</figcaption></figure></div>
-</div></section><section class="details-grid py-4" id="details" aria-labelledby="details-title"><div class="row g-4">
-<!-- The id is unique because this is the canonical branch-information block. --><div class="col-12"><header><p class="eyebrow small text-uppercase fw-semibold text-body-secondary mb-3">Visit details</p>
-          <h2 id="details-title" class="h2 fw-bold mb-3">Know before you go</h2>
-        </header></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="border rounded-3 p-3 h-100 bg-white"><h3 class="h5 fw-bold">Address</h3>
-          <p>Adolfa Yanushkevicha Street, 1<br>Tselinny microdistrict<br>Baikonyr district, Astana</p>
+        <div class="col-12 col-lg-5">
+          <img class="about-intro-photo img-fluid rounded-0 d-block mb-3" src="images/kent-interior.jpg" alt="Interior of Kent Sandwich with mustard seating and wooden tables" width="480">
+          <p class="lead mb-3 fw-normal">Kent Sandwich is a small sandwich shop in the Tselinny microdistrict. You can eat inside or take your order with you.</p>
+          <nav id="about-section-nav" class="page-jumps d-flex flex-wrap gap-2" aria-label="On this page">
+            <a id="story-link" href="#story" data-section="story" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Story</a>
+            <a id="space-link" href="#space" data-section="space" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Space</a>
+            <a id="details-link" href="#details" data-section="details" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Details</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <article class="about-story py-4" id="story" aria-labelledby="story-title">
+      <p class="eyebrow small text-uppercase fw-bold mb-3">The format</p>
+      <h2 id="story-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Simple enough to remember</h2>
+      <div class="row g-4 align-items-center mb-4">
+        <div class="col-12 col-md-5"><img class="story-photo img-fluid w-100 rounded-0" src="images/kent-packaging.jpg" alt="Kent Sandwiches presented in branded paper sleeves" loading="lazy"></div>
+        <div class="col-12 col-md-7"><p class="lead mb-0 fw-normal">Kent Sandwich serves toasted sandwiches in kraft paper sleeves. The packaging is simple, easy to carry and matches the shop’s black and yellow style.</p></div>
+      </div>
+      <h3 class="h5 fw-bold text-uppercase lh-1">What defines the experience</h3>
+      <ul class="value-list row g-3 list-unstyled">
+        <li class="col-12 col-md-6 col-lg-4"><div class="border rounded-0 p-3 h-100 bg-white"><strong class="d-block mb-2">Focused menu</strong><span>Eight sandwich choices.</span></div></li>
+        <li class="col-12 col-md-6 col-lg-4"><div class="border rounded-0 p-3 h-100 bg-white"><strong class="d-block mb-2">Fast format</strong><span>Eat inside or take the order with you.</span></div></li>
+        <li class="col-12 col-md-6 col-lg-4"><div class="border rounded-0 p-3 h-100 bg-white"><strong class="d-block mb-2">Warm interior</strong><span>Mustard seating, wood surfaces and soft vertical lighting.</span></div></li>
+      </ul>
+      <a id="about-menu-link" href="menu.html" class="btn btn-dark rounded-0 border-2 text-uppercase fw-bold">Explore the menu</a>
+    </article>
+    <section class="space-gallery py-4" id="space" aria-labelledby="space-title">
+      <div class="row g-4">
+        <div class="col-12">
+          <p class="eyebrow small text-uppercase fw-bold mb-3">Inside Kent</p>
+          <h2 id="space-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Compact, warm and graphic</h2>
+          <p id="gallery-help" class="small text-body-secondary">Open a photograph to see it at full size.</p>
+        </div>
+        <div class="col-12">
+          <figure class="gallery-main mb-0">
+            <a id="gallery-link-1" class="gallery-link d-block" href="images/kent-interior.jpg" data-gallery-index="0" data-caption-id="gallery-caption-1" aria-describedby="gallery-caption-1">
+              <span class="ratio d-block ratio-16x9 rounded-0 overflow-hidden"><img id="gallery-image-1" src="images/kent-interior.jpg" alt="Mustard upholstered bench and round wood tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover" loading="lazy"></span>
+            </a>
+            <figcaption id="gallery-caption-1" class="figure-caption mt-2">Mustard banquettes create the room’s strongest colour accent.</figcaption>
+          </figure>
+        </div>
+        <div class="col-12 col-md-6">
+          <figure class="mb-0">
+            <a id="gallery-link-2" class="gallery-link d-block" href="images/kent-seating.jpg" data-gallery-index="1" data-caption-id="gallery-caption-2" aria-describedby="gallery-caption-2">
+              <span class="ratio d-block ratio-16x9 rounded-0 overflow-hidden"><img id="gallery-image-2" src="images/kent-seating.jpg" alt="Wood chairs and small round tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover" loading="lazy"></span>
+            </a>
+            <figcaption id="gallery-caption-2" class="figure-caption mt-2">Small tables keep the layout suited to quick visits.</figcaption>
+          </figure>
+        </div>
+        <div class="col-12 col-md-6">
+          <figure class="mb-0">
+            <a id="gallery-link-3" class="gallery-link d-block" href="images/kent-gallery.jpg" data-gallery-index="2" data-caption-id="gallery-caption-3" aria-describedby="gallery-caption-3">
+              <span class="ratio d-block ratio-16x9 rounded-0 overflow-hidden"><img id="gallery-image-3" src="images/kent-gallery.jpg" alt="Framed photographs above tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover" loading="lazy"></span>
+            </a>
+            <figcaption id="gallery-caption-3" class="figure-caption mt-2">A wall of photographs gives the compact room personality.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <section class="details-grid py-4" id="details" aria-labelledby="details-title">
+      <div class="row g-4">
+        <div class="col-12">
+          <p class="eyebrow small text-uppercase fw-bold mb-3">Visit details</p>
+          <h2 id="details-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Know before you go</h2>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3"><article class="border rounded-0 p-3 h-100 bg-white">
+          <h3 class="h5 fw-bold text-uppercase lh-1">Address</h3>
+          <address id="visit-address" class="mb-0">Adolfa Yanushkevicha Street, 1<br>Tselinny microdistrict<br>Baikonyr district, Astana</address>
         </article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="border rounded-3 p-3 h-100 bg-white"><h3 class="h5 fw-bold">Hours</h3>
-          <p>Daily<br><time datetime="09:30">09:30</time>–<time datetime="21:30">21:30</time></p>
+        <div class="col-12 col-md-6 col-lg-3"><article id="visit-hours" class="border rounded-0 p-3 h-100 bg-white" data-open="09:30" data-close="21:30" data-time-zone="Asia/Almaty">
+          <h3 class="h5 fw-bold text-uppercase lh-1">Hours</h3>
+          <p>Daily<br><time id="visit-opening-time" datetime="09:30">09:30</time>–<time id="visit-closing-time" datetime="21:30">21:30</time></p>
+          <!-- Filled only after the future script computes the Astana time. -->
+          <p id="visit-status" class="hidden small mb-0" role="status" aria-live="polite"></p>
         </article></div>
-<div class="col-12 col-md-6 col-lg-3"><article class="border rounded-3 p-3 h-100 bg-white"><h3 class="h5 fw-bold">Links</h3>
-          <p>
-            <a href="tel:+77083461899">+7 708 346 18 99</a>
-            <br><a href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS listing</a>
-            <br><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram profile</a>
-          </p>
+        <div class="col-12 col-md-6 col-lg-3"><article class="border rounded-0 p-3 h-100 bg-white">
+          <h3 class="h5 fw-bold text-uppercase lh-1">Contacts</h3>
+          <p class="mb-0"><a id="visit-phone" href="tel:+77083461899">+7 708 346 18 99</a><br><a id="visit-map" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">View on 2GIS</a><br><a id="visit-instagram" href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram profile</a></p>
         </article></div>
-<div class="col-12 col-md-6 col-lg-3"><aside class="border rounded-3 p-3 h-100 bg-dark text-white"><h3 class="h5 fw-bold">Good to know</h3>
-          <p>The shop has seating inside, a takeaway option and a short menu of hot sandwiches. In Kazakh, a satisfied guest might simply say <i lang="kk">дәмді</i>: tasty.</p>
+        <div class="col-12 col-md-6 col-lg-3"><aside class="border rounded-0 p-3 h-100 bg-dark text-white">
+          <h3 class="h5 fw-bold text-uppercase lh-1">Good to know</h3>
+          <p class="mb-0">The shop has seating inside, a takeaway option and a short menu of hot sandwiches. In Kazakh, a satisfied guest might simply say <i lang="kk">дәмді</i>: tasty.</p>
         </aside></div>
-</div></section></main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
-<p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
+      </div>
+      <p class="mt-4 mb-0">Already visited? <a id="about-feedback-link" href="feedback.html">Tell us about your experience</a>.</p>
+    </section>
+  </main>
+  <!-- All viewer controls exist before the HTML/CSS freeze. Image links work without it. -->
+  <dialog id="gallery-dialog" class="gallery-dialog border border-dark border-2 rounded-0 p-3 p-md-4" aria-labelledby="gallery-dialog-title" aria-describedby="gallery-dialog-caption">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+      <h2 id="gallery-dialog-title" class="h4 fw-bold text-uppercase mb-0">Inside Kent</h2>
+      <form id="gallery-close-form" method="dialog"><button id="gallery-close" type="submit" value="close" class="btn btn-outline-dark btn-sm rounded-0 border-2" autofocus>Close photograph</button></form>
+    </div>
+    <figure class="mb-3">
+      <img id="gallery-dialog-image" src="images/kent-interior.jpg" alt="Mustard upholstered bench and round wood tables inside Kent Sandwich" class="gallery-dialog-image d-block">
+      <figcaption id="gallery-dialog-caption" class="figure-caption mt-2">Mustard banquettes create the room’s strongest colour accent.</figcaption>
+    </figure>
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <button id="gallery-previous" type="button" class="btn btn-outline-dark rounded-0 border-2" aria-label="Previous photograph">← Previous</button>
+      <output id="gallery-position" class="small" aria-live="polite">1 of 3</output>
+      <button id="gallery-next" type="button" class="btn btn-outline-dark rounded-0 border-2" aria-label="Next photograph">Next →</button>
+    </div>
+    <p id="gallery-error" class="hidden error small mt-3 mb-0" role="alert">This photograph could not be opened. Close the viewer and choose another photograph.</p>
+  </dialog>
+  <footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5 border-top border-2 border-dark">
+    <div class="row g-3 align-items-center text-center text-md-start">
+      <p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
       <p class="col-12 col-md-4 mb-0 small">Adolfa Yanushkevicha Street, 1 · Astana</p>
-      <p class="col-12 col-md-4 mb-0 small text-md-end">
-        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a>
-      </p>
-    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 shadow z-3 d-none d-lg-block" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+      <p class="col-12 col-md-4 mb-0 small text-md-end"><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html#sources" class="link-light">Sources &amp; credits</a></p>
+    </div>
+  </footer>
+  <a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 z-3 d-none d-lg-block rounded-0 border-2 text-uppercase fw-bold" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <!-- Empty at the midterm: later behaviour can be added without changing this HTML. -->
+  <script src="js/timur.js" defer></script>
 </body>
 </html>
