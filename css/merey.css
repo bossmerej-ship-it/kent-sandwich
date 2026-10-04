@@ -8,3 +8,72 @@
   font-family: var(--kent-heading-font);
   letter-spacing: -0.045em;
 }
+
+/* Keep Bootstrap warning utilities on the shop's electric yellow. */
+:is(.page-home, .page-menu, .page-order) {
+  --bs-warning: #f4e70c;
+  --bs-warning-rgb: 244, 231, 12;
+}
+
+/* JavaScript selection hooks for the menu and order pages; unused until the next assignment. */
+.menu-card.is-active,
+.menu-card.is-selected,
+.choice-card.is-active,
+.choice-card.is-selected {
+  outline: 3px solid var(--bs-body-color);
+  outline-offset: -3px;
+}
+
+.form-message {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border: 2px solid var(--bs-body-color);
+}
+
+.form-message.is-error {
+  border-color: #a12622;
+  background-color: #fff0ef;
+  color: #741a17;
+}
+
+.form-message.is-success {
+  border-color: #25613b;
+  background-color: #edf8f0;
+  color: #174629;
+}
+
+.form-control.is-error,
+.form-select.is-error {
+  border-color: #a12622;
+}
+
+.form-control.is-success,
+.form-select.is-success {
+  border-color: #25613b;
+}
+
+.item-quantity {
+  width: 5rem;
+  flex: 0 0 5rem;
+}
+
+.page-order .order-summary {
+  background-color: var(--bs-tertiary-bg);
+}
+
+.page-order .form-check-input:checked {
+  border-color: var(--bs-body-color);
+  background-color: #f4e70c;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23141414' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
+.page-order .form-check-input:focus {
+  border-color: #f4e70c;
+  box-shadow: 0 0 0 0.25rem rgb(244 231 12 / 35%);
+}
+
+.page-order .form-control:focus,
+.page-order .form-select:focus {
+  border-color: #f4e70c;
+  box-shadow: 0 0 0 0.25rem rgb(244 231 12 / 35%);
+}
