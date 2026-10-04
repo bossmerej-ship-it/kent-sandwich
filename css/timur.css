@@ -1,6 +1,90 @@
-/* Timur Naumov — about, feedback and colophon pages.
-   Keep the Kent heading font on these pages; Bootstrap controls sizes,
-   spacing, grid columns and responsive behaviour. */
-:is(.page-about, .page-feedback, .page-colophon) main :is(h1, h2, h3) {
+/* Bootstrap owns the grid, spacing and controls; these rules add page states. */
+:is(.page-about, .page-feedback, .page-colophon) main :is(h1, h2, h3),
+.gallery-dialog h2, .audit-number, .value-list strong {
   font-family: var(--kent-heading-font);
+  letter-spacing: -0.045em;
+}
+
+/* Future scripts switch classes instead of creating new styles. */
+.page .hidden {
+  display: none;
+}
+.page .error, .page .field-error {
+  --bs-border-color: #a61b29;
+  color: #861522;
+}
+.page .success {
+  --bs-border-color: #496322;
+  background-color: #f0f4e8;
+  color: #263815;
+}
+.page .pending {
+  cursor: progress;
+}
+.page-about .page-jumps .active {
+  background-color: #141414;
+  color: #fff;
+}
+.page .rating-choice.selected,
+.page .rating-choice:has(input:checked) {
+  --bs-border-color: #141414;
+  background-color: #f4e70c;
+}
+.page-feedback :is(input, select, textarea).error,
+.page-feedback :is(input, select, textarea)[aria-invalid="true"],
+.page-feedback :is(input, select, textarea):user-invalid {
+  border-color: #a61b29;
+  box-shadow: 0 0 0 0.15rem rgba(166, 27, 41, 0.15);
+}
+.page :is(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid #141414;
+  outline-offset: 3px;
+}
+.page .site-footer a:focus-visible {
+  outline-color: #f4e70c;
+}
+.rating-choice {
+  cursor: pointer;
+}
+.page :is(.page-jumps a, .gallery-dialog button) {
+  min-height: 2.75rem;
+}
+.feedback-summary dd, .feedback-message {
+  overflow-wrap: anywhere;
+}
+.feedback-message {
+  white-space: pre-wrap;
+}
+
+/* A non-modal HTML dialog keeps the form inline. method="dialog" closes it. */
+.feedback-dialog {
+  position: static;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+.feedback-dialog[open] + .feedback-confirmation {
+  display: none;
+}
+
+/* Native showModal() will own focus, Escape and the background interaction. */
+.gallery-dialog {
+  width: min(56rem, calc(100% - 2rem));
+  max-width: none;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+.gallery-dialog::backdrop {
+  background-color: rgba(20, 20, 20, 0.75);
+}
+.gallery-dialog-image {
+  width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
 }

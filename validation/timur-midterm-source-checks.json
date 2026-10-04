@@ -1,0 +1,75 @@
+{
+  "checkedDate": "2026-10-04",
+  "timeZone": "Asia/Almaty",
+  "evidenceType": "source-only",
+  "pages": [
+    {
+      "page": "about.html",
+      "status": "pass",
+      "idCount": 43,
+      "issues": [],
+      "sourceSha256": "f4dc8ace6928a2a019dacedea4a333da012baaee2b2327f01229f964b486873a"
+    },
+    {
+      "page": "feedback.html",
+      "status": "pass",
+      "idCount": 68,
+      "issues": [],
+      "sourceSha256": "9a28d4f3ec071390803100473138932af03d7c37dc455a61209f1b908d2bf9f6"
+    },
+    {
+      "page": "colophon.html",
+      "status": "pass",
+      "idCount": 22,
+      "issues": [],
+      "sourceSha256": "c480e154df79f41e85aeea6b5daa659b556032630d7166cfa83af6892edd5a4a"
+    }
+  ],
+  "stateClasses": {
+    "hidden": true,
+    "active": true,
+    "selected": true,
+    "error": true,
+    "success": true,
+    "pending": true
+  },
+  "missingFutureHooks": {
+    "about.html": [],
+    "feedback.html": [],
+    "colophon.html": []
+  },
+  "unrelatedFilesUnchanged": {
+    "index.html": true,
+    "menu.html": true,
+    "order.html": true,
+    "css/base.css": true,
+    "css/merey.css": true
+  },
+  "scriptEntryBytes": 0,
+  "readmeHasNoProcessTerms": true,
+  "cssBracesBalanced": true,
+  "customJavaScriptWritten": false,
+  "renderedChecks": "not_run; earlier browser file URL action was rejected",
+  "artifactSha256": {
+    "about.html": "f4dc8ace6928a2a019dacedea4a333da012baaee2b2327f01229f964b486873a",
+    "feedback.html": "9a28d4f3ec071390803100473138932af03d7c37dc455a61209f1b908d2bf9f6",
+    "colophon.html": "c480e154df79f41e85aeea6b5daa659b556032630d7166cfa83af6892edd5a4a",
+    "css/timur.css": "abedce33486294d338ef9374bfe5c52f2ffc9dd47e079ce37ffa727cea20caac",
+    "js/timur.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "README.md": "fd621b7f83163bf618e671f6ab391674bd2101e1af2b4bc48635fb22581a44fc"
+  },
+  "unrelatedFilesUnchangedScope": "Original local source preparation; integration preserves the destination final branch versions.",
+  "repositoryIntegration": {
+    "branch": "final",
+    "baseCommit": "2ed51f8",
+    "preservedFiles": [
+      "index.html",
+      "menu.html",
+      "order.html",
+      "css/base.css",
+      "css/merey.css"
+    ],
+    "localReferences": "pass",
+    "existingMidtermTagChanged": false
+  }
+}
