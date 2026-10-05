@@ -15,6 +15,11 @@
   --bs-warning-rgb: 244, 231, 12;
 }
 
+/* Keep prepared cart and message regions out of view until JavaScript reveals them. */
+:is(.page-home, .page-menu, .page-order) .is-hidden {
+  display: none;
+}
+
 /* JavaScript selection hooks for the menu and order pages; unused until the next assignment. */
 .menu-card.is-active,
 .menu-card.is-selected,
