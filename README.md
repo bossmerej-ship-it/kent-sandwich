@@ -137,4 +137,3 @@ Only basket product IDs and quantities are saved under `kent-sandwich-basket-v1`
 The focused automated checks run with `node --test tests/menu-data.test.cjs tests/order-validation.test.cjs`. They cover catalogue/filter/basket logic and quantity/date/time validation; they do not replace browser, keyboard, layout or peer checks. Review the browser report before treating any runtime path as verified.
 
 The original `midterm` tag stays unchanged. The `assignment-4` and `assignment-5` tags are deliberately deferred until the combined team's respective milestones and evidence are ready. The four-commits-over-three-days requirement, peer review and defence preparation require genuine team participation and cannot be created by this single-day implementation.
-
