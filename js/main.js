@@ -110,6 +110,9 @@
 
   // This shared basket link is added only on the three pages loading main.js.
   const navList = document.querySelector('#main-navbar ul');
+  navList.querySelectorAll('a').forEach(function (link) {
+    link.classList.toggle('active', link.getAttribute('aria-current') === 'page');
+  });
   const navItem = createElement('li', 'nav-item');
   const navLink = createElement('a', 'nav-link px-3 fw-semibold');
   navLink.id = 'shared-basket-link';
