@@ -7,7 +7,10 @@ const vm = require('node:vm');
 const context = vm.createContext({
   document: { body: { dataset: { page: 'test' } } }
 });
-vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/timur.js'), 'utf8'), context);
+for (const file of ['timur.js', 'about.js', 'feedback.js']) {
+  const source = fs.readFileSync(path.join(__dirname, '../js', file), 'utf8');
+  vm.runInContext(source, context);
+}
 
 function validFeedback() {
   return {
@@ -83,3 +86,15 @@ test('gallery wraps in both directions', function () {
   assert.equal(context.getNextPhotoIndex(2, 1, 3), 0);
   assert.equal(context.getNextPhotoIndex(0, -1, 3), 2);
 });
+
+for (const [page, expectedScripts] of [
+  ['about.html', ['js/timur.js', 'js/about.js']],
+  ['feedback.html', ['js/timur.js', 'js/feedback.js']],
+  ['colophon.html', ['js/timur.js']]
+]) {
+  test(page + ' loads the common script before its page script', function () {
+    const html = fs.readFileSync(path.join(__dirname, '..', page), 'utf8');
+    const scripts = Array.from(html.matchAll(/<script\s+src="(js\/[^"]+)"\s+defer><\/script>/g), match => match[1]);
+    assert.deepEqual(scripts, expectedScripts);
+  });
+}

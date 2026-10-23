@@ -52,7 +52,13 @@ From this baseline, keep the HTML interface and CSS rules frozen. Only script li
 
 ## Assignment 4 and 5 Timur JavaScript
 
-`js/timur.js` implements only `about.html`, `feedback.html` and `colophon.html`, selected by `body.dataset.page`. It uses plain functions, arrays, native events, `textContent` and existing CSS classes. The HTML and CSS files are unchanged by this implementation. Merey's pages, styles and scripts are not edited.
+The JavaScript is divided into three plain scripts:
+
+- `js/timur.js`: shared DOM/time helpers and header alignment on Timur's three pages.
+- `js/about.js`: the gallery and opening-hours status on About.
+- `js/feedback.js`: form validation, review cards, filters, sorting and completion on Feedback.
+
+About and Feedback load the common script first, followed by their page script, all with `defer`. Colophon loads only the common script. Existing functions retain their behaviour. HTML edits are limited to the new script links; CSS and Merey's files are unchanged.
 
 ### Functionality Plan
 
@@ -80,6 +86,8 @@ Required text is trimmed before validation. Names must contain 2–80 characters
 A valid submit opens the prepared review panel. Edit preserves the entered fields; Confirm adds exactly one card, resets review filters and displays the prepared summary. Reset and Start another feedback form clear the draft without deleting reviews already added during the current page visit. Copy reports success only after the Clipboard API succeeds and offers manual selection if copying fails. All visitor text is inserted with `textContent` or a textarea value.
 
 ### Verification
+
+[JS_CHECKLIST_TIMUR.md](JS_CHECKLIST_TIMUR.md) maps requirements to the exact files and line numbers in the split scripts.
 
 Run `node --test tests/timur.test.cjs`. The tests use Node's built-in test runner and the actual script, without additional packages. They cover date/time boundaries, field rules, connected filters and gallery wrapping. Browser checks and scope verification are recorded in `validation/timur-assignment-4-5-results.md`. Integration checks against the current `final` branch are recorded in the same verification report. Team milestone tags are separate from this scoped implementation.
 

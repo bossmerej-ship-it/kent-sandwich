@@ -2,64 +2,54 @@
 
 Date: 23 October 2026, Asia/Almaty.
 
-Scope: `js/timur.js`, Timur's sections of README, `tests/timur.test.cjs` and the two screenshots in `screenshots/assignment-4-5-timur/`.
+Starting commit: `e272380034d55d9591551bf6d4d5f7df069dc5b9` on `final`.
 
-## Source and freeze verification
+## Script structure and scope
 
-- All six HTML files and all three CSS files are byte-identical to their state before this implementation. The earlier navigation script links are preserved.
-- Merey's Home, Menu, Order, stylesheet and AI log are unchanged. Shared `css/base.css` and `js/navigation.js` are unchanged.
-- The existing deferred `js/timur.js` entry is used. New controls/cards are created through the DOM; state changes use existing classes. No inline CSS or new stylesheet rules are generated.
-- Syntax check: `node --check js/timur.js` passed.
-- Production-source checks found no `var`, loose equality, `innerHTML`, `element.style`, `document.write()` or `eval()`.
-- Verified `js/timur.js` SHA-256: `fd18e9be053eec7ca067e89707b69581935209c0acf98304d5e4ac7e9c555c52`.
+| File | Lines | Responsibility | SHA-256 |
+| --- | ---: | --- | --- |
+| js/timur.js | 44 | Shared element/time helpers and header alignment | `869005644f03778414b11e9895d4453eaf8199a7f72eb0e6d3c72e04ccd08308` |
+| js/about.js | 87 | Gallery, opening status and minute refresh | `f4afaf2929bb7a13c4feb259708156ffac8d6293508b229bc46607852f1b56ee` |
+| js/feedback.js | 373 | Feedback validation, cards, filters and completion | `95108cbb94529e62748511c9c34c452abe10421d96dd247d15965c88b7d4424a` |
 
-## Automated logic checks
+All 12 existing top-level function bodies are preserved exactly. Only their file placement and page initialization change. About and Feedback each receive one deferred page-script connection immediately after timur.js. Colophon still loads only timur.js. No other HTML edits or CSS edits are included.
 
-Command: `node --test` from this folder.
+Merey's Home, Menu, Order, scripts, tests, checklist, evidence and complete Functionality Plan section remain byte-identical to the starting commit. The source references in [JS_CHECKLIST_TIMUR.md](../JS_CHECKLIST_TIMUR.md) identify the new files and exact line numbers.
 
-Result: **10 tests passed, 0 failed**. These exercise the actual script through Node's VM: Astana midnight, exact opening/closing boundaries, minute-boundary refresh scheduling, optional contacts, trimmed required text, impossible/future dates, cross-field permission, invalid contacts/group/rating, connected filters, stable source-array order and gallery wrapping.
+## Automated checks
 
-## Browser checks
+- `node --check js/timur.js`, `node --check js/about.js` and `node --check js/feedback.js`: passed.
+- `node --test`: **25 passed, 0 failed**; 13 Timur checks and 12 existing Merey checks.
+- The three new checks verify the actual HTML script connections and dependency order. Before the split, the About and Feedback loading checks failed as expected; both pass after adding their scripts.
+- The existing checks exercise Astana midnight, opening/closing boundaries, minute scheduling, trimmed required text, optional contacts, impossible/future dates, contact permission, group/rating rules, connected filters, source-array order and gallery wrapping.
+- `git diff --check`: passed. Production scripts contain no var, loose equality, innerHTML, inline style mutation, document.write or eval.
 
-The saved local files were served on 127.0.0.1. Synthetic values were used; no business operation was submitted.
+## Browser checks after the split
+
+The current checkout was served at 127.0.0.1:8780. Synthetic values were used for the local demonstration forms.
 
 | Scenario | Observed result |
 | --- | --- |
-| Consistent headers | Home and all three Timur pages have the same header height and spacing, logo size and normal-case navigation. Colophon is absent from the header; the footer credit link remains. |
-| Invalid feedback | Blank fields, malformed email, fractional group size, future visit and missing contact permission data show nearby errors. Submit focuses the first invalid field and preserves values. |
-| Correction and preview | Errors clear as fields are corrected. The counter updates. A valid submit shows the real choices; Edit restores the original values and focus. |
-| Confirmation and repeat use | Confirm creates one card, a timestamp and a DEMO reference, resets filters and shows an explicit local-only summary. Restart clears the draft/counter and retains reviews for this page visit. |
-| Privacy and text safety | Contact details appear only in the opted-in summary. Text containing `<b>` and `<img>` remains literal; no corresponding injected elements appear in the cards. |
-| Search, rating, sorting and reset | Combined Chicken search and five-star filter finds the submitted card. An incompatible rating shows the empty state. Reset restores all cards; oldest-first puts the July source review first. |
-| Source attribution | The existing 2GIS review keeps its author, source date/link and `lang="ru"`. Its unspecified rating is not invented. |
-| Copy | The copy action reported success after the Clipboard API resolved, then re-enabled its button. |
-| Gallery | Opens the chosen photo, cycles from first to last and back, handles Left/Right and Escape, and restores focus to the opening link. The mobile dialog fits within 375 CSS pixels. |
-| Hours | The About page displays the computed Astana status. Automated checks verify 09:30 inclusive, 21:30 exclusive and the next-minute update delay. |
-| Responsive geometry | Home and the three Timur pages were checked at actual widths 375, 768 and 1440 CSS pixels. No horizontal document overflow or broken loaded images was found. The 600-character message and validation errors were additionally checked at 375 pixels. |
-| Runtime health | No relevant console errors were reported on the checked final routes and flows. |
+| Page loading | About loads timur.js then about.js; Feedback loads timur.js then feedback.js. Both initialize successfully. Colophon retains the common header behaviour. |
+| Header and navigation | All six pages have an 87-pixel header and 44-pixel logo at the measured widths. Colophon is absent from the main navigation. Mobile navigation expands successfully on About. Footer source links remain available. |
+| Invalid feedback | Empty submission shows nearby errors and the summary, preserves the draft and focuses guest-name. |
+| Preview and edit | Corrected fields clear the errors. The message counter updates. Preview shows the chosen Chicken item, date, rating and text. Edit restores all entered values. |
+| Confirm and reset | Confirm adds one five-star card, timestamp and DEMO reference. The count becomes 2 of 2 and the average 5.0; the source review stays unrated. Start another form resets the draft and counter while retaining cards for this visit. |
+| Text safety | Literal text containing `<b>` remains text in the preview, summary and card; no corresponding element is injected into the review list. |
+| Connected filters | Chicken search plus five stars shows the new review. Switching to one star produces the empty message and zero results. Reset restores both reviews. |
+| Copy | Copy reports success after completion and the button becomes available again. |
+| Gallery | Opens the selected image. Previous wraps from 1 of 3 to 3 of 3; ArrowRight returns to 1 of 3. Escape closes and returns focus to the original photograph link. At 375 CSS pixels, the dialog fits inside the viewport. |
+| Hours | About displays the current Astana closed/open message. Automated checks cover 09:30 inclusive, 21:30 exclusive and the next-minute delay. |
+| Menu and basket integration | Combined Chicken search and a 390 maximum produces no results; reset restores eight items. Chicken twice and Mini once produce three items totalling 1,670 ₸. The basket survives navigation through About and Feedback to Order. |
+| Order integration | Invalid submission focuses customer-name. Valid synthetic input prepares a local demonstration with Chicken × 2, Mini × 1 and the same 1,670 ₸ total. |
+| Home integration | Another suggestion changes Mini to Chicken while retaining the existing basket counts. |
+| Responsive geometry | All six pages checked at actual widths 375, 768 and 1440 CSS pixels: no horizontal document overflow or broken loaded images. |
+| Runtime health | No console errors reported across the checked routes and interactions. |
 
-Desktop captures: `../screenshots/assignment-4-5-timur/feedback-desktop.jpg` and `../screenshots/assignment-4-5-timur/about-desktop.jpg`. Browser actions and DOM measurements, rather than screenshots alone, establish the interaction results.
-
-## Integration into the current final branch
-
-Starting commit: `d5b687496a0156a7c47487d5668d6a9555ae90db` (`final`). The implementation script is unchanged from the verified local source hash above. Only `js/timur.js` and Timur-related README text change among existing tracked files; Timur's tests, report and screenshots are added. The complete Merey Functionality Plan section is preserved verbatim. All existing HTML/CSS files, Merey scripts/tests/checklist and remaining tracked files match the starting commit.
-
-The combined `node --test` run passes **22 tests, 0 failures**: 12 existing Merey tests and 10 Timur tests. `git diff --check` passes.
-
-The merged checkout was served locally and checked in the browser:
-
-- Menu search and combined filters still work, including no results and reset.
-- Chicken × 2 plus Mini × 1 survives navigation from Menu through About and Feedback to Order, with three items and 1,670 ₸.
-- About gallery wrapping, keyboard/Escape and focus restoration work; the Astana hours status is visible.
-- Feedback rejects a future visit, previews and confirms a review, retains source language/credits and filters the new card correctly.
-- Order focuses the first invalid field, then produces the correct explicit demonstration summary after valid synthetic input.
-- Home's next suggestion changes the item. Adding it updates the existing basket to four items on Order. Clearing the basket restores the empty state and disables completion.
-- All six merged pages have consistent header geometry and were measured at actual widths 375, 768 and 1440 CSS pixels. No horizontal document overflow, broken loaded images or relevant console errors were found.
-
-Both desktop screenshots were recaptured from the merged checkout using its unchanged shared stylesheet, so they reflect the final branch's typography and colours.
+New gallery evidence: [about-gallery-desktop.jpg](../screenshots/assignment-4-5-timur/about-gallery-desktop.jpg). Existing desktop captures in screenshots/assignment-4-5-timur/ remain representative: this split preserves the rendered behaviour and styling. Interaction checks above were repeated against the split scripts.
 
 ## Limits
 
-- Reviews are in memory only, disappear after reload and are never sent to the shop. No database, authentication, real order or payment was added.
-- Clipboard denial and broken-image recovery are implemented and source-reviewed; those failure paths were not forced in the browser. No full assistive-technology audit is claimed.
-- The initial source folder was not a Git checkout. Integration is performed in a separate checkout of the existing repository. No milestone tag is created by this scoped change, and these results do not claim completion of the full team submission.
+- Reviews exist only in memory, disappear after reload and are never sent to the shop. No database, authentication, real order or payment is added.
+- Clipboard denial and broken-image recovery remain implemented; these failure paths were not forced during this browser pass. No full assistive-technology audit is claimed.
+- The original source folder is not its own Git checkout; Git integration uses the separate repository checkout. This change does not create milestone tags, move midterm or claim completion of the full team submission.
