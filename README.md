@@ -23,9 +23,9 @@ All pages use `css/base.css` after Bootstrap and before their page stylesheet. N
 
 1. **Plan a visit.** Start at Home → open Our place → choose Details → read the address and daily hours → open the 2GIS location or telephone link. The visitor finishes with the information needed to reach or contact the shop.
 2. **Compare sandwiches.** Start at Home → open Menu → compare the sandwich descriptions and price table → identify a sandwich → open Our place for eating-in and takeaway information. The visitor finishes with a choice and the visit details.
-3. **Complete visit feedback.** Start at Home → open Feedback → enter a name, past/current visit date, rating and 20–600 characters of feedback → optionally add contact details → choose Complete feedback. Native validation keeps invalid fields open; valid submission replaces the form with an explicit local confirmation. The visitor can contact the shop or start another form. No message is sent to the shop by this website.
+3. **Complete visit feedback.** Start at Home → open Feedback → enter visit details → choose Review feedback → correct any field errors → review or edit the summary → confirm. A new review card and an explicit local confirmation appear. Search, rating filters and sorting help read reviews. The visitor can copy the summary or start another form. No message is sent to the shop by this website.
 
-At the midterm, Order had prepared selection fields and result containers with an unconnected submission control. The Assignment 4–5 work now connects Merey's Home, Menu and Order pages through a retained basket and a validated local demo-order summary; the current scope and Functionality Plan are recorded below. The three journeys above describe the midterm snapshot, including Timur's separate feedback journey.
+At the midterm, Order had prepared selection fields and result containers with an unconnected submission control. The Assignment 4–5 work now connects Merey's Home, Menu and Order pages through a retained basket and a validated local demo-order summary; the current scope and Functionality Plan are recorded below. The feedback journey above now describes Timur's JavaScript flow; the section below preserves the historical midterm behaviour.
 
 ## Feedback at the midterm
 
@@ -50,42 +50,38 @@ These are visual corrections already present in `final`. No CSS files changed be
 
 From this baseline, keep the HTML interface and CSS rules frozen. Only script links may be added directly to HTML. Create, update and remove interface elements through JavaScript DOM methods, and apply existing state classes through `classList`. Do not move or replace the `midterm` tag.
 
-## JavaScript plan after the HTML/CSS freeze
+## Assignment 4 and 5 Timur JavaScript
 
-All three Timur pages already load the empty `js/timur.js` with `defer`. It contains no custom behaviour at the midterm. Later assignments can fill this file without editing HTML or CSS. Use `document.body.dataset.page` to initialise only the relevant page. Bootstrap continues to own the shared mobile menu.
+`js/timur.js` implements only `about.html`, `feedback.html` and `colophon.html`, selected by `body.dataset.page`. It uses plain functions, arrays, native events, `textContent` and existing CSS classes. The HTML and CSS files are unchanged by this implementation. Merey's pages, styles and scripts are not edited.
 
-Use browser facilities already present: the Constraint Validation API and `FormData` for the form, native `HTMLDialogElement` for the viewer, `Intl.DateTimeFormat` for Astana time, and the Clipboard API with a manual-copy fallback. Keep feedback in memory for the current page; do not send it to a service or persist personal fields automatically.
+### Functionality Plan
 
-### Feedback states and transitions
+| Page | Visitor goal | Function | Expected result | Responsible student |
+| --- | --- | --- | --- | --- |
+| Timur's three pages | Use consistent navigation | Apply the existing Home/Menu header classes and 44px logo through the DOM; remove Colophon from the header | Same header spacing, background and link appearance; Sources & credits remains in the footer | Timur Naumov |
+| Feedback | Leave a useful review | Validate name, optional contacts, group size, visit date, rating, message and the contact-permission rule | Specific nearby errors, first-invalid focus, preserved input, live counter and errors that clear after correction | Timur Naumov |
+| Feedback | Check and finish a review | Preview, edit, confirm, copy summary and start another review | One new local card with automatic date/time and a demo reference; no data sent to the business | Timur Naumov |
+| Feedback | Read relevant reviews | Combined text/rating filters, date sorting, result count, average of rated results and reset | Reusable cards for the attributed source review and new local reviews, including a useful empty state | Timur Naumov |
+| About | Inspect the interior | Native photograph dialog, previous/next, Left/Right keys and Escape | Three existing photographs with captions and counter; closing returns focus to the opening link | Timur Naumov |
+| About | Know whether a visit fits opening hours | Compute the current Asia/Almaty time and refresh at minute boundaries and on return to the page | Open from 09:30 inclusive until 21:30 exclusive, otherwise show today's or tomorrow's opening time | Timur Naumov |
 
-| State | Existing markup and action |
-| --- | --- |
-| Editing | `feedback-dialog` is open; `feedback-form` is visible; `feedback-review` has `hidden`. Update `feedback-character-count` on input and reveal `feedback-count-row` only once the script owns that counter. |
-| Invalid | Keep values. Populate `feedback-error-list` from `feedback-error-item`; reveal the matching prewritten field error. Set `aria-invalid="true"`, add `error`, and focus `feedback-errors`. Each summary link targets the actual invalid control. |
-| Reviewing | Intercept the form's `submit` with `preventDefault()`. After validation, populate the existing `feedback-review-*` outputs with `textContent`, hide the form and reveal/focus `feedback-review`. |
-| Correcting | `feedback-edit` returns to the form with all entered values preserved. Clear resolved field errors as the visitor corrects them. |
-| Completed | `feedback-confirm` prepares plain text in `feedback-share-text`, reveals `feedback-share`, then calls `feedback-dialog.close("complete")`. The existing confirmation becomes visible; focus it. Include contact details only when `contact-permission` is checked. |
-| Copying | `feedback-copy` copies the prepared text. Use `pending` and disable the button only during the promise; then show an accurate result in `feedback-copy-status`. |
-| Copy failed | Reveal `feedback-copy-error`, focus/select the read-only summary and allow manual copying. Do not claim that text was copied or sent. |
-| Starting again | Intercept `feedback-restart`, call `feedback-form.reset()`, clear outputs/errors/copy status, hide the review/share panels, show the form, and reopen the non-modal dialog with `.show()`. Reset the counter and focus the name input. |
+The two main individual visitor workflows are completing and reading feedback, and exploring the interior gallery. The hours status supports planning a visit. Colophon keeps its static credits content.
 
-On enhancement, set `feedback-form.noValidate = true` so the script can show the prepared error summary on invalid submit; then reuse native `validity`/`checkValidity()` rather than a second validation framework. Also trim the name and message before checking their lengths; reject a future visit date; reject blank contact details when the include-contact checkbox is selected. Keep the original fields editable on every failure. Format the chosen sandwich and rating from their visible labels. Optional blank fields should read "Not provided" in the review instead of empty rows.
+### Data and privacy
 
-### Our place interactions
+The eight existing menu items are represented by objects with `id`, `name`, `price` and `profile`, used to generate the feedback selection options. Their prices match the supplied menu. The existing 2GIS review retains its author, original date, source link and Russian language annotation. Its rating was not supplied, so it is shown as not rated. No customer reviews or ratings are invented.
 
-| Interaction | Existing hooks | Future behaviour |
-| --- | --- | --- |
-| Photograph viewer | `gallery-link-1`–`gallery-link-3`, `gallery-dialog`, `gallery-dialog-image`, `gallery-dialog-caption`, `gallery-position`, `gallery-previous`, `gallery-next`, `gallery-close`, `gallery-error` | Intercept a photograph link, read its image and `data-caption-id`, and call `.showModal()`. Previous/Next and Left/Right cycle through the three images and update the existing image/caption/counter. Keep native Escape/close behaviour, remember the opener and restore focus on close. If an image fails, show the prepared error and retain a working close action. Without enhancement, each link already opens its real image. |
-| Opening-hours status | `visit-hours` with `data-open`, `data-close`, `data-time-zone`; `visit-status` | Compute time in `Asia/Almaty`. The shop is open at 09:30 and closed from 21:30. Fill and reveal the existing status with "Open until 21:30" or "Closed — opens at 09:30". Refresh on return to the tab and at minute intervals; use `success` only for the open state. |
-| Section navigation | `about-section-nav`, `story-link`, `space-link`, `details-link` and their `data-section` values | Ordinary anchors work now. An `IntersectionObserver` can later move `active` and `aria-current="location"` to the section in view. |
+New reviews exist only in memory on the current page and disappear after a reload. Contact fields are included in the private preview/copy summary only when the visitor selects the contact-permission checkbox; they are never added to review cards or browser storage. A demo reference is temporary and does not confirm a real order, booking or payment.
 
-Colophon remains a static source page. Its source blocks and image-credit rows already have IDs if their content later needs updating.
+### Feedback behaviour
 
-### Prepared styling
+Required text is trimmed before validation. Names must contain 2–80 characters and messages 20–600. Optional email and phone must be valid when entered. Group size must be a whole number from 1 to 20. A visit date must exist and must not be in the future in Astana. Rating must be from 1 to 5. Including contact details requires an email or phone number.
 
-`css/timur.css` already defines `hidden`, `active`, `selected`, `error`, `success` and `pending`, plus invalid-field focus, review text wrapping and the native viewer geometry/backdrop. Native radio selection is visible before enhancement; later code can also switch `selected`. Hidden panels contain real headings, buttons and field-error messages, with empty outputs where actual visitor data belongs.
+A valid submit opens the prepared review panel. Edit preserves the entered fields; Confirm adds exactly one card, resets review filters and displays the prepared summary. Reset and Start another feedback form clear the draft without deleting reviews already added during the current page visit. Copy reports success only after the Clipboard API succeeds and offers manual selection if copying fails. All visitor text is inserted with `textContent` or a textarea value.
 
-After the freeze, update values, attributes and `classList` through JavaScript. Use `textContent` for visitor text, not HTML interpolation. Clone the prepared error template when generating error rows. Do not inject styles, write inline CSS or manually add markup. The script entry, state containers and controls already exist.
+### Verification
+
+Run `node --test tests/timur.test.cjs`. The tests use Node's built-in test runner and the actual script, without additional packages. They cover date/time boundaries, field rules, connected filters and gallery wrapping. Browser checks and scope verification are recorded in `validation/timur-assignment-4-5-results.md`. Integration checks against the current `final` branch are recorded in the same verification report. Team milestone tags are separate from this scoped implementation.
 
 ## Sources and photographs
 
