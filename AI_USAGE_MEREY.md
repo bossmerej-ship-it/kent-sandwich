@@ -1,7 +1,9 @@
 # AI Assistance & Usage Log
 
-**Developer:** Merey Kuatbay  
-**AI Model Used:** Claude 3.5 Sonnet (Anthropic)  
+**Developer:** Merey Kuatbay
+
+**AI Model Used:** Claude 3.5 Sonnet (Anthropic)
+
 **Academic Honesty Statement:** Claude was employed as a technical reference and workflow assistant for semantic validation, Git recovery, CSS architecture, accessibility compliance, and layout planning. All code output and style rules were manually evaluated, integrated, tested against course constraints, and checked via official W3C validators.
 
 ---
@@ -9,7 +11,7 @@
 ## Log of Interactions
 
 | Date | Intent & User Prompt | AI Output & Recommended Solution | Critical Evaluation & Student Implementation |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
 | **2026-09-08** | Establishing root document metadata and character encoding best practices. | Recommended explicit `<meta charset="UTF-8">`, responsive viewport configurations, descriptive metadata, and clear document titles. | Configured head blocks across `index.html`, `menu.html`, and `order.html` to guarantee indexing standards and encoding accuracy. |
 | **2026-09-09** | Validating table structures and resolving W3C warnings regarding `border="1"` on `<table>`. | Explained that presentational table attributes are obsolete in HTML5; advised stripping inline attributes in favor of standard semantic `<table>` tags. | Verified HTML5 specifications, removed obsolete border attributes from `menu.html`, and achieved a clean pass on the W3C validator. |
 | **2026-09-10** | Ensuring persistent cross-page navigation links without broken relative paths. | Advised using flat relative links (`index.html`, `menu.html`, etc.) wrapped in `<nav><ul><li>` structures to preserve accessibility landmarks. | Verified circular navigation across all author pages, ensuring unbroken local pathways. |
@@ -22,3 +24,7 @@
 | **2026-09-18** | Implementing modern layout techniques (CSS Grid & Flexbox) for menu items and order forms. | Suggested using Flexbox for horizontal navigation and button groups, and CSS Grid for responsive menu cards and dual-column form fields. | Applied Flexbox alignment to navigation headers and form submission actions; styled pre-order fieldsets using clean multi-column CSS Grid. |
 | **2026-09-19** | Resolving CSS specificity conflicts and styling form focus states for WCAG accessibility. | Advised avoiding `!important`, relying on clean descendant selectors, and creating prominent `:focus-visible` outlines for interactive inputs. | Removed redundant class overrides, added accessible high-contrast outline states for all inputs and buttons, and verified styling across viewports. |
 | **2026-09-19** | Planning hand-drawn wireframe sketches and preparing W3C CSS validation evidence. | Recommended sketching responsive box-model layouts showing Flexbox/Grid boundaries, landmark tags, and documenting W3C CSS Validator passes. | Drew layout wireframes on paper with explicit semantic annotations, signatures, and dates; validated `base.css` and `merey.css` on jigsaw.w3.org without errors. |
+| **2026-09-24** | Creating an isolated Git branch workflow for Assignment 3 to preserve previous submission integrity. | Guided the creation and remote tracking of a dedicated `Assigment-3` branch (`git checkout -b Assigment-3` and `git push -u origin Assigment-3`) while retaining the vanilla `main` branch. | Successfully branched project history on GitHub, isolating new framework refactoring from Assignment 1 and 2 deliverables. |
+| **2026-09-25** | Integrating Bootstrap 5 framework (CDN) without overriding custom design tokens. | Advised linking Bootstrap 5.3 CSS/JS bundles via CDN and loading custom `merey.css` afterward to preserve brand palette overrides and custom typography. | Embedded Bootstrap CDN links into `menu.html` and `order.html`, maintaining the cascade order so brand variables take precedence. |
+| **2026-09-25** | Refactoring pre-order form and table layouts using the Bootstrap 12-column grid and utility classes. | Recommended replacing custom grid wrappers with `.container`, `.row`, and responsive breakpoint classes (`col-12 col-md-6`), along with `.form-control` and `.table-hover`. | Restructured `order.html` into a fluid multi-column form and styled the Kent Sandwich pricing table in `menu.html` with responsive table wrappers. |
+| **2026-09-26** | Incorporating Bootstrap interactive components (Navbar, Accordion, Modal/Alerts) with full accessibility. | Suggested replacing basic navigation with a responsive toggleable `.navbar`, wrapping menu categories in an accessible `.accordion`, and using `.alert` for form status. | Implemented responsive mobile navbar toggling and categorized sandwich selections via Bootstrap accordions, ensuring `aria-expanded` attributes are preserved. |
