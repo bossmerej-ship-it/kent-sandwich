@@ -110,6 +110,10 @@
 
   // This shared basket link is added only on the three pages loading main.js.
   const navList = document.querySelector('#main-navbar ul');
+  navList.querySelectorAll('a[href="colophon.html"]').forEach(function (link) {
+    const item = link.closest('li');
+    if (item) item.remove();
+  });
   navList.querySelectorAll('a').forEach(function (link) {
     link.classList.toggle('active', link.getAttribute('aria-current') === 'page');
   });

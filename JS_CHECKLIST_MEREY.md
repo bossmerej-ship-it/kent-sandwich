@@ -25,14 +25,15 @@ The references below identify function declarations or concrete statements in th
 | Separate shared and page scripts, strict mode, `defer` | `index.html:12`, `menu.html:12`, `order.html:12`; line 2 of each of the five owned scripts | Data script loads before shared behaviour and page script; each file is wrapped in an IIFE with strict mode |
 | Create elements and write safe text | `js/main.js:9` — `createElement(tag, classes, text)` | Uses `document.createElement` and `textContent`; visitor text is not parsed as HTML |
 | Shared basket storage and notification | `js/main.js:35` — `readCart()`; `js/main.js:64` — `saveCart()`; `js/main.js:101` — `onCartChange(callback)` | Restores normalized product IDs/quantities, saves changes and notifies page views |
-| Remove, clear and recompute basket | `js/main.js:72` — `setQuantity`; `js/main.js:93` — `removeFromCart`; `js/main.js:95` — `clearCart`; `js/main.js:147` — `renderCart()` | Updates rows, subtotals, total, count and empty state after each change |
+| Remove, clear and recompute basket | `js/main.js:72` — `setQuantity`; `js/main.js:93` — `removeFromCart`; `js/main.js:95` — `clearCart`; `js/main.js:151` — `renderCart()` | Updates rows, subtotals, total, count and empty state after each change |
 | Connected controls | `js/menu.js:175` — `applyFilters(resetMessage)`; `js/menu.js:108` — `sortedResults(items, order)` | Search, profile and maximum price constrain the same data; sort controls its order |
 | Repeated DOM rendering from one array | `js/menu.js:120` — `renderMenuCard(item)`; `js/menu.js:149` — `renderPriceRow(item)` | Creates cards and price rows from the same filtered results; `replaceChildren()` removes obsolete results |
 | Result count, no matches and reset | `js/menu.js:175` — `applyFilters`; `js/menu.js:207` — reset listener | Gives a visible count, explains empty results, restores all controls and focuses search |
-| `click` via `addEventListener` | `js/index.js:78`; `js/menu.js:216`; `js/main.js:191` | Another suggestion, Add to basket and basket quantity/remove actions |
+| `click` via `addEventListener` | `js/index.js:78`; `js/menu.js:216`; `js/main.js:195` | Another suggestion, Add to basket and basket quantity/remove actions |
 | `submit` via `addEventListener` | `js/menu.js:203`; `js/order.js:339` | Search form prevents navigation; order form validates and prepares a local summary |
-| Additional event types | `js/menu.js:199` — `input`; `js/menu.js:201` — `change`; `js/order.js:288` — `focusout`; `js/main.js:202` — `storage` | Immediate filtering, selection/quantity updates, field feedback and cross-tab basket synchronization |
-| Existing state classes through `classList` | `js/main.js:113` — navigation state; `js/menu.js:161` — `updateBasketSelection()`; `js/order.js:118` — `showFieldError()` | Synchronizes active navigation from `aria-current`; switches selected cards and prepared error/success/hidden states without generating CSS |
+| Additional event types | `js/menu.js:199` — `input`; `js/menu.js:201` — `change`; `js/order.js:288` — `focusout`; `js/main.js:206` — `storage` | Immediate filtering, selection/quantity updates, field feedback and cross-tab basket synchronization |
+| Existing state classes through `classList` | `js/main.js:117` — navigation state; `js/menu.js:161` — `updateBasketSelection()`; `js/order.js:118` — `showFieldError()` | Synchronizes active navigation from `aria-current`; switches selected cards and prepared error/success/hidden states without generating CSS |
+| Owned-page navigation | `js/main.js:113` — navigation item removal | Removes Colophon from Home, Menu and Order navigation through the DOM |
 
 ## Form completion and accessibility
 
@@ -44,8 +45,8 @@ The references below identify function declarations or concrete statements in th
 | Errors beside their fields and first invalid focus | `js/order.js:107` — `prepareError`; `js/order.js:118` — `showFieldError`; `js/order.js:339` — submit listener | Connects error text using `aria-describedby`, sets `aria-invalid`, preserves inputs, and focuses the first failing control |
 | Empty basket cannot finish; visible live draft and counter | `js/order.js:159` — `updateDraft()` | Disables submit for an empty basket or completed draft; displays current total/pickup and note length |
 | Finished local outcome, recovery and reset | `js/order.js:299` — `showConfirmation`; `js/order.js:173` — `invalidateConfirmation`; `js/order.js:364` — reset listener | Shows real basket lines/total plus a demo reference; states no order/payment/message was sent; supports editing and starting a cleared draft |
-| Keyboard labels and feedback | `js/menu.js:19` — `addControl`; `js/main.js:138` — `makeCartButton`; `js/main.js:51` — `announce` | Explicit filter labels, real buttons, descriptive basket-action names and status announcements |
-| Retain focus when repeated content changes | `js/main.js:147` — `renderCart`; `js/menu.js:161` — `updateBasketSelection`; `js/index.js:55` — `updateBasketSelection` | Restores a usable basket control after re-render; menu and Home additions update selection text without replacing the focused Add button |
+| Keyboard labels and feedback | `js/menu.js:19` — `addControl`; `js/main.js:142` — `makeCartButton`; `js/main.js:51` — `announce` | Explicit filter labels, real buttons, descriptive basket-action names and status announcements |
+| Retain focus when repeated content changes | `js/main.js:151` — `renderCart`; `js/menu.js:161` — `updateBasketSelection`; `js/index.js:55` — `updateBasketSelection` | Restores a usable basket control after re-render; menu and Home additions update selection text without replacing the focused Add button |
 | Storage failure and privacy | `js/main.js:30` — `showStorageNotice`; `js/main.js:35` — `readCart`; `js/main.js:64` — `saveCart` | Displays a current-page fallback notice; saves only catalogue IDs and quantities, never customer contact fields |
 
 ## Verification pointers and reproducible scenarios
