@@ -2,7 +2,7 @@
 
 Scope: `index.html`, `menu.html`, `order.html` and the shared scripts they load. Timur's `about.html`, `feedback.html`, `colophon.html` and `js/timur.js` are outside this implementation. The shared basket currently covers the three owned pages; whole-site team integration is pending.
 
-The references below identify function declarations or concrete statements in the current source. They are implementation pointers, not claims that every academic requirement has been accepted. Check `validation/merey-assignment-4-5-results.md` for actual execution results.
+The references below identify function declarations or concrete statements in the current source. Check `validation/merey-assignment-4-5-results.md` for execution results.
 
 ## Data and calculation
 
@@ -63,7 +63,7 @@ The browser report is `validation/merey-assignment-4-5-results.md`; screenshots 
 7. Viewports around 375 px, 768 px and desktop: inspect clipping, unwanted horizontal scrolling, labels, table and order layout; inspect console and loaded resources.
 8. Storage: reload/navigate with a basket; synchronize a change from another tab; test malformed stored values and an unavailable-storage fallback separately where supported.
 
-## Remaining team and academic requirements
+## Remaining team requirements
 
 - Timur's features and integration of the common basket beyond the three owned pages are pending.
 - Preserve `midterm`. Create `assignment-4` and `assignment-5` only after the team's respective milestone is ready; this scoped update does not create those tags.

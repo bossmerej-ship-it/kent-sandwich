@@ -46,7 +46,7 @@ The following two commits were made on 5 October 2026, before the Assignment 4â€
 | `0650cd2` | Removed Bootstrap's `bg-body-tertiary` class from the three page headers. | Restore the existing cream brand background instead of Bootstrap's background override. |
 | `1330420` | Removed Bootstrap's `rounded-3` class from the navigation links on those pages. | Restore the original navigation appearance using the existing styles. |
 
-These are visual corrections already present in `final`; they do not implement JavaScript features or claim Assignment 4â€“5 credit. No CSS files changed between the `midterm` tag and this `final` baseline. This section records the team's chosen baseline and its differences from the tagged snapshot; it does not claim that the baseline deviation has been approved by the instructor.
+These are visual corrections already present in `final`. No CSS files changed between the `midterm` tag and this `final` baseline. This section records the team's chosen baseline and its differences from the tagged snapshot.
 
 From this baseline, keep the HTML interface and CSS rules frozen. Only script links may be added directly to HTML. Create, update and remove interface elements through JavaScript DOM methods, and apply existing state classes through `classList`. Do not move or replace the `midterm` tag.
 
