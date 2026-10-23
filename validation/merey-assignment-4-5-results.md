@@ -22,6 +22,7 @@ The current three saved HTML sources were posted to the W3C Nu HTML Checker with
 
 ## Browser checks
 
+A Chromium browser exercised `http://127.0.0.1:8765/` through the existing static-server workflow. All form values were synthetic, including `Demo Visitor` and `demo@example.com`. No order/payment/business operation was submitted.
 
 | Scenario | Observed result |
 | --- | --- |
