@@ -7,7 +7,7 @@ const vm = require('node:vm');
 // Load the real browser scripts without mounting a page or changing the clock.
 const context = vm.createContext({
   window: {},
-  document: { getElementById: function () { return null; } }
+  jQuery: function () { /* Pure validators are exported before the UI ready callback. */ }
 });
 for (const filename of ['menu-data.js', 'order.js']) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'js', filename), 'utf8'), context,
@@ -15,6 +15,30 @@ for (const filename of ['menu-data.js', 'order.js']) {
 }
 const Kent = context.window.Kent;
 const noonInAstana = new Date('2026-10-23T07:00:00Z');
+
+test('phone validation trims outer spaces and accepts formatted 10–15 digit numbers', function () {
+  for (const phone of ['  +7 700 000 00 00  ', '1234567890', '+123456789012345']) {
+    assert.equal(Kent.validatePhone(phone), '', phone);
+  }
+});
+
+test('phone validation rejects empty, short, long and letter-containing values', function () {
+  for (const phone of ['', '   ', '123', '+1234567890123456', '+7 700 CALL NOW', '++77000000000', '(123) 456-7890']) {
+    assert.ok(Kent.validatePhone(phone), phone);
+  }
+});
+
+test('email validation trims outer spaces and accepts ordinary and plus-tag addresses', function () {
+  for (const email of ['  demo@example.com  ', 'demo+pickup@example.co.uk']) {
+    assert.equal(Kent.validateEmail(email), '', email);
+  }
+});
+
+test('email validation rejects missing domains, multiple @ signs and internal whitespace', function () {
+  for (const email of ['', ' ', 'bad@', 'a@localhost', 'a@@example.com', 'two names@example.com', 'a@example.']) {
+    assert.ok(Kent.validateEmail(email), email);
+  }
+});
 
 test('selected quantities accept the whole-number boundaries 1 and 10', function () {
   for (const quantity of ['1', '10', 3]) {
