@@ -130,14 +130,71 @@ The two main individual workflows are menu discovery with basket actions and the
 
 ### Data, scripts and local behaviour
 
-Each of the three owned pages loads `js/menu-data.js`, then `js/main.js`, then its page script (`js/index.js`, `js/menu.js` or `js/order.js`) with `defer`. Each script uses strict mode. The eight immutable catalogue objects preserve the existing names, descriptions, profiles and numeric prices. Reusable lookup, filtering, normalization and calculation functions are separated from page rendering.
+Each of the three owned pages now loads the full jQuery 3.7.1 CDN build, `js/menu-data.js`, `js/main.js`, then its page script (`js/index.js`, `js/menu.js` or `js/order.js`), all with `defer`. UI initialization runs inside jQuery ready callbacks. Each script uses strict mode. The eight immutable catalogue objects preserve the existing names, descriptions, profiles and numeric prices. Pure lookup, filtering, normalization, calculation and validation functions stay separate from jQuery DOM rendering.
 
 Only basket product IDs and quantities are saved under `kent-sandwich-basket-v1`. Prices always come from the catalogue. Customer contact fields and pickup details stay on the current page and are not saved in browser storage. There is no backend, payment or message delivery. Refreshing the page discards personal form details while restoring a valid saved basket when browser storage permits it.
 
 ### Evidence and team submission status
 
-`JS_CHECKLIST_MEREY.md` maps the actual functions and requirements to source lines. The verification report is `validation/merey-assignment-4-5-results.md`; browser captures belong in `screenshots/assignment-4-5-merey/`. Use that report for the checks actually completed and any remaining limitations; this plan alone is not a QA result. Existing midterm reports and screenshots describe earlier snapshots.
+`JS_CHECKLIST_MEREY.md`, `validation/merey-assignment-4-5-results.md` and `screenshots/assignment-4-5-merey/` describe the previous plain-JavaScript implementation. Their line references, source hashes and captures are historical, not evidence for the current jQuery version. The current requirement map and checks are below.
 
 The focused automated checks run with `node --test tests/menu-data.test.cjs tests/order-validation.test.cjs`. They cover catalogue/filter/basket logic and quantity/date/time validation; they do not replace browser, keyboard, layout or peer checks. Review the browser report before treating any runtime path as verified.
 
 The original `midterm` tag stays unchanged. The `assignment-4` and `assignment-5` tags are deliberately deferred until the combined team's respective milestones and evidence are ready. The four-commits-over-three-days requirement, peer review and defence preparation require genuine team participation and cannot be created by this single-day implementation.
+
+## jQuery assignment — Merey's Home, Menu and Order
+
+The supplied file is named `assignment6_jquery`, although its heading says Assignment 4. This update continues `final` from `c1ce694` and keeps the existing team and repository. Only Home, Menu, Order and their scripts are migrated. Timur's page scripts remain his responsibility. HTML changes are limited to the CDN script link and its explanatory comment on these three pages; no CSS rules or handwritten interface elements were added. Bootstrap still owns the existing mobile navigation. No jQuery plugins were added.
+
+### Three rewrites and the comparison archive
+
+[`js/old-js-version.js`](js/old-js-version.js) preserves the complete previous `main.js`, `index.js`, `menu.js` and `order.js`, with file boundaries. It is **not loaded by any page**. Compare these three features with their labelled rewrite comments in the active files:
+
+| Previous feature | Current implementation | Preserved behaviour |
+| --- | --- | --- |
+| Menu filtering and rendering | `applyFilters` in [`js/menu.js`](js/menu.js) | Connected search/profile/budget filters, sorting, count, reset, empty state, matching cards and price rows |
+| Basket rendering and actions | `renderCart` and delegated click handler in [`js/main.js`](js/main.js) | Array-built rows, quantities, remove/clear, subtotals, total, keyboard focus, persistence and cross-tab changes |
+| Order validation and completion | Ready callback in [`js/order.js`](js/order.js) | Nearby errors, immediate correction, future pickup within 09:30–21:15 Astana time, safe local summary and editing |
+
+Home's random suggestion also uses jQuery so it can share the same UI helpers. `Kent.element` returns a jQuery collection. `menu-data.js` and the pure validators use ordinary JavaScript for data and calculations, without accessing the DOM. Each migrated feature uses jQuery consistently for DOM operations and event handlers.
+
+**New completion behaviour:** after every valid submit, the form, checkboxes, notes and basket reset immediately. A separate in-memory snapshot keeps the confirmation visible. **Edit details** restores that snapshot and its basket; **Start new demo** clears the confirmation. Invalid submission preserves the draft. This remains a demonstration: no order, payment or contact request is sent, and personal fields are never saved to browser storage.
+
+### Requirement map for the defence
+
+| Requirement | Where to demonstrate it |
+| --- | --- |
+| CDN, version and ready | The three HTML heads pin full jQuery 3.7.1 with an integrity hash before local deferred scripts; UI code uses `jQuery(function ($) { ... })` |
+| ID, class, tag, attribute and filter selectors | `#order-form`, `.menu-board`, `main`, `[data-cart-action]`, `[name="items"]:checked`, `button:not(:disabled)` |
+| `.find()`, `.closest()`, `.parent()`, `.siblings()`, `.each()` | Order finds quantity controls from checkbox → parent label → sibling quantity label → input; menu and navigation iterate collections |
+| `$(this)` in handlers | Delegated basket buttons, delegated menu buttons, filter toggle and form input/change/focusout |
+| Two chains with three or more methods | `showBasketFeedback` in Menu (each link explained in a comment); creation of the demo notice in Order (`attr → html → insertBefore`) |
+| `.text()` versus `.html()` | Visitor names, notes and summaries use `.text()`; `.html()` is used only for fixed, trusted **Demo only** emphasis |
+| `.val()`, `.attr()`, `.prop()` | Read/reset form values; set labels and ARIA attributes; read/write the live checkbox checked state and disabled buttons |
+| Existing state classes | `addClass`, `removeClass`, `toggleClass` and `hasClass` use existing Bootstrap/Merey classes for selected, hidden, error and success states |
+| Array-built list absent from HTML | The initially empty `#cart-items` receives basket rows with `.append()` / `.appendTo()` |
+| Events and delegation | All handlers in the migrated UI use `.on()`; click, input, change, focusout, submit, reset and storage. Parent handlers catch cards/rows/buttons created later |
+| Three useful effects | Menu filter controls: `.slideToggle()`; Add-to-basket response: `.fadeIn()`; successful Order confirmation: `.slideDown()` |
+| Duration and callback | Effects use 220 ms, or 0 for reduced motion. After opening filters, focus moves to search; after confirmation opens, focus moves to the summary |
+| Full form validation | Trimmed name, phone and email formats, selected quantities, pickup date/time, allowed contact method, optional note length; contact-request is an optional boolean. Selection errors appear beside the item group |
+| Browser/server boundary | `required`, types and bounds remain in HTML; custom nearby errors take over after enhancement. The source explains why a real server must validate again |
+
+The effects use jQuery's own temporary animation styles; no manual `.css()` styling or new stylesheet rules are introduced. Repeated filter/feedback actions finish or clear old effects instead of building animation queues.
+
+### Run and check
+
+Serve the repository root with `python -m http.server 8765 --bind 127.0.0.1`, then open `http://127.0.0.1:8765/index.html`. Internet access is needed for the existing Bootstrap CDN and the jQuery CDN.
+
+Run the focused tests:
+
+```sh
+node --test tests/menu-data.test.cjs tests/order-validation.test.cjs tests/timur.test.cjs
+```
+
+On 31 October 2026, all 29 tests passed. Local browser checks covered Home suggestion/add/reload, combined menu filters and no-results/reset, sorting followed by delegated Add, filter effects/focus, basket limits/removal and cross-tab sync, nearby form errors and correction, successful reset with preserved confirmation, editing and starting again. HTML-like input remained literal text. Home/Menu/Order were checked at phone and desktop sizes; no horizontal overflow was observed. The six pages loaded with no observed console errors. This is local verification, not proof of a public deployment or a student peer review.
+
+For a short live demo: filter Menu to Hot and up to 690 ₸, reset and sort it, add a newly rendered card, change its quantity in Order, submit incomplete details, fix them, then show the cleared form and retained confirmation. Use Edit details to restore the draft. Be ready to explain the vanilla equivalents, delegation, chains, `.text()`/`.html()` and `.attr()`/`.prop()`.
+
+The submission needs the existing repository, jQuery scripts, comparison archive, README and AI log; this assignment asks for no separate report or recording. Four genuine commits across three different days per student (six commits for solo work) and the live defence remain personal submission requirements. Today's migration does not establish three different work days. During the defence, use only the resources allowed by the assignment: official documentation and W3Schools, with no outside or AI assistance.
+
+References: [jQuery releases](https://releases.jquery.com/jquery/), [`.on()` and delegation](https://api.jquery.com/on/), [`.prop()` and checkbox state](https://api.jquery.com/prop/), [`.slideToggle()`](https://api.jquery.com/slideToggle/), [`.stop()`](https://api.jquery.com/stop/).

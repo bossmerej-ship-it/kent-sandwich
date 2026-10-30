@@ -2,9 +2,9 @@
 
 **Developer:** Merey Kuatbay
 
-**AI Model Used:** Claude 3.5 Sonnet (Anthropic)
+**AI model recorded for the September entries below:** Claude 3.5 Sonnet (Anthropic)
 
-**Academic Honesty Statement:** Claude was employed as a technical reference and workflow assistant for semantic validation, Git recovery, CSS architecture, accessibility compliance, and layout planning. All code output and style rules were manually evaluated, integrated, tested against course constraints, and checked via official W3C validators.
+**September statement:** Claude was employed as a technical reference and workflow assistant for semantic validation, Git recovery, CSS architecture, accessibility compliance, and layout planning. All code output and style rules were manually evaluated, integrated, tested against course constraints, and checked via official W3C validators.
 
 ---
 
@@ -28,3 +28,7 @@
 | **2026-09-25** | Integrating Bootstrap 5 framework (CDN) without overriding custom design tokens. | Advised linking Bootstrap 5.3 CSS/JS bundles via CDN and loading custom `merey.css` afterward to preserve brand palette overrides and custom typography. | Embedded Bootstrap CDN links into `menu.html` and `order.html`, maintaining the cascade order so brand variables take precedence. |
 | **2026-09-25** | Refactoring pre-order form and table layouts using the Bootstrap 12-column grid and utility classes. | Recommended replacing custom grid wrappers with `.container`, `.row`, and responsive breakpoint classes (`col-12 col-md-6`), along with `.form-control` and `.table-hover`. | Restructured `order.html` into a fluid multi-column form and styled the Kent Sandwich pricing table in `menu.html` with responsive table wrappers. |
 | **2026-09-26** | Incorporating Bootstrap interactive components (Navbar, Accordion, Modal/Alerts) with full accessibility. | Suggested replacing basic navigation with a responsive toggleable `.navbar`, wrapping menu categories in an accessible `.accordion`, and using `.alert` for form status. | Implemented responsive mobile navbar toggling and categorized sandwich selections via Bootstrap accordions, ensuring `aria-expanded` attributes are preserved. |
+
+## 2026-10-31 — jQuery assignment
+
+AI assistance was used to migrate the existing Home, Menu and Order scripts to jQuery, preserve the vanilla comparison archive, implement the success/reset snapshot, add contact-validation tests and update the README. Assistance included code generation, integration and local automated/browser checks. The implementation uses the existing styles and catalogue; the other team member's files are outside this update. The README records the demonstrated behaviour and the remaining commit-day and defence requirements.

@@ -2,7 +2,7 @@
 
 Scope: `index.html`, `menu.html`, `order.html` and the shared scripts they load. Timur's `about.html`, `feedback.html`, `colophon.html` and `js/timur.js` are outside this implementation. The shared basket currently covers the three owned pages; whole-site team integration is pending.
 
-The references below identify function declarations or concrete statements in the current source. Check `validation/merey-assignment-4-5-results.md` for execution results.
+Historical checklist: the references below identify the plain-JavaScript source before the jQuery migration (available at commit `c1ce694` and in `js/old-js-version.js`). Check `validation/merey-assignment-4-5-results.md` for those historical execution results. See README's jQuery section for the current implementation and requirement map.
 
 ## Data and calculation
 
