@@ -1,17 +1,17 @@
-(function () {
+jQuery(function ($) {
     'use strict';
 
     const Kent = window.Kent;
-    const signature = document.querySelector('.signature-section');
-    if (!Kent || !signature || Kent.MENU.length === 0) {
+    const signature = $('.signature-section');
+    if (!Kent || !signature.length || Kent.MENU.length === 0) {
         return;
     }
 
-    const create = Kent.createElement;
+    const create = Kent.element;
     const section = create('section', 'py-5 border-bottom border-2 border-dark');
-    section.setAttribute('aria-labelledby', 'suggestion-title');
+    section.attr('aria-labelledby', 'suggestion-title');
     const heading = create('h2', 'fw-bold mb-3 display-6 text-uppercase lh-1', 'Need a hand choosing?');
-    heading.id = 'suggestion-title';
+    heading.attr("id", 'suggestion-title');
     const introduction = create('p', '', 'Try a random pick from our eight sandwiches, or ask for another suggestion.');
     const card = create('article', 'menu-card card border-dark border-2 rounded-0');
     const body = create('div', 'card-body p-4');
@@ -22,16 +22,16 @@
     const quantity = create('p', 'small mb-3');
     const actions = create('div', 'd-flex flex-wrap gap-2');
     const add = create('button', 'btn btn-dark rounded-0 border-2 fw-bold', 'Add to basket');
-    add.type = 'button';
+    add.attr("type", 'button');
     const another = create('button', 'btn btn-outline-dark rounded-0 border-2', 'Another suggestion');
-    another.type = 'button';
+    another.attr("type", 'button');
     const menuLink = create('a', 'btn btn-link link-dark', 'View the full menu →');
-    menuLink.href = 'menu.html';
+    menuLink.attr("href", 'menu.html');
     const status = create('p', 'small mt-3 mb-0');
-    status.setAttribute('role', 'status');
-    status.setAttribute('aria-atomic', 'true');
+    status.attr('role', 'status');
+    status.attr('aria-atomic', 'true');
     const basketLink = create('a', 'link-dark fw-semibold d-inline-block mt-3', 'Review your basket →');
-    basketLink.href = 'order.html';
+    basketLink.attr("href", 'order.html');
     actions.append(add, another, menuLink);
     body.append(name, description, profile, price, quantity, actions, status, basketLink);
     card.append(body);
@@ -58,40 +58,40 @@
             return line.id === item.id;
         });
         const count = entry ? entry.quantity : 0;
-        card.classList.toggle('is-selected', count > 0);
-        quantity.textContent = count > 0 ? count + ' in your basket.' : 'Not in your basket yet.';
+        card.toggleClass('is-selected', count > 0);
+        quantity.text(count > 0 ? count + ' in your basket.' : 'Not in your basket yet.');
     }
 
     function showSuggestion(shouldAnnounce) {
         suggestionIndex = chooseSuggestion(suggestionIndex, Kent.MENU);
         const item = Kent.MENU[suggestionIndex];
-        name.textContent = item.name;
-        description.textContent = item.description;
-        profile.textContent = 'Profile: ' + item.profile;
-        price.textContent = Kent.formatMoney(item.price);
-        add.setAttribute('aria-label', 'Add ' + item.name + ' to basket');
+        name.text(item.name);
+        description.text(item.description);
+        profile.text('Profile: ' + item.profile);
+        price.text(Kent.formatMoney(item.price));
+        add.attr('aria-label', 'Add ' + item.name + ' to basket');
         updateBasketSelection();
-        status.classList.remove('text-danger');
-        status.textContent = shouldAnnounce ? 'Suggestion: ' + item.name + ', ' + Kent.formatMoney(item.price) + '.' : '';
+        status.removeClass('text-danger');
+        status.text(shouldAnnounce ? 'Suggestion: ' + item.name + ', ' + Kent.formatMoney(item.price) + '.' : '');
     }
 
-    another.addEventListener('click', function () {
+    another.on('click', function () {
         showSuggestion(true);
     });
 
-    add.addEventListener('click', function () {
+    add.on('click', function () {
         const item = Kent.MENU[suggestionIndex];
         const result = Kent.addToCart(item.id);
-        status.classList.toggle('text-danger', !result.ok);
+        status.toggleClass('text-danger', !result.ok);
         if (!result.ok) {
-            status.textContent = result.message;
+            status.text(result.message);
             return;
         }
         const basket = Kent.calculateCart(Kent.getCart());
         const unit = basket.quantity === 1 ? ' sandwich' : ' sandwiches';
-        status.textContent = item.name + ' added. Basket: ' + basket.quantity + unit + ', ' + Kent.formatMoney(basket.total) + '.';
+        status.text(item.name + ' added. Basket: ' + basket.quantity + unit + ', ' + Kent.formatMoney(basket.total) + '.');
     });
 
     showSuggestion(false);
     Kent.onCartChange(updateBasketSelection);
-}());
+});
