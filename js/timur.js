@@ -1,10 +1,14 @@
 'use strict';
 
+// jQuery 3.7.1: create elements in code and insert visitor content as plain text.
 function createTimurElement(tag, classes, text) {
-  const element = document.createElement(tag);
-  element.className = classes || '';
-  if (text !== undefined) element.textContent = text;
+  const element = jQuery('<' + tag + '>').addClass(classes || '');
+  if (text !== undefined) element.text(text);
   return element;
+}
+
+function timurEffectDuration() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 180;
 }
 
 function getShopClock(now) {
@@ -20,25 +24,16 @@ function getShopClock(now) {
   };
 }
 
-function alignTimurHeader() {
-  const header = document.querySelector('.site-header');
-  header.classList.remove('bg-body', 'py-4', 'border-2');
-  header.classList.add('py-3');
-  const logo = header.querySelector('.brand-mark img');
-  logo.width = 44;
-  logo.height = 44;
-  logo.classList.remove('border-2');
-  header.querySelector('.navbar-toggler').classList.remove('rounded-0', 'border-dark', 'border-2');
-  header.querySelector('.header-note').classList.remove('text-uppercase');
-  const links = header.querySelectorAll('.nav-link');
-  for (const link of links) {
-    link.classList.remove('rounded-0', 'text-uppercase', 'small', 'fw-bold');
-    link.classList.add('fw-semibold');
-    if (link.getAttribute('href') === 'colophon.html') link.closest('li').remove();
-  }
-}
-
-const timurPage = document.body.dataset.page;
-if (timurPage === 'about' || timurPage === 'feedback' || timurPage === 'colophon') {
-  alignTimurHeader();
-}
+// .find(), .attr() and class methods replace DOM queries/property assignments.
+// Collection operations make this shorter than the original link loop.
+jQuery(function ($) {
+  // Ready waits until the page exists before querying and changing its header.
+  if (!['about', 'feedback', 'colophon'].includes($('body').attr('data-page'))) return;
+  const header = $('.site-header');
+  header.removeClass('bg-body py-4 border-2').addClass('py-3');
+  header.find('.brand-mark img').attr({ width: 44, height: 44 }).removeClass('border-2');
+  header.find('.navbar-toggler').removeClass('rounded-0 border-dark border-2');
+  header.find('.header-note').removeClass('text-uppercase');
+  header.find('.nav-link').removeClass('rounded-0 text-uppercase small fw-bold').addClass('fw-semibold');
+  header.find('a[href="colophon.html"]').closest('li').remove();
+});
