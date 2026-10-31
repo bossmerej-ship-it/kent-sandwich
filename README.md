@@ -114,7 +114,7 @@ Before submitting:
 
 ## Assignment 4–5 Functionality Plan: Merey's pages
 
-This implementation is limited to `index.html`, `menu.html` and `order.html`, with shared JavaScript used by those three pages. Their only direct HTML changes after the documented `final` baseline are deferred script links. New controls and results are created through DOM methods; existing CSS and prepared state classes supply their appearance. `about.html`, `feedback.html`, `colophon.html`, `js/timur.js` and Timur's styles and AI log are outside this change and remain his responsibility.
+This implementation is limited to `index.html`, `menu.html` and `order.html`, with shared JavaScript used by those three pages. Their only direct HTML changes after the documented `final` baseline are deferred script links. New controls and results are created through DOM methods; existing CSS and prepared state classes supply their appearance. `about.html`, `feedback.html`, `colophon.html`, `js/timur.js` and Timur's styles are outside this change and remain his responsibility.
 
 | Page | Visitor goal | Function | Visible result and completion | Owner |
 | --- | --- | --- | --- | --- |
@@ -195,7 +195,7 @@ On 31 October 2026, all 29 tests passed. Local browser checks covered Home sugge
 
 For a short live demo: filter Menu to Hot and up to 690 ₸, reset and sort it, add a newly rendered card, change its quantity in Order, submit incomplete details, fix them, then show the cleared form and retained confirmation. Use Edit details to restore the draft. Be ready to explain the vanilla equivalents, delegation, chains, `.text()`/`.html()` and `.attr()`/`.prop()`.
 
-The submission needs the existing repository, jQuery scripts, comparison archive, README and AI log; this assignment asks for no separate report or recording. Four genuine commits across three different days per student (six commits for solo work) and the live defence remain personal submission requirements. Today's migration does not establish three different work days. During the defence, use only the resources allowed by the assignment: official documentation and W3Schools, with no outside or AI assistance.
+Keep the existing repository, jQuery scripts, comparison archive and README together; this assignment asks for no separate report or recording. Four genuine commits across three different days per student (six commits for solo work) and the live defence remain personal submission requirements. Today's migration does not establish three different work days. During the defence, use only the resources allowed by the assignment: official documentation and W3Schools, with no outside assistance.
 
 References: [jQuery releases](https://releases.jquery.com/jquery/), [`.on()` and delegation](https://api.jquery.com/on/), [`.prop()` and checkbox state](https://api.jquery.com/prop/), [`.slideToggle()`](https://api.jquery.com/slideToggle/), [`.stop()`](https://api.jquery.com/stop/).
 
