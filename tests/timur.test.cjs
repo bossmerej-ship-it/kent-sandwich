@@ -5,7 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const context = vm.createContext({
-  document: { body: { dataset: { page: 'test' } } }
+  jQuery: function () { /* Pure helpers are tested without mounting the page. */ }
 });
 for (const file of ['timur.js', 'about.js', 'feedback.js']) {
   const source = fs.readFileSync(path.join(__dirname, '../js', file), 'utf8');
