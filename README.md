@@ -144,7 +144,7 @@ The original `midterm` tag stays unchanged. The `assignment-4` and `assignment-5
 
 ## jQuery assignment — Merey's Home, Menu and Order
 
-The supplied file is named `assignment6_jquery`, although its heading says Assignment 4. This update continues `final` from `c1ce694` and keeps the existing team and repository. Only Home, Menu, Order and their scripts are migrated. Timur's page scripts remain his responsibility. HTML changes are limited to the CDN script link and its explanatory comment on these three pages; no CSS rules or handwritten interface elements were added. Bootstrap still owns the existing mobile navigation. No jQuery plugins were added.
+The supplied file is named `assignment6_jquery`, although its heading says Assignment 4. This update continues `final` from `c1ce694` and keeps the existing team and repository. This section describes the Home, Menu and Order migration. The later migration of Timur's pages is documented below. HTML changes are limited to the CDN script link and its explanatory comment on these three pages; no CSS rules or handwritten interface elements were added. Bootstrap still owns the existing mobile navigation. No jQuery plugins were added.
 
 ### Three rewrites and the comparison archive
 
@@ -198,3 +198,22 @@ For a short live demo: filter Menu to Hot and up to 690 ₸, reset and sort it, 
 The submission needs the existing repository, jQuery scripts, comparison archive, README and AI log; this assignment asks for no separate report or recording. Four genuine commits across three different days per student (six commits for solo work) and the live defence remain personal submission requirements. Today's migration does not establish three different work days. During the defence, use only the resources allowed by the assignment: official documentation and W3Schools, with no outside or AI assistance.
 
 References: [jQuery releases](https://releases.jquery.com/jquery/), [`.on()` and delegation](https://api.jquery.com/on/), [`.prop()` and checkbox state](https://api.jquery.com/prop/), [`.slideToggle()`](https://api.jquery.com/slideToggle/), [`.stop()`](https://api.jquery.com/stop/).
+
+
+## Assignment 4 — Timur's jQuery implementation
+
+About, Feedback and Colophon load the same full jQuery 3.7.1 CDN build as the other pages, before their own deferred scripts. UI setup runs inside ready callbacks. HTML changes only connect the library and explain its version; existing CSS and Merey's active code are unchanged.
+
+- `js/timur.js`: jQuery element creation and header alignment, the existing Astana clock helper and reduced-motion handling.
+- `js/about.js`: jQuery gallery events, image/caption updates, keyboard navigation and focus restoration; opening hours still refresh at minute boundaries in Asia/Almaty.
+- `js/feedback.js`: trimmed input validation, nearby errors that clear on correction, preview/edit/confirm, array-built review cards, combined filters, copying with manual fallback and restarting.
+
+The three rewritten features are feedback validation/review, review-card rendering/filtering and the photograph viewer. Comments compare their jQuery methods with the previous DOM code. Complete previous versions of `timur.js`, `about.js` and `feedback.js` are appended to `js/old-js-version.js`, which is never loaded by a page.
+
+Selectors cover IDs, classes, elements, attributes and `:checked`. Traversal uses `.find()`, `.closest()`, `.parent()`, `.siblings()` and `.each()`. Event handlers use `.on()`; error-summary links use delegation because validation creates them later. Chains and the differences between `.text()`/`.html()` and `.attr()`/`.prop()` are explained in code. Visitor content is rendered as text; `.html()` is reserved for fixed markup.
+
+Feedback transitions use `.fadeOut()`, `.slideDown()` and `.fadeIn()` with a duration and a focus callback. Reduced-motion preference disables the animation duration. Confirmation resets the form while preserving the local review and summary. Contact details never enter public cards or browser storage. No feedback is sent to the shop. Native HTML constraints remain, and comments explain why a real server must validate again.
+
+Run unit checks with `node --test tests/*.test.cjs`. For browser regression checks, serve the repository on port 8765 and run `node tests/timur-browser.cjs` with Playwright available to Node. `CHROME_PATH` overrides the default Google Chrome path on macOS; `BASE_URL` overrides the local URL. Coverage includes validation/correction, delegated links, preview/edit, safe text rendering, reset, review filters, clipboard recovery, gallery keyboard/focus, reduced motion and layouts at 375/768/1440 pixels.
+
+The older checklists, validation reports and screenshots are preserved as historical material; they describe their original snapshots rather than this migration.
