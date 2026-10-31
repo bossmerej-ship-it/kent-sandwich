@@ -67,23 +67,25 @@ function filterFeedback(reviews, query, rating, order) {
   return result;
 }
 
+// .append(), .text() and .attr() replace createElement and DOM assignments.
+// The card builder is shorter, while the filtering calculations stay plain JavaScript.
 function renderFeedbackCard(review) {
   const card = createTimurElement('article', 'border border-2 rounded-0 p-3 p-md-4 mb-3 bg-white text-break');
-  card.id = 'review-' + review.id;
+  card.attr('id', 'review-' + review.id);
   card.append(createTimurElement('h3', 'h5 fw-bold', review.name));
   const rating = review.rating === null ? 'Rating not provided' : review.rating + ' / 5';
   card.append(createTimurElement('p', 'small mb-2', rating + ' · ' + review.category));
   const text = createTimurElement('p', 'feedback-message', review.text);
-  if (review.language) text.lang = review.language;
+  if (review.language) text.attr('lang', review.language);
   card.append(text);
   const date = createTimurElement('time', 'small d-block mb-2', formatFeedbackDate(review.date));
-  date.dateTime = review.date;
+  date.attr('datetime', review.date);
   card.append(date);
   if (review.source) {
     const source = createTimurElement('a', 'link-dark small', 'Original review on 2GIS ↗');
-    source.href = review.source;
-    source.target = '_blank';
-    source.rel = 'noopener noreferrer';
+    source.attr('href', review.source);
+    source.attr('target', '_blank');
+    source.attr('rel', 'noopener noreferrer');
     card.append(source);
   } else {
     card.append(createTimurElement('p', 'small mb-0', 'Local demo review — not sent to the shop.'));
@@ -91,177 +93,194 @@ function renderFeedbackCard(review) {
   return card;
 }
 
-function initTimurFeedback() {
-  const form = document.getElementById('feedback-form');
-  const dialog = document.getElementById('feedback-dialog');
-  const preview = document.getElementById('feedback-review');
-  const confirmation = document.getElementById('feedback-confirmation');
-  const message = document.getElementById('guest-message');
-  const counter = document.getElementById('feedback-character-count');
-  const errorList = document.getElementById('feedback-error-list');
-  const errorBox = document.getElementById('feedback-errors');
-  const shareText = document.getElementById('feedback-share-text');
-  const copyButton = document.getElementById('feedback-copy');
-  const copyStatus = document.getElementById('feedback-copy-status');
-  const copyError = document.getElementById('feedback-copy-error');
-  const itemSelect = document.getElementById('ordered-item');
+// jQuery 3.7.1 ready ensures the form exists before handlers are attached.
+jQuery(function ($) {
+  if ($('body').attr('data-page') !== 'feedback') return;
+  const form = $('#feedback-form');
+  const dialog = $('#feedback-dialog');
+  const preview = $('#feedback-review');
+  const confirmation = $('#feedback-confirmation');
+  const message = $('#guest-message');
+  const counter = $('#feedback-character-count');
+  const errorList = $('#feedback-error-list');
+  const errorBox = $('#feedback-errors');
+  const shareText = $('#feedback-share-text');
+  const copyButton = $('#feedback-copy');
+  const copyStatus = $('#feedback-copy-status');
+  const copyError = $('#feedback-copy-error');
+  const itemSelect = $('#ordered-item');
   let stage = 'editing';
   let draft = null;
   let submitted = false;
   let copyVersion = 0;
 
-  form.noValidate = true;
-  document.getElementById('feedback-count-row').classList.remove('hidden');
-  document.getElementById('submission-note').textContent =
-    'Review your feedback, then confirm it on this page. Nothing is sent to the shop.';
-  document.getElementById('feedback-submit').textContent = 'Review feedback';
-  itemSelect.replaceChildren(createTimurElement('option', '', 'Another item / not sure'));
-  itemSelect.firstElementChild.value = '';
+  // Retain HTML constraints; custom errors replace native popups after enhancement.
+  // Browser checks can be bypassed: a real server must validate all values again.
+  form.prop('noValidate', true);
+  // Delegation catches links created on each validation attempt; a direct binding
+  // now would miss them because the error list is initially empty.
+  errorList.on('click', 'a[href^="#"]', function (event) {
+    event.preventDefault(); // Keep focus on the field instead of only jumping to an anchor.
+    $($(this).attr('href')).trigger('focus');
+  });
+  $('#feedback-count-row').removeClass('hidden');
+  $('#submission-note').text(
+    'Review your feedback, then confirm it on this page. Nothing is sent to the shop.');
+  $('#feedback-submit').text('Review feedback');
+  itemSelect.empty().append(createTimurElement('option', '', 'Another item / not sure').val(''));
   for (const item of feedbackMenu) {
     const option = createTimurElement('option', '', item.name + ' — ' + item.price + ' ₸ · ' + item.profile);
-    option.value = item.id;
+    option.val(item.id);
     itemSelect.append(option);
   }
 
   // Preserve the actual existing review. Its source does not specify a rating.
-  const quote = document.querySelector('.feedback-prompt blockquote');
+  const quote = $('.feedback-prompt blockquote');
   const reviews = [{
-    id: 'source', name: quote.querySelector('cite').firstChild.textContent.trim().replace(/,$/, ''),
-    text: quote.querySelector('q').textContent, language: quote.querySelector('q').lang,
+    id: 'source', name: quote.find('cite').clone().children().remove().end().text().trim().replace(/,$/, ''),
+    text: quote.find('q').text(), language: quote.find('q').attr('lang'),
     rating: null, category: 'Source review',
-    date: quote.querySelector('time').dateTime, source: quote.querySelector('a').href
+    date: quote.find('time').attr('datetime'), source: quote.find('a').attr('href')
   }];
   quote.remove();
 
+  // Chain: attr applies existing classes, html adds fixed emphasis, appendTo places the notice.
+  // Never pass visitor text to html(); text() displays it without interpreting markup.
+  $('<p>').attr('class', 'small').html('<strong>Local demo.</strong> Reviews are not sent to the shop.').appendTo($('.feedback-prompt'));
+
   const section = createTimurElement('section', 'py-4');
-  section.id = 'visitor-reviews';
-  section.setAttribute('aria-labelledby', 'visitor-reviews-title');
+  section.attr('id', 'visitor-reviews');
+  section.attr('aria-labelledby', 'visitor-reviews-title');
   const heading = createTimurElement('h2', 'fw-bold display-6 text-uppercase', 'Visitor reviews');
-  heading.id = 'visitor-reviews-title';
+  heading.attr('id', 'visitor-reviews-title');
   section.append(heading, createTimurElement('p', 'small',
     'The source review is credited below. New reviews stay on this page only and disappear when you reload.'));
   const filters = createTimurElement('form', 'row g-3 mb-3');
-  filters.setAttribute('aria-label', 'Filter visitor reviews');
+  filters.attr('aria-label', 'Filter visitor reviews');
 
   function addFilter(id, labelText, control) {
     const column = createTimurElement('div', 'col-12 col-md-4');
     const label = createTimurElement('label', 'form-label', labelText);
-    label.htmlFor = id;
-    control.id = id;
+    label.attr('for', id);
+    control.attr('id', id);
     column.append(label, control);
     filters.append(column);
     return control;
   }
   const search = addFilter('review-search', 'Search reviews', createTimurElement('input', 'form-control rounded-0'));
-  search.type = 'search';
-  search.maxLength = 100;
+  search.attr('type', 'search');
+  search.attr('maxlength', 100);
   const ratingFilter = addFilter('review-rating-filter', 'Rating', createTimurElement('select', 'form-select rounded-0'));
   for (const value of ['', '5', '4', '3', '2', '1', 'unrated']) {
     const label = value === '' ? 'All ratings' : value === 'unrated' ? 'Not rated' : value + ' / 5';
     const option = createTimurElement('option', '', label);
-    option.value = value;
+    option.val(value);
     ratingFilter.append(option);
   }
   const sorting = addFilter('review-sort', 'Order', createTimurElement('select', 'form-select rounded-0'));
   for (const value of ['newest', 'oldest']) {
     const option = createTimurElement('option', '', value === 'newest' ? 'Newest first' : 'Oldest first');
-    option.value = value;
+    option.val(value);
     sorting.append(option);
   }
   const reset = createTimurElement('button', 'btn btn-outline-dark rounded-0', 'Reset filters');
-  reset.type = 'reset';
+  reset.attr('type', 'reset');
   const actions = createTimurElement('div', 'col-12');
   actions.append(reset);
   filters.append(actions);
   const count = createTimurElement('p', 'small');
-  count.id = 'review-results-count';
-  count.setAttribute('role', 'status');
+  count.attr('id', 'review-results-count');
+  count.attr('role', 'status');
   const empty = createTimurElement('p', 'border p-3 hidden', 'No reviews match. Try another search, change the rating or reset the filters.');
-  empty.id = 'review-empty';
+  empty.attr('id', 'review-empty');
   const list = createTimurElement('div');
-  list.id = 'review-list';
+  list.attr('id', 'review-list');
   section.append(filters, count, empty, list);
-  document.getElementById('main-content').append(section);
+  $('#main-content').append(section);
 
   function renderReviews() {
-    const results = filterFeedback(reviews, search.value, ratingFilter.value, sorting.value);
-    list.replaceChildren();
+    const results = filterFeedback(reviews, search.val(), ratingFilter.val(), sorting.val());
+    list.empty();
     for (const review of results) list.append(renderFeedbackCard(review));
     const rated = results.filter(function (review) { return review.rating !== null; });
     let total = 0;
     for (const review of rated) total += review.rating;
     const average = rated.length > 0 ? ' Average: ' + (total / rated.length).toFixed(1) + ' / 5.' : ' No ratings in these results.';
-    count.textContent = 'Showing ' + results.length + ' of ' + reviews.length + ' reviews.' + average;
-    empty.classList.toggle('hidden', results.length !== 0);
+    count.text('Showing ' + results.length + ' of ' + reviews.length + ' reviews.' + average);
+    empty.toggleClass('hidden', results.length !== 0);
   }
   function resetFilters() {
-    search.value = '';
-    ratingFilter.value = '';
-    sorting.value = 'newest';
+    search.val('');
+    ratingFilter.val('');
+    sorting.val('newest');
     renderReviews();
   }
-  filters.addEventListener('input', renderReviews);
-  filters.addEventListener('change', renderReviews);
-  filters.addEventListener('submit', function (event) { event.preventDefault(); renderReviews(); });
-  filters.addEventListener('reset', function (event) {
+  filters.on('input', renderReviews);
+  filters.on('change', renderReviews);
+  filters.on('submit', function (event) { event.preventDefault(); renderReviews(); });
+  filters.on('reset', function (event) {
     event.preventDefault();
     resetFilters();
-    search.focus();
+    search.trigger('focus');
   });
   renderReviews();
 
+  // .val(), .prop(), .find() and .on() replace field properties and listeners.
+  // Reading fields is shorter; the validation rules still need the same explicit checks.
   function readFeedback() {
-    const selectedRating = form.querySelector('input[name="rating"]:checked');
+    const selectedRating = form.find('input[name="rating"]:checked');
     return {
-      name: document.getElementById('guest-name').value.trim(),
-      email: document.getElementById('guest-email').value.trim(),
-      phone: document.getElementById('guest-phone').value.trim(),
-      group: document.getElementById('group-size').value,
-      date: document.getElementById('visit-date').value,
-      item: itemSelect.value,
-      rating: selectedRating ? selectedRating.value : '',
-      message: message.value.trim(),
-      contact: document.getElementById('contact-permission').checked
+      name: $('#guest-name').val().trim(),
+      email: $('#guest-email').val().trim(),
+      phone: $('#guest-phone').val().trim(),
+      group: $('#group-size').val(),
+      date: $('#visit-date').val(),
+      item: itemSelect.val(),
+      rating: selectedRating.val() || '',
+      message: message.val().trim(),
+      // prop reads the current checkbox state; attr('checked') is only its initial HTML attribute.
+      contact: $('#contact-permission').prop('checked')
     };
   }
   function showErrors(errors) {
-    errorList.replaceChildren();
-    for (const control of form.querySelectorAll('[aria-invalid]')) {
-      control.removeAttribute('aria-invalid');
-      control.classList.remove('error');
-    }
-    for (const error of form.querySelectorAll('.field-error')) error.classList.add('hidden');
+    errorList.empty();
+    form.find('[aria-invalid]').removeAttr('aria-invalid').removeClass('error');
+    form.find('.field-error').addClass('hidden');
     for (const error of errors) {
-      const control = document.getElementById(error.id);
+      const control = $('#' + error.id);
       const errorId = error.id === 'rating-1' ? 'rating-error' : error.id + '-error';
-      const fieldError = document.getElementById(errorId);
-      control.setAttribute('aria-invalid', 'true');
-      control.classList.add('error');
-      fieldError.textContent = error.message;
-      fieldError.classList.remove('hidden');
-      const row = document.getElementById('feedback-error-item').content.cloneNode(true);
-      const link = row.querySelector('a');
-      link.href = '#' + error.id;
-      link.textContent = error.message;
-      link.addEventListener('click', function (event) { event.preventDefault(); control.focus(); });
+      const fieldError = $('#' + errorId);
+      control.attr('aria-invalid', 'true');
+      control.addClass('error');
+      fieldError.text(error.message);
+      fieldError.removeClass('hidden');
+      const row = $( $('#feedback-error-item').prop('content') ).clone();
+      const link = row.find('a');
+      link.attr('href', '#' + error.id);
+      link.text(error.message);
       errorList.append(row);
     }
-    errorBox.classList.toggle('hidden', errors.length === 0);
+    errorBox.toggleClass('hidden', errors.length === 0);
   }
   function updateForm() {
-    document.getElementById('visit-date').max = getShopClock(new Date()).date;
-    counter.textContent = message.value.length;
-    for (const radio of form.querySelectorAll('input[name="rating"]')) {
-      radio.closest('label').classList.toggle('selected', radio.checked);
-    }
+    $('#visit-date').attr('max', getShopClock(new Date()).date);
+    counter.text(message.val().length);
+    form.find('input[name="rating"]').each(function () {
+      $(this).closest('label').toggleClass('selected', $(this).prop('checked'));
+    });
     if (submitted) showErrors(validateFeedback(readFeedback(), getShopClock(new Date()).date));
   }
-  form.addEventListener('input', updateForm);
-  form.addEventListener('change', updateForm);
+  form.on('input', function () { if (!form.hasClass('hidden')) updateForm(); });
+  form.on('change', updateForm);
+  form.find('input[name="rating"]').on('change', function () {
+    // From the chosen label, reach sibling columns instead of adding more IDs.
+    const chosen = $(this).closest('label');
+    chosen.addClass('selected').parent().siblings().find('label').removeClass('selected');
+  });
   updateForm();
 
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
+  form.on('submit', function (event) {
+    event.preventDefault(); // Without this, method=dialog would close before our review step.
     if (stage !== 'editing') return;
     submitted = true;
     updateForm();
@@ -269,7 +288,7 @@ function initTimurFeedback() {
     const errors = validateFeedback(data, getShopClock(new Date()).date);
     showErrors(errors);
     if (errors.length > 0) {
-      document.getElementById(errors[0].id).focus();
+      $('#' + errors[0].id).trigger('focus');
       return;
     }
     draft = data;
@@ -280,19 +299,22 @@ function initTimurFeedback() {
       message: data.message,
       contact: data.contact ? [data.email, data.phone].filter(Boolean).join(' · ') : 'Not included'
     };
-    for (const key of Object.keys(values)) document.getElementById('feedback-review-' + key).textContent = values[key];
-    form.classList.add('hidden');
-    preview.classList.remove('hidden');
+    for (const key of Object.keys(values)) $('#feedback-review-' + key).text(values[key]);
     stage = 'reviewing';
-    preview.focus();
+    form.stop(true, true).fadeOut(timurEffectDuration(), function () {
+      form.addClass('hidden');
+      preview.stop(true, true).hide().removeClass('hidden').slideDown(timurEffectDuration(), function () {
+        preview.trigger('focus');
+      });
+    });
   });
-  document.getElementById('feedback-edit').addEventListener('click', function () {
+  $('#feedback-edit').on('click', function () {
     stage = 'editing';
-    preview.classList.add('hidden');
-    form.classList.remove('hidden');
-    document.getElementById('guest-name').focus();
+    preview.addClass('hidden');
+    form.stop(true, true).removeClass('hidden').fadeIn(timurEffectDuration());
+    $('#guest-name').trigger('focus');
   });
-  document.getElementById('feedback-confirm').addEventListener('click', function () {
+  $('#feedback-confirm').on('click', function () {
     if (stage !== 'reviewing' || !draft) return;
     stage = 'completed';
     const reference = 'DEMO-' + Math.floor(100000 + Math.random() * 900000);
@@ -304,16 +326,18 @@ function initTimurFeedback() {
     });
     const lines = ['Local feedback summary · ' + reference];
     for (const label of ['name', 'date', 'group', 'item', 'rating', 'message', 'contact']) {
-      lines.push(label + ': ' + document.getElementById('feedback-review-' + label).textContent);
+      lines.push(label + ': ' + $('#feedback-review-' + label).text());
     }
     lines.push('Demo only. No data was sent to Kent Sandwich; no order, booking or payment was created.');
-    shareText.value = lines.join('\n');
-    document.getElementById('feedback-share').classList.remove('hidden');
-    document.getElementById('feedback-confirmation-message').textContent =
-      reference + ': your review was added to this page. Filters were reset so you can see it. Nothing was sent to Kent Sandwich.';
+    shareText.val(lines.join('\n'));
+    $('#feedback-share').removeClass('hidden');
+    $('#feedback-confirmation-message').text(
+      reference + ': your review was added to this page. Filters were reset so you can see it. Nothing was sent to Kent Sandwich.');
     resetFilters();
-    dialog.close('complete');
-    confirmation.focus();
+    // Reset after copying the snapshot; the reset handler must not reopen a completed form.
+    form[0].reset();
+    dialog[0].close('complete');
+    confirmation.trigger('focus');
   });
 
   function resetFeedbackView() {
@@ -322,52 +346,49 @@ function initTimurFeedback() {
     draft = null;
     copyVersion++;
     showErrors([]);
-    preview.classList.add('hidden');
-    form.classList.remove('hidden');
-    document.getElementById('feedback-share').classList.add('hidden');
-    copyStatus.classList.add('hidden');
-    copyError.classList.add('hidden');
-    copyButton.classList.remove('pending');
-    copyButton.disabled = false;
-    shareText.value = '';
-    if (!dialog.open) dialog.show();
+    preview.addClass('hidden');
+    form.stop(true, true).removeClass('hidden').fadeIn(timurEffectDuration());
+    $('#feedback-share').addClass('hidden');
+    copyStatus.addClass('hidden');
+    copyError.addClass('hidden');
+    copyButton.removeClass('pending');
+    copyButton.prop('disabled', false);
+    shareText.val('');
+    if (!dialog.prop('open')) dialog[0].show();
     updateForm();
-    document.getElementById('guest-name').focus();
+    $('#guest-name').trigger('focus');
   }
-  form.addEventListener('reset', function () {
+  form.on('reset', function () {
     // Native reset finishes before the next task reads the fields.
-    window.setTimeout(resetFeedbackView, 0);
+    if (stage !== 'completed') window.setTimeout(resetFeedbackView, 0);
   });
-  document.getElementById('feedback-restart').addEventListener('click', function (event) {
+  $('#feedback-restart').on('click', function (event) {
     event.preventDefault();
-    form.reset();
+    stage = 'editing';
+    form[0].reset();
   });
-  copyButton.addEventListener('click', async function () {
+  copyButton.on('click', async function () {
     const version = copyVersion;
-    copyButton.disabled = true;
-    copyButton.classList.add('pending');
-    copyError.classList.add('hidden');
-    copyStatus.classList.remove('hidden');
-    copyStatus.textContent = 'Copying summary…';
+    copyButton.prop('disabled', true);
+    copyButton.addClass('pending');
+    copyError.addClass('hidden');
+    copyStatus.removeClass('hidden');
+    copyStatus.text('Copying summary…');
     try {
-      await navigator.clipboard.writeText(shareText.value);
-      if (version === copyVersion) copyStatus.textContent = 'Summary copied. Nothing was sent to the shop.';
+      await navigator.clipboard.writeText(shareText.val());
+      if (version === copyVersion) copyStatus.text('Summary copied. Nothing was sent to the shop.');
     } catch (error) {
       if (version === copyVersion) {
-        copyStatus.textContent = 'Copy the selected summary manually.';
-        copyError.classList.remove('hidden');
-        shareText.focus();
-        shareText.select();
+        copyStatus.text('Copy the selected summary manually.');
+        copyError.removeClass('hidden');
+        shareText.trigger('focus');
+        shareText.trigger('select');
       }
     } finally {
       if (version === copyVersion) {
-        copyButton.disabled = false;
-        copyButton.classList.remove('pending');
+        copyButton.prop('disabled', false);
+        copyButton.removeClass('pending');
       }
     }
   });
-}
-
-if (document.body.dataset.page === 'feedback') {
-  initTimurFeedback();
-}
+});
