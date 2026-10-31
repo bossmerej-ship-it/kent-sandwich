@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-23",
+  "timezone": "Asia/Qyzylorda",
+  "recordedAtUTC": "2026-10-23T13:46:34.541Z",
+  "implementedCommit": "4484b733052f87ba65aa6477f9c9ab39dece03de",
+  "baseline": "1330420751c1866c449b3aedc326127a85ac8fa8",
+  "sources": [
+    {
+      "path": "index.html",
+      "bytes": 9098,
+      "sha256": "9f94a3203a663b1155f7cb992f7b9a1933ddf231cc1197e400873f092ba5ac8e"
+    },
+    {
+      "path": "menu.html",
+      "bytes": 14947,
+      "sha256": "990e4e43da16188836a96f4a6ffcbab550afc526a6642578aac9dae7e1950c74"
+    },
+    {
+      "path": "order.html",
+      "bytes": 17564,
+      "sha256": "e2ec30c3e8bf4c0c0fd181a40968cbbc576a3a92253f483081dc2376b848e8ee"
+    },
+    {
+      "path": "js/menu-data.js",
+      "bytes": 3527,
+      "sha256": "f83d0d226e31563d993e136063a005a9f3d1c6443a316b8d1bafe718a6ddf8fd"
+    },
+    {
+      "path": "js/main.js",
+      "bytes": 8746,
+      "sha256": "124d276d6b0ba4c87a47b337125b73259fdfc0e6e2a22c5589d47d8b69b1f290"
+    },
+    {
+      "path": "js/index.js",
+      "bytes": 4315,
+      "sha256": "62a25fbd7cd9fd482f07d5c166919118da905cde109245edcc32379ba02a56fd"
+    },
+    {
+      "path": "js/menu.js",
+      "bytes": 10309,
+      "sha256": "76e0308b4f5a4343deeb758f0ab2403b587eadb9bd4ecbd7d9bc06ccc4832af0"
+    },
+    {
+      "path": "js/order.js",
+      "bytes": 17531,
+      "sha256": "6370a61452e68a4c4d7b35678d6222a9dff38d4ca91cfcdadb666004581b89cc"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "screenshots/assignment-4-5-merey/index-desktop.jpg",
+      "bytes": 350857,
+      "sha256": "174c1e230af5b933e4f11ba64ab70292e06b787a13ef8c31ed85a1b6fb7f04b8",
+      "height": 2677,
+      "width": 1424
+    },
+    {
+      "path": "screenshots/assignment-4-5-merey/index-mobile.jpg",
+      "bytes": 206287,
+      "sha256": "e3bd55b4c894135dfbf8c6d941a38bf9c61a23c04a500371e9731a72111d1a81",
+      "height": 3606,
+      "width": 360
+    },
+    {
+      "path": "screenshots/assignment-4-5-merey/menu-desktop.jpg",
+      "bytes": 326169,
+      "sha256": "ee8675d6f006a5b7b30b1c8127016b4af7ec6f452dd299eb362c2b354893e8e9",
+      "height": 2952,
+      "width": 1424
+    },
+    {
+      "path": "screenshots/assignment-4-5-merey/menu-mobile.jpg",
+      "bytes": 240933,
+      "sha256": "461409e1d6087eab9543bf2f96e9200545714c1d2b4d94456fdd5f53b66f0fd7",
+      "height": 5444,
+      "width": 360
+    },
+    {
+      "path": "screenshots/assignment-4-5-merey/order-desktop.jpg",
+      "bytes": 334242,
+      "sha256": "58199174e1b90b5a3ee9a0eaf1c6fca3e7bf67aeab514ec0edd6d2e4c153b11e",
+      "height": 3394,
+      "width": 1424
+    },
+    {
+      "path": "screenshots/assignment-4-5-merey/order-mobile-errors.jpg",
+      "bytes": 239747,
+      "sha256": "09ca9006195290d7c72f786591969e400bd7490e687563e954d863f37880daea",
+      "height": 4816,
+      "width": 360
+    },
+    {
+      "path": "screenshots/assignment-4-5-merey/order-mobile.jpg",
+      "bytes": 268276,
+      "sha256": "2d020435388108a24fa87c07e0e913da5d98de6f6933dd0c8de879ed57091bf1",
+      "height": 5301,
+      "width": 360
+    }
+  ],
+  "automatedTests": {
+    "passed": 12,
+    "failed": 0
+  },
+  "viewports": [
+    {
+      "width": 375,
+      "height": 812
+    },
+    {
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "width": 1440,
+      "height": 1000
+    }
+  ],
+  "browser": "Chromium",
+  "boundary": "Local demo; no real order or payment"
+}
