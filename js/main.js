@@ -3,9 +3,6 @@ jQuery(function ($) {
   'use strict';
 
   const Kent = window.Kent;
-  const STORAGE_KEY = 'kent-sandwich-basket-v1';
-  let cart = [];
-  let storageAvailable = true;
 
   // All UI helpers return jQuery collections, never native DOM nodes.
   function element(tag, classes, text) {
@@ -30,76 +27,12 @@ jQuery(function ($) {
       .text('Your basket works on this page. Browser storage is unavailable, so it may not carry over to another page.');
   }
 
-  function readCart() {
-    try {
-      const saved = window.localStorage.getItem(STORAGE_KEY);
-      if (!saved) return [];
-      try { return Kent.normaliseCart(JSON.parse(saved)); }
-      catch (error) {
-        window.localStorage.removeItem(STORAGE_KEY);
-        return [];
-      }
-    } catch (error) {
-      storageAvailable = false;
-      showStorageNotice();
-      return [];
-    }
-  }
-
   function announce(message) {
     status.text('');
     window.requestAnimationFrame(function () { status.text(message); });
   }
 
-  function getCart() {
-    return cart.map(function (line) { return { id: line.id, quantity: line.quantity }; });
-  }
-
-  function notifyCartChanged() { $(document).trigger('kent:cart-change'); }
-
-  function saveCart() {
-    if (storageAvailable) {
-      try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); }
-      catch (error) { storageAvailable = false; showStorageNotice(); }
-    }
-    notifyCartChanged();
-  }
-
-  function setQuantity(id, quantity) {
-    const item = Kent.getMenuItem(Kent.MENU, id);
-    if (!item) return { ok: false, message: 'This sandwich is not on the menu.' };
-    if (!Number.isInteger(quantity) || quantity < 0 || quantity > Kent.MAX_QUANTITY) {
-      return { ok: false, message: 'Choose a whole quantity from 1 to ' + Kent.MAX_QUANTITY + ' per sandwich.' };
-    }
-    const existing = cart.find(function (line) { return line.id === id; });
-    if (quantity === 0) cart = cart.filter(function (line) { return line.id !== id; });
-    else if (existing) existing.quantity = quantity;
-    else cart.push({ id: id, quantity: quantity });
-    saveCart();
-    return { ok: true, message: quantity === 0 ? item.name + ' removed from your basket.' : item.name + ': ' + quantity + ' in your basket.' };
-  }
-
-  function addToCart(id, quantity) {
-    const added = quantity === undefined ? 1 : quantity;
-    if (!Number.isInteger(added) || added < 1) return { ok: false, message: 'Choose a whole quantity of at least 1.' };
-    const existing = cart.find(function (line) { return line.id === id; });
-    return setQuantity(id, (existing ? existing.quantity : 0) + added);
-  }
-
-  function removeFromCart(id) { return setQuantity(id, 0); }
-  function clearCart() {
-    cart = [];
-    saveCart();
-    return { ok: true, message: 'Your basket is now empty.' };
-  }
-  function onCartChange(callback) { $(document).on('kent:cart-change', callback); }
-
-  Object.assign(Kent, {
-    element: element, effectDuration: effectDuration, announce: announce, getCart: getCart,
-    setQuantity: setQuantity, addToCart: addToCart, removeFromCart: removeFromCart,
-    clearCart: clearCart, onCartChange: onCartChange
-  });
-  cart = readCart();
+  Object.assign(Kent, { element, effectDuration, announce });
 
   const navList = $('#main-navbar ul');
   navList.find('a[href="colophon.html"]').closest('li').remove();
@@ -112,12 +45,15 @@ jQuery(function ($) {
 
   const cartRegion = $('#order-cart');
   const cartList = $('#cart-items');
+  const cartEmpty = $('#cart-empty-state');
   const clearButton = element('button', 'btn btn-outline-dark rounded-0 mt-3', 'Clear basket')
     .attr({ type: 'button', id: 'clear-basket' });
   if (cartRegion.length) {
+    cartEmpty.append(' ', element('a', 'link-dark fw-semibold', 'Browse the menu.').attr('href', 'menu.html'));
     cartRegion.removeClass('is-hidden').append(clearButton);
     clearButton.on('click', function () {
-      clearCart();
+      Kent.clearCart();
+      cartEmpty.attr('tabindex', '-1').trigger('focus');
       announce('Your basket is now empty. Add sandwiches to prepare a demo order.');
     });
   }
@@ -131,7 +67,7 @@ jQuery(function ($) {
   // Rewrite 2: $(), .empty(), .append(), .prop() and delegated .on() replace native basket DOM/listeners.
   // Building rows is shorter; calculation/storage logic stays the same and focus recovery still needs care.
   function renderCart() {
-    const summary = Kent.calculateCart(cart);
+    const summary = Kent.calculateCart(Kent.getCart());
     navLink.text('Basket (' + summary.quantity + ')')
       .attr('aria-label', 'Basket, ' + summary.quantity + ' items, ' + Kent.formatMoney(summary.total));
     if (!cartList.length) return;
@@ -155,7 +91,7 @@ jQuery(function ($) {
     });
     $('#cart-count').text(summary.quantity + (summary.quantity === 1 ? ' item' : ' items'));
     $('#cart-total').text(Kent.formatMoney(summary.total));
-    $('#cart-empty-state').toggleClass('is-hidden', summary.quantity !== 0);
+    cartEmpty.toggleClass('is-hidden', summary.quantity !== 0);
     clearButton.prop('disabled', summary.quantity === 0);
     if (focused.length) {
       const buttons = cartList.find('button:not(:disabled)');
@@ -163,27 +99,25 @@ jQuery(function ($) {
         return $(this).attr('data-item-id') === focusedId && $(this).attr('data-cart-action') === focusedAction;
       }).first();
       if (next.length || buttons.length) (next.length ? next : buttons.first()).trigger('focus');
-      else $('#cart-empty-state').attr('tabindex', '-1').trigger('focus');
+      else cartEmpty.attr('tabindex', '-1').trigger('focus');
     }
   }
 
   // The parent exists before rows. Direct binding would miss new buttons after every render.
   cartList.on('click', 'button[data-cart-action]', function () {
     const button = $(this);
-    const line = cart.find(function (entry) { return entry.id === button.closest('li').attr('data-item-id'); });
+    const id = button.closest('li').attr('data-item-id');
+    const line = Kent.getCart().find(function (entry) { return entry.id === id; });
     if (!line) return;
     const action = button.attr('data-cart-action');
     const quantity = action === 'increase' ? line.quantity + 1 : action === 'decrease' ? line.quantity - 1 : 0;
-    announce(setQuantity(line.id, quantity).message);
+    announce(Kent.setQuantity(line.id, quantity).message);
   });
-  onCartChange(renderCart);
-  $(window).on('storage', function (event) {
-    const key = event.originalEvent.key;
-    if (storageAvailable && (key === STORAGE_KEY || key === null)) {
-      cart = readCart();
-      notifyCartChanged();
-      announce('Your basket was updated in another tab.');
-    }
+  Kent.onCartChange(function (source) {
+    renderCart();
+    if (!Kent.isCartStorageAvailable()) showStorageNotice();
+    if (source === 'storage') announce('Your basket was updated in another tab.');
   });
+  if (!Kent.isCartStorageAvailable()) showStorageNotice();
   renderCart();
 });
