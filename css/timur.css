@@ -5,6 +5,16 @@
   letter-spacing: -0.045em;
 }
 
+.about-story .story-title {
+  font-family: var(--bs-body-font-family);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.about-story .story-photo {
+  aspect-ratio: 6 / 7;
+  object-position: center bottom;
+}
+
 /* Future scripts switch classes instead of creating new styles. */
 .page .hidden {
   display: none;
