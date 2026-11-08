@@ -47,7 +47,7 @@
         <div class="col-12"><p class="eyebrow small text-uppercase fw-bold mb-3">Project structure</p><h2 id="build-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">One site, six pages</h2></div>
         <div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">06</p><h3 class="h5 fw-bold text-uppercase lh-1">Connected pages</h3><p>The same navigation connects the home, menu, place, order, feedback and credits.</p></article></div>
         <div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">03</p><h3 class="h5 fw-bold text-uppercase lh-1">Local stylesheets</h3><p>Shared brand colours and page corrections accompany Bootstrap’s grid, spacing and controls.</p></article></div>
-        <div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">01</p><h3 class="h5 fw-bold text-uppercase lh-1">Shared navigation</h3><p>Bootstrap opens the mobile menu. Native HTML checks the feedback fields and completes its local form.</p></article></div>
+        <div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">01</p><h3 class="h5 fw-bold text-uppercase lh-1">Shared navigation</h3><p id="build-form-description">Bootstrap opens the mobile menu. Native HTML checks the feedback fields and completes its local form.</p></article></div>
         <div class="col-12 col-md-6 col-lg-3"><article class="border-top border-dark pt-3 h-100"><p class="audit-number display-6 fw-bold">01</p><h3 class="h5 fw-bold text-uppercase lh-1">Shop location</h3><p>Every page describes Kent Sandwich at Adolfa Yanushkevicha Street, 1.</p></article></div>
         <div class="col-12"><nav aria-label="Website pages"><ul class="d-flex flex-wrap gap-3 list-unstyled mb-0">
           <li><a href="index.html">Home</a></li><li><a href="menu.html">Menu</a></li><li><a href="about.html">Our place</a></li><li><a href="order.html">Order</a></li><li><a href="feedback.html">Feedback</a></li><li><a href="colophon.html" aria-current="page">Colophon</a></li>
@@ -61,7 +61,7 @@
           <li class="mb-3"><strong>Colours.</strong> Black, warm white and yellow echo the shop’s packaging and interior.</li>
           <li class="mb-3"><strong>Structure.</strong> Headings, lists, tables, figures and fieldsets organise the information. Every content photograph has descriptive alternative text.</li>
           <li class="mb-3"><strong>Layout.</strong> Bootstrap columns stack on phones and split at md and lg. The navigation collapses below 992px.</li>
-          <li class="mb-3"><strong>Feedback.</strong> Required fields are checked by the browser. Completing the form shows a local confirmation; it does not send anything to the shop.</li>
+          <li id="feedback-principle" class="mb-3"><strong>Feedback.</strong> Required fields are checked by the browser. Completing the form shows a local confirmation; it does not send anything to the shop.</li>
           <li><strong>Keyboard access.</strong> The skip link reaches the main content, links and controls have visible focus, and official contacts remain ordinary links.</li>
         </ol></div>
       </div>
@@ -93,7 +93,7 @@
     <aside id="file-guide" class="file-guide bg-dark text-white rounded-0 p-4 my-4" aria-labelledby="file-guide-title">
       <h2 id="file-guide-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Structure &amp; access</h2>
       <p>The site uses <abbr title="HyperText Markup Language"><b>HTML</b></abbr> for its content and <abbr title="Cascading Style Sheets">CSS</abbr> for its appearance. Bootstrap 5.3.8 supplies responsive layout and navigation. Local <code>css/base.css</code> sets the shared brand colours.</p>
-      <p>Press <kbd>Tab</kbd> to move through links and controls. When a required field is empty, the browser may show <samp>Please fill out this field.</samp> and keep the feedback form open.</p>
+      <p id="keyboard-guide">Press <kbd>Tab</kbd> to move through links and controls. When a required field is empty, the browser may show <samp>Please fill out this field.</samp> and keep the feedback form open.</p>
       <pre class="bg-body text-body p-3 rounded-0 mb-0 text-wrap text-break"><code>HTML pages → content and navigation
 Shared styles → brand colours and typefaces
 Page styles → typography and interaction states
@@ -112,8 +112,6 @@ Bootstrap → grid, spacing and mobile navigation</code></pre>
   <a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 z-3 d-none d-lg-block rounded-0 border-2 text-uppercase fw-bold" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <!-- Empty at the midterm: later behaviour can be added without changing this HTML. -->
-  <!-- jQuery 3.7.1 full build loads before our scripts; the full build includes effects. -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
-<script src="js/timur.js" defer></script>
+  <script src="js/timur.js" defer></script>
 </body>
 </html>
