@@ -1,17 +1,5 @@
 'use strict';
 
-// The same eight items and prices as the existing menu.
-const feedbackMenu = [
-  { id: 'mini', name: 'Mini sandwich', price: 390, profile: 'Compact' },
-  { id: 'chicken', name: 'Chicken', price: 640, profile: 'Classic' },
-  { id: 'classic', name: 'Classic', price: 640, profile: 'Classic' },
-  { id: 'cheese', name: 'Cheese', price: 640, profile: 'Rich' },
-  { id: 'cutlet', name: 'Cutlet', price: 690, profile: 'Filling' },
-  { id: 'spicy-cutlet', name: 'Spicy cutlet', price: 740, profile: 'Hot' },
-  { id: 'hot-dog', name: 'Hot dog', price: 640, profile: 'Classic' },
-  { id: 'spicy', name: 'Spicy', price: 690, profile: 'Hot' }
-];
-
 // This page's view uses jQuery exclusively; shared time calculations stay native.
 function createTimurElement(tag, classes, text) {
   const element = jQuery('<' + tag + '>').addClass(classes || '');
@@ -54,8 +42,8 @@ function validateFeedback(data, today) {
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
     errors.push({ id: 'rating-1', message: 'Choose a rating from 1 to 5.' });
   }
-  if (data.item && !feedbackMenu.some(function (item) { return item.id === data.item; })) {
-    errors.push({ id: 'ordered-item', message: 'Choose a listed sandwich or Another item / not sure.' });
+  if (data.total !== '' && (!Number.isInteger(Number(data.total)) || Number(data.total) <= 0)) {
+    errors.push({ id: 'order-total', message: 'Enter a positive whole amount in tenge, or leave it empty.' });
   }
   if (data.message.trim().length < 20 || data.message.trim().length > 600) {
     errors.push({ id: 'guest-message', message: 'Write 20–600 characters after trimming spaces.' });
@@ -66,14 +54,15 @@ function validateFeedback(data, today) {
   return errors;
 }
 
-function filterFeedback(reviews, query, rating, order, item) {
+function filterFeedback(reviews, query, rating, order, totalFilter) {
   const search = query.trim().toLowerCase();
   const result = reviews.filter(function (review) {
     const text = (review.name + ' ' + review.text + ' ' + review.category).toLowerCase();
     const matchesRating = rating === '' ||
       (rating === 'unrated' ? review.rating === null : review.rating === Number(rating));
-    const matchesItem = !item || (item === 'unspecified' ? !review.item : review.item === item);
-    return text.includes(search) && matchesRating && matchesItem;
+    const matchesTotal = !totalFilter ||
+      (totalFilter === 'with-total' ? review.total > 0 : !(review.total > 0));
+    return text.includes(search) && matchesRating && matchesTotal;
   });
   result.sort(function (left, right) {
     if (order === 'highest' || order === 'lowest') {
@@ -88,9 +77,20 @@ function filterFeedback(reviews, query, rating, order, item) {
   return result;
 }
 
-function getFeedbackItemName(id) {
-  const item = feedbackMenu.find(function (entry) { return entry.id === id; });
-  return item ? item.name : 'Another item / not sure';
+function formatFeedbackMoney(value) {
+  return Math.round(value).toLocaleString('en-US') + ' ₸';
+}
+
+function getAverageFeedbackCheck(reviews) {
+  let total = 0;
+  let people = 0;
+  for (const review of reviews) {
+    if (review.total > 0 && review.group > 0) {
+      total += Number(review.total);
+      people += Number(review.group);
+    }
+  }
+  return people > 0 ? total / people : null;
 }
 
 function createFeedbackSummary(data, reference) {
@@ -100,7 +100,8 @@ function createFeedbackSummary(data, reference) {
     'Name: ' + data.name,
     'Visit date: ' + formatFeedbackDate(data.date),
     'Group size: ' + data.group,
-    'Sandwich: ' + getFeedbackItemName(data.item),
+    'Order total: ' + (data.total ? formatFeedbackMoney(data.total) : 'Not provided'),
+    'Check per person: ' + (data.total ? formatFeedbackMoney(data.total / data.group) : 'Not provided'),
     'Rating: ' + data.rating + ' / 5',
     'Feedback: ' + data.message,
     'Contact details: ' + contact,
@@ -111,35 +112,46 @@ function createFeedbackSummary(data, reference) {
 // .append(), .text() and .attr() replace createElement and DOM assignments.
 // The card builder is shorter, while the filtering calculations stay plain JavaScript.
 function renderFeedbackCard(review) {
-  const card = createTimurElement('article', 'border border-2 rounded-0 p-3 p-md-4 mb-3 bg-white text-break');
+  const card = createTimurElement('article', 'border border-dark rounded-0 p-3 p-md-4 bg-white text-break d-flex flex-column w-100 h-100');
   card.attr('id', 'review-' + review.id);
-  card.append(createTimurElement('h3', 'h5 fw-bold', review.name));
+  const header = createTimurElement('div', 'd-flex flex-wrap justify-content-between align-items-start gap-2 mb-3');
+  const author = createTimurElement('div');
+  author.append(createTimurElement('h3', 'h5 fw-bold mb-1', review.name));
+  const date = createTimurElement('time', 'small d-block', formatFeedbackDate(review.date));
+  date.attr('datetime', review.date);
+  author.append(date);
   const rating = review.rating === null ? 'Rating not provided' : review.rating + ' / 5';
-  card.append(createTimurElement('p', 'small mb-2', rating + ' · ' + review.category));
-  const text = createTimurElement('p', 'feedback-message', review.text);
+  const badge = createTimurElement('span', 'badge border border-dark rounded-0 p-2 text-wrap ' +
+    (review.rating === null ? 'bg-white text-dark' : 'text-bg-warning'), rating);
+  header.append(author, badge);
+  card.append(header, createTimurElement('p', 'small mb-2', review.category));
+  const text = createTimurElement('p', 'feedback-message mb-3', review.text);
   if (review.language) text.attr('lang', review.language);
   card.append(text);
-  const date = createTimurElement('time', 'small d-block mb-2', formatFeedbackDate(review.date));
-  date.attr('datetime', review.date);
-  card.append(date);
+  if (review.total > 0) {
+    card.append(createTimurElement('p', 'small fw-semibold bg-warning text-dark p-2 mb-3', 'Order total: ' + formatFeedbackMoney(review.total) +
+      ' · ' + formatFeedbackMoney(review.total / review.group) + ' per person'));
+  }
   if (review.visitDate) {
     const detailsId = 'review-details-' + review.id;
-    const toggle = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-0 mb-2', 'Show visit details');
+    const toggle = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-0 mb-3 align-self-start', 'Show visit details');
     toggle.attr({ type: 'button', 'data-review-details': '', 'aria-expanded': 'false', 'aria-controls': detailsId });
     const details = createTimurElement('p', 'review-details hidden small',
       'Visited ' + formatFeedbackDate(review.visitDate) + ' · Group size: ' + review.group + '.');
     details.attr('id', detailsId);
     card.append(toggle, details);
   }
+  const footer = createTimurElement('div', 'border-top border-dark pt-3 mt-auto');
   if (review.source) {
     const source = createTimurElement('a', 'link-dark small', 'Original review on 2GIS ↗');
     source.attr('href', review.source);
     source.attr('target', '_blank');
     source.attr('rel', 'noopener noreferrer');
-    card.append(source);
+    footer.append(source);
   } else {
-    card.append(createTimurElement('p', 'small mb-0', 'Local demo review — not sent to the shop.'));
+    footer.append(createTimurElement('p', 'small mb-0', 'Local demo review — not sent to the shop.'));
   }
+  card.append(footer);
   return card;
 }
 
@@ -158,9 +170,21 @@ jQuery(function ($) {
   const copyButton = $('#feedback-copy');
   const copyStatus = $('#feedback-copy-status');
   const copyError = $('#feedback-copy-error');
-  const itemSelect = $('#ordered-item');
+  const totalInput = createTimurElement('input', 'form-control rounded-0 bg-white');
+  totalInput.attr({ id: 'order-total', name: 'order-total', type: 'number', min: 1, step: 1,
+    placeholder: 'e.g. 1400', 'aria-describedby': 'order-total-hint order-total-error' });
+  $('#ordered-item').replaceWith(totalInput);
+  $('label[for="ordered-item"]').attr('for', 'order-total').text('Order total (₸)');
+  const totalHint = createTimurElement('p', 'form-text mb-0');
+  totalHint.attr('id', 'order-total-hint').insertAfter(totalInput);
+  $('#feedback-review-item').attr({ id: 'feedback-review-total', for: 'order-total' })
+    .closest('dd').prev('dt').text('Order total');
   $('#guest-phone').val('+7').prop('defaultValue', '+7').on('input', function () {
-    if (!this.value.startsWith('+7')) this.value = '+7' + this.value.replace(/^\+/, '');
+    let phone = $(this).val().trim();
+    const digits = phone.replace(/[ ()-]/g, '');
+    if (/^[78]\d{10}$/.test(digits)) phone = '+7' + digits.slice(1);
+    else if (!phone.startsWith('+7')) phone = '+7' + phone.replace(/^\+/, '');
+    $(this).val(phone);
   });
   $('#visit-date').prop('required', false);
   $('label[for="visit-date"]').text('Visit date (optional)');
@@ -170,9 +194,8 @@ jQuery(function ($) {
   clearEmail.on('click', function () {
     $('#guest-email').val('').trigger('input').trigger('focus');
   });
-  const itemError = createTimurElement('p', 'field-error hidden small mt-1 mb-0');
-  itemError.attr('id', 'ordered-item-error').insertAfter(itemSelect);
-  itemSelect.attr('aria-describedby', 'ordered-item-error');
+  const totalError = createTimurElement('p', 'field-error hidden small mt-1 mb-0');
+  totalError.attr('id', 'order-total-error').insertAfter(totalHint);
   const download = createTimurElement('a', 'btn btn-outline-dark rounded-0 border-2 ms-2 hidden', 'Save summary as text');
   download.attr('id', 'feedback-download').insertAfter(copyButton);
   let stage = 'editing';
@@ -194,13 +217,6 @@ jQuery(function ($) {
   $('#submission-note').text(
     'Review your feedback, then confirm it on this page. Nothing is sent to the shop.');
   $('#feedback-submit').text('Review feedback');
-  itemSelect.empty().append(createTimurElement('option', '', 'Another item / not sure').val(''));
-  for (const item of feedbackMenu) {
-    const option = createTimurElement('option', '', item.name + ' — ' + item.price + ' ₸ · ' + item.profile);
-    option.val(item.id);
-    itemSelect.append(option);
-  }
-
   // Preserve the actual existing review. Its source does not specify a rating.
   const quote = $('.feedback-prompt blockquote');
   const reviews = [{
@@ -215,19 +231,22 @@ jQuery(function ($) {
   // Never pass visitor text to html(); text() displays it without interpreting markup.
   $('<p>').attr('class', 'small').html('<strong>Local demo.</strong> Reviews are not sent to the shop.').appendTo($('.feedback-prompt'));
 
-  const section = createTimurElement('section', 'py-4');
+  const section = createTimurElement('section', 'py-4 mt-4 border-top border-dark');
   section.attr('id', 'visitor-reviews');
   section.attr('aria-labelledby', 'visitor-reviews-title');
   const heading = createTimurElement('h2', 'fw-bold display-6 text-uppercase', 'Visitor reviews');
   heading.attr('id', 'visitor-reviews-title');
+  const averageCheck = createTimurElement('p', 'fw-semibold border border-dark bg-warning text-dark p-3 mb-4');
+  averageCheck.attr('id', 'review-average-check');
   section.append(heading, createTimurElement('p', 'small',
-    'The source review is credited below. New reviews stay on this page only and disappear when you reload.'));
-  const filters = createTimurElement('form', 'row g-3 mb-3');
+    'The source review is credited below. New reviews stay on this page only and disappear when you reload.'), averageCheck);
+  const filterPanel = createTimurElement('div', 'border border-dark bg-white p-3 p-md-4 mb-4');
+  const filters = createTimurElement('form', 'row g-3');
   filters.attr('aria-label', 'Filter visitor reviews');
 
   function addFilter(id, labelText, control) {
-    const column = createTimurElement('div', 'col-12 col-md-6');
-    const label = createTimurElement('label', 'form-label', labelText);
+    const column = createTimurElement('div', 'col-12 col-md-6 col-lg-3');
+    const label = createTimurElement('label', 'form-label fw-semibold', labelText);
     label.attr('for', id);
     control.attr('id', id);
     column.append(label, control);
@@ -254,27 +273,28 @@ jQuery(function ($) {
     option.val(order.value);
     sorting.append(option);
   }
-  const sandwichFilter = addFilter('review-item-filter', 'Sandwich', createTimurElement('select', 'form-select rounded-0'));
-  sandwichFilter.append(createTimurElement('option', '', 'All sandwiches').val(''));
-  for (const item of feedbackMenu) {
-    const option = createTimurElement('option', '', item.name);
-    option.val(item.id);
-    sandwichFilter.append(option);
+  const totalFilter = addFilter('review-total-filter', 'Order total', createTimurElement('select', 'form-select rounded-0'));
+  for (const option of [
+    { value: '', label: 'All reviews' },
+    { value: 'with-total', label: 'With order total' },
+    { value: 'without-total', label: 'Without order total' }
+  ]) {
+    totalFilter.append(createTimurElement('option', '', option.label).val(option.value));
   }
-  sandwichFilter.append(createTimurElement('option', '', 'Not specified').val('unspecified'));
   const reset = createTimurElement('button', 'btn btn-outline-dark rounded-0', 'Reset filters');
   reset.attr('type', 'reset');
-  const actions = createTimurElement('div', 'col-12');
+  const actions = createTimurElement('div', 'col-12 d-flex justify-content-end');
   actions.append(reset);
   filters.append(actions);
-  const count = createTimurElement('p', 'small');
+  const count = createTimurElement('p', 'small border-bottom border-dark pb-3 mb-4');
   count.attr('id', 'review-results-count');
   count.attr('role', 'status');
-  const empty = createTimurElement('p', 'border p-3 hidden', 'No reviews match. Try another search, change the rating or reset the filters.');
+  const empty = createTimurElement('p', 'border border-dark bg-white p-4 hidden', 'No reviews match. Try another search, change the rating or reset the filters.');
   empty.attr('id', 'review-empty');
-  const list = createTimurElement('div');
+  const list = createTimurElement('div', 'row g-3');
   list.attr('id', 'review-list');
-  section.append(filters, count, empty, list);
+  filterPanel.append(filters);
+  section.append(filterPanel, count, empty, list);
   $('#main-content').append(section);
 
   // These buttons are created again after every filter: bind once on the list.
@@ -289,21 +309,26 @@ jQuery(function ($) {
   });
 
   function renderReviews() {
-    const results = filterFeedback(reviews, search.val(), ratingFilter.val(), sorting.val(), sandwichFilter.val());
+    const results = filterFeedback(reviews, search.val(), ratingFilter.val(), sorting.val(), totalFilter.val());
     list.empty();
-    for (const review of results) list.append(renderFeedbackCard(review));
+    for (const review of results) {
+      list.append(createTimurElement('div', 'col-12 col-lg-6 d-flex').append(renderFeedbackCard(review)));
+    }
     const rated = results.filter(function (review) { return review.rating !== null; });
     let total = 0;
     for (const review of rated) total += review.rating;
     const average = rated.length > 0 ? ' Average: ' + (total / rated.length).toFixed(1) + ' / 5.' : ' No ratings in these results.';
     count.text('Showing ' + results.length + ' of ' + reviews.length + ' reviews.' + average);
+    const check = getAverageFeedbackCheck(reviews);
+    averageCheck.text(check === null ? 'Average check per person: no order totals yet.'
+      : 'Average check per person (local reviews): ' + formatFeedbackMoney(check));
     empty.toggleClass('hidden', results.length !== 0);
   }
   function resetFilters() {
     search.val('');
     ratingFilter.val('');
     sorting.val('newest');
-    sandwichFilter.val('');
+    totalFilter.val('');
     renderReviews();
   }
   filters.on('input', renderReviews);
@@ -327,7 +352,7 @@ jQuery(function ($) {
       phone: phone === '+7' ? '' : phone,
       group: $('#group-size').val(),
       date: $('#visit-date').val() || getShopClock(new Date()).date,
-      item: itemSelect.val(),
+      total: totalInput.val(),
       rating: selectedRating.val() || '',
       message: message.val().trim(),
       // prop reads the current checkbox state; attr('checked') is only its initial HTML attribute.
@@ -357,6 +382,11 @@ jQuery(function ($) {
   }
   function updateForm() {
     $('#visit-date').attr('max', getShopClock(new Date()).date);
+    const total = Number(totalInput.val());
+    const group = Number($('#group-size').val());
+    totalHint.text(Number.isInteger(total) && total > 0 && Number.isInteger(group) && group >= 1 && group <= 20
+      ? formatFeedbackMoney(total / group) + ' per person.'
+      : 'Optional. Enter the total bill for your group in tenge.');
     counter.text(message.val().length);
     clearEmail.prop('disabled', $('#guest-email').val().length === 0);
     form.find('input[name="rating"]').each(function () {
@@ -388,7 +418,9 @@ jQuery(function ($) {
     draft = data;
     const values = {
       name: data.name, date: formatFeedbackDate(data.date), group: data.group,
-      item: getFeedbackItemName(data.item), rating: data.rating + ' / 5',
+      total: data.total ? formatFeedbackMoney(data.total) + ' · ' +
+        formatFeedbackMoney(data.total / data.group) + ' per person' : 'Not provided',
+      rating: data.rating + ' / 5',
       message: data.message,
       contact: data.contact ? [data.email, data.phone].filter(Boolean).join(' · ') : 'Not included'
     };
@@ -411,12 +443,13 @@ jQuery(function ($) {
   $('#feedback-confirm').on('click', function () {
     if (stage !== 'reviewing' || !draft) return;
     stage = 'completed';
+    const now = new Date();
+    if (!$('#visit-date').val()) draft.date = getShopClock(now).date;
     const reference = 'DEMO-' + Math.floor(100000 + Math.random() * 900000);
-    const item = feedbackMenu.find(function (item) { return item.id === draft.item; });
     reviews.push({
       id: reference + '-' + reviews.length, name: draft.name, text: draft.message,
-      rating: Number(draft.rating), category: item ? item.name : 'Visit feedback',
-      date: new Date().toISOString(), source: '', item: draft.item,
+      rating: Number(draft.rating), category: 'Visit feedback',
+      date: now.toISOString(), source: '', total: draft.total ? Number(draft.total) : null,
       visitDate: draft.date, group: draft.group
     });
     const summary = createFeedbackSummary(draft, reference);

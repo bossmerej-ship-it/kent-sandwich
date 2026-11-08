@@ -129,7 +129,9 @@ document.addEventListener('DOMContentLoaded', function () {
     return input;
   }
   const dateInput = addField('plan-date', 'date', 'Visit date');
-  const timeInput = addField('plan-time', 'time', 'Arrival time');
+  const timeInput = addField('plan-time', 'text', 'Arrival time (HH:MM)');
+  timeInput.placeholder = '20:30';
+  timeInput.maxLength = 5;
   const actions = createTimurNode('div', 'col-12 d-flex flex-wrap gap-2');
   const check = createTimurNode('button', 'btn btn-dark rounded-0', 'Check visit time');
   check.type = 'submit';

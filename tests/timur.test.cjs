@@ -16,7 +16,7 @@ for (const file of ['timur.js', 'about.js', 'feedback.js']) {
 function validFeedback() {
   return {
     name: 'Demo Visitor', email: '', phone: '', group: '2', date: '2026-10-23',
-    item: 'chicken', rating: '5', message: 'The sandwich was hot and the seating was comfortable.',
+    total: '1400', rating: '5', message: 'The sandwich was hot and the seating was comfortable.',
     contact: false
   };
 }
@@ -84,17 +84,24 @@ test('review search and rating filters combine and handle unrated records', func
   assert.equal(reviews[0].id, 'a', 'sorting must not mutate the original list');
 });
 
-test('sandwich review filter combines with text and rating without mutating the source', function () {
+test('order total filter combines with text and rating without mutating the source', function () {
   const reviews = [
-    { id: 'a', name: 'Alice', text: 'Fresh chicken', category: 'Chicken', item: 'chicken', rating: 5, date: '2026-11-08' },
-    { id: 'b', name: 'Bob', text: 'Fresh cheese', category: 'Cheese', item: 'cheese', rating: 4, date: '2026-11-07' },
+    { id: 'a', name: 'Alice', text: 'Fresh chicken', category: 'Visit', total: 1400, group: 2, rating: 5, date: '2026-11-08' },
+    { id: 'b', name: 'Bob', text: 'Fresh cheese', category: 'Visit', total: 3000, group: 3, rating: 4, date: '2026-11-07' },
     { id: 'c', name: 'Source', text: 'Nice room', category: 'Visit', rating: null, date: '2026-07-20' }
   ];
-  assert.equal(context.filterFeedback(reviews, ' fresh ', '', 'newest', 'cheese')[0].id, 'b');
-  assert.equal(context.filterFeedback(reviews, '', '5', 'newest', 'cheese').length, 0);
-  assert.equal(context.filterFeedback(reviews, '', '', 'newest', 'unspecified')[0].id, 'c');
+  assert.equal(context.filterFeedback(reviews, ' cheese ', '4', 'newest', 'with-total')[0].id, 'b');
+  assert.equal(context.filterFeedback(reviews, '', '5', 'newest', 'without-total').length, 0);
+  assert.equal(context.filterFeedback(reviews, '', '', 'newest', 'without-total')[0].id, 'c');
   assert.equal(reviews.length, 3);
   assert.equal(reviews[0].id, 'a');
+});
+
+test('average check divides total spending by total people and skips missing totals', function () {
+  const reviews = [{ total: 1400, group: 2 }, { total: 3000, group: 3 }, { group: 10 }];
+  assert.equal(context.getAverageFeedbackCheck(reviews), 880);
+  assert.equal(context.getAverageFeedbackCheck([{ group: 2 }]), null);
+  assert.equal(context.getAverageFeedbackCheck([]), null);
 });
 
 test('rating order keeps unrated reviews last in both directions', function () {
@@ -109,17 +116,20 @@ test('rating order keeps unrated reviews last in both directions', function () {
   assert.equal(context.filterFeedback(reviews, '', '', 'lowest')[2].name, 'Source');
 });
 
-test('feedback validates every selection including an unknown sandwich', function () {
-  assert.ok(context.validateFeedback({ ...validFeedback(), item: 'unknown' }, '2026-10-23')
-    .some(error => error.id === 'ordered-item'));
-  assert.equal(context.validateFeedback({ ...validFeedback(), item: '' }, '2026-10-23').length, 0);
+test('feedback accepts an optional positive whole order total and rejects invalid totals', function () {
+  for (const total of ['0', '-10', '1.5', 'invalid', 'Infinity']) {
+    assert.ok(context.validateFeedback({ ...validFeedback(), total }, '2026-10-23')
+      .some(error => error.id === 'order-total'), total);
+  }
+  assert.equal(context.validateFeedback({ ...validFeedback(), total: '' }, '2026-10-23').length, 0);
 });
 
 test('exported feedback summary includes actual details and only opted-in contacts', function () {
   const data = { ...validFeedback(), email: 'private@example.com', phone: '+7 700 000 00 00' };
   const summary = context.createFeedbackSummary(data, 'DEMO-123456');
   assert.match(summary, /DEMO-123456/);
-  assert.match(summary, /Chicken/);
+  assert.match(summary, /Order total: 1,400 ₸/);
+  assert.match(summary, /Check per person: 700 ₸/);
   assert.match(summary, /Group size: 2/);
   assert.match(summary, /not sent/i);
   assert.doesNotMatch(summary, /private@example.com|700 000/);
