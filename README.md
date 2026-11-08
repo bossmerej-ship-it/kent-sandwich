@@ -19,7 +19,7 @@ Merey Kuatbay owns Home, Menu and Order. The table describes what changed since 
 
 The catalogue supplies the recommendation cards, menu cards, price rows and order choices. Home creates the cards in a loop with native DOM methods. Its price change handler limits the choices and its parent click handler handles the two suggestion buttons. Menu and Order use jQuery ready callbacks, delegated events and traversal. The filter panel slides, add-to-basket feedback fades in, and Order reveals its confirmation. Browser storage contains only product IDs and quantities.
 
-Timur Naumov owns About, Feedback and Colophon. His gallery, opening hours and feedback interactions use jQuery in `js/about.js`, `js/feedback.js` and `js/timur.js`.
+Timur Naumov owns About, Feedback and Colophon. About and the shared header use plain JavaScript in `js/about.js` and `js/timur.js`; Feedback uses jQuery in `js/feedback.js`. The current changes are described below.
 
 ### Try the endterm flows
 
@@ -30,6 +30,33 @@ Timur Naumov owns About, Feedback and Colophon. His gallery, opening hours and f
 Run the automated checks with `node --test tests/*.test.cjs`. All 29 tests passed for this revision. Browser checks covered the budget limit, the filtered lowest price and manual checkout, with no console errors on the six pages.
 
 The course also requires students to record a peer check and contribute on separate days.
+
+## Endterm on About Feedback and Colophon
+
+Timur Naumov implements and maintains the features in this section. They extend the previously defended gallery, opening-hours display and feedback flow. Existing CSS is unchanged. About and Colophon no longer load jQuery; Feedback keeps the full jQuery 3.7.1 CDN build. New controls and content are created in code. The only new HTML hooks are IDs on three existing Colophon elements.
+
+| Feature | Technology and source | New behaviour since the previous assignment |
+| --- | --- | --- |
+| Plan a visit | Plain JavaScript in [about.js](js/about.js) | A loop builds the next seven days from the published daily hours. Choose a day and arrival time, correct nearby errors and see whether the shop is open, minutes until closing or the next opening, plus its address and map link. Changing the input or letting the arrival time pass clears the old result. No booking is made. |
+| Inspect photographs | Plain JavaScript in [about.js](js/about.js) | The existing previous/next, arrow keys, Escape and focus restoration now work without jQuery. Home/End jump to the first/last photograph; Open original photograph follows the selected image. |
+| Validate feedback | jQuery in [feedback.js](js/feedback.js) | The selected sandwich is checked against the catalogue, all rating choices receive the invalid state when needed, and Clear email resets the optional email with immediate revalidation. Preview, edit and confirm still preserve the reviewed input and add one local card. |
+| Find relevant reviews | jQuery in [feedback.js](js/feedback.js) | Sandwich selection combines with search and rating filters. Highest/lowest rating sorting puts unrated reviews last. Dynamically generated Show visit details buttons reveal the visit date and group size through delegation and a slide effect. Counts, averages, no-results messages and reset follow the combined filters. |
+| Keep a completed summary | jQuery in [feedback.js](js/feedback.js) | Save summary as text downloads the same snapshot shown after confirmation. Contact details appear only when the sharing checkbox was selected. Starting another form clears the summary and download while retaining local review cards. Copying still offers manual recovery when clipboard access fails. |
+| Navigation and website credits | Plain JavaScript in [timur.js](js/timur.js) | The existing header behaviour is independent of jQuery. Colophon describes the current feedback validation and completion controls while preserving source and photograph credits. |
+
+The plain-JavaScript part keeps the place information and weekday array at the top of `about.js`. `getVisitWeek`, `getVisitPlan`, `getShopClock` and `createTimurNode` return reusable results. Native `click`, `input`, `change`, `submit`, `reset`, `keydown` and `visibilitychange` handlers cover the visitor flows. A parent listener handles dynamically built day buttons, including their nested text. The published 09:30 opening is inclusive; 21:30 is closed. Calendar calculations and validation use Astana dates independently of the device's timezone.
+
+Feedback initializes inside `jQuery(function ($) { ... })`. It uses ID, class, element, attribute and `:checked` selectors, `.closest()`, `.find()`, `.siblings()`, `$(this)` and chains of three or more methods. Error-summary links and review-detail buttons use delegated `.on()` handlers. Review and edit transitions use `.fadeOut()`, `.slideDown()` and `.fadeIn()`; review details slide open and closed. Reduced-motion preference sets effect durations to zero. Visitor text is inserted with `.text()` or `.val()`.
+
+To try Timur's changes:
+
+1. On Our place, choose tomorrow in Plan your visit and enter 21:30. Check the closed result, then change the time to 20:30 and check the 60 minutes remaining. Reset the plan and try submitting it empty.
+2. Open a gallery photograph, use Left/Right and Home/End, follow its original-image link or close with Escape. Focus returns to the photograph link.
+3. On Feedback, submit empty fields, correct the nearby errors and select a sandwich. Review, edit and confirm. Save the summary as text, then filter the new card by sandwich and open its visit details. Start another form and verify that the previous card remains.
+
+These are local visitor flows. Personal contact fields are not stored in browser storage or included in review cards. The existing source review keeps its attribution and unprovided rating; new reviews are not presented as messages received by the business.
+
+Verification on 8 November 2026: `node --test tests/*.test.cjs` passed all 38 tests. `tests/timur-browser.cjs` checked field-error correction, review/edit/confirm, sandwich/rating filters, delegated visit details, the actual downloaded text, contact opt-in, clipboard recovery, reset/restart, the native visit planner, stale arrival-time recovery, gallery keyboard/focus and reduced motion. Timur's pages were checked at 320, 375, 768 and 1440 pixels, including mobile navigation. All six pages loaded without observed console errors or failed resources, and W3C Nu returned no errors or warnings for all six HTML files. These automated checks do not replace the required student peer/device check or live defence. Photograph credits still identify the supplied business-gallery images; team photographs must be provided before claiming the own-photographs requirement.
 
 ## Pages and responsibility
 
@@ -225,7 +252,7 @@ Keep the existing repository, jQuery scripts, comparison archive and README toge
 References: [jQuery releases](https://releases.jquery.com/jquery/), [`.on()` and delegation](https://api.jquery.com/on/), [`.prop()` and checkbox state](https://api.jquery.com/prop/), [`.slideToggle()`](https://api.jquery.com/slideToggle/), [`.stop()`](https://api.jquery.com/stop/).
 
 
-## Assignment 4 — Timur's jQuery implementation
+## Previous assignment — Timur's jQuery implementation
 
 About, Feedback and Colophon load the same full jQuery 3.7.1 CDN build as the other pages, before their own deferred scripts. UI setup runs inside ready callbacks. HTML changes only connect the library and explain its version; existing CSS and Merey's active code are unchanged.
 
