@@ -42,46 +42,13 @@
       </div>
 </div></header><section class="order-layout py-4" aria-labelledby="order-form-title"><div class="row g-4">
 <div class="col-12 col-lg-8">
-<!-- Item checkboxes and quantities allow a multi-item draft without sending personal details. No custom JavaScript is used. --><form id="order-form" class="order-form bg-white border rounded-0 p-3 p-md-4 border-2">
-          <!-- This form demonstrates HTML controls only; no server is connected to receive an order. -->
+<form id="order-form" class="order-form bg-white border rounded-0 p-3 p-md-4 border-2">
           <h2 id="order-form-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Your selection</h2>
           <fieldset class="border rounded-0 p-3 mb-4">
 <legend class="float-none w-auto px-2 fs-6 fw-semibold">1. Choose sandwiches</legend>
             <p id="item-selection-hint" class="form-text mt-0 mb-3">Choose any items you want.</p>
             <!-- This div arranges the item checkbox and quantity controls as a grid. -->
             <div class="choice-grid row g-2">
-              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="mini" data-price="390">
-                <label class="choice-card form-check-label d-block" for="item-mini"><input id="item-mini" type="checkbox" name="items" value="mini" data-price="390" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Mini sandwich <strong>390 ₸</strong></span></label>
-                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-mini">Quantity<input id="quantity-mini" name="quantity-mini" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="mini"></label>
-              </div></div>
-              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="chicken" data-price="640">
-                <label class="choice-card form-check-label d-block" for="item-chicken"><input id="item-chicken" type="checkbox" name="items" value="chicken" data-price="640" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Chicken <strong>640 ₸</strong></span></label>
-                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-chicken">Quantity<input id="quantity-chicken" name="quantity-chicken" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="chicken"></label>
-              </div></div>
-              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="classic" data-price="640">
-                <label class="choice-card form-check-label d-block" for="item-classic"><input id="item-classic" type="checkbox" name="items" value="classic" data-price="640" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Classic <strong>640 ₸</strong></span></label>
-                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-classic">Quantity<input id="quantity-classic" name="quantity-classic" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="classic"></label>
-              </div></div>
-              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="cheese" data-price="640">
-                <label class="choice-card form-check-label d-block" for="item-cheese"><input id="item-cheese" type="checkbox" name="items" value="cheese" data-price="640" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Cheese <strong>640 ₸</strong></span></label>
-                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-cheese">Quantity<input id="quantity-cheese" name="quantity-cheese" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="cheese"></label>
-              </div></div>
-              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="cutlet" data-price="690">
-                <label class="choice-card form-check-label d-block" for="item-cutlet"><input id="item-cutlet" type="checkbox" name="items" value="cutlet" data-price="690" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Cutlet <strong>690 ₸</strong></span></label>
-                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-cutlet">Quantity<input id="quantity-cutlet" name="quantity-cutlet" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="cutlet"></label>
-              </div></div>
-              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="spicy-cutlet" data-price="740">
-                <label class="choice-card form-check-label d-block" for="item-spicy-cutlet"><input id="item-spicy-cutlet" type="checkbox" name="items" value="spicy-cutlet" data-price="740" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Spicy cutlet <strong>740 ₸</strong></span></label>
-                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-spicy-cutlet">Quantity<input id="quantity-spicy-cutlet" name="quantity-spicy-cutlet" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="spicy-cutlet"></label>
-              </div></div>
-              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="hot-dog" data-price="640">
-                <label class="choice-card form-check-label d-block" for="item-hot-dog"><input id="item-hot-dog" type="checkbox" name="items" value="hot-dog" data-price="640" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Hot dog <strong>640 ₸</strong></span></label>
-                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-hot-dog">Quantity<input id="quantity-hot-dog" name="quantity-hot-dog" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="hot-dog"></label>
-              </div></div>
-              <div class="col-12 col-md-6"><div class="order-item border rounded-0 p-3 h-100" data-menu-item="spicy" data-price="690">
-                <label class="choice-card form-check-label d-block" for="item-spicy"><input id="item-spicy" type="checkbox" name="items" value="spicy" data-price="690" aria-describedby="item-selection-hint" class="form-check-input me-2"><span>Spicy <strong>690 ₸</strong></span></label>
-                <label class="quantity-label d-flex align-items-center gap-2 mt-3 mb-0" for="quantity-spicy">Quantity<input id="quantity-spicy" name="quantity-spicy" type="number" min="1" max="10" value="1" class="item-quantity form-control rounded-0 bg-white" data-item="spicy"></label>
-              </div></div>
             </div>
           </fieldset>
           <!-- JavaScript can reveal this prepared basket and render item rows into its list after the HTML/CSS freeze. -->
