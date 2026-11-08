@@ -1,5 +1,13 @@
 # AI Assistance & Usage Log
 
+## Endterm assistance on 8 November 2026
+
+Merey requested changes to Home, Menu and Order using the Endterm Project brief. Codex (GPT-6) read the brief and implemented the native JavaScript recommendation picker, the jQuery menu comparison and pickup suggestions, and the common catalogue and basket integration. Codex also generated the tab icon from the existing Kent logo, added pickup boundary tests and updated the README with the technology and page ownership map.
+
+The automated review covered recommendation filtering, menu comparison, basket updates across tabs, field errors and correction, and editing and clearing a completed demo. All 32 Node tests passed, and Nu HTML Checker reported zero errors on the six source pages. The existing photographs retain their source credits. The student peer check and defence remain separate course steps.
+
+## Earlier assignments
+
 **Developer:** Merey Kuatbay
 
 **AI Model Used:** Claude 3.5 Sonnet (Anthropic)

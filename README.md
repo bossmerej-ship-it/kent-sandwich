@@ -4,7 +4,32 @@ Six connected pages for the Kent Sandwich location at Adolfa Yanushkevicha Stree
 
 ## Open the site
 
-Extract the whole folder and open `index.html`. Keep `css/`, `images/` and `js/` beside the HTML files. An internet connection is required for Bootstrap from jsDelivr. No build step is required.
+Serve the repository root with `python -m http.server 8765 --bind 127.0.0.1` and open [the home page](http://127.0.0.1:8765/index.html). Use the same local address for each page so the basket carries across navigation. The browser loads Bootstrap and jQuery from their CDNs.
+
+## Endterm on Home Menu and Order
+
+Merey Kuatbay owns Home, Menu and Order. The table describes what changed since the previous jQuery assignment. [The AI usage log](AI_USAGE_MEREY.md) records assistance with this implementation.
+
+| Feature | Technology and source | New behaviour for the visitor |
+| --- | --- | --- |
+| Home recommendations | Plain JavaScript in [index.js](js/index.js) | Combine a preferred profile and maximum price. Choose a matching sandwich from the generated list or try another suggestion. The list shows how many items match and how to recover when none do. |
+| Menu filtering and comparison | jQuery in [menu.js](js/menu.js) | Compare up to three sandwiches by description, profile and price. Selections stay visible when filters change. The comparison shows the lowest price and price difference, with controls to remove or clear items. |
+| Order selection and pickup | jQuery in [order.js](js/order.js) | Select quantities from the shared catalogue and choose from up to four quarter-hour pickup suggestions in Astana. The suggestions move to the next day after the last slot. Manual date and time entry, nearby errors and the editable demo summary are available. |
+| Shared basket | jQuery basket controls in [main.js](js/main.js). Shared data and storage in [menu-data.js](js/menu-data.js) and [basket.js](js/basket.js). | The native Home and jQuery pages use one basket. Clearing the basket gives a path back to the menu, and editing a completed demo restores its items together. |
+
+The catalogue supplies the recommendation list, menu cards, price rows and order choices. Home uses native DOM methods and handles changes, resets and delegated clicks in its own file. Menu and Order use jQuery ready callbacks, delegated events, traversal and effects. The filter panel slides, add-to-basket feedback fades in, and the comparison and order confirmation reveal their results. The checkout summary is a local demo. Browser storage contains only product IDs and quantities.
+
+Timur Naumov owns About, Feedback and Colophon. His gallery, opening hours and feedback interactions use jQuery in `js/about.js`, `js/feedback.js` and `js/timur.js`.
+
+### Try the endterm flows
+
+1. On Home, select Hot and a maximum of 690 ₸, then add the matching sandwich to the basket.
+2. In Menu, compare Mini sandwich and Chicken, then change the search. Check the selected prices, remove an item, and clear the comparison.
+3. In Order, try an invalid phone or email and correct it. Choose a suggested pickup time and prepare the demo. Edit the summary to restore the draft or start a new demo to clear it.
+
+Run the automated checks with `node --test tests/*.test.cjs`. The pickup tests include the last valid slot and the change to the following day.
+
+On 8 November 2026, all 32 Node tests passed and Nu HTML Checker reported zero errors on the six pages. Browser checks exercised the recommendation, comparison, shared basket and checkout. All six pages passed layout and console checks at 375 and 1440 pixels. The course also requires students to record a peer check and contribute on separate days.
 
 ## Pages and responsibility
 
