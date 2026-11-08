@@ -48,6 +48,7 @@ function validateFeedback(data, today) {
   if (data.message.trim().length < 20 || data.message.trim().length > 600) {
     errors.push({ id: 'guest-message', message: 'Write 20–600 characters after trimming spaces.' });
   }
+  if (data.photoError) errors.push({ id: 'guest-photo', message: data.photoError });
   if (data.contact && !data.email && !data.phone) {
     errors.push({ id: 'contact-permission', message: 'Add an email or phone number, or untick this box.' });
   }
@@ -109,6 +110,12 @@ function createFeedbackSummary(data, reference) {
   ].join('\n');
 }
 
+function createFeedbackPhoto(src, alt) {
+  const frame = createTimurElement('div', 'ratio ratio-4x3 border border-dark bg-light mb-3');
+  if (src) frame.append(createTimurElement('img', 'w-100 h-100 object-fit-contain').attr({ src: src, alt: alt }));
+  return frame;
+}
+
 // .append(), .text() and .attr() replace createElement and DOM assignments.
 // The card builder is shorter, while the filtering calculations stay plain JavaScript.
 function renderFeedbackCard(review) {
@@ -128,6 +135,7 @@ function renderFeedbackCard(review) {
   const text = createTimurElement('p', 'feedback-message mb-3', review.text);
   if (review.language) text.attr('lang', review.language);
   card.append(text);
+  if (review.photo) card.append(createFeedbackPhoto(review.photo, 'Photo attached to this review'));
   if (review.total > 0) {
     card.append(createTimurElement('p', 'small fw-semibold bg-warning text-dark p-2 mb-3', 'Order total: ' + formatFeedbackMoney(review.total) +
       ' · ' + formatFeedbackMoney(review.total / review.group) + ' per person'));
@@ -196,6 +204,21 @@ jQuery(function ($) {
   });
   const totalError = createTimurElement('p', 'field-error hidden small mt-1 mb-0');
   totalError.attr('id', 'order-total-error').insertAfter(totalHint);
+  const photoField = createTimurElement('div', 'my-4');
+  const photoLabel = createTimurElement('label', 'form-label fw-semibold', 'Photo (optional)').attr('for', 'guest-photo');
+  const photoInput = createTimurElement('input', 'form-control rounded-0 bg-white');
+  photoInput.attr({ id: 'guest-photo', name: 'guest-photo', type: 'file',
+    accept: 'image/jpeg,image/png,image/webp', 'aria-describedby': 'guest-photo-hint guest-photo-error' });
+  const photoHelp = 'JPG, PNG or WebP, up to 5 MB. The photo stays on this page only.';
+  const photoHint = createTimurElement('p', 'form-text mb-2', photoHelp).attr('id', 'guest-photo-hint');
+  const photoErrorText = createTimurElement('p', 'field-error hidden small mb-2').attr('id', 'guest-photo-error');
+  const photoPreview = createFeedbackPhoto('', 'Selected review photo').attr('id', 'feedback-photo-preview').addClass('hidden');
+  const removePhoto = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-0 hidden', 'Remove photo');
+  removePhoto.attr({ id: 'feedback-remove-photo', type: 'button' });
+  photoField.append(photoLabel, photoInput, photoHint, photoErrorText, photoPreview, removePhoto)
+    .insertBefore($('#contact-permission').closest('label'));
+  const reviewPhoto = createFeedbackPhoto('', 'Photo attached to your review').attr('id', 'feedback-review-photo').addClass('hidden');
+  reviewPhoto.insertBefore($('#feedback-confirm'));
   const download = createTimurElement('a', 'btn btn-outline-dark rounded-0 border-2 ms-2 hidden', 'Save summary as text');
   download.attr('id', 'feedback-download').insertAfter(copyButton);
   let stage = 'editing';
@@ -203,6 +226,55 @@ jQuery(function ($) {
   let submitted = false;
   let copyVersion = 0;
   let summaryUrl = null;
+  let photoUrl = '';
+  let photoError = '';
+  let photoLoading = false;
+
+  function clearPhoto() {
+    photoPreview.addClass('hidden').empty();
+    reviewPhoto.addClass('hidden').empty();
+    if (photoUrl) URL.revokeObjectURL(photoUrl);
+    photoUrl = '';
+    photoError = '';
+    photoLoading = false;
+    removePhoto.addClass('hidden');
+    photoErrorText.addClass('hidden').text('');
+    photoInput.removeAttr('aria-invalid').removeClass('error');
+  }
+  photoInput.on('change', function () {
+    clearPhoto();
+    const file = photoInput.prop('files')[0];
+    if (!file) { updateForm(); return; }
+    removePhoto.removeClass('hidden');
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) {
+      photoError = 'Choose a JPG, PNG or WebP photo up to 5 MB.';
+      updateForm();
+      return;
+    }
+    photoUrl = URL.createObjectURL(file);
+    const selectedUrl = photoUrl;
+    photoLoading = true;
+    const image = createTimurElement('img', 'w-100 h-100 object-fit-contain').attr('alt', 'Selected review photo');
+    photoPreview.append(image);
+    image.one('load', function () {
+      if (photoUrl !== selectedUrl) return;
+      photoLoading = false;
+      updateForm();
+    }).one('error', function () {
+      if (photoUrl !== selectedUrl) return;
+      clearPhoto();
+      removePhoto.removeClass('hidden');
+      photoError = 'This photo could not be opened. Choose another image or remove it.';
+      updateForm();
+    }).attr('src', photoUrl);
+    photoPreview.removeClass('hidden');
+    updateForm();
+  });
+  removePhoto.on('click', function () {
+    photoInput.val('');
+    clearPhoto();
+    updateForm();
+  });
 
   // Retain HTML constraints; custom errors replace native popups after enhancement.
   // Browser checks can be bypassed: a real server must validate all values again.
@@ -355,6 +427,8 @@ jQuery(function ($) {
       total: totalInput.val(),
       rating: selectedRating.val() || '',
       message: message.val().trim(),
+      photo: photoUrl,
+      photoError: photoLoading ? 'Wait for your photo to finish loading.' : photoError,
       // prop reads the current checkbox state; attr('checked') is only its initial HTML attribute.
       contact: $('#contact-permission').prop('checked')
     };
@@ -382,6 +456,9 @@ jQuery(function ($) {
   }
   function updateForm() {
     $('#visit-date').attr('max', getShopClock(new Date()).date);
+    photoHint.text(photoLoading ? 'Loading photo…' : photoHelp);
+    photoErrorText.text(photoError).toggleClass('hidden', !photoError);
+    photoInput.toggleClass('error', Boolean(photoError)).attr('aria-invalid', String(Boolean(photoError)));
     const total = Number(totalInput.val());
     const group = Number($('#group-size').val());
     totalHint.text(Number.isInteger(total) && total > 0 && Number.isInteger(group) && group >= 1 && group <= 20
@@ -425,6 +502,8 @@ jQuery(function ($) {
       contact: data.contact ? [data.email, data.phone].filter(Boolean).join(' · ') : 'Not included'
     };
     for (const key of Object.keys(values)) $('#feedback-review-' + key).text(values[key]);
+    reviewPhoto.empty().toggleClass('hidden', !data.photo);
+    if (data.photo) reviewPhoto.append(createFeedbackPhoto(data.photo, 'Photo attached to your review').children());
     stage = 'reviewing';
     form.stop(true, true).fadeOut(timurEffectDuration(), function () {
       if (stage !== 'reviewing') return; // A reset may finish this animation early.
@@ -450,8 +529,10 @@ jQuery(function ($) {
       id: reference + '-' + reviews.length, name: draft.name, text: draft.message,
       rating: Number(draft.rating), category: 'Visit feedback',
       date: now.toISOString(), source: '', total: draft.total ? Number(draft.total) : null,
-      visitDate: draft.date, group: draft.group
+      visitDate: draft.date, group: draft.group, photo: draft.photo
     });
+    // The submitted review keeps its URL; resetting only clears the draft photo.
+    photoUrl = '';
     const summary = createFeedbackSummary(draft, reference);
     shareText.val(summary);
     // A browser download keeps the same reviewed snapshot available off this page.
@@ -489,6 +570,7 @@ jQuery(function ($) {
     $('#guest-name').trigger('focus');
   }
   form.on('reset', function () {
+    clearPhoto();
     // Native reset finishes before the next task reads the fields.
     if (stage !== 'completed') window.setTimeout(resetFeedbackView, 0);
   });
