@@ -1,16 +1,28 @@
 // Run with Playwright available to Node and the repository served at BASE_URL.
 const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 (async () => {
   const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
   try {
     const page = await browser.newPage();
+    await page.clock.install({ time: new Date('2026-11-08T05:00:00Z') });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
+    page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+    page.on('requestfailed', request => errors.push(request.url() + ': ' + request.failure().errorText));
+    page.on('response', response => { if (response.status() >= 400) errors.push(response.url() + ': ' + response.status()); });
     const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
     const go = file => page.goto(base + '/' + file, { waitUntil: 'networkidle' });
-    const visible = async selector => assert.equal(await page.locator(selector).isVisible(), true, selector);
-    const hidden = async selector => assert.equal(await page.locator(selector).isVisible(), false, selector);
+    const visible = async selector => {
+      await page.locator(selector).waitFor({ state: 'visible' });
+      assert.equal(await page.locator(selector).isVisible(), true, selector);
+    };
+    const hidden = async selector => {
+      await page.locator(selector).waitFor({ state: 'hidden', timeout: 5000 });
+      assert.equal(await page.locator(selector).isVisible(), false, selector);
+    };
     await go('feedback.html');
     assert.equal(await page.evaluate(() => jQuery.fn.jquery), '3.7.1');
     await page.locator('#feedback-submit').click();
@@ -22,6 +34,10 @@ const assert = require('node:assert/strict');
     await hidden('#guest-name-error');
     await page.locator('#guest-email').fill('bad');
     await visible('#guest-email-error');
+    await page.locator('#feedback-clear-email').click();
+    assert.equal(await page.locator('#guest-email').inputValue(), '');
+    await hidden('#guest-email-error');
+    assert.equal(await page.locator('#feedback-clear-email').isDisabled(), true);
     await page.locator('#guest-email').fill('demo@example.com');
     await hidden('#guest-email-error');
     await page.locator('#guest-phone').fill('abc');
@@ -29,6 +45,7 @@ const assert = require('node:assert/strict');
     await page.locator('#guest-phone').fill('+7 700 000 00 00');
     await hidden('#guest-phone-error');
     await page.locator('#visit-date').fill('2026-10-01');
+    await page.locator('#ordered-item').selectOption('chicken');
     await page.locator('#rating-5').check();
     await page.locator('#guest-message').fill('  Fresh sandwich and a comfortable room. <img src=x onerror=alert(1)>  ');
     await page.locator('#feedback-submit').click();
@@ -43,6 +60,7 @@ const assert = require('node:assert/strict');
     await page.locator('#feedback-review').waitFor({ state: 'visible' });
     await page.waitForFunction(() => !jQuery('#feedback-review').is(':animated'));
     await page.locator('#feedback-confirm').click();
+    await page.locator('#feedback-confirm').evaluate(button => button.click());
     assert.equal(await page.locator('#guest-name').inputValue(), '', 'successful confirmation resets inputs');
     assert.equal(await page.locator('#rating-5').isChecked(), false);
     await visible('#feedback-confirmation');
@@ -50,6 +68,23 @@ const assert = require('node:assert/strict');
     assert.equal(await page.locator('#review-list img').count(), 0);
     assert.match(await page.locator('#review-list').innerText(), /<b>Visitor<\/b>/);
     assert.doesNotMatch(await page.locator('#review-list').innerText(), /demo@example.com/);
+    const completedSummary = await page.locator('#feedback-share-text').inputValue();
+    assert.doesNotMatch(completedSummary, /demo@example.com|700 000/);
+    const downloadPromise = page.waitForEvent('download');
+    await page.locator('#feedback-download').click();
+    const download = await downloadPromise;
+    assert.match(download.suggestedFilename(), /^kent-feedback-DEMO-\d{6}\.txt$/);
+    assert.equal(fs.readFileSync(await download.path(), 'utf8'), completedSummary);
+    await page.locator('#review-item-filter').selectOption('cheese');
+    await visible('#review-empty');
+    await page.locator('#review-item-filter').selectOption('chicken');
+    assert.equal(await page.locator('#review-list article').count(), 1);
+    await page.locator('#review-list button[data-review-details]').click();
+    await visible('#review-list .review-details');
+    assert.match(await page.locator('#review-list .review-details').innerText(), /1 Oct 2026.*Group size: 1/);
+    await page.locator('#review-list button[data-review-details]').click();
+    await page.locator('#review-list .review-details').waitFor({ state: 'hidden' });
+    await page.locator('#review-item-filter').selectOption('');
     await page.locator('#review-search').fill('no matching review');
     await visible('#review-empty');
     await page.locator('#visitor-reviews button[type="reset"]').click();
@@ -76,9 +111,89 @@ const assert = require('node:assert/strict');
     await hidden('#contact-permission-error');
     await page.locator('#feedback-form button[type="reset"]').click();
     await page.waitForFunction(() => jQuery('#feedback-errors').hasClass('hidden'));
-    console.log('PASS: validation, correction, delegated links, safe preview/edit, reset, filters, copy recovery and restart');
+    await page.locator('#guest-name').fill('Second visitor');
+    await page.locator('#guest-email').fill('private@example.com');
+    await page.locator('#contact-permission').check();
+    await page.locator('#visit-date').fill('2026-11-07');
+    await page.locator('#ordered-item').selectOption('cheese');
+    await page.locator('#rating-2').check();
+    await page.locator('#guest-message').fill('The cheese sandwich was warm, but the wait was long.');
+    await page.locator('#feedback-submit').click();
+    await page.locator('#feedback-review').waitFor({ state: 'visible' });
+    await page.waitForFunction(() => !jQuery('#feedback-review').is(':animated'));
+    await page.locator('#feedback-confirm').click();
+    assert.match(await page.locator('#feedback-share-text').inputValue(), /private@example.com/);
+    assert.doesNotMatch(await page.locator('#review-list').innerText(), /private@example.com/);
+    assert.equal(await page.locator('#review-list article').count(), 3);
+    await page.locator('#review-sort').selectOption('highest');
+    assert.equal(await page.locator('#review-list article h3').first().textContent(), '<b>Visitor</b>');
+    await page.locator('#review-sort').selectOption('lowest');
+    assert.equal(await page.locator('#review-list article h3').first().textContent(), 'Second visitor');
+    assert.match(await page.locator('#review-list article').last().innerText(), /Rating not provided/);
+    await page.locator('#review-list button[data-review-details]').first().click();
+    await page.locator('#review-list .review-details').first().waitFor({ state: 'visible' });
+    if (process.env.QA_DIR) {
+      fs.mkdirSync(process.env.QA_DIR, { recursive: true });
+      await page.waitForFunction(() => jQuery(':animated').length === 0);
+      await page.screenshot({ path: path.join(process.env.QA_DIR, 'feedback-desktop.png'), fullPage: true, animations: 'disabled' });
+    }
+    await page.locator('#feedback-restart').click();
+    await hidden('#feedback-download');
+    assert.equal(await page.locator('#feedback-download').getAttribute('href'), null);
+    assert.doesNotMatch(await page.evaluate(() => JSON.stringify(localStorage)), /private@example.com/);
+    // Clearing during the preview transition must cancel that transition's result.
+    await page.locator('#guest-name').fill('Reset visitor');
+    await page.locator('#visit-date').fill('2026-11-07');
+    await page.locator('#rating-4').check();
+    await page.locator('#guest-message').fill('Fresh sandwich and a comfortable room.');
+    await page.locator('#feedback-form').evaluate(form => { form.requestSubmit(); form.reset(); });
+    await page.waitForFunction(() => jQuery('#feedback-form, #feedback-review').filter(':animated').length === 0);
+    await visible('#feedback-form');
+    await hidden('#feedback-review');
+    assert.equal(await page.locator('#guest-name').inputValue(), '');
+    assert.equal(await page.locator('#review-list article').count(), 3);
+    console.log('PASS: field validation/correction, delegated errors/details, preview/edit/confirm, privacy, download, combined filters/rating order, copy recovery, reset/restart');
     await go('about.html');
+    assert.equal(await page.evaluate(() => typeof jQuery), 'undefined');
     await visible('#visit-status');
+    assert.equal(await page.locator('#visit-week button').count(), 7);
+    await page.locator('#visit-plan-form button[type="submit"]').click();
+    await visible('#plan-date-error');
+    await visible('#plan-time-error');
+    await page.locator('#visit-week button').nth(1).locator('span').first().click();
+    assert.equal(await page.locator('#plan-date').inputValue(), '2026-11-09');
+    await hidden('#plan-date-error');
+    assert.equal(await page.locator('#plan-time').evaluate(el => el === document.activeElement), true);
+    await page.locator('#plan-time').fill('09:30');
+    await hidden('#plan-time-error');
+    await page.locator('#visit-plan-form button[type="submit"]').click();
+    assert.match(await page.locator('#visit-plan-result').innerText(), /720 minutes until closing/);
+    assert.match(await page.locator('#visit-plan-result a').getAttribute('href'), /2gis\.kz/);
+    await page.locator('#plan-time').fill('21:30');
+    await hidden('#visit-plan-result');
+    await page.locator('#visit-plan-form button[type="submit"]').click();
+    assert.match(await page.locator('#visit-plan-result').innerText(), /Closed.*10 Nov 2026 at 09:30/s);
+    await page.locator('#plan-date').fill('2026-11-07');
+    await visible('#plan-date-error');
+    await hidden('#visit-plan-result');
+    await page.locator('#visit-plan-form button[type="reset"]').click();
+    await hidden('#plan-date-error');
+    await hidden('#plan-time-error');
+    assert.equal(await page.locator('#plan-date').inputValue(), '');
+    await page.locator('#plan-date').fill('2026-11-08');
+    await page.locator('#plan-time').fill('10:00');
+    await page.locator('#visit-plan-form button[type="submit"]').click();
+    await visible('#visit-plan-result');
+    await page.clock.runFor(120000);
+    await hidden('#visit-plan-result');
+    await visible('#plan-time-error');
+    await page.locator('#visit-week button').nth(1).click();
+    await page.locator('#plan-time').fill('10:00');
+    await page.locator('#visit-plan-form button[type="submit"]').click();
+    if (process.env.QA_DIR) {
+      await page.locator('#visit-planner').screenshot({ path: path.join(process.env.QA_DIR, 'planner-desktop.png'), animations: 'disabled' });
+    }
+    console.log('PASS: native generated week, delegated day selection, date/time validation and correction, open/closed results, remaining minutes, stale-result recovery');
     await page.locator('.gallery-link').first().click();
     await visible('#gallery-dialog');
     assert.equal(await page.locator('#gallery-position').textContent(), '1 of 3');
@@ -86,20 +201,39 @@ const assert = require('node:assert/strict');
     assert.equal(await page.locator('#gallery-position').textContent(), '3 of 3');
     await page.locator('#gallery-next').click();
     assert.equal(await page.locator('#gallery-position').textContent(), '1 of 3');
+    await page.keyboard.press('End');
+    assert.equal(await page.locator('#gallery-position').textContent(), '3 of 3');
+    assert.match(await page.locator('#gallery-original').getAttribute('href'), /kent-gallery\.jpg$/);
+    await page.keyboard.press('Home');
+    assert.equal(await page.locator('#gallery-position').textContent(), '1 of 3');
     await page.keyboard.press('Escape');
     await hidden('#gallery-dialog');
     assert.equal(await page.locator('.gallery-link').first().evaluate(el => el === document.activeElement), true);
     console.log('PASS: gallery keyboard wrapping, closing/focus and opening status');
-    for (const width of [375, 768, 1440]) {
+    for (const width of [320, 375, 768, 1440]) {
       await page.setViewportSize({width, height:900});
       for (const file of ['about.html', 'feedback.html', 'colophon.html']) {
         await go(file);
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, file + ' overflow at ' + width);
+        assert.deepEqual(await page.evaluate(() => Array.from(document.images)
+          .filter(image => image.complete && image.naturalWidth === 0).map(image => image.src)), [], file + ' images');
+        if (width === 375) {
+          await page.locator('#main-nav-toggle').click();
+          await page.waitForFunction(() => document.getElementById('main-nav-toggle').getAttribute('aria-expanded') === 'true');
+          await visible('#main-navbar.collapse.show');
+          await page.locator('#main-nav-toggle').click();
+          await page.waitForFunction(() => document.getElementById('main-nav-toggle').getAttribute('aria-expanded') === 'false');
+          await hidden('#main-navbar');
+          if (process.env.QA_DIR) {
+            if (file === 'about.html') await page.locator('#visit-planner').screenshot({ path: path.join(process.env.QA_DIR, 'planner-mobile.png'), animations: 'disabled' });
+            if (file === 'feedback.html') await page.locator('#feedback-form').screenshot({ path: path.join(process.env.QA_DIR, 'feedback-mobile.png'), animations: 'disabled' });
+          }
+        }
       }
     }
     for (const file of ['index.html','menu.html','order.html']) await go(file);
     assert.deepEqual(errors, [], 'no page errors across all six pages');
-    console.log('PASS: responsive layouts at 375/768/1440 and six-page runtime health');
+    console.log('PASS: responsive layouts at 320/375/768/1440, mobile navigation, images and six-page runtime health');
     await page.emulateMedia({reducedMotion:'reduce'});
     await go('feedback.html');
     assert.equal(await page.evaluate(() => timurEffectDuration()), 0);
