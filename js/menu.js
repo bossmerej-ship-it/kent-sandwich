@@ -10,6 +10,8 @@ jQuery(function ($) {
     }
 
     const create = Kent.element;
+    const comparisonLimit = 3;
+    const compared = new Set();
     const form = create('form', 'mb-4');
     form.attr('aria-label', 'Filter the sandwich menu');
     const fieldset = create('fieldset');
@@ -94,6 +96,17 @@ jQuery(function ($) {
     const feedback = create('p', 'small mb-3');
     feedback.attr('role', 'status');
     feedback.attr('aria-atomic', 'true');
+    const comparison = create('section', 'border border-dark p-3 mb-4')
+        .attr('aria-labelledby', 'menu-comparison-title');
+    const comparisonTitle = create('h3', 'h5 fw-bold', 'Compare sandwiches')
+        .attr({ id: 'menu-comparison-title', tabindex: '-1' });
+    const comparisonStatus = create('p', 'small mb-2').attr('role', 'status');
+    const comparisonDetails = create('div', 'is-hidden').attr('id', 'menu-comparison-items');
+    const comparisonList = create('ul', 'row g-2 list-unstyled mb-3');
+    const clearComparison = create('button', 'btn btn-outline-dark rounded-0', 'Clear comparison')
+        .attr('type', 'button');
+    comparisonDetails.append(comparisonList, clearComparison);
+    comparison.append(comparisonTitle, comparisonStatus, comparisonDetails);
     const empty = create('div', 'form-message is-hidden');
     const emptyHeading = create('h3', 'h5 fw-bold', 'No sandwiches match these filters.');
     const emptyHelp = create('p', 'mb-0', 'Try a different search, increase the maximum price, or reset the filters.');
@@ -112,7 +125,76 @@ jQuery(function ($) {
             if (expanded) search.trigger('focus');
         });
     });
-    grid.before(form, summary, feedback, empty);
+    grid.before(form, summary, comparison, feedback, empty);
+
+    function updateComparisonButtons() {
+        grid.find('button[data-compare-item]').each(function () {
+            const button = $(this);
+            const selected = compared.has(button.attr('data-compare-item'));
+            button.attr('aria-pressed', String(selected))
+                .toggleClass('btn-dark', selected)
+                .toggleClass('btn-outline-dark', !selected)
+                .prop('disabled', !selected && compared.size === comparisonLimit);
+        });
+    }
+
+    function renderComparison() {
+        const items = Kent.MENU.filter(function (item) { return compared.has(item.id); });
+        comparisonList.empty();
+        if (!items.length) {
+            comparisonDetails.stop(true, true).addClass('is-hidden');
+            comparisonStatus.text('Choose two or three sandwiches to compare their prices and profiles.');
+        } else {
+            items.forEach(function (item) {
+                const row = create('li', 'col-12 col-md-4');
+                const details = create('div', 'border p-3 h-100 d-flex flex-column');
+                const name = create('h4', 'h6 fw-bold', item.name);
+                const description = create('p', 'small mb-2', item.description);
+                const price = create('p', 'fw-semibold mt-auto mb-2', item.profile + ' · ' + Kent.formatMoney(item.price));
+                const remove = create('button', 'btn btn-sm btn-outline-dark rounded-0 align-self-start', 'Remove')
+                    .attr({ type: 'button', 'data-remove-compare': item.id, 'aria-label': 'Remove ' + item.name + ' from comparison' });
+                row.append(details.append(name, description, price, remove)).appendTo(comparisonList);
+            });
+            const prices = items.map(function (item) { return item.price; });
+            const lowest = Math.min(...prices);
+            const difference = Math.max(...prices) - lowest;
+            if (items.length === 1) {
+                comparisonStatus.text('Choose one more sandwich to compare prices.');
+            } else if (difference === 0) {
+                comparisonStatus.text(items.length + ' selected. Each costs ' + Kent.formatMoney(lowest) + '.');
+            } else {
+                const cheapest = items.filter(function (item) { return item.price === lowest; })
+                    .map(function (item) { return item.name; }).join(', ');
+                comparisonStatus.text(items.length + ' selected. Lowest price: ' + cheapest + ' at ' + Kent.formatMoney(lowest) +
+                    '. Price difference: ' + Kent.formatMoney(difference) + '.');
+            }
+            if (items.length === comparisonLimit) {
+                comparisonStatus.append(' Remove one to compare another sandwich.');
+            }
+            if (comparisonDetails.hasClass('is-hidden')) {
+                comparisonDetails.stop(true, true).hide().removeClass('is-hidden').slideDown(Kent.effectDuration());
+            }
+        }
+        updateComparisonButtons();
+    }
+
+    grid.on('click', 'button[data-compare-item]', function () {
+        const id = $(this).closest('[data-menu-item]').attr('data-menu-item');
+        if (compared.has(id)) compared.delete(id);
+        else if (compared.size < comparisonLimit) compared.add(id);
+        renderComparison();
+    });
+    comparisonList.on('click', 'button[data-remove-compare]', function () {
+        compared.delete($(this).attr('data-remove-compare'));
+        renderComparison();
+        const next = comparisonList.find('button').first();
+        (next.length ? next : comparisonTitle).trigger('focus');
+    });
+    clearComparison.on('click', function () {
+        compared.clear();
+        renderComparison();
+        comparisonTitle.trigger('focus');
+    });
 
     function menuNumber(item) {
         return String(Kent.MENU.indexOf(item) + 1).padStart(2, '0');
@@ -154,7 +236,10 @@ jQuery(function ($) {
         add.attr("type", 'button');
         add.attr("data-add-item", item.id);
         add.attr('aria-label', 'Add ' + item.name + ' to basket');
-        body.append(selection, add);
+        const compare = create('button', 'btn btn-outline-dark rounded-0 mt-2', 'Compare')
+            .attr({ type: 'button', 'data-compare-item': item.id, 'aria-label': 'Compare ' + item.name,
+                'aria-controls': 'menu-comparison-items', 'aria-pressed': 'false' });
+        body.append(selection, add, compare);
         article.append(body);
         column.append(article);
         return column;
@@ -211,6 +296,7 @@ jQuery(function ($) {
         feedback.stop(true, true).text('');
         feedback.removeClass('text-danger');
         updateBasketSelection();
+        updateComparisonButtons();
     }
 
     search.on('input', function () { applyFilters(false); });
@@ -254,5 +340,6 @@ jQuery(function ($) {
     });
 
     applyFilters(false);
+    renderComparison();
     Kent.onCartChange(updateBasketSelection);
 });
