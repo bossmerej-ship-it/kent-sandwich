@@ -40,8 +40,9 @@ test('hours refresh aligns with the next minute instead of the page-load time', 
   assert.equal(context.getNextMinuteDelay(new Date('2026-10-23T04:30:00.000Z')), 60000);
 });
 
-test('valid feedback permits empty optional contact fields', function () {
+test('valid feedback permits empty optional contact fields and visit date', function () {
   assert.equal(context.validateFeedback(validFeedback(), '2026-10-23').length, 0);
+  assert.equal(context.validateFeedback({ ...validFeedback(), date: '' }, '2026-10-23').length, 0);
 });
 
 test('spaces do not satisfy name or message length', function () {
@@ -51,7 +52,7 @@ test('spaces do not satisfy name or message length', function () {
 });
 
 test('future and impossible visit dates are rejected', function () {
-  for (const date of ['2099-10-23', '2026-02-30', '', '2026-13-01']) {
+  for (const date of ['2099-10-23', '2026-02-30', '2026-13-01']) {
     assert.ok(context.validateFeedback({ ...validFeedback(), date }, '2026-10-23')
       .some(error => error.id === 'visit-date'));
   }

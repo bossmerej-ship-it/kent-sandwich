@@ -46,8 +46,8 @@ function validateFeedback(data, today) {
     errors.push({ id: 'group-size', message: 'Choose a whole group size from 1 to 20.' });
   }
   const date = new Date(data.date + 'T00:00:00Z');
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(data.date) || Number.isNaN(date.getTime()) ||
-      date.toISOString().slice(0, 10) !== data.date || data.date > today) {
+  if (data.date && (!/^\d{4}-\d{2}-\d{2}$/.test(data.date) || Number.isNaN(date.getTime()) ||
+      date.toISOString().slice(0, 10) !== data.date || data.date > today)) {
     errors.push({ id: 'visit-date', message: 'Choose a real visit date that is not in the future.' });
   }
   const rating = Number(data.rating);
@@ -159,6 +159,12 @@ jQuery(function ($) {
   const copyStatus = $('#feedback-copy-status');
   const copyError = $('#feedback-copy-error');
   const itemSelect = $('#ordered-item');
+  $('#guest-phone').val('+7').prop('defaultValue', '+7').on('input', function () {
+    if (!this.value.startsWith('+7')) this.value = '+7' + this.value.replace(/^\+/, '');
+  });
+  $('#visit-date').prop('required', false);
+  $('label[for="visit-date"]').text('Visit date (optional)');
+  $('#visit-date-hint').text('Leave empty to use today\'s date.');
   const clearEmail = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-0 mt-2', 'Clear email');
   clearEmail.attr({ id: 'feedback-clear-email', type: 'button' }).insertAfter($('#guest-email'));
   clearEmail.on('click', function () {
@@ -314,12 +320,13 @@ jQuery(function ($) {
   // Reading fields is shorter; the validation rules still need the same explicit checks.
   function readFeedback() {
     const selectedRating = form.find('input[name="rating"]:checked');
+    const phone = $('#guest-phone').val().trim();
     return {
       name: $('#guest-name').val().trim(),
       email: $('#guest-email').val().trim(),
-      phone: $('#guest-phone').val().trim(),
+      phone: phone === '+7' ? '' : phone,
       group: $('#group-size').val(),
-      date: $('#visit-date').val(),
+      date: $('#visit-date').val() || getShopClock(new Date()).date,
       item: itemSelect.val(),
       rating: selectedRating.val() || '',
       message: message.val().trim(),

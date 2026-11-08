@@ -133,7 +133,7 @@ New reviews exist only in memory on the current page and disappear after a reloa
 
 ### Feedback behaviour
 
-Required text is trimmed before validation. Names must contain 2–80 characters and messages 20–600. Optional email and phone must be valid when entered. Group size must be a whole number from 1 to 20. A visit date must exist and must not be in the future in Astana. Rating must be from 1 to 5. Including contact details requires an email or phone number.
+Required text is trimmed before validation. Names must contain 2–80 characters and messages 20–600. Optional email and phone must be valid when entered. Phone starts with `+7`; the prefix alone counts as empty. Group size must be a whole number from 1 to 20. Visit date is optional and defaults to the day of submission in Astana; an entered date must be real and must not be in the future. Rating must be from 1 to 5. Including contact details requires an email or phone number.
 
 A valid submit opens the prepared review panel. Edit preserves the entered fields; Confirm adds exactly one card, resets review filters and displays the prepared summary. Reset and Start another feedback form clear the draft without deleting reviews already added during the current page visit. Copy reports success only after the Clipboard API succeeds and offers manual selection if copying fails. All visitor text is inserted with `textContent` or a textarea value.
 
