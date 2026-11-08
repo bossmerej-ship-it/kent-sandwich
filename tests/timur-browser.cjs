@@ -25,6 +25,12 @@ const path = require('node:path');
     };
     await go('feedback.html');
     assert.equal(await page.evaluate(() => jQuery.fn.jquery), '3.7.1');
+    assert.equal(await page.locator('.feedback-intro').getByText('This form completes on your screen. It does not send your feedback to the shop.').count(), 0);
+    assert.equal(await page.locator('#review-list a[href*="tab/reviews"]').count(), 0);
+    const yellow = await page.locator('.source-tab').evaluate(element => getComputedStyle(element).backgroundColor);
+    for (const selector of ['.feedback-prompt', '#review-average-check']) {
+      assert.equal(await page.locator(selector).evaluate(element => getComputedStyle(element).backgroundColor), yellow);
+    }
     assert.equal(await page.locator('#guest-phone').inputValue(), '+7');
     assert.equal(await page.locator('#visit-date').evaluate(input => input.required), false);
     assert.equal(await page.locator('#guest-photo').getAttribute('type'), 'file');
@@ -188,6 +194,12 @@ const path = require('node:path');
     assert.equal(await page.locator('#review-list article').count(), 3);
     assert.equal(await page.locator('#review-list img').count(), 1);
     await page.waitForFunction(() => document.querySelector('#review-list img').naturalWidth > 0);
+    const heights = await page.locator('#review-list').evaluate(list => ({
+      source: list.querySelector('#review-source').getBoundingClientRect().height,
+      photo: list.querySelector('article:has(img)').getBoundingClientRect().height
+    }));
+    assert.ok(heights.source < heights.photo - 100, 'a review without a photo keeps its own height');
+    assert.equal(await page.locator('#review-list .badge').first().evaluate(element => getComputedStyle(element).backgroundColor), yellow);
     await hidden('#feedback-photo-preview');
     assert.equal(await photoInput.evaluate(input => input.files.length), 0);
     await page.locator('#review-sort').selectOption('highest');

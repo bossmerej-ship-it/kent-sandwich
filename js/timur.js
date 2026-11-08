@@ -21,9 +21,10 @@ function getShopClock(now) {
   };
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  if (!['about', 'feedback', 'colophon'].includes(document.body.dataset.page)) return;
+// Run as soon as the header has been parsed, before page scripts or jQuery load.
+function prepareTimurHeader() {
   const header = document.querySelector('.site-header');
+  if (!header || !header.querySelector('.header-note')) return false;
   header.classList.remove('bg-body', 'py-4', 'border-2');
   header.classList.add('py-3');
   const logo = header.querySelector('.brand-mark img');
@@ -37,6 +38,16 @@ document.addEventListener('DOMContentLoaded', function () {
     link.classList.add('fw-semibold');
   }
   header.querySelector('a[href="colophon.html"]').closest('li').remove();
+  return true;
+}
+if (!prepareTimurHeader()) {
+  const observer = new MutationObserver(function () {
+    if (prepareTimurHeader()) observer.disconnect();
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
   if (document.body.dataset.page === 'colophon') {
     document.getElementById('build-form-description').textContent =
       'Bootstrap opens the mobile menu. Feedback checks each field, then offers a review step and local confirmation.';

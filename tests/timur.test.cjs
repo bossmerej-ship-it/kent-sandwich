@@ -6,7 +6,8 @@ const vm = require('node:vm');
 
 const context = vm.createContext({
   jQuery: function () { /* Pure helpers are tested without mounting the page. */ },
-  document: { addEventListener: function () {} }
+  MutationObserver: class { observe() {} disconnect() {} },
+  document: { addEventListener: function () {}, querySelector: function () { return null; } }
 });
 for (const file of ['timur.js', 'about.js', 'feedback.js']) {
   const source = fs.readFileSync(path.join(__dirname, '../js', file), 'utf8');
@@ -196,7 +197,11 @@ for (const [page, expectedScripts] of [
 ]) {
   test(page + ' loads the common script before its page script', function () {
     const html = fs.readFileSync(path.join(__dirname, '..', page), 'utf8');
-    const scripts = Array.from(html.matchAll(/<script\s+src="(js\/[^"]+)"\s+defer><\/script>/g), match => match[1]);
+    const scripts = Array.from(html.matchAll(/<script\s+src="(js\/[^"]+)"(?:\s+defer)?><\/script>/g), match => match[1]);
     assert.deepEqual(scripts, expectedScripts);
+    if (page !== 'colophon.html') {
+      const common = html.indexOf('<script src="js/timur.js"></script>');
+      assert.ok(common > html.indexOf('<head>') && common < html.indexOf('</head>'), 'header setup loads before the body and jQuery');
+    }
   });
 }

@@ -119,7 +119,7 @@ function createFeedbackPhoto(src, alt) {
 // .append(), .text() and .attr() replace createElement and DOM assignments.
 // The card builder is shorter, while the filtering calculations stay plain JavaScript.
 function renderFeedbackCard(review) {
-  const card = createTimurElement('article', 'border border-dark rounded-0 p-3 p-md-4 bg-white text-break d-flex flex-column w-100 h-100');
+  const card = createTimurElement('article', 'border border-dark rounded-0 p-3 p-md-4 bg-white text-break d-flex flex-column w-100');
   card.attr('id', 'review-' + review.id);
   const header = createTimurElement('div', 'd-flex flex-wrap justify-content-between align-items-start gap-2 mb-3');
   const author = createTimurElement('div');
@@ -129,7 +129,7 @@ function renderFeedbackCard(review) {
   author.append(date);
   const rating = review.rating === null ? 'Rating not provided' : review.rating + ' / 5';
   const badge = createTimurElement('span', 'badge border border-dark rounded-0 p-2 text-wrap ' +
-    (review.rating === null ? 'bg-white text-dark' : 'text-bg-warning'), rating);
+    (review.rating === null ? 'bg-white text-dark' : 'bg-body-tertiary text-dark'), rating);
   header.append(author, badge);
   card.append(header, createTimurElement('p', 'small mb-2', review.category));
   const text = createTimurElement('p', 'feedback-message mb-3', review.text);
@@ -137,7 +137,7 @@ function renderFeedbackCard(review) {
   card.append(text);
   if (review.photo) card.append(createFeedbackPhoto(review.photo, 'Photo attached to this review'));
   if (review.total > 0) {
-    card.append(createTimurElement('p', 'small fw-semibold bg-warning text-dark p-2 mb-3', 'Order total: ' + formatFeedbackMoney(review.total) +
+    card.append(createTimurElement('p', 'small fw-semibold bg-body-tertiary text-dark p-2 mb-3', 'Order total: ' + formatFeedbackMoney(review.total) +
       ' · ' + formatFeedbackMoney(review.total / review.group) + ' per person'));
   }
   if (review.visitDate) {
@@ -149,23 +149,19 @@ function renderFeedbackCard(review) {
     details.attr('id', detailsId);
     card.append(toggle, details);
   }
-  const footer = createTimurElement('div', 'border-top border-dark pt-3 mt-auto');
-  if (review.source) {
-    const source = createTimurElement('a', 'link-dark small', 'Original review on 2GIS ↗');
-    source.attr('href', review.source);
-    source.attr('target', '_blank');
-    source.attr('rel', 'noopener noreferrer');
-    footer.append(source);
-  } else {
+  if (!review.source) {
+    const footer = createTimurElement('div', 'border-top border-dark pt-3 mt-auto');
     footer.append(createTimurElement('p', 'small mb-0', 'Local demo review — not sent to the shop.'));
+    card.append(footer);
   }
-  card.append(footer);
   return card;
 }
 
 // jQuery 3.7.1 ready ensures the form exists before handlers are attached.
 jQuery(function ($) {
   if ($('body').attr('data-page') !== 'feedback') return;
+  $('.feedback-intro .small.mb-0').remove();
+  $('.feedback-prompt').removeClass('bg-warning').addClass('bg-body-tertiary');
   const form = $('#feedback-form');
   const dialog = $('#feedback-dialog');
   const preview = $('#feedback-review');
@@ -308,7 +304,7 @@ jQuery(function ($) {
   section.attr('aria-labelledby', 'visitor-reviews-title');
   const heading = createTimurElement('h2', 'fw-bold display-6 text-uppercase', 'Visitor reviews');
   heading.attr('id', 'visitor-reviews-title');
-  const averageCheck = createTimurElement('p', 'fw-semibold border border-dark bg-warning text-dark p-3 mb-4');
+  const averageCheck = createTimurElement('p', 'fw-semibold border border-dark bg-body-tertiary text-dark p-3 mb-4');
   averageCheck.attr('id', 'review-average-check');
   section.append(heading, createTimurElement('p', 'small',
     'The source review is credited below. New reviews stay on this page only and disappear when you reload.'), averageCheck);
@@ -363,7 +359,7 @@ jQuery(function ($) {
   count.attr('role', 'status');
   const empty = createTimurElement('p', 'border border-dark bg-white p-4 hidden', 'No reviews match. Try another search, change the rating or reset the filters.');
   empty.attr('id', 'review-empty');
-  const list = createTimurElement('div', 'row g-3');
+  const list = createTimurElement('div', 'row g-3 align-items-start');
   list.attr('id', 'review-list');
   filterPanel.append(filters);
   section.append(filterPanel, count, empty, list);
@@ -384,7 +380,7 @@ jQuery(function ($) {
     const results = filterFeedback(reviews, search.val(), ratingFilter.val(), sorting.val(), totalFilter.val());
     list.empty();
     for (const review of results) {
-      list.append(createTimurElement('div', 'col-12 col-lg-6 d-flex').append(renderFeedbackCard(review)));
+      list.append(createTimurElement('div', 'col-12 col-lg-6').append(renderFeedbackCard(review)));
     }
     const rated = results.filter(function (review) { return review.rating !== null; });
     let total = 0;
