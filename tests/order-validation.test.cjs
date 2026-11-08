@@ -95,27 +95,3 @@ test('missing or malformed clock values cannot pass the hours comparison', funct
     assert.ok(Kent.validatePickup('2026-10-24', time, noonInAstana).time, time);
   }
 });
-
-test('suggestions list the next four future quarter hours in Astana', function () {
-  const pickup = Kent.getPickupSuggestions('', noonInAstana);
-  assert.equal(pickup.date, '2026-10-23');
-  assert.deepEqual([...pickup.times], ['12:15', '12:30', '12:45', '13:00']);
-  for (const time of pickup.times) assert.equal(Kent.validatePickup(pickup.date, time, noonInAstana).time, '');
-});
-
-test('the last pickup stays selectable until it passes, then suggestions roll into the next year', function () {
-  const beforeLast = Kent.getPickupSuggestions('2026-12-31', new Date('2026-12-31T16:14:59Z'));
-  assert.equal(beforeLast.date, '2026-12-31');
-  assert.deepEqual([...beforeLast.times], ['21:15']);
-
-  const afterLast = Kent.getPickupSuggestions('2026-12-31', new Date('2026-12-31T16:15:00Z'));
-  assert.equal(afterLast.date, '2027-01-01');
-  assert.deepEqual([...afterLast.times], ['09:30', '09:45', '10:00', '10:15']);
-});
-
-test('suggestions keep a valid future date and fall back from an impossible date', function () {
-  const future = Kent.getPickupSuggestions('2026-10-30', noonInAstana);
-  assert.equal(future.date, '2026-10-30');
-  assert.equal(future.times[0], '09:30');
-  assert.equal(Kent.getPickupSuggestions('2026-02-30', noonInAstana).date, '2026-10-23');
-});

@@ -12,24 +12,24 @@ Merey Kuatbay owns Home, Menu and Order. The table describes what changed since 
 
 | Feature | Technology and source | New behaviour for the visitor |
 | --- | --- | --- |
-| Home recommendations | Plain JavaScript in [index.js](js/index.js) | Combine a preferred profile and maximum price. Choose a matching sandwich from the generated list or try another suggestion. The list shows how many items match and how to recover when none do. |
-| Menu filtering and comparison | jQuery in [menu.js](js/menu.js) | Compare up to three sandwiches by description, profile and price. Selections stay visible when filters change. The comparison shows the lowest price and price difference, with controls to remove or clear items. |
-| Order selection and pickup | jQuery in [order.js](js/order.js) | Select quantities from the shared catalogue and choose from up to four quarter-hour pickup suggestions in Astana. The suggestions move to the next day after the last slot. Manual date and time entry, nearby errors and the editable demo summary are available. |
+| Home recommendations | Plain JavaScript in [index.js](js/index.js) | Set a maximum price for the existing random suggestion. The card and the Another suggestion button use the matching sandwiches. |
+| Menu filtering | jQuery in [menu.js](js/menu.js) | The existing result count now shows the lowest price among the sandwiches that match the filters. |
+| Order selection and pickup | jQuery in [order.js](js/order.js) | The existing choices use prices from the shared catalogue. Enter pickup details and prepare or edit the local demo summary. |
 | Shared basket | jQuery basket controls in [main.js](js/main.js). Shared data and storage in [menu-data.js](js/menu-data.js) and [basket.js](js/basket.js). | The native Home and jQuery pages use one basket. Clearing the basket gives a path back to the menu, and editing a completed demo restores its items together. |
 
-The catalogue supplies the recommendation list, menu cards, price rows and order choices. Home uses native DOM methods and handles changes, resets and delegated clicks in its own file. Menu and Order use jQuery ready callbacks, delegated events, traversal and effects. The filter panel slides, add-to-basket feedback fades in, and the comparison and order confirmation reveal their results. The checkout summary is a local demo. Browser storage contains only product IDs and quantities.
+The catalogue supplies the recommendation cards, menu cards, price rows and order choices. Home creates the cards in a loop with native DOM methods. Its price change handler limits the choices and its parent click handler handles the two suggestion buttons. Menu and Order use jQuery ready callbacks, delegated events and traversal. The filter panel slides, add-to-basket feedback fades in, and Order reveals its confirmation. Browser storage contains only product IDs and quantities.
 
 Timur Naumov owns About, Feedback and Colophon. His gallery, opening hours and feedback interactions use jQuery in `js/about.js`, `js/feedback.js` and `js/timur.js`.
 
 ### Try the endterm flows
 
-1. On Home, select Hot and a maximum of 690 ₸, then add the matching sandwich to the basket.
-2. In Menu, compare Mini sandwich and Chicken, then change the search. Check the selected prices, remove an item, and clear the comparison.
-3. In Order, try an invalid phone or email and correct it. Choose a suggested pickup time and prepare the demo. Edit the summary to restore the draft or start a new demo to clear it.
+1. On Home, select a maximum of 390 ₸ to get the Mini sandwich, then add it to the basket.
+2. In Menu, set the profile to Hot. The lowest price shown in the result count changes from 390 ₸ to 690 ₸.
+3. In Order, enter a future pickup date and time in Astana. Try an invalid phone or email, correct it and prepare the demo. Edit the summary to restore the draft.
 
-Run the automated checks with `node --test tests/*.test.cjs`. The pickup tests include the last valid slot and the change to the following day.
+Run the automated checks with `node --test tests/*.test.cjs`. All 29 tests passed for this revision. Browser checks covered the budget limit, the filtered lowest price and manual checkout, with no console errors on the six pages.
 
-On 8 November 2026, all 32 Node tests passed and Nu HTML Checker reported zero errors on the six pages. Browser checks exercised the recommendation, comparison, shared basket and checkout. All six pages passed layout and console checks at 375 and 1440 pixels. The course also requires students to record a peer check and contribute on separate days.
+The course also requires students to record a peer check and contribute on separate days.
 
 ## Pages and responsibility
 

@@ -4,13 +4,6 @@
   const Kent = window.Kent;
   if (!Kent) return;
 
-  const PICKUP_START = '09:30';
-  const PICKUP_END = '21:15';
-  const SLOT_INTERVAL = 15;
-  const slotDateFormat = new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'UTC', weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
-  });
-
   // The shop's calendar is used even when the visitor is in another time zone.
   function getShopClock(now) {
     const parts = new Intl.DateTimeFormat('en-CA', {
@@ -38,55 +31,20 @@
       ? '' : 'Quantity must be a whole number from 1 to 10.';
   }
 
-  function isCalendarDate(date) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return false;
-    const midnight = new Date(date + 'T00:00:00Z');
-    return !Number.isNaN(midnight.getTime()) && midnight.toISOString().slice(0, 10) === date;
-  }
-
-  function minutesAfterMidnight(time) {
-    const parts = time.split(':').map(Number);
-    return parts[0] * 60 + parts[1];
-  }
-
-  // Show up to four quarter-hour choices. Manual times can still use any valid minute.
-  function getPickupSuggestions(requestedDate, now = new Date()) {
-    const clock = getShopClock(now);
-    const opening = minutesAfterMidnight(PICKUP_START);
-    const closing = minutesAfterMidnight(PICKUP_END);
-    let date = isCalendarDate(requestedDate) && requestedDate >= clock.date ? requestedDate : clock.date;
-    let first = opening;
-    if (date === clock.date) {
-      const nextQuarter = (Math.floor(clock.seconds / (60 * SLOT_INTERVAL)) + 1) * SLOT_INTERVAL;
-      first = Math.max(opening, nextQuarter);
-    }
-    if (first > closing) {
-      const tomorrow = new Date(date + 'T00:00:00Z');
-      tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
-      date = tomorrow.toISOString().slice(0, 10);
-      first = opening;
-    }
-    const times = [];
-    for (let minute = first; minute <= closing && times.length < 4; minute += SLOT_INTERVAL) {
-      const hours = String(Math.floor(minute / 60)).padStart(2, '0');
-      const minutes = String(minute % 60).padStart(2, '0');
-      times.push(hours + ':' + minutes);
-    }
-    return { date, times };
-  }
-
   // A date/time pair must be in the future AND inside the prepared pickup hours.
   function validatePickup(date, time, now) {
     const clock = getShopClock(now || new Date());
     const errors = { date: '', time: '' };
-    if (!isCalendarDate(date)) errors.date = 'Choose a pickup date.';
+    const dateObject = /^\d{4}-\d{2}-\d{2}$/.test(date) ? new Date(date + 'T00:00:00Z') : null;
+    const validDate = dateObject && !Number.isNaN(dateObject.getTime()) &&
+      dateObject.toISOString().slice(0, 10) === date;
+    if (!validDate) errors.date = 'Choose a pickup date.';
     else if (date < clock.date) errors.date = 'Choose today or a later date in Astana.';
 
     if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time)) errors.time = 'Choose a pickup time.';
-    else if (time < PICKUP_START || time > PICKUP_END) {
-      errors.time = 'Pickup is available from ' + PICKUP_START + ' to ' + PICKUP_END + '.';
-    } else if (!errors.date && date === clock.date) {
-      const seconds = minutesAfterMidnight(time) * 60;
+    else if (time < '09:30' || time > '21:15') errors.time = 'Pickup is available from 09:30 to 21:15.';
+    else if (validDate && !errors.date && date === clock.date) {
+      const seconds = Number(time.slice(0, 2)) * 3600 + Number(time.slice(3, 5)) * 60;
       if (seconds <= clock.seconds) errors.time = 'Choose a pickup time later than now in Astana.';
     }
     return errors;
@@ -94,7 +52,6 @@
 
   Kent.validateQuantity = validateQuantity;
   Kent.validatePickup = validatePickup;
-  Kent.getPickupSuggestions = getPickupSuggestions;
 
   function validatePhone(value) {
     return /^\+?[0-9](?:[ ()-]*[0-9]){9,14}$/.test(String(value).trim())
@@ -238,32 +195,10 @@
     const draft = create('section', 'border border-dark p-3 mb-4').attr('aria-labelledby', 'pickup-draft-title');
     const draftTitle = create('h3', 'h5 fw-bold', 'Your demo draft').attr('id', 'pickup-draft-title');
     const draftText = create('p', 'mb-2');
-    const availability = create('p', 'small mb-0', 'Pickup times: ' + PICKUP_START + '–' + PICKUP_END +
-      ', Astana time. Enter a time or choose a suggestion.');
-    const pickupLabel = create('p', 'small fw-semibold mt-3 mb-2').attr('id', 'pickup-suggestions-label');
-    const pickupButtons = create('div', 'd-flex flex-wrap gap-2')
-      .attr({ role: 'group', 'aria-labelledby': pickupLabel.attr('id') });
-    const pickupFeedback = create('p', 'small mb-0').attr('role', 'status');
-    draft.append(draftTitle, draftText, availability, pickupLabel, pickupButtons, pickupFeedback)
-      .appendTo(form.find('fieldset').eq(1));
+    const availability = create('p', 'small mb-0', 'Pickup times: 09:30–21:15, Astana time. Choose a future date and time.');
+    draft.append(draftTitle, draftText, availability).appendTo(form.find('fieldset').eq(1));
     const submitHint = create('p', 'form-text mb-3').attr('id', 'order-submit-hint').insertBefore(submit);
     appendDescription(submit, submitHint.attr('id'));
-
-    function renderPickupSuggestions() {
-      const suggestions = getPickupSuggestions(value('pickup-date'));
-      const day = slotDateFormat.format(new Date(suggestions.date + 'T00:00:00Z'));
-      pickupLabel.text('Suggested pickup times for ' + day);
-      pickupButtons.empty().attr('data-pickup-date', suggestions.date);
-      pickupFeedback.text('');
-      suggestions.times.forEach(function (slot) {
-        const selected = date.val() === suggestions.date && time.val() === slot;
-        const classes = 'btn btn-sm rounded-0 ' + (selected ? 'btn-dark' : 'btn-outline-dark');
-        create('button', classes, slot).attr({
-          type: 'button', 'data-pickup-time': slot, 'aria-pressed': String(selected),
-          'aria-label': 'Use ' + slot + ' on ' + day
-        }).appendTo(pickupButtons);
-      });
-    }
 
     function updateDraft() {
       const basket = Kent.calculateCart(Kent.getCart());
@@ -366,29 +301,6 @@
       }
     }
 
-    pickupButtons.on('click', 'button[data-pickup-time]', function () {
-      const button = $(this);
-      const pickedDate = pickupButtons.attr('data-pickup-date');
-      const pickedTime = button.attr('data-pickup-time');
-      const errors = validatePickup(pickedDate, pickedTime);
-      if (errors.date || errors.time) {
-        renderPickupSuggestions();
-        pickupFeedback.text('That time has passed. Choose another pickup time.');
-        pickupButtons.find('button').first().trigger('focus');
-        return;
-      }
-      invalidateConfirmation();
-      date.val(pickedDate);
-      time.val(pickedTime);
-      touched.add('pickup-date');
-      touched.add('pickup-time');
-      updateTouchedErrors();
-      updateDraft();
-      renderPickupSuggestions();
-      pickupFeedback.text('Pickup set for ' + pickedDate + ' at ' + pickedTime + ' (Astana).');
-      time.trigger('focus');
-    });
-
     form.on('input', 'input, select, textarea', function () {
       const control = $(this);
       invalidateConfirmation();
@@ -396,7 +308,6 @@
       if (choice) updateQuantity(choice);
       updateTouchedErrors();
       updateDraft();
-      if (control.is(date) || control.is(time)) renderPickupSuggestions();
     });
     form.on('change', 'input, select, textarea', function () {
       const control = $(this);
@@ -417,7 +328,6 @@
       } else if (messages.has(control.attr('id'))) touched.add(control.attr('id'));
       updateTouchedErrors();
       updateDraft();
-      if (control.is(date) || control.is(time)) renderPickupSuggestions();
     });
     form.on('focusout', 'input, select, textarea', function () {
       const id = $(this).attr('id');
@@ -458,7 +368,6 @@
       date.attr('min', getShopClock(new Date()).date);
       Kent.clearCart();
       syncChoices(false);
-      renderPickupSuggestions();
       resetting = false;
     }
 
@@ -520,7 +429,6 @@
       }));
       resetting = false;
       syncChoices(false);
-      renderPickupSuggestions();
       name.trigger('focus');
     });
 
@@ -568,6 +476,5 @@
       updateTouchedErrors();
     });
     syncChoices(false);
-    renderPickupSuggestions();
   });
 })();

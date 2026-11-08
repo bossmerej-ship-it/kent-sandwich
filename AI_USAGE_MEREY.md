@@ -2,9 +2,9 @@
 
 ## Endterm assistance on 8 November 2026
 
-Merey requested changes to Home, Menu and Order using the Endterm Project brief. Codex (GPT-6) read the brief and implemented the native JavaScript recommendation picker, the jQuery menu comparison and pickup suggestions, and the common catalogue and basket integration. Codex also generated the tab icon from the existing Kent logo, added pickup boundary tests and updated the README with the technology and page ownership map.
+Merey requested changes to Home, Menu and Order using the Endterm Project brief. Codex (GPT-6) prepared an initial implementation, then narrowed the scope at Merey's request. The revised version adds a budget limit to the existing Home recommendation in plain JavaScript and a lowest-price hint to the existing jQuery menu filters. It uses one catalogue for the menu and the order choices and one basket across the three pages. Codex also generated the tab icon from the existing Kent logo and documented the final features and page ownership.
 
-The automated review covered recommendation filtering, menu comparison, basket updates across tabs, field errors and correction, and editing and clearing a completed demo. All 32 Node tests passed, and Nu HTML Checker reported zero errors on the six source pages. The existing photographs retain their source credits. The student peer check and defence remain separate course steps.
+Codex ran the 29 automated tests and checked the revised flow in the browser, including the basket and order form. The existing photographs retain their source credits. The student peer check and defence remain separate course steps.
 
 ## Earlier assignments
 
