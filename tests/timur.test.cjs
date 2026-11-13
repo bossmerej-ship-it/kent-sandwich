@@ -64,12 +64,17 @@ test('contact permission requires at least one valid contact', function () {
   assert.ok(context.validateFeedback(data, '2026-10-23').some(error => error.id === 'contact-permission'));
   assert.equal(context.validateFeedback({ ...data, email: 'demo@example.com' }, '2026-10-23').length, 0);
   assert.equal(context.validateFeedback({ ...data, phone: '+7 700 000 00 00' }, '2026-10-23').length, 0);
+  assert.equal(context.validateFeedback({ ...data, phone: '+7-(747)-123-1212' }, '2026-10-23').length, 0);
 });
 
 test('bad email, phone, group size and rating receive specific errors', function () {
   const errors = context.validateFeedback({ ...validFeedback(), email: 'bad', phone: 'abc', group: '1.5', rating: '' }, '2026-10-23');
   for (const id of ['guest-email', 'guest-phone', 'group-size', 'rating-1']) {
     assert.ok(errors.some(error => error.id === id), id);
+  }
+  for (const phone of ['+7-(747)-123-121', '+7-(747)-123-12120', '+1 747 123 12 12']) {
+    assert.ok(context.validateFeedback({ ...validFeedback(), phone }, '2026-10-23')
+      .some(error => error.id === 'guest-phone'), phone);
   }
 });
 
@@ -173,9 +178,10 @@ test('visit planner rejects invalid dates and times and visits earlier than the 
 
 test('visit week uses calendar days across month and year boundaries', function () {
   const days = context.getVisitWeek('2026-12-29');
-  assert.equal(days.length, 7);
-  assert.equal(days[0].date, '2026-12-29');
-  assert.equal(days[6].date, '2027-01-04');
+  assert.equal(Array.from(days, day => day.day).join(', '), 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday');
+  assert.equal(days[0].date, '2027-01-04');
+  assert.equal(days[1].date, '2026-12-29');
+  assert.equal(days[6].date, '2027-01-03');
   assert.equal(days[0].opening, '09:30');
   assert.equal(days[6].closing, '21:30');
 });

@@ -18,6 +18,27 @@ function formatFeedbackDate(value) {
   }).format(new Date(value));
 }
 
+const phoneExample = '+7-(747)-123-1212';
+const phoneHelp = 'Enter 10 digits after +7, for example ' + phoneExample + '.';
+
+function formatFeedbackPhone(value) {
+  const compact = value.trim().replace(/[^\d+]/g, '');
+  let digits = compact.replace(/\D/g, '');
+  if (/^\+[0-689]/.test(compact)) return '+' + digits.slice(0, 11);
+
+  // Pasted numbers may start with +7, 7 or the local prefix 8.
+  if (compact.startsWith('+7') || (digits.length > 10 && /^[78]/.test(digits))) {
+    digits = digits.slice(1);
+  }
+  digits = digits.slice(0, 10);
+  if (!digits) return '+7';
+
+  let phone = '+7-(' + digits.slice(0, 3);
+  if (digits.length > 3) phone += ')-' + digits.slice(3, 6);
+  if (digits.length > 6) phone += '-' + digits.slice(6);
+  return phone;
+}
+
 function validateFeedback(data, today) {
   const errors = [];
   if (data.name.trim().length < 2 || data.name.trim().length > 80) {
@@ -26,8 +47,8 @@ function validateFeedback(data, today) {
   if (data.email && (data.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))) {
     errors.push({ id: 'guest-email', message: 'Enter a valid email address, or leave it empty.' });
   }
-  if (data.phone && (data.phone.length > 30 || !/^\+?[0-9](?:[ ()-]*[0-9]){9,14}$/.test(data.phone))) {
-    errors.push({ id: 'guest-phone', message: 'Enter 10–15 phone digits, or leave this field empty.' });
+  if (data.phone && !/^\+7(?:[ ()-]*\d){10}$/.test(data.phone)) {
+    errors.push({ id: 'guest-phone', message: phoneHelp });
   }
   const group = Number(data.group);
   if (!Number.isInteger(group) || group < 1 || group > 20) {
@@ -183,21 +204,31 @@ jQuery(function ($) {
   totalHint.attr('id', 'order-total-hint').insertAfter(totalInput);
   $('#feedback-review-item').attr({ id: 'feedback-review-total', for: 'order-total' })
     .closest('dd').prev('dt').text('Order total');
-  $('#guest-phone').val('+7').prop('defaultValue', '+7').on('input', function () {
-    let phone = $(this).val().trim();
-    const digits = phone.replace(/[ ()-]/g, '');
-    if (/^[78]\d{10}$/.test(digits)) phone = '+7' + digits.slice(1);
-    else if (!phone.startsWith('+7')) phone = '+7' + phone.replace(/^\+/, '');
-    $(this).val(phone);
+  const phoneInput = $('#guest-phone');
+  phoneInput.attr({ placeholder: phoneExample, title: phoneHelp }).removeAttr('pattern');
+  $('#guest-phone-hint, #guest-phone-error').text(phoneHelp);
+  phoneInput.val('+7').prop('defaultValue', '+7').on('input change', function () {
+    const value = phoneInput.val();
+    const formatted = formatFeedbackPhone(value);
+    if (value === formatted) return;
+
+    const cursor = this.selectionStart;
+    phoneInput.val(formatted);
+
+    // Keep the cursor next to the same digit when editing the middle.
+    if (cursor === null || cursor === value.length) return;
+    let digitsBeforeCursor = value.slice(0, cursor).replace(/\D/g, '').length;
+    let position = 0;
+    while (position < formatted.length && digitsBeforeCursor > 0) {
+      if (/\d/.test(formatted[position])) digitsBeforeCursor--;
+      position++;
+    }
+    position = Math.max(position, 2);
+    this.setSelectionRange(position, position);
   });
   $('#visit-date').prop('required', false);
   $('label[for="visit-date"]').text('Visit date (optional)');
   $('#visit-date-hint').text('Leave empty to use today\'s date.');
-  const clearEmail = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-0 mt-2', 'Clear email');
-  clearEmail.attr({ id: 'feedback-clear-email', type: 'button' }).insertAfter($('#guest-email'));
-  clearEmail.on('click', function () {
-    $('#guest-email').val('').trigger('input').trigger('focus');
-  });
   const totalError = createTimurElement('p', 'field-error hidden small mt-1 mb-0');
   totalError.attr('id', 'order-total-error').insertAfter(totalHint);
   const photoField = createTimurElement('div', 'my-4');
@@ -413,7 +444,7 @@ jQuery(function ($) {
   // Reading fields is shorter; the validation rules still need the same explicit checks.
   function readFeedback() {
     const selectedRating = form.find('input[name="rating"]:checked');
-    const phone = $('#guest-phone').val().trim();
+    const phone = phoneInput.val().trim();
     return {
       name: $('#guest-name').val().trim(),
       email: $('#guest-email').val().trim(),
@@ -461,7 +492,6 @@ jQuery(function ($) {
       ? formatFeedbackMoney(total / group) + ' per person.'
       : 'Optional. Enter the total bill for your group in tenge.');
     counter.text(message.val().length);
-    clearEmail.prop('disabled', $('#guest-email').val().length === 0);
     form.find('input[name="rating"]').each(function () {
       $(this).closest('label').toggleClass('selected', $(this).prop('checked'));
     });

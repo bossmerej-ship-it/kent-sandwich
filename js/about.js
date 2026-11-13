@@ -6,7 +6,7 @@ const visitPlace = {
   address: 'Adolfa Yanushkevicha Street, 1, Astana',
   map: 'https://2gis.kz/astana/firm/70000001114376342'
 };
-const visitDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const visitDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 function getOpeningStatus(now, opening, closing) {
   const clock = getShopClock(now);
@@ -42,10 +42,12 @@ function getVisitWeek(start) {
   const days = [];
   for (let offset = 0; offset < 7; offset++) {
     const date = addVisitDays(start, offset);
-    days.push({
-      date: date, day: visitDays[new Date(date + 'T00:00:00Z').getUTCDay()],
+    const weekday = new Date(date + 'T00:00:00Z').getUTCDay();
+    const index = weekday === 0 ? 6 : weekday - 1; // JavaScript counts Sunday as day 0.
+    days[index] = {
+      date: date, day: visitDays[index],
       opening: visitPlace.opening, closing: visitPlace.closing
-    });
+    };
   }
   return days;
 }
@@ -86,9 +88,8 @@ document.addEventListener('DOMContentLoaded', function () {
     status.classList.remove('hidden');
     status.classList.toggle('success', result.open);
     const today = getShopClock(now).date;
-    dateInput.min = today;
     if (displayedDate !== today) renderWeek(today);
-    if (attempted && getVisitPlan(dateInput.value, timeInput.value, now).errors.length > 0) changePlan();
+    if (attempted && getVisitPlan(dateSelect.value, timeInput.value, now).errors.length > 0) changePlan();
   }
   function refreshHours() {
     updateHours();
@@ -112,26 +113,26 @@ document.addEventListener('DOMContentLoaded', function () {
   const form = createTimurNode('form', 'row g-3');
   form.id = 'visit-plan-form';
   form.noValidate = true;
-  function addField(id, type, labelText) {
+  function addField(id, labelText, control) {
     const column = createTimurNode('div', 'col-12 col-md-6');
     const label = createTimurNode('label', 'form-label', labelText);
     label.htmlFor = id;
-    const input = createTimurNode('input', 'form-control rounded-0');
-    input.id = id;
-    input.name = id;
-    input.type = type;
-    input.required = true;
-    input.setAttribute('aria-describedby', id + '-error');
+    control.id = id;
+    control.name = id;
+    control.required = true;
+    control.setAttribute('aria-describedby', id + '-error');
     const error = createTimurNode('p', 'field-error hidden small mt-1 mb-0');
     error.id = id + '-error';
-    column.append(label, input, error);
+    column.append(label, control, error);
     form.append(column);
-    return input;
   }
-  const dateInput = addField('plan-date', 'date', 'Visit date');
-  const timeInput = addField('plan-time', 'text', 'Arrival time (HH:MM)');
+  const dateSelect = createTimurNode('select', 'form-select rounded-0');
+  addField('plan-date', 'Visit date', dateSelect);
+  const timeInput = createTimurNode('input', 'form-control rounded-0');
+  timeInput.type = 'text';
   timeInput.placeholder = '20:30';
   timeInput.maxLength = 5;
+  addField('plan-time', 'Arrival time', timeInput);
   const actions = createTimurNode('div', 'col-12 d-flex flex-wrap gap-2');
   const check = createTimurNode('button', 'btn btn-dark rounded-0', 'Check visit time');
   check.type = 'submit';
@@ -149,28 +150,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function selectDay() {
     for (const button of week.querySelectorAll('button')) {
-      const selected = button.dataset.visitDate === dateInput.value;
+      const selected = button.dataset.visitDate === dateSelect.value;
       button.classList.toggle('active', selected);
       button.setAttribute('aria-pressed', String(selected));
     }
   }
   function renderWeek(today) {
     displayedDate = today;
+    const selectedDate = dateSelect.value;
+    const placeholder = createTimurNode('option', '', 'Choose a date');
+    placeholder.value = '';
+    dateSelect.replaceChildren(placeholder);
     week.replaceChildren();
     for (const day of getVisitWeek(today)) {
+      const label = day.day + ' · ' + formatVisitDate(day.date);
+      const option = createTimurNode('option', '', label);
+      option.value = day.date;
+      dateSelect.append(option);
       const column = createTimurNode('div', 'col-12 col-md-6');
       const button = createTimurNode('button', 'btn btn-outline-dark rounded-0 w-100 text-start');
       button.type = 'button';
       button.dataset.visitDate = day.date;
-      button.append(createTimurNode('span', 'd-block fw-semibold', day.day + ' · ' + formatVisitDate(day.date)),
+      button.append(createTimurNode('span', 'd-block fw-semibold', label),
         createTimurNode('span', 'small', day.opening + '–' + day.closing));
       column.append(button);
       week.append(column);
+      if (day.date === selectedDate) dateSelect.value = selectedDate;
     }
     selectDay();
   }
   function showPlanErrors(errors) {
-    for (const input of [dateInput, timeInput]) {
+    for (const input of [dateSelect, timeInput]) {
       const error = errors.find(function (entry) { return entry.id === input.id; });
       const note = document.getElementById(input.id + '-error');
       input.classList.toggle('error', Boolean(error));
@@ -181,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   function resetPlan() {
     attempted = false;
-    dateInput.value = '';
+    dateSelect.value = '';
     timeInput.value = '';
     showPlanErrors([]);
     output.classList.add('hidden');
@@ -190,13 +200,13 @@ document.addEventListener('DOMContentLoaded', function () {
   function changePlan() {
     output.classList.add('hidden'); // Never leave a result for an older selection visible.
     selectDay();
-    if (attempted) showPlanErrors(getVisitPlan(dateInput.value, timeInput.value, new Date()).errors);
+    if (attempted) showPlanErrors(getVisitPlan(dateSelect.value, timeInput.value, new Date()).errors);
   }
   // Delegation also handles the new buttons rebuilt after Astana midnight.
   week.addEventListener('click', function (event) {
     const button = event.target.closest('button[data-visit-date]');
     if (!button || !week.contains(button)) return;
-    dateInput.value = button.dataset.visitDate;
+    dateSelect.value = button.dataset.visitDate;
     changePlan();
     timeInput.focus();
   });
@@ -205,19 +215,19 @@ document.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('reset', function (event) {
     event.preventDefault();
     resetPlan();
-    dateInput.focus();
+    dateSelect.focus();
   });
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     attempted = true;
-    const plan = getVisitPlan(dateInput.value.trim(), timeInput.value.trim(), new Date());
+    const plan = getVisitPlan(dateSelect.value, timeInput.value.trim(), new Date());
     showPlanErrors(plan.errors);
     if (plan.errors.length > 0) {
       output.classList.add('hidden');
       document.getElementById(plan.errors[0].id).focus();
       return;
     }
-    const chosen = formatVisitDate(dateInput.value) + ' at ' + timeInput.value + ' (Astana time)';
+    const chosen = formatVisitDate(dateSelect.value) + ' at ' + timeInput.value + ' (Astana time)';
     const summary = plan.open
       ? 'Open at your arrival. ' + plan.minutesUntilClose + ' minutes until closing.'
       : 'Closed at your arrival. Next opening: ' + formatVisitDate(plan.nextOpening.slice(0, 10)) + ' at ' + visitPlace.opening + '.';

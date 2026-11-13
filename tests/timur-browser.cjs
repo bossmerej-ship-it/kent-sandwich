@@ -46,25 +46,28 @@ const path = require('node:path');
     await hidden('#guest-name-error');
     await page.locator('#guest-email').fill('bad');
     await visible('#guest-email-error');
-    await page.locator('#feedback-clear-email').click();
-    assert.equal(await page.locator('#guest-email').inputValue(), '');
+    assert.equal(await page.getByRole('button', { name: 'Clear email', exact: true }).count(), 0);
+    await page.locator('#guest-email').fill('');
     await hidden('#guest-email-error');
-    assert.equal(await page.locator('#feedback-clear-email').isDisabled(), true);
     await page.locator('#guest-email').fill('demo@example.com');
     await hidden('#guest-email-error');
-    await page.locator('#guest-phone').fill('abc');
+    const phoneInput = page.locator('#guest-phone');
+    await phoneInput.fill('747123');
     await visible('#guest-phone-error');
-    for (const [entered, expected] of [
-      ['77771234567', '+77771234567'],
-      ['8 (777) 123-45-67', '+77771234567'],
-      ['  +7 777 123 45 67  ', '+7 777 123 45 67']
-    ]) {
-      await page.locator('#guest-phone').fill(entered);
-      assert.equal(await page.locator('#guest-phone').inputValue(), expected);
+    for (const entered of ['77471231212', '8 (747) 123-12-12', '+7 747 123 12 12', '7471231212']) {
+      await phoneInput.fill(entered);
+      assert.equal(await phoneInput.inputValue(), '+7-(747)-123-1212');
       await hidden('#guest-phone-error');
     }
-    await page.locator('#guest-phone').fill('700 000 00 00');
-    assert.equal(await page.locator('#guest-phone').inputValue(), '+7700 000 00 00');
+    await phoneInput.fill('');
+    await phoneInput.pressSequentially('7471');
+    assert.equal(await phoneInput.inputValue(), '+7-(747)-1');
+    await phoneInput.pressSequentially('23121299');
+    assert.equal(await phoneInput.inputValue(), '+7-(747)-123-1212');
+    await hidden('#guest-phone-error');
+    await phoneInput.press('Backspace');
+    await visible('#guest-phone-error');
+    await phoneInput.pressSequentially('2');
     await hidden('#guest-phone-error');
     await page.locator('#visit-date').fill('2026-10-01');
     await page.locator('#order-total').fill('-1');
@@ -240,11 +243,16 @@ const path = require('node:path');
     await go('about.html');
     assert.equal(await page.evaluate(() => typeof jQuery), 'undefined');
     await visible('#visit-status');
-    assert.equal(await page.locator('#visit-week button').count(), 7);
+    const dayButtons = page.locator('#visit-week button');
+    assert.deepEqual((await dayButtons.allTextContents()).map(text => text.split(' · ')[0]),
+      ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
+    const dateSelect = page.getByLabel('Visit date', { exact: true });
+    assert.equal(await dateSelect.evaluate(el => el.tagName), 'SELECT');
+    assert.equal(await page.getByLabel('Arrival time', { exact: true }).count(), 1);
     await page.locator('#visit-plan-form button[type="submit"]').click();
     await visible('#plan-date-error');
     await visible('#plan-time-error');
-    await page.locator('#visit-week button').nth(1).locator('span').first().click();
+    await dayButtons.first().locator('span').first().click();
     assert.equal(await page.locator('#plan-date').inputValue(), '2026-11-09');
     await hidden('#plan-date-error');
     assert.equal(await page.locator('#plan-time').evaluate(el => el === document.activeElement), true);
@@ -261,21 +269,22 @@ const path = require('node:path');
     await hidden('#visit-plan-result');
     await page.locator('#visit-plan-form button[type="submit"]').click();
     assert.match(await page.locator('#visit-plan-result').innerText(), /Closed.*10 Nov 2026 at 09:30/s);
-    await page.locator('#plan-date').fill('2026-11-07');
-    await visible('#plan-date-error');
+    assert.equal(await dateSelect.locator('option[value="2026-11-07"]').count(), 0);
+    await dateSelect.selectOption('2026-11-10');
+    assert.equal(await dayButtons.nth(1).getAttribute('aria-pressed'), 'true');
     await hidden('#visit-plan-result');
     await page.locator('#visit-plan-form button[type="reset"]').click();
     await hidden('#plan-date-error');
     await hidden('#plan-time-error');
     assert.equal(await page.locator('#plan-date').inputValue(), '');
-    await page.locator('#plan-date').fill('2026-11-08');
+    await dateSelect.selectOption('2026-11-08');
     await page.locator('#plan-time').fill('10:00');
     await page.locator('#visit-plan-form button[type="submit"]').click();
     await visible('#visit-plan-result');
     await page.clock.runFor(120000);
     await hidden('#visit-plan-result');
     await visible('#plan-time-error');
-    await page.locator('#visit-week button').nth(1).click();
+    await dayButtons.first().click();
     await page.locator('#plan-time').fill('10:00');
     await page.locator('#visit-plan-form button[type="submit"]').click();
     if (process.env.QA_DIR) {
