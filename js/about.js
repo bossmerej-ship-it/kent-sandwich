@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
     status.classList.toggle('success', result.open);
     const today = getShopClock(now).date;
     if (displayedDate !== today) renderWeek(today);
-    if (attempted && getVisitPlan(dateSelect.value, timeSelect.value, now).errors.length > 0) changePlan();
+    if (attempted && getVisitPlan(dateSelect.value, timeInput.value, now).errors.length > 0) changePlan();
   }
   function refreshHours() {
     updateHours();
@@ -128,20 +128,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   const dateSelect = createTimurNode('select', 'form-select rounded-0');
   addField('plan-date', 'Visit date', dateSelect);
-  const timeSelect = createTimurNode('select', 'form-select rounded-0');
-  const timePlaceholder = createTimurNode('option', '', 'Choose a time');
-  timePlaceholder.value = '';
-  timeSelect.append(timePlaceholder);
-  for (let hour = 0; hour < 24; hour++) {
-    const hours = String(hour).padStart(2, '0');
-    for (const minutes of ['00', '15', '30', '45']) {
-      const time = hours + ':' + minutes;
-      const option = createTimurNode('option', '', time);
-      option.value = time;
-      timeSelect.append(option);
-    }
-  }
-  addField('plan-time', 'Arrival time', timeSelect);
+  const timeInput = createTimurNode('input', 'form-control rounded-0 bg-white');
+  timeInput.type = 'time';
+  addField('plan-time', 'Arrival time', timeInput);
   const actions = createTimurNode('div', 'col-12 d-flex flex-wrap gap-2');
   const check = createTimurNode('button', 'btn btn-dark rounded-0', 'Check visit time');
   check.type = 'submit';
@@ -189,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
     selectDay();
   }
   function showPlanErrors(errors) {
-    for (const input of [dateSelect, timeSelect]) {
+    for (const input of [dateSelect, timeInput]) {
       const error = errors.find(function (entry) { return entry.id === input.id; });
       const note = document.getElementById(input.id + '-error');
       input.classList.toggle('error', Boolean(error));
@@ -201,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function resetPlan() {
     attempted = false;
     dateSelect.value = '';
-    timeSelect.value = '';
+    timeInput.value = '';
     showPlanErrors([]);
     output.classList.add('hidden');
     selectDay();
@@ -209,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function changePlan() {
     output.classList.add('hidden'); // Never leave a result for an older selection visible.
     selectDay();
-    if (attempted) showPlanErrors(getVisitPlan(dateSelect.value, timeSelect.value, new Date()).errors);
+    if (attempted) showPlanErrors(getVisitPlan(dateSelect.value, timeInput.value, new Date()).errors);
   }
   // Delegation also handles the new buttons rebuilt after Astana midnight.
   week.addEventListener('click', function (event) {
@@ -217,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!button || !week.contains(button)) return;
     dateSelect.value = button.dataset.visitDate;
     changePlan();
-    timeSelect.focus();
+    timeInput.focus();
   });
   form.addEventListener('input', changePlan);
   form.addEventListener('change', changePlan);
@@ -229,14 +218,14 @@ document.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     attempted = true;
-    const plan = getVisitPlan(dateSelect.value, timeSelect.value, new Date());
+    const plan = getVisitPlan(dateSelect.value, timeInput.value, new Date());
     showPlanErrors(plan.errors);
     if (plan.errors.length > 0) {
       output.classList.add('hidden');
       document.getElementById(plan.errors[0].id).focus();
       return;
     }
-    const chosen = formatVisitDate(dateSelect.value) + ' at ' + timeSelect.value + ' (Astana time)';
+    const chosen = formatVisitDate(dateSelect.value) + ' at ' + timeInput.value + ' (Astana time)';
     const summary = plan.open
       ? 'Open at your arrival. ' + plan.minutesUntilClose + ' minutes until closing.'
       : 'Closed at your arrival. Next opening: ' + formatVisitDate(plan.nextOpening.slice(0, 10)) + ' at ' + visitPlace.opening + '.';
