@@ -7,8 +7,8 @@ function createTimurElement(tag, classes, text) {
   return element;
 }
 
-function timurEffectDuration() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 180;
+function feedbackIcon(symbol, classes = '') {
+  return createTimurElement('span', 'flex-shrink-0 ' + classes, symbol).attr('aria-hidden', 'true');
 }
 
 function formatFeedbackDate(value) {
@@ -30,7 +30,7 @@ function formatFeedbackPhone(value) {
     digits = digits.slice(1);
   }
   digits = digits.slice(0, 10);
-  if (!digits) return '+7';
+  if (!digits) return compact.startsWith('+7') ? '+7' : '';
 
   let phone = '+7-(' + digits.slice(0, 3);
   if (digits.length > 3) phone += ')-' + digits.slice(3, 6);
@@ -130,12 +130,6 @@ function createFeedbackSummary(data, reference) {
   ].join('\n');
 }
 
-function createFeedbackPhoto(src, alt) {
-  const frame = createTimurElement('div', 'ratio ratio-4x3 border border-dark bg-light mb-3');
-  if (src) frame.append(createTimurElement('img', 'w-100 h-100 object-fit-contain').attr({ src: src, alt: alt }));
-  return frame;
-}
-
 function renderReviewDetails(review) {
   const fields = [];
   if (review.visitDate) fields.push(['Visit date', formatFeedbackDate(review.visitDate)]);
@@ -208,11 +202,7 @@ function renderFeedbackCard(review) {
 // jQuery 3.7.1 ready ensures the form exists before handlers are attached.
 jQuery(function ($) {
   if ($('body').attr('data-page') !== 'feedback') return;
-  $('.feedback-intro .small.mb-0').remove();
-  $('.feedback-prompt').removeClass('bg-warning').addClass('bg-body-tertiary');
   const form = $('#feedback-form');
-  const dialog = $('#feedback-dialog');
-  const preview = $('#feedback-review');
   const confirmation = $('#feedback-confirmation');
   const message = $('#guest-message');
   const counter = $('#feedback-character-count');
@@ -230,12 +220,10 @@ jQuery(function ($) {
   $('label[for="ordered-item"]').attr('for', 'order-total').text('Order total (₸)');
   const totalHint = createTimurElement('p', 'form-text mb-0');
   totalHint.attr('id', 'order-total-hint').insertAfter(totalInput);
-  $('#feedback-review-item').attr({ id: 'feedback-review-total', for: 'order-total' })
-    .closest('dd').prev('dt').text('Order total');
   const phoneInput = $('#guest-phone');
   phoneInput.attr({ placeholder: phoneExample, title: phoneHelp }).removeAttr('pattern');
   $('#guest-phone-hint, #guest-phone-error').text(phoneHelp);
-  phoneInput.val('+7').prop('defaultValue', '+7').on('input change', function () {
+  phoneInput.on('input change', function () {
     const value = phoneInput.val();
     const formatted = formatFeedbackPhone(value);
     if (value === formatted) return;
@@ -261,25 +249,39 @@ jQuery(function ($) {
   $('label[for="group-size"]').text('People in your group (optional)');
   const totalError = createTimurElement('p', 'field-error hidden small mt-1 mb-0');
   totalError.attr('id', 'order-total-error').insertAfter(totalHint);
-  const photoField = createTimurElement('div', 'my-4');
+  const photoField = createTimurElement('div', 'rounded-3 border bg-light p-3 my-4');
   const photoLabel = createTimurElement('label', 'form-label fw-semibold', 'Photo (optional)').attr('for', 'guest-photo');
-  const photoInput = createTimurElement('input', 'form-control rounded-0 bg-white');
+  photoLabel.prepend(feedbackIcon('▧', 'me-2'));
+  const photoInput = createTimurElement('input', 'form-control rounded-3 bg-white');
   photoInput.attr({ id: 'guest-photo', name: 'guest-photo', type: 'file',
     accept: 'image/jpeg,image/png,image/webp', 'aria-describedby': 'guest-photo-hint guest-photo-error' });
   const photoHelp = 'JPG, PNG or WebP, up to 5 MB. The photo stays on this page only.';
   const photoHint = createTimurElement('p', 'form-text mb-2', photoHelp).attr('id', 'guest-photo-hint');
   const photoErrorText = createTimurElement('p', 'field-error hidden small mb-2').attr('id', 'guest-photo-error');
-  const photoPreview = createFeedbackPhoto('', 'Selected review photo').attr('id', 'feedback-photo-preview').addClass('hidden');
-  const removePhoto = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-0 hidden', 'Remove photo');
+  const photoPreview = createTimurElement('div', 'ratio ratio-16x9 border rounded-3 overflow-hidden bg-white mb-3 hidden')
+    .attr('id', 'feedback-photo-preview');
+  const removePhoto = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-3 hidden', 'Remove photo');
   removePhoto.attr({ id: 'feedback-remove-photo', type: 'button' });
   photoField.append(photoLabel, photoInput, photoHint, photoErrorText, photoPreview, removePhoto)
     .insertBefore($('#contact-permission').closest('label'));
-  const reviewPhoto = createFeedbackPhoto('', 'Photo attached to your review').attr('id', 'feedback-review-photo').addClass('hidden');
-  reviewPhoto.insertBefore($('#feedback-confirm'));
-  const download = createTimurElement('a', 'btn btn-outline-dark rounded-0 border-2 ms-2 hidden', 'Save summary as text');
-  download.attr('id', 'feedback-download').insertAfter(copyButton);
-  let stage = 'editing';
-  let draft = null;
+  const download = createTimurElement('a', 'btn btn-outline-dark rounded-3', 'Save summary as text');
+  download.attr('id', 'feedback-download').prepend(feedbackIcon('↓', 'me-2'));
+  const share = createTimurElement('details', 'small');
+  share.append(createTimurElement('summary', 'fw-semibold', 'Copy or save your summary'));
+  const shareContent = $('#feedback-share').removeClass('hidden mb-4').addClass('pt-3');
+  shareText.attr('rows', 6).removeClass('rounded-0').addClass('rounded-3 bg-white');
+  copyButton.removeClass('rounded-0 border-2').addClass('rounded-3').prepend(feedbackIcon('▣', 'me-2'));
+  const shareActions = createTimurElement('div', 'd-flex flex-wrap gap-2');
+  shareActions.insertBefore(copyButton).append(copyButton, download);
+  share.append(shareContent);
+  confirmation.removeClass('border-2 rounded-0 p-md-4').addClass('hidden rounded-4 mb-3');
+  $('#feedback-confirmation-title').removeClass('display-6 text-uppercase lh-1 mb-3').addClass('h5 mb-2')
+    .text('Feedback added').prepend(feedbackIcon('✓', 'me-2'));
+  $('#feedback-confirmation-message').addClass('small mb-2');
+  const shopLinks = $('#feedback-shop-instagram').parent().detach();
+  const restart = $('#feedback-restart').attr('href', '#guest-name').text('Back to the feedback form');
+  restart.parent().addClass('small mt-2');
+  share.insertBefore(restart.parent());
   let submitted = false;
   let copyVersion = 0;
   let summaryUrl = null;
@@ -289,7 +291,6 @@ jQuery(function ($) {
 
   function clearPhoto() {
     photoPreview.addClass('hidden').empty();
-    reviewPhoto.addClass('hidden').empty();
     if (photoUrl) URL.revokeObjectURL(photoUrl);
     photoUrl = '';
     photoError = '';
@@ -333,21 +334,54 @@ jQuery(function ($) {
     updateForm();
   });
 
-  // Retain HTML constraints; custom errors replace native popups after enhancement.
-  // Browser checks can be bypassed: a real server must validate all values again.
-  form.prop('noValidate', true);
+  // Replace the old review dialog with the inline form.
+  $('#feedback-dialog').replaceWith(form.detach());
+  form.attr('aria-labelledby', 'feedback-title').prop('noValidate', true);
   // Delegation catches links created on each validation attempt; a direct binding
   // now would miss them because the error list is initially empty.
   errorList.on('click', 'a[href^="#"]', function (event) {
     event.preventDefault(); // Keep focus on the field instead of only jumping to an anchor.
     $($(this).attr('href')).trigger('focus');
   });
-  $('#feedback-count-row').removeClass('hidden');
-  $('#submission-note').text(
-    'Review your feedback, then confirm it on this page. Nothing is sent to the shop.');
-  $('#feedback-submit').text('Review feedback');
+
+  const intro = $('.feedback-intro');
+  intro.removeClass('border-bottom border-dark border-2 mb-4').addClass('mb-2');
+  intro.find('h1').removeClass('display-2 text-uppercase mb-4').addClass('display-4 mb-0');
+  intro.find('.lead').text('Tell us about the food, service or space.').addClass('mb-0');
+  intro.find('.small.mb-0').remove();
+  $('.feedback-layout').removeClass('py-4').addClass('pb-4');
+  form.removeClass('rounded-0 border-2 p-md-4').addClass('rounded-4 shadow-sm p-sm-4 p-xl-5');
+  form.find('.feedback-fields .form-control').removeClass('rounded-0').addClass('rounded-3 py-2');
+  form.find('.feedback-fields label, label[for="guest-message"]').addClass('fw-semibold');
+  $('#feedback-title').removeClass('display-6 text-uppercase').addClass('h2');
+  $('#feedback-title').addClass('d-flex align-items-center gap-3')
+    .prepend(feedbackIcon('✎', 'bg-body-tertiary rounded-3 px-3 py-2 fs-5'));
+  message.removeClass('rounded-0').addClass('rounded-3').attr('rows', 4);
+  const counterRow = $('#feedback-count-row').removeClass('hidden mt-1').addClass('mb-0 ms-auto');
+  const messageHelp = createTimurElement('div', 'd-flex flex-wrap align-items-baseline gap-2 mt-2');
+  messageHelp.insertAfter(message).append($('#guest-message-hint').removeClass('mt-1'), counterRow);
+  $('#feedback-errors').removeClass('rounded-0').addClass('rounded-3');
+  $('#feedback-rating').removeClass('border rounded-0 p-3').addClass('border-0 p-0');
+  $('#feedback-rating legend').removeClass('px-2');
+  form.find('.rating-row > div').removeClass('col-6 col-md-4 col-xl').addClass('col');
+  form.find('.rating-choice').removeClass('d-block border-2 rounded-0 p-3')
+    .addClass('d-flex flex-column align-items-center border rounded-3 p-2');
+  form.find('.rating-choice > span').addClass('small text-center');
+  form.find('.rating-choice small').removeClass('d-block').addClass('d-none d-md-block');
+  form.find('.rating-choice input').removeClass('me-2');
+  form.find('.rating-choice').prepend(feedbackIcon('★', 'mb-1'));
+  $('#submission-note').text('Your review appears on this page until you reload. To reach the shop, use its contact links.');
+  const submit = $('#feedback-submit').removeClass('btn-dark me-2 mb-2 rounded-0 border-2 text-uppercase px-4 py-3')
+    .addClass('btn-warning rounded-3 px-4 py-2').text('Post feedback').prepend(feedbackIcon('↗', 'me-2'));
+  const clear = $('#feedback-reset').removeClass('mb-2 rounded-0 border-2 text-uppercase px-4 py-3')
+    .addClass('rounded-3 px-4 py-2').prepend(feedbackIcon('↺', 'me-2'));
+  const formActions = createTimurElement('div', 'd-grid d-sm-flex flex-wrap gap-2');
+  formActions.insertBefore(submit).append(submit, clear);
+
   // Preserve the actual existing review. Its source does not specify a rating.
-  const quote = $('.feedback-prompt blockquote');
+  const prompt = $('.feedback-prompt');
+  form.parent().insertBefore(prompt.parent());
+  const quote = prompt.find('blockquote');
   const reviews = [{
     id: 'source', name: quote.find('cite').clone().children().remove().end().text().trim().replace(/[,\s—–-]+$/, ''),
     text: quote.find('q').text(), language: quote.find('q').attr('lang'),
@@ -355,29 +389,32 @@ jQuery(function ($) {
     date: quote.find('time').attr('datetime'), source: quote.find('a').attr('href')
   }];
   quote.remove();
-
-  // Chain: attr applies existing classes, html adds fixed emphasis, appendTo places the notice.
-  // Never pass visitor text to html(); text() displays it without interpreting markup.
-  $('<p>').attr('class', 'small').html('<strong>Local demo.</strong> Reviews are not sent to the shop.').appendTo($('.feedback-prompt'));
+  prompt.removeClass('rounded-0 border-2 border-dark p-4 bg-warning').addClass('rounded-4 p-3 p-md-4 bg-body-tertiary');
+  prompt.children('.eyebrow, p:last-child').remove();
+  prompt.find('h2').removeClass('display-6 text-uppercase').addClass('h4');
+  prompt.find('.ratio').removeClass('rounded-0').addClass('rounded-3');
+  shopLinks.removeClass('mb-3').addClass('mt-3 mb-0');
+  shopLinks.find('a').removeClass('rounded-0 border-2').addClass('rounded-3 btn-sm');
+  prompt.append(shopLinks);
 
   const section = createTimurElement('section', 'py-4 mt-4 border-top border-dark');
   section.attr('id', 'visitor-reviews');
   section.attr('aria-labelledby', 'visitor-reviews-title');
-  const heading = createTimurElement('h2', 'fw-bold display-6 text-uppercase', 'Visitor reviews');
+  const heading = createTimurElement('h2', 'fw-bold h2', 'Visitor reviews');
   heading.attr('id', 'visitor-reviews-title');
-  const averageCheck = createTimurElement('p', 'fw-semibold border border-dark bg-body-tertiary text-dark p-3 mb-4');
+  const averageCheck = createTimurElement('p', 'small fw-semibold border rounded-3 bg-white p-3 mb-3');
   averageCheck.attr('id', 'review-average-check');
   section.append(heading, createTimurElement('p', 'small',
     'The source review is credited below. New reviews stay on this page only and disappear when you reload.'), averageCheck);
-  const filterPanel = createTimurElement('div', 'border border-dark bg-white p-3 p-md-4 mb-4');
+  const filterPanel = createTimurElement('div', 'border rounded-4 bg-white p-3 p-md-4 mb-3');
   const filters = createTimurElement('form', 'row g-3');
   filters.attr('aria-label', 'Filter visitor reviews');
 
   function addFilter(id, labelText, control) {
     const column = createTimurElement('div', 'col-12 col-md-6 col-lg-3');
     const label = createTimurElement('label', 'form-label fw-semibold', labelText);
-    label.attr('for', id);
-    control.attr('id', id);
+    label.attr('for', id).addClass('small');
+    control.attr('id', id).removeClass('rounded-0').addClass('rounded-3 bg-white');
     column.append(label, control);
     filters.append(column);
     return control;
@@ -410,20 +447,20 @@ jQuery(function ($) {
   ]) {
     totalFilter.append(createTimurElement('option', '', option.label).val(option.value));
   }
-  const reset = createTimurElement('button', 'btn btn-outline-dark rounded-0', 'Reset filters');
-  reset.attr('type', 'reset');
+  const reset = createTimurElement('button', 'btn btn-outline-dark rounded-3', 'Reset filters');
+  reset.attr('type', 'reset').prepend(feedbackIcon('↺', 'me-2'));
   const actions = createTimurElement('div', 'col-12 d-flex justify-content-end');
   actions.append(reset);
   filters.append(actions);
-  const count = createTimurElement('p', 'small border-bottom border-dark pb-3 mb-4');
+  const count = createTimurElement('p', 'small text-body-secondary mb-3');
   count.attr('id', 'review-results-count');
   count.attr('role', 'status');
-  const empty = createTimurElement('p', 'border border-dark bg-white p-4 hidden', 'No reviews match. Try another search, change the rating or reset the filters.');
+  const empty = createTimurElement('p', 'border rounded-4 bg-white p-4 hidden', 'No reviews match. Try another search, change the rating or reset the filters.');
   empty.attr('id', 'review-empty');
   const list = createTimurElement('div', 'row g-3 align-items-start');
   list.attr('id', 'review-list');
   filterPanel.append(filters);
-  section.append(filterPanel, count, empty, list);
+  section.append(filterPanel, count, empty, confirmation, list);
   $('#main-content').append(section);
 
   const photoDialog = createTimurElement('dialog', 'gallery-dialog border rounded-4 p-3 shadow')
@@ -486,7 +523,7 @@ jQuery(function ($) {
       phone: phone === '+7' ? '' : phone,
       group: groupInput.prop('validity').badInput ? NaN : groupInput.val(),
       date: $('#visit-date').val(),
-      total: totalInput.val(),
+      total: totalInput.prop('validity').badInput ? NaN : totalInput.val(),
       rating: selectedRating.val() || '',
       message: message.val().trim(),
       photo: photoUrl,
@@ -532,113 +569,56 @@ jQuery(function ($) {
     });
     if (submitted) showErrors(validateFeedback(readFeedback(), getShopClock(new Date()).date));
   }
-  form.on('input', function () { if (!form.hasClass('hidden')) updateForm(); });
-  form.on('change', updateForm);
-  form.find('input[name="rating"]').on('change', function () {
-    // From the chosen label, reach sibling columns instead of adding more IDs.
-    const chosen = $(this).closest('label');
-    chosen.addClass('selected').parent().siblings().find('label').removeClass('selected');
-  });
+  form.on('input change', updateForm);
   updateForm();
 
   form.on('submit', function (event) {
-    event.preventDefault(); // Without this, method=dialog would close before our review step.
-    if (stage !== 'editing') return;
+    event.preventDefault();
     submitted = true;
-    updateForm();
+    const now = new Date();
     const data = readFeedback();
-    const errors = validateFeedback(data, getShopClock(new Date()).date);
+    const errors = validateFeedback(data, getShopClock(now).date);
     showErrors(errors);
     if (errors.length > 0) {
       $('#' + errors[0].id).trigger('focus');
       return;
     }
-    draft = data;
-    let total = data.total ? formatFeedbackMoney(data.total) : 'Not provided';
-    if (data.total && data.group) total += ' · ' + formatFeedbackMoney(data.total / data.group) + ' per person';
-    const values = {
-      name: data.name, date: data.date ? formatFeedbackDate(data.date) : 'Not provided',
-      group: data.group || 'Not provided', total: total,
-      rating: data.rating + ' / 5',
-      message: data.message,
-      contact: data.contact ? [data.email, data.phone].filter(Boolean).join(' · ') : 'Not included'
-    };
-    for (const key of Object.keys(values)) $('#feedback-review-' + key).text(values[key]);
-    reviewPhoto.empty().toggleClass('hidden', !data.photo);
-    if (data.photo) reviewPhoto.append(createFeedbackPhoto(data.photo, 'Photo attached to your review').children());
-    stage = 'reviewing';
-    form.stop(true, true).fadeOut(timurEffectDuration(), function () {
-      if (stage !== 'reviewing') return; // A reset may finish this animation early.
-      form.addClass('hidden');
-      preview.stop(true, true).hide().removeClass('hidden').slideDown(timurEffectDuration(), function () {
-        if (stage === 'reviewing') preview.trigger('focus');
-      });
-    });
-  });
-  $('#feedback-edit').on('click', function () {
-    stage = 'editing';
-    preview.stop(true, true).addClass('hidden');
-    form.stop(true, true).removeClass('hidden').fadeIn(timurEffectDuration());
-    $('#guest-name').trigger('focus');
-  });
-  $('#feedback-confirm').on('click', function () {
-    if (stage !== 'reviewing' || !draft) return;
-    stage = 'completed';
-    const now = new Date();
     const reference = 'DEMO-' + Math.floor(100000 + Math.random() * 900000);
-    reviews.push({
-      id: reference + '-' + reviews.length, name: draft.name, text: draft.message,
-      rating: Number(draft.rating), category: 'Visit feedback',
-      date: now.toISOString(), source: '', total: draft.total ? Number(draft.total) : null,
-      visitDate: draft.date, group: draft.group, photo: draft.photo
+    reviews.unshift({
+      id: reference + '-' + reviews.length, name: data.name, text: data.message,
+      rating: Number(data.rating), category: 'Visit feedback',
+      date: now.toISOString(), source: '', total: data.total ? Number(data.total) : null,
+      visitDate: data.date, group: data.group, photo: data.photo
     });
-    // The submitted review keeps its URL; resetting only clears the draft photo.
+    // The posted card now owns the photo URL.
     photoUrl = '';
-    const summary = createFeedbackSummary(draft, reference);
-    shareText.val(summary);
-    // A browser download keeps the same reviewed snapshot available off this page.
-    summaryUrl = URL.createObjectURL(new Blob([summary], { type: 'text/plain;charset=utf-8' }));
-    download.attr({ href: summaryUrl, download: 'kent-feedback-' + reference + '.txt' }).removeClass('hidden');
-    $('#feedback-share').removeClass('hidden');
-    $('#feedback-confirmation-message').text(
-      reference + ': your review was added to this page. Filters were reset so you can see it. Nothing was sent to Kent Sandwich.');
-    resetFilters();
-    // Reset after copying the snapshot; the reset handler must not reopen a completed form.
     form[0].reset();
-    dialog[0].close('complete');
-    confirmation.trigger('focus');
-  });
+    resetFilters();
 
-  function resetFeedbackView() {
-    stage = 'editing';
-    submitted = false;
-    draft = null;
+    const summary = createFeedbackSummary(data, reference);
+    if (summaryUrl) URL.revokeObjectURL(summaryUrl);
+    shareText.val(summary);
+    summaryUrl = URL.createObjectURL(new Blob([summary], { type: 'text/plain;charset=utf-8' }));
+    download.attr({ href: summaryUrl, download: 'kent-feedback-' + reference + '.txt' });
     copyVersion++;
-    showErrors([]);
-    preview.stop(true, true).addClass('hidden');
-    form.stop(true, true).removeClass('hidden').fadeIn(timurEffectDuration());
-    $('#feedback-share').addClass('hidden');
     copyStatus.addClass('hidden');
     copyError.addClass('hidden');
-    copyButton.removeClass('pending');
-    copyButton.prop('disabled', false);
-    shareText.val('');
-    download.addClass('hidden').removeAttr('href download');
-    if (summaryUrl) URL.revokeObjectURL(summaryUrl);
-    summaryUrl = null;
-    if (!dialog.prop('open')) dialog[0].show();
-    updateForm();
-    $('#guest-name').trigger('focus');
-  }
-  form.on('reset', function () {
-    clearPhoto();
-    // Native reset finishes before the next task reads the fields.
-    if (stage !== 'completed') window.setTimeout(resetFeedbackView, 0);
+    copyButton.removeClass('pending').prop('disabled', false);
+    share.prop('open', false);
+    $('#feedback-confirmation-message').text('Your review is below. It stays on this page until you reload.');
+    confirmation.removeClass('hidden').trigger('focus');
   });
-  $('#feedback-restart').on('click', function (event) {
+
+  form.on('reset', function () {
+    submitted = false;
+    clearPhoto();
+    showErrors([]);
+    // The default values are restored after the reset event.
+    window.setTimeout(updateForm, 0);
+  });
+  restart.on('click', function (event) {
     event.preventDefault();
-    stage = 'editing';
-    form[0].reset();
+    $('#guest-name').trigger('focus');
   });
   copyButton.on('click', async function () {
     const version = copyVersion;
