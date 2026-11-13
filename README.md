@@ -12,22 +12,21 @@ Merey Kuatbay owns Home, Menu and Order. The table describes what changed since 
 
 | Feature | Technology and source | New behaviour for the visitor |
 | --- | --- | --- |
-| Home recommendations | Plain JavaScript in [index.js](js/index.js) | Set a maximum price for the existing random suggestion. The card and the Another suggestion button use the matching sandwiches. |
 | Menu filtering | jQuery in [menu.js](js/menu.js) | The existing result count now shows the lowest price among the sandwiches that match the filters. |
 | Order selection and pickup | jQuery in [order.js](js/order.js) | Use − and + to change quantities. The basket and draft update from the shared catalogue prices. Enter pickup details and prepare or edit the local demo summary. |
-| Shared basket | jQuery basket controls in [main.js](js/main.js). Shared data and storage in [menu-data.js](js/menu-data.js) and [basket.js](js/basket.js). | The native Home and jQuery pages use one basket. Clearing the basket gives a path back to the menu, and editing a completed demo restores its items together. |
+| Shared basket | jQuery basket controls in [main.js](js/main.js). Shared data and storage in [menu-data.js](js/menu-data.js) and [basket.js](js/basket.js). | The header shows one basket across Home, Menu and Order. Add sandwiches from Menu or Order. Editing a completed demo restores its items together. |
 
-The catalogue supplies the recommendation cards, menu cards, price rows and order choices. Home creates the cards in a loop with native DOM methods. Its price change handler limits the choices and its parent click handler handles the two suggestion buttons. Menu and Order use jQuery ready callbacks, delegated events and traversal. The filter panel slides, add-to-basket feedback fades in, and Order reveals its confirmation. Browser storage contains only product IDs and quantities.
+The catalogue supplies the menu cards, price rows and order choices. Menu and Order use jQuery ready callbacks, delegated events and traversal. The filter panel slides, add-to-basket feedback fades in, and Order reveals its confirmation. Browser storage contains only product IDs and quantities.
 
 Timur Naumov owns About, Feedback and Colophon. About and the shared header use plain JavaScript in `js/about.js` and `js/timur.js`; Feedback uses jQuery in `js/feedback.js`. The current changes are described below.
 
 ### Try the endterm flows
 
-1. On Home, select a maximum of 390 ₸ to get the Mini sandwich, then add it to the basket.
-2. In Menu, set the profile to Hot. The lowest price shown in the result count changes from 390 ₸ to 690 ₸.
+1. Open Menu from Home and set the profile to Hot. The lowest price shown in the result count changes from 390 ₸ to 690 ₸.
+2. Add a sandwich from Menu and open the basket from the header.
 3. In Order, enter a future pickup date and time in Astana. Try an invalid phone or email, correct it and prepare the demo. Edit the summary to restore the draft.
 
-Run the automated checks with `node --test tests/*.test.cjs`. All 29 tests passed for this revision. Browser checks covered the budget limit, the filtered lowest price and manual checkout, with no console errors on the six pages.
+Run the automated checks with `node --test tests/*.test.cjs`.
 
 The course also requires students to record a peer check and contribute on separate days.
 
@@ -166,7 +165,7 @@ Before submitting:
 
 ## Assignment 4–5 Functionality Plan: Merey's pages
 
-This implementation is limited to `index.html`, `menu.html` and `order.html`, with shared JavaScript used by those three pages. Their only direct HTML changes after the documented `final` baseline are deferred script links. New controls and results are created through DOM methods; existing CSS and prepared state classes supply their appearance. `about.html`, `feedback.html`, `colophon.html`, `js/timur.js` and Timur's styles are outside this change and remain his responsibility.
+This plan records the Assignment 4–5 implementation for `index.html`, `menu.html` and `order.html`. Its Home suggestion was removed in the final cleanup. The last version of that feature is in [Git history](https://github.com/bossmerej-ship-it/kent-sandwich/blob/5de4950e2c58c41433004f4e640ff29a8bf67a00/js/index.js).
 
 | Page | Visitor goal | Function | Visible result and completion | Owner |
 | --- | --- | --- | --- | --- |
@@ -178,11 +177,11 @@ This implementation is limited to `index.html`, `menu.html` and `order.html`, wi
 | `order.html` | Finish the local demo and continue safely | Prepare demo order, edit details or start a new demo | A random `DEMO-` reference, actual items/quantities, total and entered details; explicit notice that nothing was sent to the shop; edits clear the old summary and starting again clears the draft and basket | Merey Kuatbay |
 | Home, Menu and Order | Keep one selection while navigating | Shared basket storage, header count, change notifications and cross-tab synchronization | Counts, selections and Order agree; unavailable storage produces an honest current-page-only notice | Merey Kuatbay; integration into Timur's pages remains pending |
 
-The two main individual workflows are menu discovery with basket actions and the complete validated pickup-demo flow. Home's suggestion is an additional useful interaction. The shared basket currently spans Merey's three pages only; the team still needs to agree and integrate the common feature across the other pages before claiming a whole-site shared feature. This scope does not claim completion of Timur's assignment work or of the combined team submission.
+The two main individual workflows are menu discovery with basket actions and the complete validated pickup-demo flow. The shared basket spans Merey's three pages.
 
 ### Data, scripts and local behaviour
 
-Each of the three owned pages now loads the full jQuery 3.7.1 CDN build, `js/menu-data.js`, `js/main.js`, then its page script (`js/index.js`, `js/menu.js` or `js/order.js`), all with `defer`. UI initialization runs inside jQuery ready callbacks. Each script uses strict mode. The eight immutable catalogue objects preserve the existing names, descriptions, profiles and numeric prices. Pure lookup, filtering, normalization, calculation and validation functions stay separate from jQuery DOM rendering.
+All three pages load the full jQuery 3.7.1 CDN build, `js/menu-data.js`, `js/basket.js` and `js/main.js` with `defer`. Menu and Order then load their page scripts. UI initialization runs inside jQuery ready callbacks. Each script uses strict mode. The eight immutable catalogue objects preserve the existing names, descriptions, profiles and numeric prices. Pure lookup, filtering, normalization, calculation and validation functions stay separate from jQuery DOM rendering.
 
 Only basket product IDs and quantities are saved under `kent-sandwich-basket-v1`. Prices always come from the catalogue. Customer contact fields and pickup details stay on the current page and are not saved in browser storage. There is no backend, payment or message delivery. Refreshing the page discards personal form details while restoring a valid saved basket when browser storage permits it.
 
@@ -208,7 +207,7 @@ The [comparison archive in Git history](https://github.com/bossmerej-ship-it/ken
 | Basket rendering and actions | `renderCart` and delegated click handler in [`js/main.js`](js/main.js) | Array-built rows, quantities, remove/clear, subtotals, total, keyboard focus, persistence and cross-tab changes |
 | Order validation and completion | Ready callback in [`js/order.js`](js/order.js) | Nearby errors, immediate correction, future pickup within 09:30–21:15 Astana time, safe local summary and editing |
 
-Home's random suggestion also uses jQuery so it can share the same UI helpers. `Kent.element` returns a jQuery collection. `menu-data.js` and the pure validators use ordinary JavaScript for data and calculations, without accessing the DOM. Each migrated feature uses jQuery consistently for DOM operations and event handlers.
+`Kent.element` returns a jQuery collection. `menu-data.js` and the pure validators use ordinary JavaScript for data and calculations, without accessing the DOM.
 
 **New completion behaviour:** after every valid submit, the form, checkboxes, notes and basket reset immediately. A separate in-memory snapshot keeps the confirmation visible. **Edit details** restores that snapshot and its basket; **Start new demo** clears the confirmation. Invalid submission preserves the draft. This remains a demonstration: no order, payment or contact request is sent, and personal fields are never saved to browser storage.
 
