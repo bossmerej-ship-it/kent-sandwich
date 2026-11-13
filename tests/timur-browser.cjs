@@ -115,13 +115,12 @@ const path = require('node:path');
     await visible('#review-empty');
     await page.locator('#review-total-filter').selectOption('with-total');
     assert.equal(await page.locator('#review-list article').count(), 1);
-    assert.match(await page.locator('#review-list article').innerText(), /700 ₸ per person/);
+    const reviewCard = page.locator('#review-list article');
+    assert.equal(await reviewCard.locator('header time').innerText(), '8 Nov 2026');
+    assert.doesNotMatch(await reviewCard.innerText(), /Local demo review|Visit feedback|Show visit details/);
+    assert.match(await reviewCard.locator('.review-details').innerText(), /Visit date\s+1 Oct 2026\s+Group size\s+2\s+Order total\s+1,400 ₸\s+Per person\s+700 ₸/);
     await page.locator('#review-rating-filter').selectOption('');
-    await page.locator('#review-list button[data-review-details]').click();
     await visible('#review-list .review-details');
-    assert.match(await page.locator('#review-list .review-details').innerText(), /1 Oct 2026.*Group size: 2/);
-    await page.locator('#review-list button[data-review-details]').click();
-    await page.locator('#review-list .review-details').waitFor({ state: 'hidden' });
     await page.locator('#review-total-filter').selectOption('');
     await page.locator('#review-search').fill('no matching review');
     await visible('#review-empty');
@@ -197,12 +196,20 @@ const path = require('node:path');
     assert.equal(await page.locator('#review-list article').count(), 3);
     assert.equal(await page.locator('#review-list img').count(), 1);
     await page.waitForFunction(() => document.querySelector('#review-list img').naturalWidth > 0);
-    const heights = await page.locator('#review-list').evaluate(list => ({
-      source: list.querySelector('#review-source').getBoundingClientRect().height,
-      photo: list.querySelector('article:has(img)').getBoundingClientRect().height
-    }));
-    assert.ok(heights.source < heights.photo - 100, 'a review without a photo keeps its own height');
-    assert.equal(await page.locator('#review-list .badge').first().evaluate(element => getComputedStyle(element).backgroundColor), yellow);
+    const thumbnail = page.locator('#review-list button[data-review-photo]');
+    assert.equal(await thumbnail.innerText(), '⤢');
+    assert.ok((await thumbnail.boundingBox()).height <= 96, 'the photo is a compact thumbnail');
+    await thumbnail.locator('img').click();
+    await visible('#review-photo-dialog');
+    assert.equal(await page.locator('#review-photo-dialog img').getAttribute('src'), photoUrl);
+    await page.keyboard.press('Escape');
+    await hidden('#review-photo-dialog');
+    assert.equal(await thumbnail.evaluate(button => button === document.activeElement), true);
+    await thumbnail.press('Enter');
+    await visible('#review-photo-dialog');
+    await page.getByRole('button', { name: 'Close review photo' }).click();
+    await hidden('#review-photo-dialog');
+    assert.equal(await page.locator('#review-list .review-rating').first().evaluate(element => getComputedStyle(element).backgroundColor), yellow);
     await hidden('#feedback-photo-preview');
     assert.equal(await photoInput.evaluate(input => input.files.length), 0);
     await page.locator('#review-sort').selectOption('highest');
@@ -211,8 +218,7 @@ const path = require('node:path');
     assert.equal(await page.locator('#review-list img').getAttribute('src'), photoUrl);
     assert.equal(await page.locator('#review-list article h3').first().textContent(), 'Second visitor');
     assert.match(await page.locator('#review-list article').last().innerText(), /Rating not provided/);
-    assert.match(await page.locator('#review-list article').first().locator('.review-details').innerText(), /Visited 9 Nov 2026/);
-    await page.locator('#review-list button[data-review-details]').first().click();
+    assert.match(await page.locator('#review-list article').first().locator('.review-details').innerText(), /Visit date\s+9 Nov 2026/);
     await page.locator('#review-list .review-details').first().waitFor({ state: 'visible' });
     if (process.env.QA_DIR) {
       fs.mkdirSync(process.env.QA_DIR, { recursive: true });
@@ -238,6 +244,17 @@ const path = require('node:path');
     await hidden('#feedback-photo-preview');
     assert.equal(await photoInput.evaluate(input => input.files.length), 0);
     assert.equal(await page.locator('#review-list article').count(), 3);
+    const photoCard = page.locator('#review-list article').filter({ has: page.locator('[data-review-photo]') });
+    const viewport = page.viewportSize();
+    for (const width of [1280, 320]) {
+      await page.setViewportSize({ width, height: viewport.height });
+      assert.equal(await photoCard.evaluate(card => card.scrollWidth <= card.clientWidth), true);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      if (process.env.QA_DIR) {
+        await photoCard.screenshot({ path: path.join(process.env.QA_DIR, 'review-card-' + width + '.png') });
+      }
+    }
+    await page.setViewportSize(viewport);
     console.log('PASS: phone normalization, midnight date, order totals and average check, validation, preview/edit/confirm, privacy, download, combined filters, copy recovery, reset/restart');
     await page.clock.setSystemTime(new Date('2026-11-08T05:00:00Z'));
     await go('about.html');

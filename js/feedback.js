@@ -13,8 +13,7 @@ function timurEffectDuration() {
 
 function formatFeedbackDate(value) {
   return new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'Asia/Almaty', dateStyle: 'medium',
-    timeStyle: value.includes('T') ? 'short' : undefined
+    timeZone: 'Asia/Almaty', dateStyle: 'medium'
   }).format(new Date(value));
 }
 
@@ -137,44 +136,71 @@ function createFeedbackPhoto(src, alt) {
   return frame;
 }
 
-// .append(), .text() and .attr() replace createElement and DOM assignments.
-// The card builder is shorter, while the filtering calculations stay plain JavaScript.
+function renderReviewDetails(review) {
+  const fields = [
+    ['Visit date', formatFeedbackDate(review.visitDate)],
+    ['Group size', review.group]
+  ];
+  if (review.total > 0) {
+    fields.push(['Order total', formatFeedbackMoney(review.total)]);
+    fields.push(['Per person', formatFeedbackMoney(review.total / review.group)]);
+  }
+  const details = createTimurElement('dl', 'review-details row row-cols-2 row-cols-xl-4 g-2 border rounded-3 bg-light mx-0 mt-0 mb-3 p-2');
+  for (const [label, value] of fields) {
+    details.append(createTimurElement('div', 'col mt-0 py-1').append(
+      createTimurElement('dt', 'small text-body-secondary fw-normal', label),
+      createTimurElement('dd', 'fw-semibold mb-0', value)
+    ));
+  }
+  return details;
+}
+
+// jQuery builds the card and inserts visitor input as plain text.
 function renderFeedbackCard(review) {
-  const card = createTimurElement('article', 'border border-dark rounded-0 p-3 p-md-4 bg-white text-break d-flex flex-column w-100');
+  const card = createTimurElement('article', 'border rounded-4 shadow-sm p-3 p-md-4 bg-white text-break');
   card.attr('id', 'review-' + review.id);
-  const header = createTimurElement('div', 'd-flex flex-wrap justify-content-between align-items-start gap-2 mb-3');
-  const author = createTimurElement('div');
+  const header = createTimurElement('header', 'd-flex flex-wrap justify-content-between align-items-start gap-2 mb-3');
+  const identity = createTimurElement('div', 'd-flex align-items-center gap-2');
+  const initial = Array.from(review.name)[0] || '';
+  const avatar = createTimurElement('span', 'badge rounded-circle bg-dark text-white p-2 flex-shrink-0', initial.toUpperCase())
+    .attr('aria-hidden', 'true');
+  const author = createTimurElement('div', 'text-break');
   author.append(createTimurElement('h3', 'h5 fw-bold mb-1', review.name));
-  const date = createTimurElement('time', 'small d-block', formatFeedbackDate(review.date));
+  const date = createTimurElement('time', 'small text-body-secondary d-block', formatFeedbackDate(review.date));
   date.attr('datetime', review.date);
   author.append(date);
+  identity.append(avatar, author);
+
   const rating = review.rating === null ? 'Rating not provided' : review.rating + ' / 5';
-  const badge = createTimurElement('span', 'badge border border-dark rounded-0 p-2 text-wrap ' +
-    (review.rating === null ? 'bg-white text-dark' : 'bg-body-tertiary text-dark'), rating);
-  header.append(author, badge);
-  card.append(header, createTimurElement('p', 'small mb-2', review.category));
-  const text = createTimurElement('p', 'feedback-message mb-3', review.text);
-  if (review.language) text.attr('lang', review.language);
-  card.append(text);
-  if (review.photo) card.append(createFeedbackPhoto(review.photo, 'Photo attached to this review'));
-  if (review.total > 0) {
-    card.append(createTimurElement('p', 'small fw-semibold bg-body-tertiary text-dark p-2 mb-3', 'Order total: ' + formatFeedbackMoney(review.total) +
-      ' · ' + formatFeedbackMoney(review.total / review.group) + ' per person'));
+  const badge = createTimurElement('span', 'review-rating badge d-inline-flex align-items-center gap-1 rounded-pill px-3 py-2 text-dark ' +
+    (review.rating === null ? 'bg-light border' : 'bg-body-tertiary'));
+  if (review.rating !== null) {
+    badge.append(createTimurElement('span', '', '★').attr('aria-hidden', 'true'));
   }
-  if (review.visitDate) {
-    const detailsId = 'review-details-' + review.id;
-    const toggle = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-0 mb-3 align-self-start', 'Show visit details');
-    toggle.attr({ type: 'button', 'data-review-details': '', 'aria-expanded': 'false', 'aria-controls': detailsId });
-    const details = createTimurElement('p', 'review-details hidden small',
-      'Visited ' + formatFeedbackDate(review.visitDate) + ' · Group size: ' + review.group + '.');
-    details.attr('id', detailsId);
-    card.append(toggle, details);
+  badge.append(createTimurElement('span', '', rating));
+  header.append(identity, badge);
+  card.append(header);
+
+  if (review.visitDate) card.append(renderReviewDetails(review));
+  if (review.source) {
+    card.append(createTimurElement('p', 'small text-body-secondary mb-2', review.category));
   }
-  if (!review.source) {
-    const footer = createTimurElement('div', 'border-top border-dark pt-3 mt-auto');
-    footer.append(createTimurElement('p', 'small mb-0', 'Local demo review — not sent to the shop.'));
-    card.append(footer);
+  const content = createTimurElement('div', 'd-flex align-items-start justify-content-between gap-3');
+  const message = createTimurElement('p', 'feedback-message mb-0', review.text);
+  if (review.language) message.attr('lang', review.language);
+  content.append(message);
+
+  if (review.photo) {
+    const thumbnail = createTimurElement('button', 'btn border bg-light rounded-3 overflow-hidden p-0 position-relative flex-shrink-0')
+      .attr({ type: 'button', 'data-review-photo': '', 'aria-label': 'Open review photo by ' + review.name, 'aria-haspopup': 'dialog' });
+    const image = createTimurElement('img', 'd-block object-fit-cover')
+      .attr({ src: review.photo, alt: '', width: 96, height: 72 });
+    const expandIcon = createTimurElement('span', 'badge text-bg-dark position-absolute bottom-0 end-0 m-1', '⤢')
+      .attr('aria-hidden', 'true');
+    thumbnail.append(image, expandIcon);
+    content.append(thumbnail);
   }
+  card.append(content);
   return card;
 }
 
@@ -396,15 +422,20 @@ jQuery(function ($) {
   section.append(filterPanel, count, empty, list);
   $('#main-content').append(section);
 
-  // These buttons are created again after every filter: bind once on the list.
-  list.on('click', 'button[data-review-details]', function () {
-    const button = $(this);
-    const details = button.closest('article').find('.review-details');
-    const expanded = button.attr('aria-expanded') === 'true';
-    button.attr('aria-expanded', String(!expanded)).text(expanded ? 'Show visit details' : 'Hide visit details');
-    details.stop(true, true);
-    if (expanded) details.slideUp(timurEffectDuration(), function () { details.addClass('hidden'); });
-    else details.hide().removeClass('hidden').slideDown(timurEffectDuration());
+  const photoDialog = createTimurElement('dialog', 'gallery-dialog border rounded-4 p-3 shadow')
+    .attr({ id: 'review-photo-dialog', 'aria-label': 'Review photo' });
+  const fullPhoto = createTimurElement('img', 'gallery-dialog-image d-block')
+    .attr('alt', 'Photo attached to the review');
+  const closePhoto = createTimurElement('button', 'btn-close d-block ms-auto mb-3')
+    .attr({ type: 'button', 'aria-label': 'Close review photo' });
+  photoDialog.append(closePhoto).insertAfter(section);
+  closePhoto.on('click', function () { photoDialog[0].close(); });
+  // Filtering rebuilds the thumbnails. One handler on the list serves them all.
+  list.on('click', 'button[data-review-photo]', function () {
+    const thumbnail = $(this);
+    fullPhoto.attr('src', thumbnail.find('img').attr('src')).appendTo(photoDialog);
+    thumbnail.trigger('focus');
+    photoDialog[0].showModal(); // The browser handles Escape and returns focus.
   });
 
   function renderReviews() {
