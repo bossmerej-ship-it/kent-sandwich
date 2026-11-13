@@ -89,6 +89,7 @@
   box-shadow: 0 0 0 0.25rem rgb(244 231 12 / 35%);
 }
 
+.page-menu #menu-search:focus,
 .page-order .form-control:focus,
 .page-order .form-select:focus {
   border-color: #f4e70c;
