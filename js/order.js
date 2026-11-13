@@ -45,9 +45,30 @@
 
   Kent.validatePickup = validatePickup;
 
+  // Kazakhstan numbering plan: https://www.itu.int/oth/T020200006F/en
+  // Additional network codes cross-checked against published KZ numbering metadata.
+  const phoneNetworkCodes = new Set([
+    '700', '701', '702', '705', '706', '707', '708', '747', '751', '753',
+    '760', '761', '762', '763', '764', '771', '775', '776', '777', '778', '785', '790'
+  ]);
+  const landlinePrefix = /^(?:71[0-68][2-9]|7172|72[1-9][2-9])/;
+
   function validatePhone(value) {
-    return /^\+?[0-9](?:[ ()-]*[0-9]){9,14}$/.test(String(value).trim())
-      ? '' : 'Enter a phone number with 10 to 15 digits. Spaces, brackets and hyphens are allowed.';
+    const phone = String(value).trim();
+    if (!phone) return 'Enter your phone number.';
+    if (!/^\+?(?:\d|\(\d+\))(?:[\s-]*(?:\d|\(\d+\)))*$/.test(phone)) {
+      return 'Use digits, spaces, parentheses or hyphens. A plus sign can only go at the start.';
+    }
+
+    const compact = phone.replace(/[\s()-]/g, '');
+    const match = compact.match(/^(?:\+7|[78])?(\d{10})$/);
+    if (!match) return 'Enter a Kazakhstan phone number, for example +7 7XX XXX XX XX.';
+
+    const national = match[1];
+    if (!phoneNetworkCodes.has(national.slice(0, 3)) && !landlinePrefix.test(national)) {
+      return 'Check the mobile or area code and enter a Kazakhstan phone number.';
+    }
+    return '';
   }
 
   function validateEmail(value) {
@@ -103,7 +124,7 @@
     let submitted = false;
     let lastSnapshot = null;
 
-    // Retain required/type/pattern/min/max in HTML and reuse validity, but show our own nearby errors.
+    // Retain native field types and limits, but show our own nearby errors.
     // Client checks can be bypassed; a real server must validate everything again before accepting an order.
     form.prop('noValidate', true);
     submit.attr('type', 'submit').text('Prepare demo order');
