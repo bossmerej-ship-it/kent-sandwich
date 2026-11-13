@@ -50,7 +50,7 @@ function validateFeedback(data, today) {
     errors.push({ id: 'guest-phone', message: phoneHelp });
   }
   const group = Number(data.group);
-  if (!Number.isInteger(group) || group < 1 || group > 20) {
+  if (data.group !== '' && (!Number.isInteger(group) || group < 1 || group > 20)) {
     errors.push({ id: 'group-size', message: 'Choose a whole group size from 1 to 20.' });
   }
   const date = new Date(data.date + 'T00:00:00Z');
@@ -119,10 +119,10 @@ function createFeedbackSummary(data, reference) {
   return [
     'Local feedback summary · ' + reference,
     'Name: ' + data.name,
-    'Visit date: ' + formatFeedbackDate(data.date),
-    'Group size: ' + data.group,
+    'Visit date: ' + (data.date ? formatFeedbackDate(data.date) : 'Not provided'),
+    'Group size: ' + (data.group || 'Not provided'),
     'Order total: ' + (data.total ? formatFeedbackMoney(data.total) : 'Not provided'),
-    'Check per person: ' + (data.total ? formatFeedbackMoney(data.total / data.group) : 'Not provided'),
+    'Check per person: ' + (data.total && data.group ? formatFeedbackMoney(data.total / data.group) : 'Not provided'),
     'Rating: ' + data.rating + ' / 5',
     'Feedback: ' + data.message,
     'Contact details: ' + contact,
@@ -137,14 +137,14 @@ function createFeedbackPhoto(src, alt) {
 }
 
 function renderReviewDetails(review) {
-  const fields = [
-    ['Visit date', formatFeedbackDate(review.visitDate)],
-    ['Group size', review.group]
-  ];
+  const fields = [];
+  if (review.visitDate) fields.push(['Visit date', formatFeedbackDate(review.visitDate)]);
+  if (review.group > 0) fields.push(['Group size', review.group]);
   if (review.total > 0) {
     fields.push(['Order total', formatFeedbackMoney(review.total)]);
-    fields.push(['Per person', formatFeedbackMoney(review.total / review.group)]);
+    if (review.group > 0) fields.push(['Per person', formatFeedbackMoney(review.total / review.group)]);
   }
+  if (fields.length === 0) return null;
   const details = createTimurElement('dl', 'review-details row row-cols-2 row-cols-xl-4 g-2 border rounded-3 bg-light mx-0 mt-0 mb-3 p-2');
   for (const [label, value] of fields) {
     details.append(createTimurElement('div', 'col mt-0 py-1').append(
@@ -162,7 +162,8 @@ function renderFeedbackCard(review) {
   const header = createTimurElement('header', 'd-flex flex-wrap justify-content-between align-items-start gap-2 mb-3');
   const identity = createTimurElement('div', 'd-flex align-items-center gap-2');
   const initial = Array.from(review.name)[0] || '';
-  const avatar = createTimurElement('span', 'badge rounded-circle bg-dark text-white p-2 flex-shrink-0', initial.toUpperCase())
+  const avatar = createTimurElement('span', 'd-inline-flex align-items-center justify-content-center rounded-circle bg-dark text-white small fw-bold flex-shrink-0', initial.toUpperCase())
+    .css({ width: '2.25rem', height: '2.25rem' })
     .attr('aria-hidden', 'true');
   const author = createTimurElement('div', 'text-break');
   author.append(createTimurElement('h3', 'h5 fw-bold mb-1', review.name));
@@ -173,7 +174,7 @@ function renderFeedbackCard(review) {
 
   const rating = review.rating === null ? 'Rating not provided' : review.rating + ' / 5';
   const badge = createTimurElement('span', 'review-rating badge d-inline-flex align-items-center gap-1 rounded-pill px-3 py-2 text-dark ' +
-    (review.rating === null ? 'bg-light border' : 'bg-body-tertiary'));
+    (review.rating === null ? 'bg-light border' : 'bg-body-tertiary fs-5'));
   if (review.rating !== null) {
     badge.append(createTimurElement('span', '', '★').attr('aria-hidden', 'true'));
   }
@@ -181,7 +182,7 @@ function renderFeedbackCard(review) {
   header.append(identity, badge);
   card.append(header);
 
-  if (review.visitDate) card.append(renderReviewDetails(review));
+  card.append(renderReviewDetails(review));
   if (review.source) {
     card.append(createTimurElement('p', 'small text-body-secondary mb-2', review.category));
   }
@@ -221,6 +222,7 @@ jQuery(function ($) {
   const copyButton = $('#feedback-copy');
   const copyStatus = $('#feedback-copy-status');
   const copyError = $('#feedback-copy-error');
+  const groupInput = $('#group-size');
   const totalInput = createTimurElement('input', 'form-control rounded-0 bg-white');
   totalInput.attr({ id: 'order-total', name: 'order-total', type: 'number', min: 1, step: 1,
     placeholder: 'e.g. 1400', 'aria-describedby': 'order-total-hint order-total-error' });
@@ -254,7 +256,9 @@ jQuery(function ($) {
   });
   $('#visit-date').prop('required', false);
   $('label[for="visit-date"]').text('Visit date (optional)');
-  $('#visit-date-hint').text('Leave empty to use today\'s date.');
+  $('#visit-date-hint').text('Include the date if you remember it.');
+  groupInput.val('').prop('defaultValue', '');
+  $('label[for="group-size"]').text('People in your group (optional)');
   const totalError = createTimurElement('p', 'field-error hidden small mt-1 mb-0');
   totalError.attr('id', 'order-total-error').insertAfter(totalHint);
   const photoField = createTimurElement('div', 'my-4');
@@ -450,7 +454,7 @@ jQuery(function ($) {
     const average = rated.length > 0 ? ' Average: ' + (total / rated.length).toFixed(1) + ' / 5.' : ' No ratings in these results.';
     count.text('Showing ' + results.length + ' of ' + reviews.length + ' reviews.' + average);
     const check = getAverageFeedbackCheck(reviews);
-    averageCheck.text(check === null ? 'Average check per person: no order totals yet.'
+    averageCheck.text(check === null ? 'Average check per person: no reviews with both an order total and group size yet.'
       : 'Average check per person (local reviews): ' + formatFeedbackMoney(check));
     empty.toggleClass('hidden', results.length !== 0);
   }
@@ -480,8 +484,8 @@ jQuery(function ($) {
       name: $('#guest-name').val().trim(),
       email: $('#guest-email').val().trim(),
       phone: phone === '+7' ? '' : phone,
-      group: $('#group-size').val(),
-      date: $('#visit-date').val() || getShopClock(new Date()).date,
+      group: groupInput.prop('validity').badInput ? NaN : groupInput.val(),
+      date: $('#visit-date').val(),
       total: totalInput.val(),
       rating: selectedRating.val() || '',
       message: message.val().trim(),
@@ -518,7 +522,7 @@ jQuery(function ($) {
     photoErrorText.text(photoError).toggleClass('hidden', !photoError);
     photoInput.toggleClass('error', Boolean(photoError)).attr('aria-invalid', String(Boolean(photoError)));
     const total = Number(totalInput.val());
-    const group = Number($('#group-size').val());
+    const group = Number(groupInput.val());
     totalHint.text(Number.isInteger(total) && total > 0 && Number.isInteger(group) && group >= 1 && group <= 20
       ? formatFeedbackMoney(total / group) + ' per person.'
       : 'Optional. Enter the total bill for your group in tenge.');
@@ -550,10 +554,11 @@ jQuery(function ($) {
       return;
     }
     draft = data;
+    let total = data.total ? formatFeedbackMoney(data.total) : 'Not provided';
+    if (data.total && data.group) total += ' · ' + formatFeedbackMoney(data.total / data.group) + ' per person';
     const values = {
-      name: data.name, date: formatFeedbackDate(data.date), group: data.group,
-      total: data.total ? formatFeedbackMoney(data.total) + ' · ' +
-        formatFeedbackMoney(data.total / data.group) + ' per person' : 'Not provided',
+      name: data.name, date: data.date ? formatFeedbackDate(data.date) : 'Not provided',
+      group: data.group || 'Not provided', total: total,
       rating: data.rating + ' / 5',
       message: data.message,
       contact: data.contact ? [data.email, data.phone].filter(Boolean).join(' · ') : 'Not included'
@@ -580,7 +585,6 @@ jQuery(function ($) {
     if (stage !== 'reviewing' || !draft) return;
     stage = 'completed';
     const now = new Date();
-    if (!$('#visit-date').val()) draft.date = getShopClock(now).date;
     const reference = 'DEMO-' + Math.floor(100000 + Math.random() * 900000);
     reviews.push({
       id: reference + '-' + reviews.length, name: draft.name, text: draft.message,

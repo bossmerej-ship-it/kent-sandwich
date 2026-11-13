@@ -177,7 +177,7 @@ const path = require('node:path');
     await page.locator('#feedback-submit').click();
     await page.locator('#feedback-review').waitFor({ state: 'visible' });
     await page.waitForFunction(() => !jQuery('#feedback-review').is(':animated'));
-    assert.equal(await page.locator('#feedback-review-date').textContent(), '8 Nov 2026');
+    assert.equal(await page.locator('#feedback-review-date').textContent(), 'Not provided');
     await visible('#feedback-review-photo');
     assert.equal(await page.locator('#feedback-review-photo img').getAttribute('src'), photoUrl);
     await page.locator('#feedback-edit').click();
@@ -189,7 +189,7 @@ const path = require('node:path');
     await page.clock.setSystemTime(new Date('2026-11-08T19:00:01Z'));
     await page.locator('#feedback-confirm').click();
     assert.match(await page.locator('#feedback-share-text').inputValue(), /private@example.com/);
-    assert.match(await page.locator('#feedback-share-text').inputValue(), /Visit date: 9 Nov 2026/);
+    assert.match(await page.locator('#feedback-share-text').inputValue(), /Visit date: Not provided/);
     assert.match(await page.locator('#feedback-share-text').inputValue(), /Check per person: 1,000 ₸/);
     assert.equal(await page.locator('#review-average-check').textContent(), 'Average check per person (local reviews): 880 ₸');
     assert.doesNotMatch(await page.locator('#review-list').innerText(), /private@example.com/);
@@ -218,7 +218,10 @@ const path = require('node:path');
     assert.equal(await page.locator('#review-list img').getAttribute('src'), photoUrl);
     assert.equal(await page.locator('#review-list article h3').first().textContent(), 'Second visitor');
     assert.match(await page.locator('#review-list article').last().innerText(), /Rating not provided/);
-    assert.match(await page.locator('#review-list article').first().locator('.review-details').innerText(), /Visit date\s+9 Nov 2026/);
+    const partialReview = page.locator('#review-list article').first();
+    assert.equal(await partialReview.locator('header time').innerText(), '9 Nov 2026');
+    assert.deepEqual(await partialReview.locator('.review-details dt').allTextContents(),
+      ['Group size', 'Order total', 'Per person']);
     await page.locator('#review-list .review-details').first().waitFor({ state: 'visible' });
     if (process.env.QA_DIR) {
       fs.mkdirSync(process.env.QA_DIR, { recursive: true });
@@ -255,6 +258,33 @@ const path = require('node:path');
       }
     }
     await page.setViewportSize(viewport);
+    await page.locator('#guest-name').fill('Asyl');
+    await page.locator('#rating-5').check();
+    await page.locator('#guest-message').fill('Fresh sandwiches and quick service.');
+    await page.locator('#feedback-submit').click();
+    await visible('#feedback-review');
+    await page.locator('#feedback-confirm').click();
+    const basicReview = page.locator('#review-list article').filter({ hasText: 'Asyl' });
+    assert.equal(await basicReview.locator('.review-details').count(), 0);
+    const avatar = await basicReview.locator('header .rounded-circle').boundingBox();
+    assert.equal(avatar.width, avatar.height);
+    assert.ok(await basicReview.locator('.review-rating').evaluate(badge => parseFloat(getComputedStyle(badge).fontSize) >= 18));
+    if (process.env.QA_DIR) {
+      await basicReview.screenshot({ path: path.join(process.env.QA_DIR, 'review-card-no-details.png') });
+    }
+    await page.locator('#feedback-restart').click();
+    await page.locator('#guest-name').fill('Order only');
+    await page.locator('#order-total').fill('1500');
+    await page.locator('#rating-4').check();
+    await page.locator('#guest-message').fill('Fresh sandwiches and quick service.');
+    await page.locator('#feedback-submit').click();
+    await visible('#feedback-review');
+    assert.equal(await page.locator('#feedback-review-total').textContent(), '1,500 ₸');
+    await page.locator('#feedback-confirm').click();
+    const orderReview = page.locator('#review-list article').filter({ hasText: 'Order only' });
+    assert.deepEqual(await orderReview.locator('.review-details dt').allTextContents(), ['Order total']);
+    assert.match(await page.locator('#feedback-share-text').inputValue(), /Check per person: Not provided/);
+    assert.match(await page.locator('#review-average-check').textContent(), /880 ₸/);
     console.log('PASS: phone normalization, midnight date, order totals and average check, validation, preview/edit/confirm, privacy, download, combined filters, copy recovery, reset/restart');
     await page.clock.setSystemTime(new Date('2026-11-08T05:00:00Z'));
     await go('about.html');
