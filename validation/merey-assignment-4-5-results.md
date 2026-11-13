@@ -5,7 +5,7 @@ Date: 23 October 2026, Asia/Qyzylorda. Implemented source snapshot: `4484b73`. S
 ## Scope and source checks
 
 - `index.html`, `menu.html` and `order.html` differ from the starting snapshot only by three deferred script links each. No interface markup was directly rewritten.
-- All three CSS files, `about.html`, `feedback.html`, `colophon.html`, `js/timur.js` and `AI_USAGE_TIMUR.md` match the starting snapshot. Git's normal Windows line-ending conversion is excluded from that comparison.
+- All three CSS files, `about.html`, `feedback.html`, `colophon.html` and `js/timur.js` match the starting snapshot. Git's normal Windows line-ending conversion is excluded from that comparison.
 - All five new scripts passed `node --check`. Source checks found no `var`, loose equality, unsafe `innerHTML`, `element.style`, `document.write()` or `eval()`.
 - The existing `midterm` tag still resolves to `fb5b79be9e5bf0e8a7acc2460a197d1c5092c319`.
 - `git diff --check` passed.

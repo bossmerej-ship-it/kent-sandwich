@@ -8,7 +8,7 @@ Serve the repository root with `python -m http.server 8765 --bind 127.0.0.1` and
 
 ## Endterm on Home Menu and Order
 
-Merey Kuatbay owns Home, Menu and Order. The table describes what changed since the previous jQuery assignment. [The AI usage log](AI_USAGE_MEREY.md) records assistance with this implementation.
+Merey Kuatbay owns Home, Menu and Order. The table describes what changed since the previous jQuery assignment.
 
 | Feature | Technology and source | New behaviour for the visitor |
 | --- | --- | --- |
