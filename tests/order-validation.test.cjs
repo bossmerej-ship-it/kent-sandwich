@@ -4,12 +4,19 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
-// Load the real browser scripts without mounting a page or changing the clock.
+// Load the real basket and validators without mounting a page or changing the clock.
+const storage = new Map();
 const context = vm.createContext({
-  window: {},
+  window: {
+    addEventListener() {},
+    localStorage: {
+      getItem: key => storage.get(key) ?? null,
+      setItem: (key, value) => storage.set(key, value)
+    }
+  },
   jQuery: function () { /* Pure validators are exported before the UI ready callback. */ }
 });
-for (const filename of ['menu-data.js', 'order.js']) {
+for (const filename of ['menu-data.js', 'basket.js', 'order.js']) {
   vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'js', filename), 'utf8'), context,
     { filename: filename });
 }
@@ -40,16 +47,20 @@ test('email validation rejects missing domains, multiple @ signs and internal wh
   }
 });
 
-test('selected quantities accept the whole-number boundaries 1 and 10', function () {
-  for (const quantity of ['1', '10', 3]) {
-    assert.equal(Kent.validateQuantity(quantity), '', String(quantity));
-  }
+test('basket accepts the maximum quantity and removes the sandwich at zero', function () {
+  assert.equal(Kent.setQuantity('mini', 10).ok, true);
+  assert.equal(Kent.calculateCart(Kent.getCart()).total, 3900);
+  assert.equal(Kent.setQuantity('mini', 0).ok, true);
+  assert.equal(Kent.getCart().length, 0);
 });
 
-test('blank, zero, fractional, excessive and non-numeric quantities are rejected', function () {
-  for (const quantity of ['', '  ', 0, -1, 1.5, 11, 'abc', Infinity]) {
-    assert.ok(Kent.validateQuantity(quantity), String(quantity));
+test('invalid basket quantities leave the last valid quantity unchanged', function () {
+  Kent.setQuantity('mini', 1);
+  for (const quantity of ['', '2', -1, 1.5, 11, Infinity]) {
+    assert.equal(Kent.setQuantity('mini', quantity).ok, false, String(quantity));
+    assert.equal(Kent.getCart()[0].quantity, 1);
   }
+  Kent.clearCart();
 });
 
 test('the same day is permitted while a past shop date is rejected', function () {

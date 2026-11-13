@@ -24,13 +24,6 @@
     };
   }
 
-  function validateQuantity(value) {
-    if (String(value).trim() === '') return 'Enter a quantity from 1 to 10.';
-    const quantity = Number(value);
-    return Number.isInteger(quantity) && quantity >= 1 && quantity <= 10
-      ? '' : 'Quantity must be a whole number from 1 to 10.';
-  }
-
   // A date/time pair must be in the future AND inside the prepared pickup hours.
   function validatePickup(date, time, now) {
     const clock = getShopClock(now || new Date());
@@ -50,7 +43,6 @@
     return errors;
   }
 
-  Kent.validateQuantity = validateQuantity;
   Kent.validatePickup = validatePickup;
 
   function validatePhone(value) {
@@ -81,41 +73,35 @@
     const confirmation = $('#order-confirmation');
     const fields = form.find('#customer-name, #customer-phone, #customer-email, #pickup-date, #pickup-time, #contact-method, #order-note');
     const touched = new Set();
-    const invalidQuantities = new Set();
     const messages = new Map();
     const choiceGrid = form.find('.choice-grid');
-    Kent.MENU.forEach(function (item) {
+    const choices = Kent.MENU.map(function (item) {
       const id = 'item-' + item.id;
-      const quantityId = 'quantity-' + item.id;
       const checkbox = create('input', 'form-check-input me-2')
         .attr({ id, type: 'checkbox', name: 'items', value: item.id, 'aria-describedby': 'item-selection-hint' });
       const description = create('span', '', item.name + ' ')
         .append(create('strong', '', Kent.formatMoney(item.price)));
-      const choice = create('label', 'choice-card form-check-label d-block')
+      const label = create('label', 'form-check-label d-block')
         .attr('for', id).append(checkbox, description);
-      const quantity = create('input', 'item-quantity form-control rounded-0 bg-white')
-        .attr({ id: quantityId, name: quantityId, type: 'number', min: 1, max: Kent.MAX_QUANTITY, value: 1 });
-      const quantityLabel = create('label', 'quantity-label d-flex align-items-center gap-2 mt-3 mb-0', 'Quantity')
-        .attr('for', quantityId).append(quantity);
-      const tile = create('div', 'order-item border rounded-0 p-3 h-100')
-        .attr('data-menu-item', item.id).append(choice, quantityLabel);
+      const minus = create('button', 'btn btn-outline-dark rounded-0 fw-bold', '−')
+        .attr({ type: 'button', 'data-quantity-step': '-1', 'aria-label': 'Decrease ' + item.name + ' quantity' });
+      const plus = create('button', 'btn btn-outline-dark rounded-0 fw-bold', '+')
+        .attr({ type: 'button', 'data-quantity-step': '1', 'aria-label': 'Increase ' + item.name + ' quantity' });
+      const quantity = create('output', 'd-flex align-items-center justify-content-center border-top border-bottom border-dark px-2 fw-semibold', '0')
+        .attr({ id: 'quantity-' + item.id, tabindex: '-1', 'aria-live': 'off' });
+      const stepper = create('div', 'order-quantity d-inline-flex')
+        .attr({ role: 'group', 'aria-label': item.name + ' quantity' }).append(minus, quantity, plus);
+      const controls = create('div', 'd-flex flex-wrap align-items-center gap-2 mt-2')
+        .append(create('span', '', 'Quantity'), stepper);
+      const tile = create('div', 'choice-card border rounded-0 p-3 h-100')
+        .attr('data-menu-item', item.id).append(label, controls);
       create('div', 'col-12 col-md-6').append(tile).appendTo(choiceGrid);
+      return { id: item.id, checkbox, tile, minus, quantity, plus };
     });
-    const choices = [];
-    choiceGrid.find('[name="items"]').each(function () {
-      const checkbox = $(this);
-      choices.push({
-        id: checkbox.val(), checkbox: checkbox, label: checkbox.closest('.choice-card'),
-        // From the checkbox's parent label, reach its sibling quantity label without a new ID.
-        quantity: checkbox.parent().siblings('.quantity-label').find('input')
-      });
-    });
-    let changingCart = false;
     let resetting = false;
     let confirmed = false;
     let submitted = false;
     let lastSnapshot = null;
-    let previousQuantities = new Map();
 
     // Retain required/type/pattern/min/max in HTML and reuse validity, but show our own nearby errors.
     // Client checks can be bypassed; a real server must validate everything again before accepting an order.
@@ -146,12 +132,10 @@
     function prepareError(control) {
       const id = control.attr('id');
       const message = create('span', 'd-block small mt-1 text-danger is-hidden').attr('id', id + '-error');
-      const anchor = control.hasClass('item-quantity') ? control.closest('label') : control;
-      anchor.after(message);
+      control.after(message);
       messages.set(id, message);
     }
     fields.each(function () { prepareError($(this)); });
-    choices.forEach(function (choice) { prepareError(choice.quantity); });
 
     function showFieldError(control, error, showSuccess) {
       const message = messages.get(control.attr('id'));
@@ -220,30 +204,26 @@
       Kent.announce('The previous demo summary was cleared. Review your changes and prepare it again.');
     }
 
-    function mutateCart(action) {
-      changingCart = true;
-      try { return action(); }
-      finally { changingCart = false; }
+    function getQuantity(cart, id) {
+      const line = cart.find(function (entry) { return entry.id === id; });
+      return line ? line.quantity : 0;
     }
 
-    function syncChoices(preserveInvalid) {
+    function syncChoices() {
       const cart = Kent.getCart();
-      const cartCleared = !preserveInvalid && previousQuantities.size > 0 && cart.length === 0;
       choices.forEach(function (choice) {
-        const line = cart.find(function (entry) { return entry.id === choice.id; });
-        const unchangedQuantity = previousQuantities.get(choice.id) === (line ? line.quantity : undefined);
-        const keepInvalid = !cartCleared && invalidQuantities.has(choice.id) && (preserveInvalid || unchangedQuantity);
-        if (!keepInvalid) {
-          invalidQuantities.delete(choice.id);
-          // .prop('checked') is the live state; .attr('checked') only describes the HTML default.
-          choice.checkbox.prop('checked', Boolean(line));
-          choice.quantity.val(line ? String(line.quantity) : '1');
-          showFieldError(choice.quantity, '', Boolean(line) && touched.has(choice.quantity.attr('id')));
-        }
-        choice.quantity.prop('disabled', !choice.checkbox.prop('checked'));
-        choice.label.toggleClass('is-selected', choice.checkbox.prop('checked'));
+        const count = getQuantity(cart, choice.id);
+        const atMin = count === 0;
+        const atMax = count === Kent.MAX_QUANTITY;
+        const reachedLimit = (atMin && choice.minus.is(':focus')) || (atMax && choice.plus.is(':focus'));
+        // .prop('checked') updates the live state; the basket owns the quantity.
+        choice.checkbox.prop('checked', !atMin);
+        choice.tile.toggleClass('is-selected', !atMin);
+        choice.quantity.text(count);
+        choice.minus.prop('disabled', atMin);
+        choice.plus.prop('disabled', atMax);
+        if (reachedLimit) choice.quantity.trigger('focus');
       });
-      previousQuantities = new Map(cart.map(function (line) { return [line.id, line.quantity]; }));
       updateDraft();
     }
 
@@ -261,10 +241,6 @@
       const method = value('contact-method');
       errors.set('contact-method', method === 'phone' || method === 'whatsapp' ? '' : 'Choose phone call or WhatsApp.');
       errors.set('order-note', value('order-note').length <= 240 ? '' : 'Keep your note within 240 characters.');
-      // The contact-request checkbox is optional: both checked and unchecked are valid.
-      choices.forEach(function (choice) {
-        errors.set(choice.quantity.attr('id'), choice.checkbox.prop('checked') ? validateQuantity(choice.quantity.val()) : '');
-      });
       return errors;
     }
 
@@ -285,47 +261,20 @@
       }
     }
 
-    function updateQuantity(choice) {
-      touched.add(choice.quantity.attr('id'));
-      if (!choice.checkbox.prop('checked')) return;
-      const error = validateQuantity(choice.quantity.val());
-      showFieldError(choice.quantity, error, !error);
-      if (error) invalidQuantities.add(choice.id);
-      else {
-        invalidQuantities.delete(choice.id);
-        const quantity = Number(choice.quantity.val());
-        const existing = Kent.getCart().find(function (line) { return line.id === choice.id; });
-        if (!existing || existing.quantity !== quantity) {
-          mutateCart(function () { return Kent.setQuantity(choice.id, quantity); });
-        }
-      }
-    }
-
-    form.on('input', 'input, select, textarea', function () {
-      const control = $(this);
-      invalidateConfirmation();
-      const choice = choices.find(function (entry) { return entry.quantity.is(control); });
-      if (choice) updateQuantity(choice);
-      updateTouchedErrors();
-      updateDraft();
+    choiceGrid.on('click', 'button[data-quantity-step]', function () {
+      const button = $(this);
+      const id = button.closest('[data-menu-item]').attr('data-menu-item');
+      const count = getQuantity(Kent.getCart(), id) + Number(button.attr('data-quantity-step'));
+      Kent.announce(Kent.setQuantity(id, count).message);
     });
-    form.on('change', 'input, select, textarea', function () {
-      const control = $(this);
+    choiceGrid.on('change', 'input[name="items"]', function () {
+      const checkbox = $(this);
+      Kent.announce(Kent.setQuantity(checkbox.val(), checkbox.prop('checked') ? 1 : 0).message);
+    });
+    form.on('input change', 'input:not([name="items"]), select, textarea', function (event) {
       invalidateConfirmation();
-      const choice = choices.find(function (entry) { return entry.checkbox.is(control); });
-      if (choice) {
-        if (control.prop('checked')) {
-          choice.quantity.prop('disabled', false);
-          updateQuantity(choice);
-        } else {
-          invalidQuantities.delete(choice.id);
-          touched.delete(choice.quantity.attr('id'));
-          showFieldError(choice.quantity, '', false);
-          mutateCart(function () { return Kent.removeFromCart(choice.id); });
-          syncChoices(true);
-        }
-        choice.label.toggleClass('is-selected', control.prop('checked'));
-      } else if (messages.has(control.attr('id'))) touched.add(control.attr('id'));
+      const id = $(this).attr('id');
+      if (event.type === 'change' && messages.has(id)) touched.add(id);
       updateTouchedErrors();
       updateDraft();
     });
@@ -346,7 +295,6 @@
       resetting = true;
       submitted = false;
       touched.clear();
-      invalidQuantities.clear();
       form.find('input, textarea').each(function () {
         const control = $(this);
         if (control.is(':checkbox')) control.prop('checked', control.prop('defaultChecked'));
@@ -367,7 +315,7 @@
       if (!keepConfirmation) invalidateConfirmation();
       date.attr('min', getShopClock(new Date()).date);
       Kent.clearCart();
-      syncChoices(false);
+      syncChoices();
       resetting = false;
     }
 
@@ -428,7 +376,7 @@
         return { id: line.item.id, quantity: line.quantity };
       }));
       resetting = false;
-      syncChoices(false);
+      syncChoices();
       name.trigger('focus');
     });
 
@@ -472,9 +420,9 @@
     Kent.onCartChange(function () {
       if (resetting) return;
       invalidateConfirmation();
-      syncChoices(changingCart);
+      syncChoices();
       updateTouchedErrors();
     });
-    syncChoices(false);
+    syncChoices();
   });
 })();

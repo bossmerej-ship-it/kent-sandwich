@@ -14,7 +14,7 @@ Merey Kuatbay owns Home, Menu and Order. The table describes what changed since 
 | --- | --- | --- |
 | Home recommendations | Plain JavaScript in [index.js](js/index.js) | Set a maximum price for the existing random suggestion. The card and the Another suggestion button use the matching sandwiches. |
 | Menu filtering | jQuery in [menu.js](js/menu.js) | The existing result count now shows the lowest price among the sandwiches that match the filters. |
-| Order selection and pickup | jQuery in [order.js](js/order.js) | The existing choices use prices from the shared catalogue. Enter pickup details and prepare or edit the local demo summary. |
+| Order selection and pickup | jQuery in [order.js](js/order.js) | Use − and + to change quantities. The basket and draft update from the shared catalogue prices. Enter pickup details and prepare or edit the local demo summary. |
 | Shared basket | jQuery basket controls in [main.js](js/main.js). Shared data and storage in [menu-data.js](js/menu-data.js) and [basket.js](js/basket.js). | The native Home and jQuery pages use one basket. Clearing the basket gives a path back to the menu, and editing a completed demo restores its items together. |
 
 The catalogue supplies the recommendation cards, menu cards, price rows and order choices. Home creates the cards in a loop with native DOM methods. Its price change handler limits the choices and its parent click handler handles the two suggestion buttons. Menu and Order use jQuery ready callbacks, delegated events and traversal. The filter panel slides, add-to-basket feedback fades in, and Order reveals its confirmation. Browser storage contains only product IDs and quantities.

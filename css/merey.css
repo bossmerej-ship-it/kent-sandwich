@@ -58,9 +58,14 @@
   border-color: #25613b;
 }
 
-.item-quantity {
-  width: 5rem;
-  flex: 0 0 5rem;
+.order-quantity .btn {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.order-quantity output {
+  min-width: 2.5rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .page-order .order-summary {
