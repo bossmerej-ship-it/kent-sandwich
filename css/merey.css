@@ -20,10 +20,11 @@
   display: none;
 }
 
-/* JavaScript selection hooks for the menu and order pages; unused until the next assignment. */
-.menu-card.is-active,
+.menu-guide-photo {
+  object-position: center bottom;
+}
+
 .menu-card.is-selected,
-.choice-card.is-active,
 .choice-card.is-selected {
   outline: 3px solid var(--bs-body-color);
   outline-offset: -3px;

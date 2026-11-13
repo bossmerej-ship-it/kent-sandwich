@@ -35,33 +35,32 @@
     </div></header><!-- container caps the content width on large screens and keeps readable gutters on phones. --><main class="site-main container px-lg-5" id="main-content"><header class="page-intro menu-intro py-4 py-lg-5 border-bottom mb-4 border-dark border-2"><div class="row g-4 align-items-center">
 <div class="col-12 col-lg-7">
 <p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">Menu</p>
-        <h1 class="fw-bold text-uppercase display-2 lh-1 mb-4">Pick your sandwich</h1>
+        <h1 class="fw-bold text-uppercase display-2 lh-1 mb-0">Pick your sandwich</h1>
         </div>
 <div class="col-12 col-lg-5">
-<p class="lead mb-3 fw-normal">Eight hot sandwiches, from the mini to the spicy cutlet. Choose a filling and check the price below.</p>
-        <a class="jump-link btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold me-2 mb-2" href="#menu-table">Jump to price table ↓</a>
-        <a id="start-order-link" class="btn btn-dark btn-sm rounded-0 border-2 text-uppercase fw-bold mb-2" href="order.html">Prepare a pickup order</a>
+<p class="lead mb-0 fw-normal">Eight hot sandwiches, from the mini to the spicy cutlet. Choose a filling and check the price below.</p>
       </div>
 </div></header><!-- Bootstrap Card: adapted from https://getbootstrap.com/docs/5.3/components/card/ using the existing sandwich titles, descriptions and prices; width is controlled by grid columns, with no inline style. --><section class="menu-board py-4" aria-labelledby="menu-board-title"><h2 id="menu-board-title" class="visually-hidden fw-bold mb-3 display-6 text-uppercase lh-1">Sandwich menu cards</h2>
         <!-- Responsive block 3: one card per row on phones, two at md and four at lg. --><div class="row g-0">
-</div></section><section class="menu-photo-band py-5" aria-label="Kent Sandwich serving photo"><div class="row g-4 align-items-center">
-<div class="col-12 col-md-6"><figure><div class="ratio ratio-4x3 rounded-0 overflow-hidden"><img src="images/kent-hero2.jpg" alt="A long toasted chicken sandwich in a Kent paper sleeve" class="w-100 h-100 object-fit-cover"></div>
-<figcaption class="figure-caption mt-2">Made to eat in or carry out.</figcaption></figure></div>
-<!-- This div groups the heading and list beside the figure; it has no independent semantic role. --><div class="col-12 col-md-6"><div>
-          <p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">How to choose</p>
-          <h2 class="fw-bold mb-3 display-6 text-uppercase lh-1">How to choose</h2>
-          <ol type="1">
-<li class="mb-2">Choose mini or full size.</li>
-            <li class="mb-2">Pick a filling:
-              <ul>
-<li class="mb-2">chicken, classic or cheese for a familiar taste;</li>
-                <li class="mb-2">cutlet or spicy cutlet for a more filling option.</li>
-              </ul>
-</li>
-            <li class="mb-2">Go spicy only when you want the extra kick.</li>
-          </ol>
-</div></div>
-      </div></section><section class="table-section py-5" id="menu-table" aria-labelledby="price-title"><!-- The id is unique because the page has one canonical price table destination. --><h2 id="price-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Price list</h2>
+</div></section>
+      <section class="py-4" aria-labelledby="menu-guide-title">
+        <div class="row g-0 border border-dark">
+          <div class="col-md-7 col-lg-8 d-flex flex-column justify-content-center p-4 p-lg-5">
+            <h2 id="menu-guide-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">How to choose</h2>
+            <ol class="ps-3 mb-0">
+              <li class="mb-2"><strong>Size:</strong> Go mini for a snack or full size for a meal.</li>
+              <li class="mb-2"><strong>Filling:</strong> Try chicken, classic or cheese for a familiar taste, or cutlet for a heartier sandwich.</li>
+              <li><strong>Heat:</strong> Pick spicy cutlet if you want an extra kick.</li>
+            </ol>
+          </div>
+          <div class="col-md-5 col-lg-4">
+            <div class="ratio ratio-4x3 h-100">
+              <img src="images/kent-hero2.jpg" alt="A long toasted chicken sandwich in a Kent paper sleeve" class="menu-guide-photo object-fit-cover" width="1440" height="1920">
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="table-section py-5" id="menu-table" aria-labelledby="price-title"><h2 id="price-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Price list</h2>
         <!-- This div has no content meaning; it only lets the wide table scroll when space is limited. -->
         <div class="table-responsive rounded-0 border">
           <table class="table table-striped table-hover align-middle mb-0">

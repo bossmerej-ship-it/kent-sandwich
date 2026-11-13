@@ -200,7 +200,7 @@ The supplied file is named `assignment6_jquery`, although its heading says Assig
 
 ### Three rewrites and the comparison archive
 
-[`js/old-js-version.js`](js/old-js-version.js) preserves the complete previous `main.js`, `index.js`, `menu.js` and `order.js`, with file boundaries. It is **not loaded by any page**. Compare these three features with their labelled rewrite comments in the active files:
+The [comparison archive in Git history](https://github.com/bossmerej-ship-it/kent-sandwich/blob/080490cbc471eec885ff744d12996d0ef4ad16be/js/old-js-version.js) preserves the complete previous `main.js`, `index.js`, `menu.js` and `order.js`, with file boundaries. Compare these three features with their labelled rewrite comments in the active files:
 
 | Previous feature | Current implementation | Preserved behaviour |
 | --- | --- | --- |
@@ -247,7 +247,7 @@ On 31 October 2026, all 29 tests passed. Local browser checks covered Home sugge
 
 For a short live demo: filter Menu to Hot and up to 690 ₸, reset and sort it, add a newly rendered card, change its quantity in Order, submit incomplete details, fix them, then show the cleared form and retained confirmation. Use Edit details to restore the draft. Be ready to explain the vanilla equivalents, delegation, chains, `.text()`/`.html()` and `.attr()`/`.prop()`.
 
-Keep the existing repository, jQuery scripts, comparison archive and README together; this assignment asks for no separate report or recording. Four genuine commits across three different days per student (six commits for solo work) and the live defence remain personal submission requirements. Today's migration does not establish three different work days. During the defence, use only the resources allowed by the assignment: official documentation and W3Schools, with no outside assistance.
+The previous assignment kept the jQuery scripts, comparison archive and README in the same repository and asked for no separate report or recording. Four genuine commits across three different days per student (six commits for solo work) and the live defence were personal submission requirements. During the defence, students could use official documentation and W3Schools.
 
 References: [jQuery releases](https://releases.jquery.com/jquery/), [`.on()` and delegation](https://api.jquery.com/on/), [`.prop()` and checkbox state](https://api.jquery.com/prop/), [`.slideToggle()`](https://api.jquery.com/slideToggle/), [`.stop()`](https://api.jquery.com/stop/).
 
@@ -260,7 +260,7 @@ About, Feedback and Colophon load the same full jQuery 3.7.1 CDN build as the ot
 - `js/about.js`: jQuery gallery events, image/caption updates, keyboard navigation and focus restoration; opening hours still refresh at minute boundaries in Asia/Almaty.
 - `js/feedback.js`: trimmed input validation, nearby errors that clear on correction, preview/edit/confirm, array-built review cards, combined filters, copying with manual fallback and restarting.
 
-The three rewritten features are feedback validation/review, review-card rendering/filtering and the photograph viewer. Comments compare their jQuery methods with the previous DOM code. Complete previous versions of `timur.js`, `about.js` and `feedback.js` are appended to `js/old-js-version.js`, which is never loaded by a page.
+The three rewritten features are feedback validation/review, review-card rendering/filtering and the photograph viewer. Comments compare their jQuery methods with the previous DOM code. Complete previous versions of `timur.js`, `about.js` and `feedback.js` are also in the [comparison archive in Git history](https://github.com/bossmerej-ship-it/kent-sandwich/blob/080490cbc471eec885ff744d12996d0ef4ad16be/js/old-js-version.js).
 
 Selectors cover IDs, classes, elements, attributes and `:checked`. Traversal uses `.find()`, `.closest()`, `.parent()`, `.siblings()` and `.each()`. Event handlers use `.on()`; error-summary links use delegation because validation creates them later. Chains and the differences between `.text()`/`.html()` and `.attr()`/`.prop()` are explained in code. Visitor content is rendered as text; `.html()` is reserved for fixed markup.
 
