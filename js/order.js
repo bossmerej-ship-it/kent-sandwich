@@ -77,24 +77,24 @@
     const choiceGrid = form.find('.choice-grid');
     const choices = Kent.MENU.map(function (item) {
       const id = 'item-' + item.id;
-      const checkbox = create('input', 'form-check-input me-2')
-        .attr({ id, type: 'checkbox', name: 'items', value: item.id, 'aria-describedby': 'item-selection-hint' });
-      const description = create('span', '', item.name + ' ')
-        .append(create('strong', '', Kent.formatMoney(item.price)));
-      const label = create('label', 'form-check-label d-block')
+      const checkbox = create('input', 'form-check-input flex-shrink-0 mt-0')
+        .attr({ id, type: 'checkbox', name: 'items', value: item.id });
+      const description = create('span', '').append(
+        create('span', 'd-block fw-semibold', item.name),
+        create('span', 'd-block small text-body-secondary', Kent.formatMoney(item.price))
+      );
+      const label = create('label', 'form-check-label d-flex align-items-center gap-2')
         .attr('for', id).append(checkbox, description);
-      const minus = create('button', 'btn btn-outline-dark rounded-0 fw-bold', '−')
+      const minus = create('button', 'btn btn-outline-dark rounded-0 p-0 fs-5 lh-1', '−')
         .attr({ type: 'button', 'data-quantity-step': '-1', 'aria-label': 'Decrease ' + item.name + ' quantity' });
-      const plus = create('button', 'btn btn-outline-dark rounded-0 fw-bold', '+')
+      const plus = create('button', 'btn btn-outline-dark rounded-0 p-0 fs-5 lh-1', '+')
         .attr({ type: 'button', 'data-quantity-step': '1', 'aria-label': 'Increase ' + item.name + ' quantity' });
-      const quantity = create('output', 'd-flex align-items-center justify-content-center border-top border-bottom border-dark px-2 fw-semibold', '0')
+      const quantity = create('output', 'd-flex align-items-center justify-content-center px-1 fw-semibold', '0')
         .attr({ id: 'quantity-' + item.id, tabindex: '-1', 'aria-live': 'off' });
-      const stepper = create('div', 'order-quantity d-inline-flex')
+      const stepper = create('div', 'order-quantity d-inline-flex flex-shrink-0 ms-auto')
         .attr({ role: 'group', 'aria-label': item.name + ' quantity' }).append(minus, quantity, plus);
-      const controls = create('div', 'd-flex flex-wrap align-items-center gap-2 mt-2')
-        .append(create('span', '', 'Quantity'), stepper);
-      const tile = create('div', 'choice-card border rounded-0 p-3 h-100')
-        .attr('data-menu-item', item.id).append(label, controls);
+      const tile = create('div', 'choice-card d-flex flex-wrap align-items-center gap-2 border rounded-0 px-2 px-sm-3 py-3 h-100')
+        .attr('data-menu-item', item.id).append(label, stepper);
       create('div', 'col-12 col-md-6').append(tile).appendTo(choiceGrid);
       return { id: item.id, checkbox, tile, minus, quantity, plus };
     });

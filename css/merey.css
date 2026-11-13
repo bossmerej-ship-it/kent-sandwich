@@ -58,13 +58,19 @@
   border-color: #25613b;
 }
 
+.choice-card .form-check-label {
+  flex: 1 0 7.5rem;
+}
+
 .order-quantity .btn {
+  display: grid;
+  place-items: center;
   min-width: 2.75rem;
   min-height: 2.75rem;
 }
 
 .order-quantity output {
-  min-width: 2.5rem;
+  min-width: 1.75rem;
   font-variant-numeric: tabular-nums;
 }
 
