@@ -145,9 +145,6 @@ jQuery(function ($) {
         const profileText = create('p', 'small text-body-secondary', 'Profile: ' + item.profile);
         const price = create('p', 'menu-price mt-auto fs-3 fw-bold mb-0', Kent.formatMoney(item.price));
         body.append(number, title, note, profileText, price);
-        if (item.id === 'mini') {
-            body.append(create('span', 'menu-badge badge text-bg-dark align-self-start mt-2', 'Small'));
-        }
         const selection = create('p', 'small mt-3 mb-2');
         selection.attr("data-basket-quantity", item.id);
         const add = create('button', 'btn btn-dark rounded-0 border-2 fw-bold', 'Add to basket');
