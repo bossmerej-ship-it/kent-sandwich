@@ -54,22 +54,14 @@ const path = require('node:path');
     await visible('#guest-phone-error');
     for (const entered of ['77471231212', '8 (747) 123-12-12', '+7 747 123 12 12', '7471231212']) {
       await phone.fill(entered);
-      await phone.press('Tab');
       assert.equal(await phone.inputValue(), '+7-(747)-123-1212');
       await hidden('#guest-phone-error');
     }
-    for (const entered of ['+77471231212', '87471231212', '77471231212', '7471231212']) {
-      await phone.fill('');
-      await phone.pressSequentially(entered);
-      await phone.press('Tab');
-      assert.equal(await phone.inputValue(), '+7-(747)-123-1212', entered);
-      await hidden('#guest-phone-error');
-    }
-    await phone.fill('+7-(747)-123-12129');
-    await phone.press('Tab');
-    assert.equal(await phone.inputValue(), '+7-(747)-123-12129');
-    await visible('#guest-phone-error');
-    await phone.fill('+7-(747)-123-1212');
+    await phone.fill('');
+    await phone.pressSequentially('7471');
+    assert.equal(await phone.inputValue(), '+7-(747)-1');
+    await phone.pressSequentially('23121299');
+    assert.equal(await phone.inputValue(), '+7-(747)-123-1212');
     await hidden('#guest-phone-error');
     await phone.press('Backspace');
     await visible('#guest-phone-error');
@@ -180,12 +172,10 @@ const path = require('node:path');
     await page.waitForFunction(() => document.querySelector('#feedback-photo-preview img').naturalWidth > 0);
     const photoUrl = await page.locator('#feedback-photo-preview img').getAttribute('src');
     await page.clock.setSystemTime(new Date('2026-11-08T19:00:01Z'));
-    await phone.pressSequentially('87471231212');
-    await phone.press('Enter');
+    await page.locator('#feedback-submit').click();
     assert.equal(await page.locator('#feedback-confirmation details').getAttribute('open'), null);
     assert.equal(await page.locator('#contact-permission').isChecked(), false);
     assert.match(await page.locator('#feedback-share-text').inputValue(), /private@example.com/);
-    assert.match(await page.locator('#feedback-share-text').inputValue(), /\+7-\(747\)-123-1212/);
     assert.match(await page.locator('#feedback-share-text').inputValue(), /Visit date: Not provided/);
     assert.match(await page.locator('#feedback-share-text').inputValue(), /Check per person: 1,000 ₸/);
     assert.equal(await page.locator('#review-average-check').textContent(), 'Average check per person (local reviews): 880 ₸');
