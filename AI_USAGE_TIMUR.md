@@ -2,8 +2,8 @@
 
 **Developer:** Timur
 **AI Model Used:** Claude (Anthropic)
-**Assignment:** Introduction to Web Technologies — Assignment 3 (Bootstrap: grid system, containers, responsive behavior, typography, buttons, utilities, one Bootstrap component)
-**Academic Honesty Statement:** Per the course AI policy, Claude was used only to explain Bootstrap concepts and clarify how specific classes/components work. Claude did not rebuild any pages, write markup, or produce the component/utility code directly. All HTML, class choices, and comments were authored independently and adapted from the official Bootstrap documentation where required.
+**Assignment:** Introduction to Web Technologies — FINAL PROJECT 
+**Academic Honesty Statement:** Per the course AI policy, Claude was used only to explain Bootstrap concepts and clarify how specific classes/components work. Claude did not rebuild any pages, write markup, or produce the component/utility code directly. All HTML, class choices, and comments were authored independently and adapted from the official Bootstrap documentation where required. Also used for explaining Jquery, and how to use. 
 
 ## Log of Interactions
 
