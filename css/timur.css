@@ -35,10 +35,8 @@
   background-color: #141414;
   color: #fff;
 }
-.page .rating-choice.selected,
-.page .rating-choice:has(input:checked) {
-  --bs-border-color: #141414;
-  background-color: #f4e70c;
+.feedback-prompt {
+  top: 1rem;
 }
 .page-feedback .rating-choice {
   display: flex;
@@ -50,6 +48,16 @@
   min-height: 4rem;
   padding: .5rem .25rem;
   cursor: pointer;
+}
+.page-feedback .rating-choice:is(:hover, :has(input:checked)) {
+  --bs-border-color: var(--bs-body-color);
+}
+.page-feedback .rating-choice:has(input:checked) {
+  background-color: var(--bs-tertiary-bg);
+}
+.rating-star {
+  font-size: 1.75rem;
+  line-height: 1;
 }
 .page-feedback .rating-choice:has(:focus-visible) {
   outline: 2px solid var(--bs-body-color);

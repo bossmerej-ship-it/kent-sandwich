@@ -479,9 +479,6 @@ jQuery(function ($) {
       ? formatFeedbackMoney(total / group) + ' per person.'
       : 'Optional. Enter the total bill for your group in tenge.');
     counter.text(message.val().length);
-    form.find('input[name="rating"]').each(function () {
-      $(this).closest('label').toggleClass('selected', $(this).prop('checked'));
-    });
     if (submitted) showErrors(validateFeedback(readFeedback(), getShopClock(new Date()).date));
   }
   form.on('input change', updateForm);
