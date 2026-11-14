@@ -1,148 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Share feedback about a visit to Kent Sandwich in Astana.">
-    <meta name="author" content="Timur Naumov">
-    <title>Kent Sandwich Astana | Feedback</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/timur.css">
-  </head>
-  <body class="page page-feedback">
-    <!-- Author: Timur Naumov -->
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
-        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
-        <span class="brand-mark" aria-hidden="true">
-          <img src="images/kent-logo.jpg" alt="">
-        </span>
-        <span class="brand-name">Kent<br>Sandwich</span>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prepare feedback about a visit to Kent Sandwich in Astana and find the shop’s official contact channels.">
+  <meta name="author" content="Timur Naumov">
+  <title>Kent Sandwich Astana | Feedback</title>
+  <!-- Bootstrap 5.3.8: framework styles precede the small local correction layers. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/timur.css">
+  <script src="js/menu-data.js" defer></script>
+  <script src="js/basket.js" defer></script>
+  <script src="js/site-actions.js" defer></script>
+  <script src="js/timur.js"></script>
+</head>
+<body class="page page-feedback" data-page="feedback">
+  <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
+  <header id="page-top" tabindex="-1" class="site-header navbar navbar-expand-lg border-bottom border-dark bg-body py-4 border-2">
+    <!-- Bootstrap owns the responsive navigation; page scripts reuse these hooks. -->
+    <div class="container-fluid px-3 px-md-4 px-xl-5">
+      <a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
+        <span class="brand-mark" aria-hidden="true"><img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover border-2" width="52" height="52"></span>
+        <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
       </a>
-      <nav class="site-nav" aria-label="Main navigation">
-        <ul>
-          <li>
-            <a href="index.html">Home</a>
-          </li>
-          <li>
-            <a href="menu.html">Menu</a>
-          </li>
-          <li>
-            <a href="about.html">Our place</a>
-          </li>
-          <li>
-            <a href="order.html">Order</a>
-          </li>
-          <li>
-            <a href="feedback.html" aria-current="page">Feedback</a>
-          </li>
-          <li>
-            <a href="colophon.html">Colophon</a>
-          </li>
+      <button id="main-nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler rounded-0 border-dark border-2"><span class="navbar-toggler-icon"></span></button>
+      <nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar">
+        <ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
+          <li class="nav-item"><a href="index.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Home</a></li>
+          <li class="nav-item"><a href="menu.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Menu</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Our place</a></li>
+          <li class="nav-item"><a href="order.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Order</a></li>
+          <li class="nav-item"><a href="feedback.html" aria-current="page" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold active bg-dark text-white">Feedback</a></li>
+          <li class="nav-item"><a href="colophon.html" class="nav-link rounded-0 px-3 fw-semibold text-uppercase small fw-bold">Colophon</a></li>
         </ul>
       </nav>
-      <p class="header-note">Astana · daily 09:30–21:30</p>
+      <p class="header-note d-none d-xl-block small text-end mb-0 ms-3 text-uppercase">Astana · daily 09:30–21:30</p>
+    </div>
+  </header>
+  <!-- Bootstrap container and grid keep the content readable at phone and desktop widths. -->
+  <main class="site-main container px-lg-5" id="main-content">
+    <header class="page-intro feedback-intro py-4 py-lg-5 border-bottom border-dark border-2">
+      <p class="eyebrow small text-uppercase fw-bold mb-3">Feedback</p>
+      <h1 class="fw-bold text-uppercase display-2 lh-1 mb-0">How was your visit?</h1>
     </header>
-    <main class="site-main" id="main-content">
-      <header class="page-intro feedback-intro">
-        <p class="eyebrow">Feedback</p>
-        <h1>How was your visit?</h1>
-        <p>Tell us what you ordered, when you visited and what stood out. A few clear details about the food, service or room make the feedback more useful.</p>
-      </header>
-      <section class="feedback-layout" aria-labelledby="feedback-title">
-        <article class="feedback-prompt">
-          <p class="eyebrow">Your visit</p>
-          <h2>What should we know?</h2>
-          <p>You can write about your sandwich, waiting time, service or the seating area.</p>
-          <blockquote>
+    <section class="feedback-layout py-4" aria-labelledby="feedback-title">
+      <div class="row g-4">
+        <div class="col-12 col-lg-4">
+          <aside class="feedback-prompt sticky-lg-top bg-body-tertiary text-dark border border-dark border-2 p-3 p-xl-4" aria-labelledby="feedback-contact-title">
+            <h2 id="feedback-contact-title" class="h4 fw-bold text-uppercase mb-3">Contact the shop</h2>
+            <p class="small mb-3">For a reply about your visit, message or call Kent Sandwich.</p>
+            <blockquote class="border-top border-dark pt-3 my-4">
               <p><q lang="ru">Классное место с приятными ценами и оригинальным решением в интерьере) Для студентов самое то</q></p>
-              <cite>Диас Турлугулов, <time datetime="2026-07-20">20 July 2026</time> &mdash; <a href="https://2gis.kz/astana/firm/70000001114376342/tab/reviews" target="_blank" rel="noopener noreferrer">2GIS review</a></cite>
-          </blockquote>
-          <img src="images/kent-table.jpg" alt="Kent Sandwich package and drinks arranged on a wood table">
-        </article>
-        <form class="feedback-form" action="#" method="post">
-          <!-- This form demonstrates HTML controls only; no server is connected to receive feedback. -->
-          <h2 id="feedback-title">Leave feedback</h2>
-          <p class="required-note">Fields marked * are required.</p>
-          <!-- This div has no content meaning; it only aligns the related form fields in columns. -->
-          <div class="feedback-fields">
-            <label for="guest-name">Name *<input id="guest-name" name="guest-name" type="text" autocomplete="name" minlength="2" required>
-            </label>
-            <label for="guest-email">Email *<input id="guest-email" name="guest-email" type="email" autocomplete="email" required>
-            </label>
-            <label for="guest-phone">Phone<input id="guest-phone" name="guest-phone" type="tel" autocomplete="tel" placeholder="+7 700 000 00 00" pattern="\+?[0-9 ()-]{10,18}">
-            </label>
-            <label for="group-size">People in your group<input id="group-size" name="group-size" type="number" min="1" max="20" value="1">
-            </label>
-            <label for="visit-date">Visit date *<input id="visit-date" name="visit-date" type="date" required>
-            </label>
-            <label for="ordered-item">What did you order?<select id="ordered-item" name="ordered-item">
-                <option value="">Choose one</option>
-                <option>Mini sandwich</option>
-                <option>Chicken</option>
-                <option>Classic</option>
-                <option>Cheese</option>
-                <option>Cutlet</option>
-                <option>Spicy cutlet</option>
-                <option>Hot dog</option>
-                <option>Spicy</option>
-              </select>
-            </label>
-          </div>
-          <fieldset class="rating-fieldset">
-            <legend>Overall rating *</legend>
-            <!-- This div has no content meaning; it keeps the five related rating choices in one row. -->
-            <div class="rating-row">
-              <!-- Each span combines a rating number with its short inline description. -->
-              <label for="rating-1">
-                <input id="rating-1" type="radio" name="rating" value="1" required>
-                <span>1<small>Poor</small>
-                </span>
-              </label>
-              <label for="rating-2">
-                <input id="rating-2" type="radio" name="rating" value="2">
-                <span>2<small>Fair</small>
-                </span>
-              </label>
-              <label for="rating-3">
-                <input id="rating-3" type="radio" name="rating" value="3">
-                <span>3<small>Good</small>
-                </span>
-              </label>
-              <label for="rating-4">
-                <input id="rating-4" type="radio" name="rating" value="4">
-                <span>4<small>Great</small>
-                </span>
-              </label>
-              <label for="rating-5">
-                <input id="rating-5" type="radio" name="rating" value="5">
-                <span>5<small>Excellent</small>
-                </span>
-              </label>
+              <cite class="small">Диас Турлугулов, <time datetime="2026-07-20">20 July 2026</time> — <a href="https://2gis.kz/astana/firm/70000001114376342/tab/reviews" target="_blank" rel="noopener noreferrer">2GIS review</a></cite>
+            </blockquote>
+            <div class="ratio ratio-4x3 rounded-0 overflow-hidden"><img src="images/kent-table.jpg" alt="Kent Sandwich package and drinks arranged on a wood table" class="w-100 h-100 object-fit-cover" loading="lazy"></div>
+            <div class="d-flex flex-wrap gap-2 mt-3">
+              <a id="feedback-shop-instagram" href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="btn btn-dark rounded-0 btn-sm">Instagram ↗</a>
+              <a id="feedback-shop-phone" href="tel:+77083461899" class="btn btn-outline-dark rounded-0 btn-sm">Call the shop</a>
             </div>
-          </fieldset>
-          <label class="full-field" for="guest-message">Your feedback *<textarea id="guest-message" name="guest-message" rows="7" minlength="20" maxlength="600" required placeholder="Tell us what happened during your visit">
-            </textarea>
-          </label>
-          <label class="check-line" for="contact-permission">
-            <input id="contact-permission" type="checkbox" name="contact-permission">
-            <!-- This span keeps the checkbox text as one inline label phrase. -->
-            <span>You may contact me about this feedback.</span>
-          </label>
-          <p class="form-note">Thanks for your feedback.</p>
-          <button class="button button-dark" type="submit">Check feedback</button>
-          <button class="button button-light" type="reset">Clear form</button>
-        </form>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
-      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
-      <p>
-        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
-      </p>
-    </footer>
-    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
-  </body>
+          </aside>
+        </div>
+        <div class="col-12 col-lg-8">
+          <form id="feedback-form" class="bg-white border border-2 rounded-0 p-3 p-md-4" aria-labelledby="feedback-title" aria-describedby="submission-note">
+            <h2 id="feedback-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Leave feedback</h2>
+            <p class="small text-body-secondary mb-4">Fields marked * are required.</p>
+            <section id="feedback-errors" class="hidden error border p-3 mb-4" role="alert" aria-labelledby="feedback-errors-title" tabindex="-1">
+              <h3 id="feedback-errors-title" class="h6 fw-bold">Check the highlighted fields</h3>
+              <ul id="feedback-error-list" class="mb-0"></ul>
+            </section>
+
+            <fieldset class="border p-3 mb-4">
+              <legend class="float-none w-auto px-2 fs-6 fw-semibold">Visit details</legend>
+              <div class="feedback-fields row g-3">
+                <div class="col-12 col-md-6">
+                  <label for="guest-name" class="form-label d-block mb-1">Name *</label>
+                  <input id="guest-name" name="guest-name" type="text" autocomplete="name" minlength="2" maxlength="80" required class="form-control rounded-0 bg-white" aria-describedby="guest-name-error">
+                  <p id="guest-name-error" class="field-error hidden small mt-1 mb-0">Enter a name between 2 and 80 characters.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="guest-email" class="form-label d-block mb-1">Email</label>
+                  <input id="guest-email" name="guest-email" type="email" autocomplete="email" maxlength="254" class="form-control rounded-0 bg-white" aria-describedby="guest-email-error">
+                  <p id="guest-email-error" class="field-error hidden small mt-1 mb-0">Enter a valid email address, or leave this field empty.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="guest-phone" class="form-label d-block mb-1">Phone</label>
+                  <input id="guest-phone" name="guest-phone" type="tel" autocomplete="tel" placeholder="+7-(747)-123-1212" maxlength="30" class="form-control rounded-0 bg-white" aria-describedby="guest-phone-hint guest-phone-error">
+                  <p id="guest-phone-hint" class="form-text mb-0">Enter 10 digits after +7.</p>
+                  <p id="guest-phone-error" class="field-error hidden small mt-1 mb-0"></p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="group-size" class="form-label d-block mb-1">People in your group (optional)</label>
+                  <input id="group-size" name="group-size" type="number" min="1" max="20" step="1" class="form-control rounded-0 bg-white" aria-describedby="group-size-error">
+                  <p id="group-size-error" class="field-error hidden small mt-1 mb-0">Choose a whole number between 1 and 20.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="visit-date" class="form-label d-block mb-1">Visit date (optional)</label>
+                  <input id="visit-date" name="visit-date" type="date" class="form-control rounded-0 bg-white" aria-describedby="visit-date-hint visit-date-error">
+                  <p id="visit-date-hint" class="form-text mb-0">Include the date if you remember it.</p>
+                  <p id="visit-date-error" class="field-error hidden small mt-1 mb-0">Choose a visit date that is not in the future.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="order-total" class="form-label d-block mb-1">Order total (₸)</label>
+                  <input id="order-total" name="order-total" type="number" min="1" step="1" placeholder="e.g. 1400" class="form-control rounded-0 bg-white" aria-describedby="order-total-hint order-total-error">
+                  <p id="order-total-hint" class="form-text mb-0">Optional. Enter the total bill for your group in tenge.</p>
+                  <p id="order-total-error" class="field-error hidden small mt-1 mb-0"></p>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset id="feedback-rating" class="border p-3 mb-4" aria-describedby="rating-error">
+              <legend class="float-none w-auto px-2 fs-6 fw-semibold">Overall rating *</legend>
+              <div class="row g-2">
+                <div class="col">
+                  <label for="rating-1" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-1" type="radio" name="rating" value="1" required class="visually-hidden">
+                    <span class="rating-star" aria-hidden="true">★</span>
+                    <span class="fw-semibold">1</span>
+                    <small class="d-none d-md-block text-body-secondary">Poor</small>
+                  </label>
+                </div>
+                <div class="col">
+                  <label for="rating-2" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-2" type="radio" name="rating" value="2" class="visually-hidden">
+                    <span class="rating-star" aria-hidden="true">★</span>
+                    <span class="fw-semibold">2</span>
+                    <small class="d-none d-md-block text-body-secondary">Fair</small>
+                  </label>
+                </div>
+                <div class="col">
+                  <label for="rating-3" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-3" type="radio" name="rating" value="3" class="visually-hidden">
+                    <span class="rating-star" aria-hidden="true">★</span>
+                    <span class="fw-semibold">3</span>
+                    <small class="d-none d-md-block text-body-secondary">Good</small>
+                  </label>
+                </div>
+                <div class="col">
+                  <label for="rating-4" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-4" type="radio" name="rating" value="4" class="visually-hidden">
+                    <span class="rating-star" aria-hidden="true">★</span>
+                    <span class="fw-semibold">4</span>
+                    <small class="d-none d-md-block text-body-secondary">Great</small>
+                  </label>
+                </div>
+                <div class="col">
+                  <label for="rating-5" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-5" type="radio" name="rating" value="5" class="visually-hidden">
+                    <span class="rating-star" aria-hidden="true">★</span>
+                    <span class="fw-semibold">5</span>
+                    <small class="d-none d-md-block text-body-secondary">Excellent</small>
+                  </label>
+                </div>
+              </div>
+              <p id="rating-error" class="field-error hidden small mt-2 mb-0">Choose a rating from 1 to 5.</p>
+            </fieldset>
+
+            <fieldset class="border p-3 mb-4">
+              <legend class="float-none w-auto px-2 fs-6 fw-semibold">Your feedback</legend>
+              <label class="form-label mb-1" for="guest-message">Comments *</label>
+              <textarea id="guest-message" name="guest-message" rows="4" minlength="20" maxlength="600" required placeholder="Tell us what stood out during your visit" class="form-control rounded-0 bg-white" aria-describedby="guest-message-hint guest-message-error"></textarea>
+              <div class="d-flex flex-wrap justify-content-between gap-2 mt-2">
+                <p id="guest-message-hint" class="small text-body-secondary mb-0">Write 20–600 characters about your visit.</p>
+                <p class="small text-body-secondary mb-0"><output id="feedback-character-count" for="guest-message">0</output> / 600</p>
+              </div>
+              <p id="guest-message-error" class="field-error hidden small mt-1 mb-0"></p>
+
+              <div class="border-top mt-3 pt-3">
+                <label class="form-label mb-2" for="guest-photo">Photo (optional)</label>
+                <div class="feedback-upload d-flex align-items-center gap-2 border">
+                  <label for="guest-photo" class="feedback-upload-icon d-grid align-self-stretch bg-body-tertiary flex-shrink-0">
+                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 16V4m-4 4 4-4 4 4M4 16v4h16v-4"/>
+                    </svg>
+                  </label>
+                  <input id="guest-photo" name="guest-photo" type="file" accept="image/jpeg,image/png,image/webp" class="form-control border-0 rounded-0 bg-transparent" aria-describedby="guest-photo-hint guest-photo-error">
+                </div>
+                <p id="guest-photo-hint" class="form-text mb-2">JPG, PNG or WebP, up to 5 MB. The photo stays on this page.</p>
+                <p id="guest-photo-error" class="field-error hidden small mb-2"></p>
+                <div id="feedback-photo-preview" class="ratio ratio-16x9 border overflow-hidden bg-white mb-2 hidden"></div>
+                <button id="feedback-remove-photo" type="button" class="btn btn-outline-dark btn-sm rounded-0 hidden">Remove photo</button>
+              </div>
+
+              <label class="form-check-label d-flex align-items-start gap-2 mt-3" for="contact-permission">
+                <input id="contact-permission" type="checkbox" name="contact-permission" value="include" class="form-check-input flex-shrink-0" aria-describedby="contact-permission-error">
+                <span>Include my email and phone in my feedback summary.</span>
+              </label>
+              <p id="contact-permission-error" class="field-error hidden small mt-1 mb-0"></p>
+            </fieldset>
+
+            <p class="small text-body-secondary mb-3" id="submission-note">Your review appears on this page until you reload. Use the shop’s contact links to get in touch.</p>
+            <div class="d-grid d-sm-flex flex-wrap gap-2">
+              <button id="feedback-submit" class="btn btn-dark rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="submit" disabled>Post feedback</button>
+              <button id="feedback-reset" class="btn btn-outline-dark rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="reset">Clear form</button>
+            </div>
+          </form>
+          <section id="feedback-confirmation" class="hidden success border p-3 mb-3" aria-labelledby="feedback-confirmation-title" aria-live="polite" tabindex="-1">
+            <h2 id="feedback-confirmation-title" class="h5 fw-bold text-uppercase mb-2">Feedback added</h2>
+            <p class="small mb-2">Your review is below. It stays on this page until you reload.</p>
+            <details class="small">
+              <summary class="fw-semibold">Copy or save your summary</summary>
+              <div class="pt-3">
+                <label for="feedback-share-text" class="form-label">Your feedback summary</label>
+                <textarea id="feedback-share-text" class="form-control rounded-0 bg-white feedback-message mb-3" rows="6" readonly></textarea>
+                <div class="d-flex flex-wrap gap-2">
+                  <button id="feedback-copy" type="button" class="btn btn-outline-dark rounded-0">Copy summary</button>
+                  <a id="feedback-download" class="btn btn-outline-dark rounded-0">Save summary as text</a>
+                </div>
+                <p id="feedback-copy-status" class="hidden small mt-2 mb-0" role="status" aria-live="polite"></p>
+                <p id="feedback-copy-error" class="hidden error small mt-2 mb-0" role="alert">Copying is unavailable. Select the summary above and copy it manually.</p>
+              </div>
+            </details>
+            <p class="small mt-2 mb-0"><a id="feedback-restart" href="#guest-name">Back to the feedback form</a> · <a href="about.html#details">View visit details</a></p>
+          </section>
+        </div>
+      </div>
+      <template id="feedback-error-item"><li><a href="#feedback-form" class="link-dark"></a></li></template>
+    </section>
+  </main>
+
+  <footer class="site-footer container-fluid bg-dark text-white mt-5 pt-5 px-3 px-md-4 px-xl-5 border-top border-2 border-dark">
+    <div class="row g-3 align-items-center text-center text-md-start">
+      <p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
+      <p class="col-12 col-md-4 mb-0 small text-center">Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p class="col-12 col-md-4 mb-0 small text-md-end"><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html#sources" class="link-light">Sources &amp; credits</a></p>
+    </div>
+  </footer>
+  <nav class="site-actions d-flex flex-wrap justify-content-end gap-2" aria-label="Quick links">
+    <a id="shared-basket-link" class="btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="order.html#order-cart"><span class="basket-icon" aria-hidden="true"></span>Basket <span id="basket-badge" class="badge text-bg-dark" hidden>0</span></a>
+    <a class="source-tab btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+    <a class="btn btn-dark btn-sm rounded-0 fw-bold shadow-sm" href="#page-top" aria-label="Back to top">↑</a>
+  </nav>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <!-- jQuery 3.7.1 full build loads before Feedback; the full build includes effects. -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
+  <script src="js/feedback.js" defer></script>
+</body>
 </html>

@@ -1,0 +1,35 @@
+[
+  {
+    "page": "about.html",
+    "checkedDate": "2026-10-04",
+    "timeZone": "Asia/Almaty",
+    "validator": "W3C Nu",
+    "sourceSha256": "f4dc8ace6928a2a019dacedea4a333da012baaee2b2327f01229f964b486873a",
+    "submittedSourceSha256": "f4dc8ace6928a2a019dacedea4a333da012baaee2b2327f01229f964b486873a",
+    "privacy": "The mailto address alone was substituted in the submitted copy; local source was unchanged.",
+    "messages": [],
+    "status": "pass"
+  },
+  {
+    "page": "feedback.html",
+    "checkedDate": "2026-10-04",
+    "timeZone": "Asia/Almaty",
+    "validator": "W3C Nu",
+    "sourceSha256": "9a28d4f3ec071390803100473138932af03d7c37dc455a61209f1b908d2bf9f6",
+    "submittedSourceSha256": "9a28d4f3ec071390803100473138932af03d7c37dc455a61209f1b908d2bf9f6",
+    "privacy": "The mailto address alone was substituted in the submitted copy; local source was unchanged.",
+    "messages": [],
+    "status": "pass"
+  },
+  {
+    "page": "colophon.html",
+    "checkedDate": "2026-10-04",
+    "timeZone": "Asia/Almaty",
+    "validator": "W3C Nu",
+    "sourceSha256": "c480e154df79f41e85aeea6b5daa659b556032630d7166cfa83af6892edd5a4a",
+    "submittedSourceSha256": "2a6ccea475c84998aa3d6c3a3fa1fbe9afba3ed84afa4d630d8ee8eabf3fe56d",
+    "privacy": "The mailto address alone was substituted in the submitted copy; local source was unchanged.",
+    "messages": [],
+    "status": "pass"
+  }
+]

@@ -1,207 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kent Sandwich menu with eight current sandwich choices and prices in Astana.">
-    <meta name="author" content="Merey Kuatbay">
-    <title>Kent Sandwich Astana | Menu</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/merey.css">
-  </head>
-  <body class="page page-menu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Kent Sandwich menu with eight current sandwich choices and prices in Astana.">
+<meta name="author" content="Merey Kuatbay">
+<title>Kent Sandwich Astana | Menu</title>
+<!-- Bootstrap 5.3.8 via CDN; shared styles follow it, then the page owner’s correction stylesheet. --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/merey.css">
+<!-- jQuery 3.7.1 full build: CDN library loads before our deferred scripts; full includes effects. -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
+<script src="js/menu-data.js" defer></script>
+<script src="js/basket.js" defer></script>
+<script src="js/site-actions.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/menu.js" defer></script>
+</head>
+<body class="page page-menu">
     <!-- Author: Merey Kuatbay -->
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Kent Sandwich home">
-        <!-- These spans separate the inline logo and name; neither part is a standalone section. -->
-        <span class="brand-mark" aria-hidden="true">
-          <img src="images/kent-logo.jpg" alt="">
-        </span>
-        <span class="brand-name">Kent<br>Sandwich</span>
+    <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
+    <header id="page-top" tabindex="-1" class="site-header navbar navbar-expand-lg border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
+<a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
+        <span class="brand-mark" aria-hidden="true"><img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover" width="44" height="44"></span>
+        <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
       </a>
-      <nav class="site-nav" aria-label="Main navigation">
-        <ul>
-          <li>
-            <a href="index.html">Home</a>
-          </li>
-          <li>
-            <a href="menu.html" aria-current="page">Menu</a>
-          </li>
-          <li>
-            <a href="about.html">Our place</a>
-          </li>
-          <li>
-            <a href="order.html">Order</a>
-          </li>
-          <li>
-            <a href="feedback.html">Feedback</a>
-          </li>
-          <li>
-            <a href="colophon.html">Colophon</a>
-          </li>
-        </ul>
-      </nav>
-      <p class="header-note">Astana · daily 09:30–21:30</p>
-    </header>
-    <main class="site-main" id="main-content">
-      <header class="page-intro menu-intro">
-        <p class="eyebrow">Menu</p>
-        <h1>Pick your sandwich</h1>
-        <p>Eight hot sandwiches, from the mini to the spicy cutlet. Choose a filling and check the price below.</p>
-        <a class="jump-link" href="#menu-table">Jump to price table ↓</a>
-      </header>
-      <section class="menu-board" aria-labelledby="menu-board-title">
-        <h2 id="menu-board-title" class="visually-hidden">Sandwich menu cards</h2>
-        <article class="menu-card menu-card-featured">
-          <p class="menu-number">01</p>
-          <h3>Mini sandwich</h3>
-          <p class="menu-note">The smallest sandwich on the menu.</p>
-          <p class="menu-price">390 ₸</p>
-          <!-- This span is an inline badge inside the card, not a separate content section. -->
-          <span class="menu-badge">Small</span>
-        </article>
-        <article class="menu-card">
-          <p class="menu-number">02</p>
-          <h3>Chicken</h3>
-          <p class="menu-note">Hot sandwich with chicken.</p>
-          <p class="menu-price">640 ₸</p>
-        </article>
-        <article class="menu-card">
-          <p class="menu-number">03</p>
-          <h3>Classic</h3>
-          <p class="menu-note">The classic Kent Sandwich option.</p>
-          <p class="menu-price">640 ₸</p>
-        </article>
-        <article class="menu-card">
-          <p class="menu-number">04</p>
-          <h3>Cheese</h3>
-          <p class="menu-note">Hot sandwich with cheese.</p>
-          <p class="menu-price">640 ₸</p>
-        </article>
-        <article class="menu-card">
-          <p class="menu-number">05</p>
-          <h3>Cutlet</h3>
-          <p class="menu-note">Hot sandwich with a cutlet.</p>
-          <p class="menu-price">690 ₸</p>
-        </article>
-        <article class="menu-card">
-          <p class="menu-number">06</p>
-          <h3>Spicy cutlet</h3>
-          <p class="menu-note">Cutlet sandwich with a spicy taste.</p>
-          <p class="menu-price">740 ₸</p>
-        </article>
-        <article class="menu-card">
-          <p class="menu-number">07</p>
-          <h3>Hot dog</h3>
-          <p class="menu-note">Kent Sandwich hot dog.</p>
-          <p class="menu-price">640 ₸</p>
-        </article>
-        <article class="menu-card">
-          <p class="menu-number">08</p>
-          <h3>Spicy</h3>
-          <p class="menu-note">A spicy hot sandwich.</p>
-          <p class="menu-price">690 ₸</p>
-        </article>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button><nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navbar"><ul class="navbar-nav mx-lg-auto gap-1 pt-3 pt-lg-0">
+          <li class="nav-item"><a href="index.html" class="nav-link px-3 fw-semibold">Home</a></li>
+          <li class="nav-item"><a href="menu.html" aria-current="page" class="nav-link px-3 fw-semibold active bg-dark text-white">Menu</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link px-3 fw-semibold">Our place</a></li>
+          <li class="nav-item"><a href="order.html" class="nav-link px-3 fw-semibold">Order</a></li>
+          <li class="nav-item"><a href="feedback.html" class="nav-link px-3 fw-semibold">Feedback</a></li>
+          <li class="nav-item"><a href="colophon.html" class="nav-link px-3 fw-semibold">Colophon</a></li>
+        </ul></nav><p class="header-note d-none d-xl-block small text-end mb-0 ms-3">Astana · daily 09:30–21:30</p>
+    </div></header><!-- container caps the content width on large screens and keeps readable gutters on phones. --><main class="site-main container px-lg-5" id="main-content"><header class="page-intro menu-intro py-4 py-lg-5 border-bottom mb-4 border-dark border-2"><div class="row g-4 align-items-center">
+<div class="col-12 col-lg-7">
+<p class="eyebrow small text-uppercase fw-semibold mb-3 fw-bold">Menu</p>
+        <h1 class="fw-bold text-uppercase display-2 lh-1 mb-0">Pick your sandwich</h1>
+        </div>
+<div class="col-12 col-lg-5">
+<p class="lead mb-2 fw-normal">Eight hot sandwiches, from the mini to the spicy cutlet. Choose a filling and check the price on its card.</p>
+<p class="small text-body-secondary mb-0">Menu illustrations are for reference. Confirm prices and availability with the shop.</p>
+      </div>
+</div></header><!-- Bootstrap Card: adapted from https://getbootstrap.com/docs/5.3/components/card/ using the existing sandwich titles, descriptions and prices; width is controlled by grid columns, with no inline style. --><section class="menu-board py-4" aria-labelledby="menu-board-title"><h2 id="menu-board-title" class="visually-hidden fw-bold mb-3 display-6 text-uppercase lh-1">Sandwich menu cards</h2>
+        <div class="row g-3">
+</div></section>
+      <section class="py-4" aria-labelledby="menu-guide-title">
+        <div class="row g-0 border border-dark">
+          <div class="col-md-7 col-lg-8 d-flex flex-column justify-content-center p-4 p-lg-5">
+            <h2 id="menu-guide-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">How to choose</h2>
+            <ol class="ps-3 mb-0">
+              <li class="mb-2"><strong>Size:</strong> Go mini for a snack or full size for a meal.</li>
+              <li class="mb-2"><strong>Filling:</strong> Try chicken, classic or cheese for a familiar taste, or cutlet for a heartier sandwich.</li>
+              <li><strong>Heat:</strong> Pick spicy cutlet if you want an extra kick.</li>
+            </ol>
+          </div>
+          <div class="col-md-5 col-lg-4">
+            <div class="ratio ratio-4x3 h-100">
+              <img src="images/kent-hero2.jpg" alt="A long toasted chicken sandwich in a Kent paper sleeve" class="menu-guide-photo object-fit-cover" width="840" height="1120" loading="lazy">
+            </div>
+          </div>
+        </div>
       </section>
-      <section class="menu-photo-band" aria-label="Kent Sandwich serving photo">
-        <figure>
-          <img src="images/kent-hero2.jpg" alt="A long toasted chicken sandwich in a Kent paper sleeve">
-          <figcaption>Made to eat in or carry out.</figcaption>
-        </figure>
-        <!-- This div groups the heading and list beside the figure; it has no independent semantic role. -->
+      <section class="menu-order-cta d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 border-top border-dark border-2 mt-4 pt-4" aria-labelledby="menu-order-cta-title">
         <div>
-          <p class="eyebrow">How to choose</p>
-          <h2>How to choose</h2>
-          <ol type="1">
-            <li>Choose mini or full size.</li>
-            <li>Pick a filling:
-              <ul>
-                <li>chicken, classic or cheese for a familiar taste;</li>
-                <li>cutlet or spicy cutlet for a more filling option.</li>
-              </ul>
-            </li>
-            <li>Go spicy only when you want the extra kick.</li>
-          </ol>
+          <p class="eyebrow small text-uppercase fw-bold mb-2">Ready when you are</p>
+          <h2 id="menu-order-cta-title" class="fw-bold mb-0 display-6 text-uppercase lh-1">Planning to order?</h2>
         </div>
+        <a class="btn btn-dark rounded-0 border-2 text-uppercase fw-bold px-4 py-3" href="order.html">Build your order →</a>
       </section>
-      <section class="table-section" id="menu-table" aria-labelledby="price-title">
-        <!-- The id is unique because the page has one canonical price table destination. -->
-        <h2 id="price-title">Price list</h2>
-        <!-- This div has no content meaning; it only lets the wide table scroll when space is limited. -->
-        <div class="table-scroll">
-          <table>
-            <caption>Kent Sandwich menu listed on 2GIS, July 2026<sup>1</sup></caption>
-            <thead>
-              <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Sandwich</th>
-                <th scope="col">Profile</th>
-                <th scope="col">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">01</th>
-                <td>Mini sandwich</td>
-                <td>Compact</td>
-                <td>390 ₸</td>
-              </tr>
-              <tr>
-                <th scope="row">02</th>
-                <td>Chicken</td>
-                <td>Classic</td>
-                <td>640 ₸</td>
-              </tr>
-              <tr>
-                <th scope="row">03</th>
-                <td>Classic</td>
-                <td>Classic</td>
-                <td>640 ₸</td>
-              </tr>
-              <tr>
-                <th scope="row">04</th>
-                <td>Cheese</td>
-                <td>Rich</td>
-                <td>640 ₸</td>
-              </tr>
-              <tr>
-                <th scope="row">05</th>
-                <td>Cutlet</td>
-                <td>Filling</td>
-                <td>690 ₸</td>
-              </tr>
-              <tr>
-                <th scope="row">06</th>
-                <td>Spicy cutlet</td>
-                <td>Hot</td>
-                <td>740 ₸</td>
-              </tr>
-              <tr>
-                <th scope="row">07</th>
-                <td>Hot dog</td>
-                <td>Classic</td>
-                <td>640 ₸</td>
-              </tr>
-              <tr>
-                <th scope="row">08</th>
-                <td>Spicy</td>
-                <td>Hot</td>
-                <td>690 ₸</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="source-note"><sup>1</sup> Availability and prices may change. Confirm the current menu with the shop before ordering.</p>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <p class="footer-brand">&copy; 2026 Kent Sandwich</p>
-      <p>Adolfa Yanushkevicha Street, 1 · Astana</p>
-      <p>
-        <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Instagram</a> · <a href="colophon.html">Sources &amp; credits</a>
-      </p>
-    </footer>
-    <a class="source-tab" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
-  </body>
+      </main>
+  <footer class="site-footer container-fluid bg-dark text-white mt-5 pt-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
+<p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
+      <p class="col-12 col-md-4 mb-0 small text-center">Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p class="col-12 col-md-4 mb-0 small text-md-end"><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a></p>
+    </div></footer>
+  <nav class="site-actions d-flex flex-wrap justify-content-end gap-2" aria-label="Quick links">
+    <a id="shared-basket-link" class="btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="order.html#order-cart"><span class="basket-icon" aria-hidden="true"></span>Basket <span id="basket-badge" class="badge text-bg-dark" hidden>0</span></a>
+    <a class="source-tab btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+    <a class="btn btn-dark btn-sm rounded-0 fw-bold shadow-sm" href="#page-top" aria-label="Back to top">↑</a>
+  </nav>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
 </html>
