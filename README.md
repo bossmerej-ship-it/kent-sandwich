@@ -6,24 +6,24 @@ Six connected pages for the Kent Sandwich location at Adolfa Yanushkevicha Stree
 
 Serve the repository root with `python -m http.server 8765 --bind 127.0.0.1` and open [the home page](http://127.0.0.1:8765/index.html). Use the same local address for each page so the basket carries across navigation. The browser loads Bootstrap and jQuery from their CDNs.
 
-## Endterm on Home Menu and Order
+## Home, Menu and Order
 
-Merey Kuatbay owns Home, Menu and Order. The table describes what changed since the previous jQuery assignment.
+Merey Kuatbay owns Home, Menu and Order.
 
 | Feature | Technology and source | New behaviour for the visitor |
 | --- | --- | --- |
-| Menu filtering | jQuery in [menu.js](js/menu.js) | The existing result count now shows the lowest price among the sandwiches that match the filters. |
-| Order selection and pickup | jQuery in [order.js](js/order.js) | Use − and + to change quantities. The basket and draft update from the shared catalogue prices. Enter pickup details and prepare or edit the local demo summary. |
-| Shared basket | jQuery basket controls in [main.js](js/main.js). Shared data and storage in [menu-data.js](js/menu-data.js) and [basket.js](js/basket.js). | The header shows one basket across Home, Menu and Order. Add sandwiches from Menu or Order. Editing a completed demo restores its items together. |
+| Menu filtering | jQuery in [menu.js](js/menu.js) | Each illustrated card shows its price. Add an item, then use the same button to add another. The result count shows the lowest price among the matches. |
+| Order selection and pickup | jQuery in [order.js](js/order.js) | Select a card or use − and +. The basket beside the form shows quantities and totals. Enter pickup details and prepare or edit the local demo summary. |
+| Shared basket | [basket.js](js/basket.js) for storage, [site-actions.js](js/site-actions.js) for the badge and [main.js](js/main.js) for the order controls. | All six pages link to the same basket. The badge shows the total number of sandwiches. Editing a completed demo restores its items. |
 
-The catalogue supplies the menu cards, price rows and order choices. Menu and Order use jQuery ready callbacks, delegated events and traversal. The filter panel slides, add-to-basket feedback fades in, and Order reveals its confirmation. Browser storage contains only product IDs and quantities.
+The catalogue supplies the menu cards and order choices. Menu and Order use jQuery ready callbacks, delegated events and traversal. The filter panel slides, add-to-basket feedback fades in, and Order reveals its confirmation. Browser storage contains only product IDs and quantities.
 
 Timur Naumov owns About, Feedback and Colophon. About and the shared header use plain JavaScript in `js/about.js` and `js/timur.js`; Feedback uses jQuery in `js/feedback.js`. The current changes are described below.
 
-### Try the endterm flows
+### Try the menu and order
 
 1. Open Menu from Home and set the profile to Hot. The lowest price shown in the result count changes from 390 ₸ to 690 ₸.
-2. Add a sandwich from Menu and open the basket from the header.
+2. Add a sandwich from Menu, use + to add another and open the floating Basket link.
 3. In Order, enter a future pickup date and time in Astana. Try an invalid phone or email, correct it and prepare the demo. Edit the summary to restore the draft.
 
 Run the automated checks with `node --test tests/*.test.cjs`.
@@ -68,12 +68,12 @@ Verification on 8 November 2026: `node --test tests/*.test.cjs` passed all 38 te
 | `feedback.html` | Visit feedback and local completion | Timur Naumov | `css/timur.css` |
 | `colophon.html` | Site structure, design choices and source credits | Timur Naumov | `css/timur.css` |
 
-All pages use `css/base.css` after Bootstrap and before their page stylesheet. Navigation lists the same six destinations. Main content uses `container`; the shared header and footer use `container-fluid`. Bootstrap columns stack on phones and split at `md` (768px) and `lg` (992px); navigation expands at `lg`.
+All pages use `css/base.css` after Bootstrap and before their page stylesheet. The header links to Home, Menu, Our place, Order and Feedback. The footer links to Sources & credits. The floating controls open the basket, open the map and return to the top. Main content uses `container`; the shared header and footer use `container-fluid`. Navigation expands at `lg` (992px).
 
 ## Three visitor journeys
 
 1. **Plan a visit.** Start at Home → open Our place → choose Details → read the address and daily hours → open the 2GIS location or telephone link. The visitor finishes with the information needed to reach or contact the shop.
-2. **Compare sandwiches.** Start at Home → open Menu → compare the sandwich descriptions and price table → identify a sandwich → open Our place for eating-in and takeaway information. The visitor finishes with a choice and the visit details.
+2. **Compare sandwiches.** Start at Home → open Menu → compare the descriptions and prices on the sandwich cards → identify a sandwich → open Our place for eating-in and takeaway information. The visitor finishes with a choice and the visit details.
 3. **Complete visit feedback.** Start at Home → open Feedback → enter visit details → choose Review feedback → correct any field errors → review or edit the summary → confirm. A new review card and an explicit local confirmation appear. Search, rating filters and sorting help read reviews. The visitor can copy the summary or start another form. No message is sent to the shop by this website.
 
 At the midterm, Order had prepared selection fields and result containers with an unconnected submission control. The Assignment 4–5 work now connects Merey's Home, Menu and Order pages through a retained basket and a validated local demo-order summary; the current scope and Functionality Plan are recorded below. The feedback journey above now describes Timur's JavaScript flow; the section below preserves the historical midterm behaviour.

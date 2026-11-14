@@ -10,11 +10,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/timur.css">
+  <script src="js/menu-data.js" defer></script>
+  <script src="js/basket.js" defer></script>
+  <script src="js/site-actions.js" defer></script>
   <script src="js/timur.js"></script>
 </head>
 <body class="page page-about" data-page="about">
   <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
-  <header class="site-header navbar navbar-expand-lg border-bottom border-dark bg-body py-4 border-2">
+  <header id="page-top" tabindex="-1" class="site-header navbar navbar-expand-lg border-bottom border-dark bg-body py-4 border-2">
     <!-- Bootstrap owns the responsive navigation; page scripts reuse these hooks. -->
     <div class="container-fluid px-3 px-md-4 px-xl-5">
       <a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
@@ -62,7 +65,7 @@
           <p class="lead mb-0 fw-normal">Kent Sandwich serves toasted sandwiches in kraft paper sleeves. The packaging is simple, easy to carry and matches the shop’s black and yellow style.</p>
         </div>
         <div class="col-12 col-md-6">
-          <img class="story-photo d-block img-fluid w-100 object-fit-cover" src="images/kent-packaging.jpg" alt="Kent Sandwiches presented in branded paper sleeves" width="1440" height="1920" loading="lazy">
+          <img class="story-photo d-block img-fluid w-100 object-fit-cover" src="images/kent-packaging.jpg" alt="Kent Sandwiches presented in branded paper sleeves" width="1200" height="1600" loading="lazy">
         </div>
       </div>
       <h3 class="h5 fw-bold text-uppercase lh-1">What defines the experience</h3>
@@ -151,14 +154,18 @@
     </div>
     <p id="gallery-error" class="hidden error small mt-3 mb-0" role="alert">This photograph could not be opened. Close the viewer and choose another photograph.</p>
   </dialog>
-  <footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5 border-top border-2 border-dark">
+  <footer class="site-footer container-fluid bg-dark text-white mt-5 pt-5 px-3 px-md-4 px-xl-5 border-top border-2 border-dark">
     <div class="row g-3 align-items-center text-center text-md-start">
       <p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
       <p class="col-12 col-md-4 mb-0 small text-center">Adolfa Yanushkevicha Street, 1 · Astana</p>
       <p class="col-12 col-md-4 mb-0 small text-md-end"><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html#sources" class="link-light">Sources &amp; credits</a></p>
     </div>
   </footer>
-  <a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 z-3 d-none d-lg-block rounded-0 border-2 text-uppercase fw-bold" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+  <nav class="site-actions d-flex flex-wrap justify-content-end gap-2" aria-label="Quick links">
+    <a id="shared-basket-link" class="btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="order.html#order-cart"><span class="basket-icon" aria-hidden="true"></span>Basket <span id="basket-badge" class="badge text-bg-dark" hidden>0</span></a>
+    <a class="source-tab btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+    <a class="btn btn-dark btn-sm rounded-0 fw-bold shadow-sm" href="#page-top" aria-label="Back to top">↑</a>
+  </nav>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <!-- Empty at the midterm: later behaviour can be added without changing this HTML. -->
   <script src="js/about.js" defer></script>

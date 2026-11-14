@@ -29,3 +29,56 @@
   --bs-btn-active-bg: #e0d30b;
   --bs-btn-active-border-color: #e0d30b;
 }
+
+html {
+  scroll-padding-bottom: 4.5rem;
+}
+
+.site-actions {
+  position: fixed;
+  z-index: 1030;
+  bottom: calc(.75rem + env(safe-area-inset-bottom));
+  right: calc(.75rem + env(safe-area-inset-right));
+  max-width: calc(100% - 1.5rem);
+}
+
+.site-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.site-actions .btn:focus-visible {
+  outline: 2px solid var(--bs-body-color);
+  outline-offset: 2px;
+}
+
+#basket-badge[hidden] {
+  display: none;
+}
+
+.basket-icon {
+  position: relative;
+  width: 1rem;
+  height: .65rem;
+  margin-top: .2rem;
+  border: 2px solid currentColor;
+  border-radius: 0 0 .2rem .2rem;
+}
+
+.basket-icon::before {
+  position: absolute;
+  inset: -.42rem .1rem auto;
+  height: .35rem;
+  border: 2px solid currentColor;
+  border-bottom: 0;
+  border-radius: .35rem .35rem 0 0;
+  content: "";
+}
+
+.site-footer {
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+}

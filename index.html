@@ -13,12 +13,13 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
 <script src="js/menu-data.js" defer></script>
 <script src="js/basket.js" defer></script>
+<script src="js/site-actions.js" defer></script>
 <script src="js/main.js" defer></script>
 </head>
 <body class="page page-home">
     <!-- Author: Merey Kuatbay -->
     <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
-    <header class="site-header navbar navbar-expand-lg border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
+    <header id="page-top" tabindex="-1" class="site-header navbar navbar-expand-lg border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
 <a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
         <span class="brand-mark" aria-hidden="true"><img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover" width="44" height="44"></span>
         <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
@@ -37,7 +38,7 @@
         <h1 id="home-title" class="fw-bold text-uppercase display-2 lh-1 mb-4">A proper hot sandwich. Nothing extra.</h1>
         <p class="lead mb-0 fw-normal"><em>Hot pressed sandwiches</em> for lunch, takeaway or a quick stop in the city. The short menu keeps ordering simple.</p>
         </div>
-<div class="col-12 col-lg-6"><figure class="hero-figure mb-0"><div class="ratio rounded-0 overflow-hidden ratio-1x1"><img src="images/kent-hero.jpg" alt="Kent Sandwich storefront and sign on Adolfa Yanushkevicha Street" class="w-100 h-100 object-fit-cover"></div></figure></div>
+<div class="col-12 col-lg-6"><figure class="hero-figure mb-0"><div class="ratio rounded-0 overflow-hidden ratio-1x1"><img src="images/kent-hero.jpg" alt="Kent Sandwich storefront and sign on Adolfa Yanushkevicha Street" class="w-100 h-100 object-fit-cover" width="1200" height="1600"></div></figure></div>
 </div></section><!-- Responsive block 1: facts stack on phones, use two columns at md and three at lg. --><section class="quick-facts py-0 border-bottom border-2 border-dark" aria-label="Kent Sandwich essentials"><div class="row g-0">
 <div class="col-12 col-md-6 col-lg-4"><article class="fact-card h-100 border-dark p-4 border-end"><p class="fact-number fw-bold mb-2 fs-2">8</p>
           <h2 class="fw-bold mb-3 text-uppercase lh-1 h5">Sandwiches</h2>
@@ -58,9 +59,9 @@
           <p>Kent serves hot pressed sandwiches in paper sleeves. Take a seat for lunch or grab a sandwich to go if you’re short on time.</p>
           <p>Chicken, Classic and Cheese are mild choices. Try the Cutlet for a heartier sandwich, or pick Spicy or Spicy Cutlet if you want more heat.</p>
           <p>For a quick snack, the Mini sandwich costs <strong>390 ₸</strong>. Full-size sandwiches cost <strong>640 to 740 ₸</strong>, depending on the filling.</p>
-          <p class="mb-0">The <mark class="bg-warning"><a class="link-dark" href="menu.html">full menu</a></mark> shows all eight options. You can filter by sandwich profile or set a maximum price per sandwich.</p>
+          <p class="mb-0">The <mark class="bg-warning"><a class="link-dark" href="menu.html">full menu</a></mark> shows all eight options and their prices. You can filter by sandwich profile or set a maximum price per sandwich.</p>
         </div></div>
-        <div class="col-12 col-md-6"><figure class="signature-figure"><div class="ratio rounded-0 overflow-hidden ratio-1x1"><img src="images/kent-packaging.jpg" alt="Three Kent Sandwiches in branded kraft paper sleeves" class="w-100 h-100 object-fit-cover"></div>
+        <div class="col-12 col-md-6"><figure class="signature-figure"><div class="ratio rounded-0 overflow-hidden ratio-1x1"><img src="images/kent-packaging.jpg" alt="Toasted Kent sandwiches in branded kraft paper sleeves" class="w-100 h-100 object-fit-cover" width="1200" height="1600" loading="lazy"></div>
 <figcaption class="figure-caption mt-2">Recognisable kraft sleeves, photographed at Kent Sandwich.</figcaption></figure></div>
 </div></section><!-- Responsive block 2: visit information uses one, two and four columns at phone, md and lg widths. --><section class="visit-strip bg-dark text-white rounded-0 p-4 p-lg-5 my-4" id="visit" aria-labelledby="visit-title"><div class="row g-4 align-items-center">
 <!-- The id is unique because this is the only home-page destination for visit details. --><!-- This div groups the visit heading within the larger visit section; it has no separate meaning. --><div class="col-12 col-md-6 col-lg-4"><div>
@@ -72,11 +73,17 @@
           <strong>Open daily</strong>
           <br>09:30–21:30</p></div>
         <div class="col-12 col-md-6 col-lg-3"><a class="btn btn-warning rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">Open in 2GIS</a></div>
-      </div></section></main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
+      </div></section></main>
+  <footer class="site-footer container-fluid bg-dark text-white mt-5 pt-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
 <p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
-      <p class="col-12 col-md-4 mb-0 small">Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p class="col-12 col-md-4 mb-0 small text-center">Adolfa Yanushkevicha Street, 1 · Astana</p>
       <p class="col-12 col-md-4 mb-0 small text-md-end"><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a></p>
-    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 shadow z-3 d-none d-lg-block" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+    </div></footer>
+  <nav class="site-actions d-flex flex-wrap justify-content-end gap-2" aria-label="Quick links">
+    <a id="shared-basket-link" class="btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="order.html#order-cart"><span class="basket-icon" aria-hidden="true"></span>Basket <span id="basket-badge" class="badge text-bg-dark" hidden>0</span></a>
+    <a class="source-tab btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+    <a class="btn btn-dark btn-sm rounded-0 fw-bold shadow-sm" href="#page-top" aria-label="Back to top">↑</a>
+  </nav>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

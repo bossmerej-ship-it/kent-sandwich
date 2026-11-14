@@ -187,7 +187,7 @@ test('visit week uses calendar days across month and year boundaries', function 
 });
 
 test('About and shared navigation run without a jQuery dependency', function () {
-  for (const file of ['timur.js', 'about.js']) {
+  for (const file of ['timur.js', 'about.js', 'site-actions.js']) {
     const source = fs.readFileSync(path.join(__dirname, '../js', file), 'utf8');
     assert.doesNotMatch(source, /jQuery\(|\$\(/, file);
   }
@@ -196,10 +196,11 @@ test('About and shared navigation run without a jQuery dependency', function () 
   }
 });
 
+const basketScripts = ['js/menu-data.js', 'js/basket.js', 'js/site-actions.js'];
 for (const [page, expectedScripts] of [
-  ['about.html', ['js/timur.js', 'js/about.js']],
-  ['feedback.html', ['js/timur.js', 'js/feedback.js']],
-  ['colophon.html', ['js/timur.js']]
+  ['about.html', [...basketScripts, 'js/timur.js', 'js/about.js']],
+  ['feedback.html', [...basketScripts, 'js/timur.js', 'js/feedback.js']],
+  ['colophon.html', [...basketScripts, 'js/timur.js']]
 ]) {
   test(page + ' loads the common script before its page script', function () {
     const html = fs.readFileSync(path.join(__dirname, '..', page), 'utf8');

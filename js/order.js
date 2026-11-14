@@ -98,26 +98,25 @@
     const choiceGrid = form.find('.choice-grid');
     const choices = Kent.MENU.map(function (item) {
       const id = 'item-' + item.id;
-      const checkbox = create('input', 'form-check-input flex-shrink-0 mt-0')
-        .attr({ id, type: 'checkbox', name: 'items', value: item.id });
       const description = create('span', '').append(
         create('span', 'd-block fw-semibold', item.name),
-        create('span', 'd-block small text-body-secondary', Kent.formatMoney(item.price))
+        create('span', 'd-block small', Kent.formatMoney(item.price))
       );
-      const label = create('label', 'form-check-label d-flex align-items-center gap-2')
-        .attr('for', id).append(checkbox, description);
+      const select = create('button', 'choice-toggle stretched-link text-start border-0 bg-transparent p-0').attr({
+        id, type: 'button', 'data-toggle-item': item.id, 'aria-pressed': 'false'
+      }).append(description);
       const minus = create('button', 'btn btn-outline-dark rounded-0 p-0 fs-5 lh-1', '−')
         .attr({ type: 'button', 'data-quantity-step': '-1', 'aria-label': 'Decrease ' + item.name + ' quantity' });
       const plus = create('button', 'btn btn-outline-dark rounded-0 p-0 fs-5 lh-1', '+')
         .attr({ type: 'button', 'data-quantity-step': '1', 'aria-label': 'Increase ' + item.name + ' quantity' });
       const quantity = create('output', 'd-flex align-items-center justify-content-center px-1 fw-semibold', '0')
-        .attr({ id: 'quantity-' + item.id, tabindex: '-1', 'aria-live': 'off' });
-      const stepper = create('div', 'order-quantity d-inline-flex flex-shrink-0 ms-auto')
+        .attr({ id: 'quantity-' + item.id, 'aria-live': 'off' });
+      const stepper = create('div', 'order-quantity position-relative z-2 d-inline-flex flex-shrink-0 ms-auto')
         .attr({ role: 'group', 'aria-label': item.name + ' quantity' }).append(minus, quantity, plus);
-      const tile = create('div', 'choice-card d-flex flex-wrap align-items-center gap-2 border rounded-0 px-2 px-sm-3 py-3 h-100')
-        .attr('data-menu-item', item.id).append(label, stepper);
+      const tile = create('div', 'choice-card position-relative d-flex flex-wrap align-items-center gap-2 border rounded-0 px-2 px-sm-3 py-3 h-100')
+        .attr('data-menu-item', item.id).append(select, stepper);
       create('div', 'col-12 col-md-6').append(tile).appendTo(choiceGrid);
-      return { id: item.id, checkbox, tile, minus, quantity, plus };
+      return { id: item.id, select, tile, minus, quantity, plus };
     });
     let resetting = false;
     let confirmed = false;
@@ -127,13 +126,10 @@
     // Retain native field types and limits, but show our own nearby errors.
     // Client checks can be bypassed; a real server must validate everything again before accepting an order.
     form.prop('noValidate', true);
-    submit.attr('type', 'submit').text('Prepare demo order');
+    submit.attr('type', 'submit');
     name.attr('maxlength', 80);
     date.attr('min', getShopClock(new Date()).date);
     request.siblings('span').text('Include my contact preference in the demo summary.');
-    $('.order-summary dt').filter(function () {
-      return $(this).text() === 'Online form';
-    }).next('dd').text('Prepare a demo pickup summary on this page.');
 
     function value(id) { return String($('#' + id).val() || '').trim(); }
 
@@ -173,20 +169,12 @@
 
     const selectionError = create('p', 'form-message is-error small mt-2 is-hidden')
       .attr('id', 'selection-error').appendTo(form.find('fieldset').first());
-    function showSelectionError() {
-      const empty = form.find('[name="items"]:checked').length === 0;
+    function setSelectionError(empty) {
       selectionError.text(empty ? 'Choose at least one sandwich.' : '').toggleClass('is-hidden', !empty);
       choices.forEach(function (choice) {
-        choice.checkbox.toggleClass('is-error', empty);
-        if (empty) {
-          choice.checkbox.attr('aria-invalid', 'true');
-          appendDescription(choice.checkbox, 'selection-error');
-        } else {
-          choice.checkbox.removeAttr('aria-invalid');
-          removeDescription(choice.checkbox, 'selection-error');
-        }
+        if (empty) appendDescription(choice.select, 'selection-error');
+        else removeDescription(choice.select, 'selection-error');
       });
-      return empty;
     }
 
     const noteCounter = create('span', 'd-block small mt-1').attr('id', 'order-note-count').insertAfter(note);
@@ -197,24 +185,13 @@
       .html('<strong>Demo only:</strong> your details stay on this page. No order, payment or contact request is sent to the shop.')
       .insertBefore(submit);
     appendDescription(submit, demoNotice.attr('id'));
-    const draft = create('section', 'border border-dark p-3 mb-4').attr('aria-labelledby', 'pickup-draft-title');
-    const draftTitle = create('h3', 'h5 fw-bold', 'Your demo draft').attr('id', 'pickup-draft-title');
-    const draftText = create('p', 'mb-2');
-    const availability = create('p', 'small mb-0', 'Pickup times: 09:30–21:15, Astana time. Choose a future date and time.');
-    draft.append(draftTitle, draftText, availability).appendTo(form.find('fieldset').eq(1));
-    const submitHint = create('p', 'form-text mb-3').attr('id', 'order-submit-hint').insertBefore(submit);
-    appendDescription(submit, submitHint.attr('id'));
+    const submitHint = $('#order-submit-hint');
 
-    function updateDraft() {
-      const basket = Kent.calculateCart(Kent.getCart());
-      const selection = basket.quantity + (basket.quantity === 1 ? ' sandwich' : ' sandwiches') + ' · ' + Kent.formatMoney(basket.total);
-      draftText.text(selection + (date.val() && time.val()
-        ? ' · Pickup ' + date.val() + ' at ' + time.val() + ' (Astana).' : ' · Pickup not selected yet.'));
+    function updateFormControls() {
+      const empty = Kent.getCart().length === 0;
       noteCounter.text(String(note.val()).length + ' / 240 characters');
-      submit.prop('disabled', basket.quantity === 0 || confirmed);
-      submitHint.text(confirmed ? 'Demo prepared. The form and basket are cleared. Use Edit details to restore this draft.'
-        : basket.quantity === 0 ? 'Choose at least one sandwich to prepare a demo order.'
-          : 'Review your basket and pickup details, then prepare the demo summary.');
+      submit.prop('disabled', empty || confirmed);
+      submitHint.toggleClass('is-hidden', !empty || confirmed);
     }
 
     function invalidateConfirmation() {
@@ -237,15 +214,14 @@
         const atMin = count === 0;
         const atMax = count === Kent.MAX_QUANTITY;
         const reachedLimit = (atMin && choice.minus.is(':focus')) || (atMax && choice.plus.is(':focus'));
-        // .prop('checked') updates the live state; the basket owns the quantity.
-        choice.checkbox.prop('checked', !atMin);
+        choice.select.attr('aria-pressed', String(!atMin));
         choice.tile.toggleClass('is-selected', !atMin);
         choice.quantity.text(count);
         choice.minus.prop('disabled', atMin);
         choice.plus.prop('disabled', atMax);
-        if (reachedLimit) choice.quantity.trigger('focus');
+        if (reachedLimit) choice.select.trigger('focus');
       });
-      updateDraft();
+      updateFormControls();
     }
 
     function fieldErrors() {
@@ -275,7 +251,8 @@
       });
       if (submitted) {
         const count = Array.from(errors.values()).filter(Boolean).length;
-        const empty = showSelectionError();
+        const empty = Kent.getCart().length === 0;
+        setSelectionError(empty);
         errorSummary.text(empty ? 'Choose at least one sandwich and check the highlighted fields.'
           : count ? 'Please correct the highlighted fields before preparing your demo order.' : '')
           .toggleClass('is-hidden', !empty && count === 0);
@@ -288,16 +265,17 @@
       const count = getQuantity(Kent.getCart(), id) + Number(button.attr('data-quantity-step'));
       Kent.announce(Kent.setQuantity(id, count).message);
     });
-    choiceGrid.on('change', 'input[name="items"]', function () {
-      const checkbox = $(this);
-      Kent.announce(Kent.setQuantity(checkbox.val(), checkbox.prop('checked') ? 1 : 0).message);
+    choiceGrid.on('click', '[data-toggle-item]', function () {
+      const id = $(this).attr('data-toggle-item');
+      const count = getQuantity(Kent.getCart(), id);
+      Kent.announce(Kent.setQuantity(id, count === 0 ? 1 : 0).message);
     });
-    form.on('input change', 'input:not([name="items"]), select, textarea', function (event) {
+    form.on('input change', 'input, select, textarea', function (event) {
       invalidateConfirmation();
       const id = $(this).attr('id');
       if (event.type === 'change' && messages.has(id)) touched.add(id);
       updateTouchedErrors();
-      updateDraft();
+      updateFormControls();
     });
     form.on('focusout', 'input, select, textarea', function () {
       const id = $(this).attr('id');
@@ -327,11 +305,7 @@
         control.val((defaults.length ? defaults.first() : control.find('option').first()).val());
       });
       messages.forEach(function (message, id) { showFieldError($('#' + id), '', false); });
-      selectionError.addClass('is-hidden').text('');
-      choices.forEach(function (choice) {
-        choice.checkbox.removeClass('is-error').removeAttr('aria-invalid');
-        removeDescription(choice.checkbox, 'selection-error');
-      });
+      setSelectionError(false);
       errorSummary.addClass('is-hidden').text('');
       if (!keepConfirmation) invalidateConfirmation();
       date.attr('min', getShopClock(new Date()).date);
@@ -377,7 +351,7 @@
           // Focus only after the summary is visible; the snapshot survives the form reset.
           if (confirmed) $(this).trigger('focus');
         });
-      updateDraft();
+      updateFormControls();
     }
 
     // Delegation works for confirmation buttons that are created only after a successful submit.
@@ -414,15 +388,16 @@
         touched.add(id);
         showFieldError(control, error, Boolean(value(id)) && !control.prop('disabled'));
       });
-      const noSelection = showSelectionError();
       const firstInvalid = form.find('input, select, textarea').filter(function () {
         return Boolean(errors.get($(this).attr('id')));
       }).first();
       const basket = Kent.calculateCart(Kent.getCart());
-      if (noSelection || firstInvalid.length || basket.quantity === 0) {
+      const noSelection = basket.quantity === 0;
+      setSelectionError(noSelection);
+      if (noSelection || firstInvalid.length) {
         errorSummary.text(noSelection ? 'Choose at least one sandwich, then check the highlighted fields.'
           : 'Please correct the highlighted fields before preparing your demo order.').removeClass('is-hidden');
-        (noSelection ? choices[0].checkbox : firstInvalid).trigger('focus');
+        (noSelection ? choices[0].select : firstInvalid).trigger('focus');
         return;
       }
       const snapshot = captureSnapshot(basket);
@@ -434,8 +409,8 @@
       // Native reset runs after this handler; cancel it to avoid overwriting our synchronous cart sync.
       event.preventDefault();
       resetDraft(false);
-      Kent.announce('Demo draft cleared, including basket and pickup details.');
-      choices[0].checkbox.trigger('focus');
+      Kent.announce('Form and basket cleared.');
+      choices[0].select.trigger('focus');
     });
 
     Kent.onCartChange(function () {

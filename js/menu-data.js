@@ -4,14 +4,22 @@
   const Kent = window.Kent || {};
   const MAX_QUANTITY = 10;
   const MENU = Object.freeze([
-    { id: 'mini', name: 'Mini sandwich', price: 390, description: 'The smallest sandwich on the menu.', profile: 'Compact' },
-    { id: 'chicken', name: 'Chicken', price: 640, description: 'Hot sandwich with chicken.', profile: 'Classic' },
-    { id: 'classic', name: 'Classic', price: 640, description: 'The classic Kent Sandwich option.', profile: 'Classic' },
-    { id: 'cheese', name: 'Cheese', price: 640, description: 'Hot sandwich with cheese.', profile: 'Rich' },
-    { id: 'cutlet', name: 'Cutlet', price: 690, description: 'Hot sandwich with a cutlet.', profile: 'Filling' },
-    { id: 'spicy-cutlet', name: 'Spicy cutlet', price: 740, description: 'Cutlet sandwich with a spicy taste.', profile: 'Hot' },
-    { id: 'hot-dog', name: 'Hot dog', price: 640, description: 'Kent Sandwich hot dog.', profile: 'Classic' },
-    { id: 'spicy', name: 'Spicy', price: 690, description: 'A spicy hot sandwich.', profile: 'Hot' }
+    { id: 'mini', name: 'Mini sandwich', price: 390, description: 'The smallest sandwich on the menu.', profile: 'Compact',
+      imageAlt: 'Illustration of a short toasted sandwich with a cut end' },
+    { id: 'chicken', name: 'Chicken', price: 640, description: 'Hot sandwich with chicken.', profile: 'Classic',
+      imageAlt: 'Illustration of a toasted baguette sandwich with sliced chicken' },
+    { id: 'classic', name: 'Classic', price: 640, description: 'The classic Kent Sandwich option.', profile: 'Classic',
+      imageAlt: 'Illustration of two halves of a baguette sandwich with folded filling' },
+    { id: 'cheese', name: 'Cheese', price: 640, description: 'Hot sandwich with cheese.', profile: 'Rich',
+      imageAlt: 'Illustration of a toasted sandwich with melted cheese' },
+    { id: 'cutlet', name: 'Cutlet', price: 690, description: 'Hot sandwich with a cutlet.', profile: 'Filling',
+      imageAlt: 'Illustration of a baguette sandwich with a breaded cutlet' },
+    { id: 'spicy-cutlet', name: 'Spicy cutlet', price: 740, description: 'Cutlet sandwich with a spicy taste.', profile: 'Hot',
+      imageAlt: 'Illustration of a breaded cutlet sandwich with red chilli' },
+    { id: 'hot-dog', name: 'Hot dog', price: 640, description: 'Kent Sandwich hot dog.', profile: 'Classic',
+      imageAlt: 'Illustration of a grilled sausage in a split toasted bun' },
+    { id: 'spicy', name: 'Spicy', price: 690, description: 'A spicy hot sandwich.', profile: 'Hot',
+      imageAlt: 'Illustration of a toasted baguette sandwich with red pepper' }
   ].map(function (item) { return Object.freeze(item); }));
 
   function getMenuItem(items, id) {

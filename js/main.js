@@ -1,4 +1,4 @@
-// jQuery 3.7.1 full loads first; ready waits for the frozen markup.
+// jQuery 3.7.1 full loads first; ready waits for the page markup.
 jQuery(function ($) {
   'use strict';
 
@@ -39,18 +39,13 @@ jQuery(function ($) {
   navList.find('a').each(function () {
     $(this).toggleClass('active', $(this).attr('aria-current') === 'page');
   });
-  const navLink = element('a', 'nav-link px-3 fw-semibold')
-    .attr({ id: 'shared-basket-link', href: 'order.html#order-cart' });
-  element('li', 'nav-item').append(navLink).appendTo(navList);
-
   const cartRegion = $('#order-cart');
   const cartList = $('#cart-items');
   const cartEmpty = $('#cart-empty-state');
-  const clearButton = element('button', 'btn btn-outline-dark rounded-0 mt-3', 'Clear basket')
+  const clearButton = element('button', 'btn btn-outline-dark btn-sm rounded-0 mt-3', 'Clear basket')
     .attr({ type: 'button', id: 'clear-basket' });
   if (cartRegion.length) {
-    cartEmpty.append(' ', element('a', 'link-dark fw-semibold', 'Browse the menu.').attr('href', 'menu.html'));
-    cartRegion.removeClass('is-hidden').append(clearButton);
+    cartRegion.append(clearButton);
     clearButton.on('click', function () {
       Kent.clearCart();
       cartEmpty.attr('tabindex', '-1').trigger('focus');
@@ -58,48 +53,50 @@ jQuery(function ($) {
     });
   }
 
-  function makeCartButton(action, item, label, accessibleName) {
-    return element('button', 'btn btn-outline-dark rounded-0', label).attr({
-      type: 'button', 'data-cart-action': action, 'data-item-id': item.id, 'aria-label': accessibleName
+  function makeCartButton(action, label, accessibleName) {
+    return element('button', 'btn btn-outline-dark btn-sm rounded-0', label).attr({
+      type: 'button', 'data-cart-action': action, 'aria-label': accessibleName
     });
   }
 
   // Rewrite 2: $(), .empty(), .append(), .prop() and delegated .on() replace native basket DOM/listeners.
   // Building rows is shorter; calculation/storage logic stays the same and focus recovery still needs care.
   function renderCart() {
-    const summary = Kent.calculateCart(Kent.getCart());
-    navLink.text('Basket (' + summary.quantity + ')')
-      .attr('aria-label', 'Basket, ' + summary.quantity + ' items, ' + Kent.formatMoney(summary.total));
     if (!cartList.length) return;
+    const summary = Kent.calculateCart(Kent.getCart());
     const focused = cartList.find(':focus');
-    const focusedId = focused.attr('data-item-id');
+    const focusedId = focused.closest('li').attr('data-item-id');
     const focusedAction = focused.attr('data-cart-action');
+    const scrollTop = cartList.scrollTop();
     cartList.empty();
-    // These rows exist only here: #cart-items in the frozen HTML is empty.
     summary.lines.forEach(function (line) {
-      const row = element('li', 'border-bottom py-3').attr('data-item-id', line.item.id);
-      const heading = element('p', 'fw-bold mb-2', line.item.name + ' — ' + Kent.formatMoney(line.item.price) + ' each');
-      const controls = element('div', 'd-flex flex-wrap align-items-center gap-2');
-      const minus = makeCartButton('decrease', line.item, '−', 'Decrease ' + line.item.name + ' quantity');
-      const plus = makeCartButton('increase', line.item, '+', 'Increase ' + line.item.name + ' quantity')
+      const row = element('li', 'border-bottom py-2').attr('data-item-id', line.item.id);
+      const heading = element('div', 'd-flex flex-wrap justify-content-between gap-1 mb-1').append(
+        element('span', 'fw-semibold', line.item.name),
+        element('strong', 'text-nowrap', Kent.formatMoney(line.subtotal))
+      );
+      const controls = element('div', 'd-flex flex-wrap align-items-center gap-1');
+      const minus = makeCartButton('decrease', '−', 'Decrease ' + line.item.name + ' quantity');
+      const plus = makeCartButton('increase', '+', 'Increase ' + line.item.name + ' quantity')
         .prop('disabled', line.quantity >= Kent.MAX_QUANTITY);
       const quantity = element('span', 'px-2', String(line.quantity))
         .attr('aria-label', line.quantity + ' ' + line.item.name);
-      const remove = makeCartButton('remove', line.item, 'Remove', 'Remove ' + line.item.name + ' from basket');
-      controls.append(minus, quantity, plus, remove, element('strong', 'ms-sm-auto', Kent.formatMoney(line.subtotal)));
+      const remove = makeCartButton('remove', 'Remove', 'Remove ' + line.item.name + ' from basket');
+      controls.append(minus, quantity, plus, remove.addClass('ms-auto'));
       row.append(heading, controls).appendTo(cartList);
     });
-    $('#cart-count').text(summary.quantity + (summary.quantity === 1 ? ' item' : ' items'));
+    cartList.scrollTop(scrollTop);
     $('#cart-total').text(Kent.formatMoney(summary.total));
     cartEmpty.toggleClass('is-hidden', summary.quantity !== 0);
     clearButton.prop('disabled', summary.quantity === 0);
     if (focused.length) {
       const buttons = cartList.find('button:not(:disabled)');
-      const next = buttons.filter(function () {
-        return $(this).attr('data-item-id') === focusedId && $(this).attr('data-cart-action') === focusedAction;
-      }).first();
-      if (next.length || buttons.length) (next.length ? next : buttons.first()).trigger('focus');
-      else cartEmpty.attr('tabindex', '-1').trigger('focus');
+      const sameItem = buttons.filter(function () {
+        return $(this).closest('li').attr('data-item-id') === focusedId;
+      });
+      const sameAction = sameItem.filter(function () { return $(this).attr('data-cart-action') === focusedAction; });
+      const next = sameAction[0] || sameItem[0] || buttons[0] || cartEmpty[0];
+      next.focus();
     }
   }
 

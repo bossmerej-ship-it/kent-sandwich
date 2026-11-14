@@ -13,13 +13,14 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
 <script src="js/menu-data.js" defer></script>
 <script src="js/basket.js" defer></script>
+<script src="js/site-actions.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/menu.js" defer></script>
 </head>
 <body class="page page-menu">
     <!-- Author: Merey Kuatbay -->
     <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 bg-dark text-white p-3" href="#main-content">Skip to content</a>
-    <header class="site-header navbar navbar-expand-lg border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
+    <header id="page-top" tabindex="-1" class="site-header navbar navbar-expand-lg border-bottom border-dark py-3"><div class="container-fluid px-3 px-md-4 px-xl-5">
 <a class="brand navbar-brand d-flex align-items-center gap-2 me-3" href="index.html" aria-label="Kent Sandwich home">
         <span class="brand-mark" aria-hidden="true"><img src="images/kent-logo.jpg" alt="" class="rounded-circle border border-dark object-fit-cover" width="44" height="44"></span>
         <span class="brand-name fs-6 fw-bold lh-1 text-uppercase">Kent<br>Sandwich</span>
@@ -38,10 +39,11 @@
         <h1 class="fw-bold text-uppercase display-2 lh-1 mb-0">Pick your sandwich</h1>
         </div>
 <div class="col-12 col-lg-5">
-<p class="lead mb-0 fw-normal">Eight hot sandwiches, from the mini to the spicy cutlet. Choose a filling and check the price below.</p>
+<p class="lead mb-2 fw-normal">Eight hot sandwiches, from the mini to the spicy cutlet. Choose a filling and check the price on its card.</p>
+<p class="small text-body-secondary mb-0">Menu illustrations are for reference. Confirm prices and availability with the shop.</p>
       </div>
 </div></header><!-- Bootstrap Card: adapted from https://getbootstrap.com/docs/5.3/components/card/ using the existing sandwich titles, descriptions and prices; width is controlled by grid columns, with no inline style. --><section class="menu-board py-4" aria-labelledby="menu-board-title"><h2 id="menu-board-title" class="visually-hidden fw-bold mb-3 display-6 text-uppercase lh-1">Sandwich menu cards</h2>
-        <!-- Responsive block 3: one card per row on phones, two at md and four at lg. --><div class="row g-0">
+        <div class="row g-3">
 </div></section>
       <section class="py-4" aria-labelledby="menu-guide-title">
         <div class="row g-0 border border-dark">
@@ -55,41 +57,29 @@
           </div>
           <div class="col-md-5 col-lg-4">
             <div class="ratio ratio-4x3 h-100">
-              <img src="images/kent-hero2.jpg" alt="A long toasted chicken sandwich in a Kent paper sleeve" class="menu-guide-photo object-fit-cover" width="1440" height="1920">
+              <img src="images/kent-hero2.jpg" alt="A long toasted chicken sandwich in a Kent paper sleeve" class="menu-guide-photo object-fit-cover" width="840" height="1120" loading="lazy">
             </div>
           </div>
         </div>
       </section>
-      <section class="table-section py-5" id="menu-table" aria-labelledby="price-title"><h2 id="price-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Price list</h2>
-        <!-- This div has no content meaning; it only lets the wide table scroll when space is limited. -->
-        <div class="table-responsive rounded-0 border">
-          <table class="table table-striped table-hover align-middle mb-0">
-<caption class="caption-top small px-3 bg-warning text-dark fw-bold text-uppercase py-3">Kent Sandwich menu listed on 2GIS, July 2026<sup>1</sup>
-</caption>
-            <thead class="table-dark"><tr>
-<th scope="col">No.</th>
-                <th scope="col">Sandwich</th>
-                <th scope="col">Profile</th>
-                <th scope="col">Price</th>
-              </tr></thead>
-<tbody id="menu-price-rows">
-</tbody>
-</table>
-</div>
-        <p class="source-note small text-body-secondary mt-2"><sup>1</sup> Availability and prices may change. Confirm the current menu with the shop before ordering.</p>
-      </section>
-      <section class="menu-order-cta d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 border-top border-dark border-2 mt-5 pt-4" aria-labelledby="menu-order-cta-title">
+      <section class="menu-order-cta d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 border-top border-dark border-2 mt-4 pt-4" aria-labelledby="menu-order-cta-title">
         <div>
           <p class="eyebrow small text-uppercase fw-bold mb-2">Ready when you are</p>
           <h2 id="menu-order-cta-title" class="fw-bold mb-0 display-6 text-uppercase lh-1">Planning to order?</h2>
         </div>
         <a class="btn btn-dark rounded-0 border-2 text-uppercase fw-bold px-4 py-3" href="order.html">Build your order →</a>
       </section>
-      </main><!-- Responsive text: footer is centred on phones and left/right aligned from md (768px). --><footer class="site-footer container-fluid bg-dark text-white mt-5 py-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
+      </main>
+  <footer class="site-footer container-fluid bg-dark text-white mt-5 pt-5 px-3 px-md-4 px-xl-5"><div class="row g-3 align-items-center text-center text-md-start">
 <p class="col-12 col-md-4 mb-0 fw-bold">© 2026 Kent Sandwich</p>
-      <p class="col-12 col-md-4 mb-0 small">Adolfa Yanushkevicha Street, 1 · Astana</p>
+      <p class="col-12 col-md-4 mb-0 small text-center">Adolfa Yanushkevicha Street, 1 · Astana</p>
       <p class="col-12 col-md-4 mb-0 small text-md-end"><a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="link-light">Instagram</a> · <a href="colophon.html" class="link-light">Sources &amp; credits</a></p>
-    </div></footer><a class="source-tab btn btn-warning btn-sm position-fixed bottom-0 end-0 m-3 shadow z-3 d-none d-lg-block" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+    </div></footer>
+  <nav class="site-actions d-flex flex-wrap justify-content-end gap-2" aria-label="Quick links">
+    <a id="shared-basket-link" class="btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="order.html#order-cart"><span class="basket-icon" aria-hidden="true"></span>Basket <span id="basket-badge" class="badge text-bg-dark" hidden>0</span></a>
+    <a class="source-tab btn btn-warning btn-sm rounded-0 fw-bold shadow-sm" href="https://2gis.kz/astana/firm/70000001114376342" target="_blank" rel="noopener noreferrer">2GIS ↗</a>
+    <a class="btn btn-dark btn-sm rounded-0 fw-bold shadow-sm" href="#page-top" aria-label="Back to top">↑</a>
+  </nav>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

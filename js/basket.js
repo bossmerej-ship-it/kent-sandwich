@@ -31,7 +31,7 @@
     return cart.map(function (line) { return { id: line.id, quantity: line.quantity }; });
   }
 
-  // Only product IDs and quantities go into storage. Both interfaces use this same basket.
+  // Only product IDs and quantities go into the shared basket storage.
   function replaceCart(lines) {
     cart = Kent.normaliseCart(lines);
     if (storageAvailable) {
@@ -74,7 +74,6 @@
   }
 
   function clearCart() { replaceCart([]); }
-  function removeFromCart(id) { return setQuantity(id, 0); }
   function onCartChange(listener) { listeners.add(listener); }
   function isCartStorageAvailable() { return storageAvailable; }
 
@@ -86,7 +85,7 @@
   });
 
   Object.assign(Kent, {
-    getCart, replaceCart, setQuantity, addToCart, removeFromCart, clearCart,
+    getCart, replaceCart, setQuantity, addToCart, clearCart,
     onCartChange, isCartStorageAvailable
   });
 })();

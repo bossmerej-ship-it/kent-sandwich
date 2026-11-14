@@ -4,8 +4,7 @@ jQuery(function ($) {
     const Kent = window.Kent;
     const board = $('.menu-board');
     const grid = $('.menu-board > .row');
-    const tableBody = $('#menu-price-rows');
-    if (!Kent || !board.length || !grid.length || !tableBody.length) {
+    if (!Kent || !board.length || !grid.length) {
         return;
     }
 
@@ -88,7 +87,7 @@ jQuery(function ($) {
     count.attr('role', 'status');
     count.attr('aria-atomic', 'true');
     const basketLink = create('a', 'link-dark fw-bold');
-    basketLink.attr("href", 'order.html');
+    basketLink.attr("href", 'order.html#order-cart');
     summary.append(count, basketLink);
 
     const feedback = create('p', 'small mb-3');
@@ -114,11 +113,6 @@ jQuery(function ($) {
     });
     grid.before(form, summary, feedback, empty);
 
-    function menuNumber(item) {
-        return String(Kent.MENU.indexOf(item) + 1).padStart(2, '0');
-    }
-
-    // Both the card grid and table below use this same filtered array.
     function sortedResults(items, order) {
         const result = items.slice();
         if (order === 'price-asc') {
@@ -132,53 +126,58 @@ jQuery(function ($) {
     }
 
     function renderMenuCard(item) {
-        const column = create('div', 'col-12 col-md-6 col-lg-3');
+        const column = create('div', 'col-12 col-sm-6 col-lg-3');
         const colour = item.id === 'mini' ? 'bg-warning' : 'bg-white';
         const article = create('article', 'menu-card card h-100 border-dark border-2 rounded-0 ' + colour);
         article.attr("id", 'menu-item-' + item.id);
         article.attr("data-menu-item", item.id);
-        article.attr("data-price", String(item.price));
-        const body = create('div', 'card-body d-flex flex-column p-4');
-        const number = create('p', 'menu-number small text-body-secondary mb-3', menuNumber(item));
+        const image = create('img', 'menu-card-photo border-bottom border-dark').attr({
+            src: 'images/menu/' + item.id + '.webp',
+            alt: item.imageAlt,
+            width: 720,
+            height: 480,
+            loading: 'lazy'
+        });
+        const body = create('div', 'card-body d-flex flex-column p-3');
         const title = create('h3', 'h5 fw-bold card-title text-uppercase lh-1', item.name);
         const note = create('p', 'menu-note card-text text-body-secondary', item.description);
         const profileText = create('p', 'small text-body-secondary', 'Profile: ' + item.profile);
         const price = create('p', 'menu-price mt-auto fs-3 fw-bold mb-0', Kent.formatMoney(item.price));
-        body.append(number, title, note, profileText, price);
-        const selection = create('p', 'small mt-3 mb-2');
-        selection.attr("data-basket-quantity", item.id);
+        body.append(title, note, profileText, price);
+        const selection = create('p', 'menu-item-quantity small mt-2 mb-2').attr('id', 'menu-quantity-' + item.id);
         const add = create('button', 'btn btn-dark rounded-0 border-2 fw-bold', 'Add to basket');
         add.attr("type", 'button');
         add.attr("data-add-item", item.id);
-        add.attr('aria-label', 'Add ' + item.name + ' to basket');
+        add.attr('aria-label', 'Add to basket: ' + item.name);
         body.append(selection, add);
-        article.append(body);
+        article.append(image, body);
         column.append(article);
         return column;
-    }
-
-    function renderPriceRow(item) {
-        const row = create('tr');
-        row.attr("id", 'price-row-' + item.id);
-        row.attr("data-menu-item", item.id);
-        row.attr("data-price", String(item.price));
-        const number = create('th', '', menuNumber(item));
-        number.attr("scope", 'row');
-        row.append(number, create('td', '', item.name), create('td', '', item.profile), create('td', '', Kent.formatMoney(item.price)));
-        return row;
     }
 
     // Update existing nodes only, preserving keyboard focus on the Add button.
     function updateBasketSelection() {
         const cart = Kent.getCart();
-        grid.find('[data-basket-quantity]').each(function () {
-            const label = $(this);
-            const entry = cart.find(function (line) {
-                return line.id === label.attr('data-basket-quantity');
-            });
+        grid.find('button[data-add-item]').each(function () {
+            const button = $(this);
+            const id = button.attr('data-add-item');
+            const item = Kent.getMenuItem(Kent.MENU, id);
+            const entry = cart.find(function (line) { return line.id === id; });
             const quantity = entry ? entry.quantity : 0;
-            label.text(quantity > 0 ? quantity + ' in your basket' : 'Not in your basket yet');
-            label.closest('.menu-card').toggleClass('is-selected', quantity > 0);
+            const atLimit = quantity >= Kent.MAX_QUANTITY;
+            const selection = $('#menu-quantity-' + id);
+            selection.text(quantity > 0
+                ? quantity + ' in your basket' + (atLimit ? ' · Limit reached' : '')
+                : '');
+            selection.toggleClass('fw-bold', quantity > 0);
+            button.closest('.menu-card').toggleClass('is-selected', quantity > 0);
+            button.text(quantity > 0 ? quantity + ' +' : 'Add to basket')
+                .attr('aria-label', quantity > 0 ? 'Add one more ' + item.name + ' to basket' : 'Add to basket: ' + item.name);
+            if (quantity) button.attr('aria-describedby', selection.attr('id'));
+            else button.removeAttr('aria-describedby');
+            const moveFocus = atLimit && button.is(':focus');
+            button.prop('disabled', atLimit);
+            if (moveFocus) selection.attr('tabindex', '-1').trigger('focus');
         });
         const basket = Kent.calculateCart(cart);
         basketLink.text('Review basket (' + basket.quantity + ') · ' + Kent.formatMoney(basket.total) + ' →');
@@ -191,19 +190,10 @@ jQuery(function ($) {
         const filtered = Kent.filterMenu(Kent.MENU, search.val(), profile.val(), maxPrice);
         const results = sortedResults(filtered, sorting.val());
         grid.empty();
-        tableBody.empty();
         results.forEach(function (item) {
             grid.append(renderMenuCard(item));
-            tableBody.append(renderPriceRow(item));
         });
         empty.toggleClass('is-hidden', results.length > 0);
-        if (results.length === 0) {
-            const row = create('tr');
-            const cell = create('td', 'text-center py-4', 'No sandwiches match the selected filters.');
-            cell.attr("colspan", 4);
-            row.append(cell);
-            tableBody.append(row);
-        }
         const priceHint = results.length
             ? ' Lowest price: ' + Kent.formatMoney(Math.min(...results.map(item => item.price))) + '.'
             : '';
