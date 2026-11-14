@@ -52,17 +52,34 @@
     '760', '761', '762', '763', '764', '771', '775', '776', '777', '778', '785', '790'
   ]);
   const landlinePrefix = /^(?:71[0-68][2-9]|7172|72[1-9][2-9])/;
+  const phonePrefix = '+7';
+
+  function formatOrderPhone(value) {
+    const compact = value.replace(/[\s()-]/g, '');
+    if (!compact || compact === '+') return phonePrefix;
+
+    // A full pasted number may already include +7 or an initial 7 or 8.
+    const national = compact.replace(/^(?:\+7|[78](?=\d{10}$))/, '');
+    if (!/^\d{0,10}$/.test(national)) return value;
+    if (!national) return phonePrefix;
+
+    let formatted = phonePrefix + '-(' + national.slice(0, 3);
+    if (national.length > 3) formatted += ')-' + national.slice(3, 6);
+    if (national.length > 6) formatted += '-' + national.slice(6);
+    return formatted;
+  }
 
   function validatePhone(value) {
     const phone = String(value).trim();
-    if (!phone) return 'Enter your phone number.';
-    if (!/^\+?(?:\d|\(\d+\))(?:[\s-]*(?:\d|\(\d+\)))*$/.test(phone)) {
-      return 'Use digits, spaces, parentheses or hyphens. A plus sign can only go at the start.';
-    }
-
+    if (!phone || phone === phonePrefix) return 'Enter your phone number.';
     const compact = phone.replace(/[\s()-]/g, '');
     const match = compact.match(/^(?:\+7|[78])?(\d{10})$/);
-    if (!match) return 'Enter a Kazakhstan phone number, for example +7 7XX XXX XX XX.';
+    if (!match && /^\+?\d*$/.test(compact)) {
+      return 'Enter 10 digits after +7, for example +7-(747)-123-1212.';
+    }
+    if (!match || !/^\+?(?:\d|\(\d+\))(?:[\s-]*(?:\d|\(\d+\)))*$/.test(phone)) {
+      return 'Use digits, spaces, parentheses or hyphens. A plus sign can only go at the start.';
+    }
 
     const national = match[1];
     if (!phoneNetworkCodes.has(national.slice(0, 3)) && !landlinePrefix.test(national)) {
@@ -85,6 +102,7 @@
     if (!form.length) return;
     const create = Kent.element;
     const name = $('#customer-name');
+    const phone = $('#customer-phone');
     const date = $('#pickup-date');
     const time = $('#pickup-time');
     const note = $('#order-note');
@@ -270,6 +288,32 @@
       const count = getQuantity(Kent.getCart(), id);
       Kent.announce(Kent.setQuantity(id, count === 0 ? 1 : 0).message);
     });
+    phone.on('input change', function () {
+      const value = this.value;
+      const formatted = formatOrderPhone(value);
+      if (formatted === value) return;
+
+      const cursor = this.selectionStart;
+      this.value = formatted;
+      if (cursor === null || cursor === value.length) return;
+
+      // Keep the same digits to the right of the caret when separators change.
+      let digitsAfterCursor = value.slice(cursor).replace(/\D/g, '').length;
+      let position = formatted.length;
+      while (position > phonePrefix.length && digitsAfterCursor > 0) {
+        position--;
+        if (/\d/.test(formatted[position])) digitsAfterCursor--;
+      }
+      while (position > phonePrefix.length && /\D/.test(formatted[position - 1])) position--;
+      this.setSelectionRange(position, position);
+    });
+    phone.on('paste', function (event) {
+      const pasted = event.originalEvent?.clipboardData?.getData('text/plain');
+      if (!pasted || this.value !== phonePrefix) return;
+      event.preventDefault();
+      // Insert the number in place of the preset prefix.
+      phone.val(pasted).trigger('input');
+    });
     form.on('input change', 'input, select, textarea', function (event) {
       invalidateConfirmation();
       const id = $(this).attr('id');
@@ -380,6 +424,7 @@
       event.preventDefault();
       if (confirmed) return;
       fields.each(function () { $(this).val(String($(this).val() || '').trim()); });
+      phone.val(formatOrderPhone(phone.val()));
       date.attr('min', getShopClock(new Date()).date);
       submitted = true;
       const errors = fieldErrors();

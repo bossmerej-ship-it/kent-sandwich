@@ -127,8 +127,7 @@ jQuery(function ($) {
 
     function renderMenuCard(item) {
         const column = create('div', 'col-12 col-sm-6 col-lg-3');
-        const colour = item.id === 'mini' ? 'bg-warning' : 'bg-white';
-        const article = create('article', 'menu-card card h-100 border-dark border-2 rounded-0 ' + colour);
+        const article = create('article', 'menu-card card h-100 border-dark border-2 rounded-0');
         article.attr("id", 'menu-item-' + item.id);
         article.attr("data-menu-item", item.id);
         const image = create('img', 'menu-card-photo border-bottom border-dark').attr({
@@ -145,41 +144,49 @@ jQuery(function ($) {
         const price = create('p', 'menu-price mt-auto fs-3 fw-bold mb-0', Kent.formatMoney(item.price));
         body.append(title, note, profileText, price);
         const selection = create('p', 'menu-item-quantity small mt-2 mb-2').attr('id', 'menu-quantity-' + item.id);
-        const add = create('button', 'btn btn-dark rounded-0 border-2 fw-bold', 'Add to basket');
-        add.attr("type", 'button');
-        add.attr("data-add-item", item.id);
-        add.attr('aria-label', 'Add to basket: ' + item.name);
-        body.append(selection, add);
+        const decrease = create('button', 'btn btn-outline-dark rounded-0 border-2 px-0 fs-5 lh-1 d-none', '−')
+            .attr({
+                type: 'button',
+                'data-menu-quantity': 'decrease',
+                'aria-label': 'Decrease ' + item.name + ' quantity',
+                'aria-describedby': selection.attr('id')
+            });
+        const add = create('button', 'btn btn-dark rounded-0 border-2 fw-bold flex-grow-1', 'Add to basket')
+            .attr({ type: 'button', 'data-menu-quantity': 'increase', 'aria-label': 'Add to basket: ' + item.name });
+        body.append(selection, create('div', 'd-flex gap-2').append(decrease, add));
         article.append(image, body);
         column.append(article);
         return column;
     }
 
-    // Update existing nodes only, preserving keyboard focus on the Add button.
+    // Basket changes update the existing controls without rebuilding the cards.
     function updateBasketSelection() {
-        const cart = Kent.getCart();
-        grid.find('button[data-add-item]').each(function () {
-            const button = $(this);
-            const id = button.attr('data-add-item');
+        const basket = Kent.calculateCart(Kent.getCart());
+        grid.find('.menu-card').each(function () {
+            const card = $(this);
+            const id = card.attr('data-menu-item');
             const item = Kent.getMenuItem(Kent.MENU, id);
-            const entry = cart.find(function (line) { return line.id === id; });
-            const quantity = entry ? entry.quantity : 0;
+            const quantity = basket.lines.find(function (line) { return line.item.id === id; })?.quantity ?? 0;
             const atLimit = quantity >= Kent.MAX_QUANTITY;
-            const selection = $('#menu-quantity-' + id);
+            const selection = card.find('.menu-item-quantity');
+            const decrease = card.find('[data-menu-quantity="decrease"]');
+            const add = card.find('[data-menu-quantity="increase"]');
+            const focusAdd = quantity === 0 && (decrease.is(':focus') || selection.is(':focus'));
+            const focusStatus = atLimit && add.is(':focus');
             selection.text(quantity > 0
                 ? quantity + ' in your basket' + (atLimit ? ' · Limit reached' : '')
                 : '');
             selection.toggleClass('fw-bold', quantity > 0);
-            button.closest('.menu-card').toggleClass('is-selected', quantity > 0);
-            button.text(quantity > 0 ? quantity + ' +' : 'Add to basket')
+            card.toggleClass('is-selected', quantity > 0);
+            decrease.toggleClass('d-none', quantity === 0);
+            add.text(quantity > 0 ? quantity + ' +' : 'Add to basket')
                 .attr('aria-label', quantity > 0 ? 'Add one more ' + item.name + ' to basket' : 'Add to basket: ' + item.name);
-            if (quantity) button.attr('aria-describedby', selection.attr('id'));
-            else button.removeAttr('aria-describedby');
-            const moveFocus = atLimit && button.is(':focus');
-            button.prop('disabled', atLimit);
-            if (moveFocus) selection.attr('tabindex', '-1').trigger('focus');
+            if (quantity) add.attr('aria-describedby', selection.attr('id'));
+            else add.removeAttr('aria-describedby');
+            add.prop('disabled', atLimit);
+            if (focusAdd) add.trigger('focus');
+            if (focusStatus) selection.attr('tabindex', '-1').trigger('focus');
         });
-        const basket = Kent.calculateCart(cart);
         basketLink.text('Review basket (' + basket.quantity + ') · ' + Kent.formatMoney(basket.total) + ' →');
     }
 
@@ -230,18 +237,19 @@ jQuery(function ($) {
     }
 
     // Delegation stays on the existing grid; direct handlers would miss cards rebuilt by filtering.
-    grid.on('click', 'button[data-add-item]', function () {
+    grid.on('click', 'button[data-menu-quantity]', function () {
         const button = $(this);
-        const item = Kent.getMenuItem(Kent.MENU, button.attr('data-add-item'));
-        const result = Kent.addToCart(item.id);
-        feedback.toggleClass('text-danger', !result.ok);
-        if (!result.ok) {
-            showBasketFeedback(result.message);
-            return;
+        const id = button.closest('.menu-card').attr('data-menu-item');
+        let result;
+        if (button.attr('data-menu-quantity') === 'decrease') {
+            const entry = Kent.getCart().find(function (line) { return line.id === id; });
+            if (!entry) return;
+            result = Kent.setQuantity(id, entry.quantity - 1);
+        } else {
+            result = Kent.addToCart(id);
         }
-        const basket = Kent.calculateCart(Kent.getCart());
-        const unit = basket.quantity === 1 ? ' sandwich' : ' sandwiches';
-        showBasketFeedback(item.name + ' added. Basket: ' + basket.quantity + unit + ', ' + Kent.formatMoney(basket.total) + '. Review your basket to adjust quantities.');
+        feedback.toggleClass('text-danger', !result.ok);
+        showBasketFeedback(result.message);
     });
 
     applyFilters(false);

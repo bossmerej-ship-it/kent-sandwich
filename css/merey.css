@@ -24,6 +24,10 @@
   object-position: center bottom;
 }
 
+.menu-card {
+  --bs-card-bg: var(--bs-white);
+}
+
 .menu-card-photo {
   display: block;
   width: 100%;
@@ -38,6 +42,7 @@
 
 .menu-card.is-selected,
 .choice-card.is-selected {
+  background-color: var(--bs-warning);
   outline: 3px solid var(--bs-body-color);
   outline-offset: -3px;
 }
@@ -74,10 +79,6 @@
   flex: 1 0 7.5rem;
   color: inherit;
   cursor: pointer;
-}
-
-.choice-card.is-selected {
-  background-color: var(--bs-warning);
 }
 
 .choice-toggle:focus-visible,

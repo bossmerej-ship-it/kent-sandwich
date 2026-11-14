@@ -8,6 +8,8 @@ The shared image prompt requested a horizontal 3:2 editorial illustration with a
 
 Codex also checked source references, reduced the size of the existing photographs and ran validation and browser checks. The student is responsible for the physical phone check and for explaining the submitted code at the defence.
 
+In a follow-up, Codex used the shared basket state to style selected menu cards and let visitors decrease quantities on Menu. It also formatted the Order phone field with a preset +7 based on the Feedback example and checked that incomplete and invalid numbers still fail validation.
+
 ## Endterm assistance on 8 November 2026
 
 ## Earlier assignments

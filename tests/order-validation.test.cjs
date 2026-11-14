@@ -25,13 +25,13 @@ const noonInAstana = new Date('2026-10-23T07:00:00Z');
 
 test('phone validation accepts Kazakhstan mobile and landline formats', function () {
   for (const phone of ['  +7 (701) 234-56-78  ', '8 (747) 234 56 78', '7771234567',
-    '77082345678', '+7 (7172) 23-45-67', '+7 727 234 56 78']) {
+    '77082345678', '+7 (7172) 23-45-67', '+7 727 234 56 78', '+7-(747)-123-1212']) {
     assert.equal(Kent.validatePhone(phone), '', phone);
   }
 });
 
 test('phone validation rejects impossible lengths, characters and codes', function () {
-  for (const phone of ['', '   ', '123', '1234567890', '00000000000', '+7 701 234 56 7',
+  for (const phone of ['', '   ', '+7', '123', '1234567890', '00000000000', '+7 701 234 56 7',
     '+7 701 234 56 789', '+7 700 CALL NOW', '++77012345678', '+7 (701 234-56-78', '+8 701 234 56 78',
     '+1 202 555 0123', '+7 999 123 45 67', '+7 703 123 45 67', '+7 717 123 45 67']) {
     assert.ok(Kent.validatePhone(phone), phone);
