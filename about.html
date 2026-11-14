@@ -50,9 +50,9 @@
           <img class="about-intro-photo img-fluid rounded-0 d-block mb-3" src="images/kent-interior.jpg" alt="Interior of Kent Sandwich with mustard seating and wooden tables" width="480">
           <p class="lead mb-3 fw-normal">Kent Sandwich is a small sandwich shop in the Tselinny microdistrict. You can eat inside or take your order with you.</p>
           <nav id="about-section-nav" class="page-jumps d-flex flex-wrap gap-2" aria-label="On this page">
-            <a id="story-link" href="#story" data-section="story" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Story</a>
-            <a id="space-link" href="#space" data-section="space" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Space</a>
-            <a id="details-link" href="#details" data-section="details" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Details</a>
+            <a id="story-link" href="#story" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Story</a>
+            <a id="space-link" href="#space" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Space</a>
+            <a id="details-link" href="#details" class="btn btn-outline-dark btn-sm rounded-0 border-2 text-uppercase fw-bold">Details</a>
           </nav>
         </div>
       </div>
@@ -85,7 +85,7 @@
         </div>
         <div class="col-12">
           <figure class="gallery-main mb-0">
-            <a id="gallery-link-1" class="gallery-link d-block" href="images/kent-interior.jpg" data-gallery-index="0" data-caption-id="gallery-caption-1" aria-describedby="gallery-caption-1">
+            <a id="gallery-link-1" class="gallery-link d-block" href="images/kent-interior.jpg" data-caption-id="gallery-caption-1" aria-describedby="gallery-caption-1">
               <span class="ratio d-block ratio-16x9 rounded-0 overflow-hidden"><img id="gallery-image-1" src="images/kent-interior.jpg" alt="Mustard upholstered bench and round wood tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover" loading="lazy"></span>
             </a>
             <figcaption id="gallery-caption-1" class="figure-caption mt-2">Mustard banquettes create the room’s strongest colour accent.</figcaption>
@@ -93,7 +93,7 @@
         </div>
         <div class="col-12 col-md-6">
           <figure class="mb-0">
-            <a id="gallery-link-2" class="gallery-link d-block" href="images/kent-seating.jpg" data-gallery-index="1" data-caption-id="gallery-caption-2" aria-describedby="gallery-caption-2">
+            <a id="gallery-link-2" class="gallery-link d-block" href="images/kent-seating.jpg" data-caption-id="gallery-caption-2" aria-describedby="gallery-caption-2">
               <span class="ratio d-block ratio-16x9 rounded-0 overflow-hidden"><img id="gallery-image-2" src="images/kent-seating.jpg" alt="Wood chairs and small round tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover" loading="lazy"></span>
             </a>
             <figcaption id="gallery-caption-2" class="figure-caption mt-2">Small tables keep the layout suited to quick visits.</figcaption>
@@ -101,7 +101,7 @@
         </div>
         <div class="col-12 col-md-6">
           <figure class="mb-0">
-            <a id="gallery-link-3" class="gallery-link d-block" href="images/kent-gallery.jpg" data-gallery-index="2" data-caption-id="gallery-caption-3" aria-describedby="gallery-caption-3">
+            <a id="gallery-link-3" class="gallery-link d-block" href="images/kent-gallery.jpg" data-caption-id="gallery-caption-3" aria-describedby="gallery-caption-3">
               <span class="ratio d-block ratio-16x9 rounded-0 overflow-hidden"><img id="gallery-image-3" src="images/kent-gallery.jpg" alt="Framed photographs above tables inside Kent Sandwich" class="w-100 h-100 object-fit-cover" loading="lazy"></span>
             </a>
             <figcaption id="gallery-caption-3" class="figure-caption mt-2">A wall of photographs gives the compact room personality.</figcaption>
@@ -119,10 +119,9 @@
           <h3 class="h5 fw-bold text-uppercase lh-1">Address</h3>
           <address id="visit-address" class="mb-0">Adolfa Yanushkevicha Street, 1<br>Tselinny microdistrict<br>Baikonyr district, Astana</address>
         </article></div>
-        <div class="col-12 col-md-6 col-lg-3"><article id="visit-hours" class="border rounded-0 p-3 h-100 bg-white" data-open="09:30" data-close="21:30" data-time-zone="Asia/Almaty">
+        <div class="col-12 col-md-6 col-lg-3"><article id="visit-hours" class="border rounded-0 p-3 h-100 bg-white" data-open="09:30" data-close="21:30">
           <h3 class="h5 fw-bold text-uppercase lh-1">Hours</h3>
           <p>Daily<br><time id="visit-opening-time" datetime="09:30">09:30</time>–<time id="visit-closing-time" datetime="21:30">21:30</time></p>
-          <!-- Filled only after the future script computes the Astana time. -->
           <p id="visit-status" class="hidden small mb-0" role="status" aria-live="polite"></p>
         </article></div>
         <div class="col-12 col-md-6 col-lg-3"><article class="border rounded-0 p-3 h-100 bg-white">
@@ -137,7 +136,6 @@
       <p class="mt-4 mb-0">Already visited? <a id="about-feedback-link" href="feedback.html">Tell us about your experience</a>.</p>
     </section>
   </main>
-  <!-- All viewer controls exist before the HTML/CSS freeze. Image links work without it. -->
   <dialog id="gallery-dialog" class="gallery-dialog border border-dark border-2 rounded-0 p-3 p-md-4" aria-labelledby="gallery-dialog-title" aria-describedby="gallery-dialog-caption">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
       <h2 id="gallery-dialog-title" class="h4 fw-bold text-uppercase mb-0">Inside Kent</h2>
@@ -167,7 +165,6 @@
     <a class="btn btn-dark btn-sm rounded-0 fw-bold shadow-sm" href="#page-top" aria-label="Back to top">↑</a>
   </nav>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  <!-- Empty at the midterm: later behaviour can be added without changing this HTML. -->
   <script src="js/about.js" defer></script>
 </body>
 </html>

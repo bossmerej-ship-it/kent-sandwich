@@ -21,21 +21,13 @@ const phoneExample = '+7-(747)-123-1212';
 const phoneHelp = 'Enter 10 digits after +7, for example ' + phoneExample + '.';
 
 function formatFeedbackPhone(value) {
-  const compact = value.trim().replace(/[^\d+]/g, '');
-  let digits = compact.replace(/\D/g, '');
-  if (/^\+[0-689]/.test(compact)) return '+' + digits.slice(0, 11);
+  const phone = value.trim();
+  const compact = phone.replace(/[ ()-]/g, '');
+  const match = /^(?:\+7|[78])?(\d{3})(\d{3})(\d{4})$/.exec(compact);
+  if (!match) return phone;
 
-  // Pasted numbers may start with +7, 7 or the local prefix 8.
-  if (compact.startsWith('+7') || (digits.length > 10 && /^[78]/.test(digits))) {
-    digits = digits.slice(1);
-  }
-  digits = digits.slice(0, 10);
-  if (!digits) return compact.startsWith('+7') ? '+7' : '';
-
-  let phone = '+7-(' + digits.slice(0, 3);
-  if (digits.length > 3) phone += ')-' + digits.slice(3, 6);
-  if (digits.length > 6) phone += '-' + digits.slice(6);
-  return phone;
+  const [, areaCode, exchange, subscriber] = match;
+  return '+7-(' + areaCode + ')-' + exchange + '-' + subscriber;
 }
 
 function validateFeedback(data, today) {
@@ -216,24 +208,9 @@ jQuery(function ($) {
   const totalInput = $('#order-total');
   const totalHint = $('#order-total-hint');
   const phoneInput = $('#guest-phone');
-  phoneInput.on('input change', function () {
-    const value = phoneInput.val();
-    const formatted = formatFeedbackPhone(value);
-    if (value === formatted) return;
-
-    const cursor = this.selectionStart;
-    phoneInput.val(formatted);
-
-    // Keep the cursor next to the same digit when editing the middle.
-    if (cursor === null || cursor === value.length) return;
-    let digitsBeforeCursor = value.slice(0, cursor).replace(/\D/g, '').length;
-    let position = 0;
-    while (position < formatted.length && digitsBeforeCursor > 0) {
-      if (/\d/.test(formatted[position])) digitsBeforeCursor--;
-      position++;
-    }
-    position = Math.max(position, 2);
-    this.setSelectionRange(position, position);
+  phoneInput.on('blur', function () {
+    // Keep the raw digits while typing so the leading 7 or 8 can be resolved by length.
+    phoneInput.val(formatFeedbackPhone(phoneInput.val()));
   });
   const photoInput = $('#guest-photo');
   const photoHint = $('#guest-photo-hint');
@@ -431,11 +408,10 @@ jQuery(function ($) {
   // Reading fields is shorter; the validation rules still need the same explicit checks.
   function readFeedback() {
     const selectedRating = form.find('input[name="rating"]:checked');
-    const phone = phoneInput.val().trim();
     return {
       name: $('#guest-name').val().trim(),
       email: $('#guest-email').val().trim(),
-      phone: phone === '+7' ? '' : phone,
+      phone: formatFeedbackPhone(phoneInput.val()),
       group: groupInput.prop('validity').badInput ? NaN : groupInput.val(),
       date: $('#visit-date').val(),
       total: totalInput.prop('validity').badInput ? NaN : totalInput.val(),

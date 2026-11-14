@@ -15,7 +15,6 @@
   object-position: center bottom;
 }
 
-/* Future scripts switch classes instead of creating new styles. */
 .page .hidden {
   display: none;
 }
@@ -30,10 +29,6 @@
 }
 .page .pending {
   cursor: progress;
-}
-.page-about .page-jumps .active {
-  background-color: #141414;
-  color: #fff;
 }
 .feedback-prompt {
   top: 1rem;
@@ -99,7 +94,6 @@
   white-space: pre-wrap;
 }
 
-/* Native showModal() will own focus, Escape and the background interaction. */
 .gallery-dialog {
   width: min(56rem, calc(100% - 2rem));
   max-width: none;
