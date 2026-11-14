@@ -8,11 +8,11 @@ I used Claude 3.5 Sonnet (Anthropic) as a reference during the earlier assignmen
 
 ## Menu illustrations on 14 November 2026
 
-I used OpenAI's image generator during the final stage to create eight menu illustrations. The prompts requested a consistent warm background and a separate illustration for each menu item. The images were resized to 720 × 480 pixels, saved as WebP and added with descriptive alt text. The menu identifies them as illustrations for reference.
+I used OpenAI's image generator at the final stage to make eight illustrations for the menu, one for each item. The menu identifies them as reference illustrations.
 
-## Code and testing assistance during endterm and final revisions
+## Code and testing assistance
 
-I used Codex to help revise the existing Menu cards, basket controls, Order quantity buttons and phone field. It also helped align the shared footer and navigation, resize existing images and check the site with the W3C validator and desktop browsers.
+I used AI assistance to revise and test the existing site.
 
 ---
 
