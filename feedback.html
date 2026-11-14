@@ -40,139 +40,174 @@
   </header>
   <!-- Bootstrap container and grid keep the content readable at phone and desktop widths. -->
   <main class="site-main container px-lg-5" id="main-content">
-    <header class="page-intro feedback-intro py-4 py-lg-5 border-bottom mb-4 border-dark border-2">
-      <div class="row g-4 align-items-center">
-        <div class="col-12 col-lg-7"><p class="eyebrow small text-uppercase fw-bold mb-3">Feedback</p><h1 class="fw-bold text-uppercase display-2 lh-1 mb-4">How was your visit?</h1></div>
-        <div class="col-12 col-lg-5"><p class="lead mb-3 fw-normal">Tell us what you ordered, when you visited and what stood out. A few clear details about the food, service or room make the feedback more useful.</p><p class="small mb-0">This form completes on your screen. It does not send your feedback to the shop.</p></div>
-      </div>
+    <header class="page-intro feedback-intro py-4 py-lg-5 border-bottom border-dark border-2">
+      <p class="eyebrow small text-uppercase fw-bold mb-3">Feedback</p>
+      <h1 class="fw-bold text-uppercase display-2 lh-1 mb-0">How was your visit?</h1>
     </header>
-    <section class="feedback-layout py-4" aria-labelledby="feedback-layout-title">
-      <h2 id="feedback-layout-title" class="visually-hidden">Complete your visit feedback</h2>
+    <section class="feedback-layout py-4" aria-labelledby="feedback-title">
       <div class="row g-4">
+        <div class="col-12 col-lg-8">
+          <form id="feedback-form" class="bg-white border border-2 rounded-0 p-3 p-md-4" aria-labelledby="feedback-title" aria-describedby="submission-note">
+            <h2 id="feedback-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Leave feedback</h2>
+            <p class="small text-body-secondary mb-4">Fields marked * are required.</p>
+            <section id="feedback-errors" class="hidden error border p-3 mb-4" role="alert" aria-labelledby="feedback-errors-title" tabindex="-1">
+              <h3 id="feedback-errors-title" class="h6 fw-bold">Check the highlighted fields</h3>
+              <ul id="feedback-error-list" class="mb-0"></ul>
+            </section>
+
+            <fieldset class="border p-3 mb-4">
+              <legend class="float-none w-auto px-2 fs-6 fw-semibold">Visit details</legend>
+              <div class="feedback-fields row g-3">
+                <div class="col-12 col-md-6">
+                  <label for="guest-name" class="form-label d-block mb-1">Name *</label>
+                  <input id="guest-name" name="guest-name" type="text" autocomplete="name" minlength="2" maxlength="80" required class="form-control rounded-0 bg-white" aria-describedby="guest-name-error">
+                  <p id="guest-name-error" class="field-error hidden small mt-1 mb-0">Enter a name between 2 and 80 characters.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="guest-email" class="form-label d-block mb-1">Email</label>
+                  <input id="guest-email" name="guest-email" type="email" autocomplete="email" maxlength="254" class="form-control rounded-0 bg-white" aria-describedby="guest-email-error">
+                  <p id="guest-email-error" class="field-error hidden small mt-1 mb-0">Enter a valid email address, or leave this field empty.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="guest-phone" class="form-label d-block mb-1">Phone</label>
+                  <input id="guest-phone" name="guest-phone" type="tel" autocomplete="tel" placeholder="+7-(747)-123-1212" maxlength="30" class="form-control rounded-0 bg-white" aria-describedby="guest-phone-hint guest-phone-error">
+                  <p id="guest-phone-hint" class="form-text mb-0">Enter 10 digits after +7.</p>
+                  <p id="guest-phone-error" class="field-error hidden small mt-1 mb-0"></p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="group-size" class="form-label d-block mb-1">People in your group (optional)</label>
+                  <input id="group-size" name="group-size" type="number" min="1" max="20" step="1" class="form-control rounded-0 bg-white" aria-describedby="group-size-error">
+                  <p id="group-size-error" class="field-error hidden small mt-1 mb-0">Choose a whole number between 1 and 20.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="visit-date" class="form-label d-block mb-1">Visit date (optional)</label>
+                  <input id="visit-date" name="visit-date" type="date" class="form-control rounded-0 bg-white" aria-describedby="visit-date-hint visit-date-error">
+                  <p id="visit-date-hint" class="form-text mb-0">Include the date if you remember it.</p>
+                  <p id="visit-date-error" class="field-error hidden small mt-1 mb-0">Choose a visit date that is not in the future.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label for="order-total" class="form-label d-block mb-1">Order total (₸)</label>
+                  <input id="order-total" name="order-total" type="number" min="1" step="1" placeholder="e.g. 1400" class="form-control rounded-0 bg-white" aria-describedby="order-total-hint order-total-error">
+                  <p id="order-total-hint" class="form-text mb-0">Optional. Enter the total bill for your group in tenge.</p>
+                  <p id="order-total-error" class="field-error hidden small mt-1 mb-0"></p>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset id="feedback-rating" class="border p-3 mb-4" aria-describedby="rating-error">
+              <legend class="float-none w-auto px-2 fs-6 fw-semibold">Overall rating *</legend>
+              <div class="row g-2">
+                <div class="col">
+                  <label for="rating-1" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-1" type="radio" name="rating" value="1" required class="form-check-input">
+                    <span class="fw-semibold"><span aria-hidden="true">★</span> 1</span>
+                    <small class="d-none d-md-block text-body-secondary">Poor</small>
+                  </label>
+                </div>
+                <div class="col">
+                  <label for="rating-2" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-2" type="radio" name="rating" value="2" class="form-check-input">
+                    <span class="fw-semibold"><span aria-hidden="true">★</span> 2</span>
+                    <small class="d-none d-md-block text-body-secondary">Fair</small>
+                  </label>
+                </div>
+                <div class="col">
+                  <label for="rating-3" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-3" type="radio" name="rating" value="3" class="form-check-input">
+                    <span class="fw-semibold"><span aria-hidden="true">★</span> 3</span>
+                    <small class="d-none d-md-block text-body-secondary">Good</small>
+                  </label>
+                </div>
+                <div class="col">
+                  <label for="rating-4" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-4" type="radio" name="rating" value="4" class="form-check-input">
+                    <span class="fw-semibold"><span aria-hidden="true">★</span> 4</span>
+                    <small class="d-none d-md-block text-body-secondary">Great</small>
+                  </label>
+                </div>
+                <div class="col">
+                  <label for="rating-5" class="rating-choice form-check-label border rounded-0">
+                    <input id="rating-5" type="radio" name="rating" value="5" class="form-check-input">
+                    <span class="fw-semibold"><span aria-hidden="true">★</span> 5</span>
+                    <small class="d-none d-md-block text-body-secondary">Excellent</small>
+                  </label>
+                </div>
+              </div>
+              <p id="rating-error" class="field-error hidden small mt-2 mb-0">Choose a rating from 1 to 5.</p>
+            </fieldset>
+
+            <fieldset class="border p-3 mb-4">
+              <legend class="float-none w-auto px-2 fs-6 fw-semibold">Your feedback</legend>
+              <label class="form-label mb-1" for="guest-message">Comments *</label>
+              <textarea id="guest-message" name="guest-message" rows="4" minlength="20" maxlength="600" required placeholder="Tell us what stood out during your visit" class="form-control rounded-0 bg-white" aria-describedby="guest-message-hint guest-message-error"></textarea>
+              <div class="d-flex flex-wrap justify-content-between gap-2 mt-2">
+                <p id="guest-message-hint" class="small text-body-secondary mb-0">Write 20–600 characters about your visit.</p>
+                <p class="small text-body-secondary mb-0"><output id="feedback-character-count" for="guest-message">0</output> / 600</p>
+              </div>
+              <p id="guest-message-error" class="field-error hidden small mt-1 mb-0"></p>
+
+              <div class="border-top mt-3 pt-3">
+                <label class="form-label mb-2" for="guest-photo">Photo (optional)</label>
+                <div class="feedback-upload d-flex align-items-center gap-2 border">
+                  <label for="guest-photo" class="feedback-upload-icon d-grid align-self-stretch bg-body-tertiary flex-shrink-0" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 16V4m-4 4 4-4 4 4M4 16v4h16v-4"/>
+                    </svg>
+                  </label>
+                  <input id="guest-photo" name="guest-photo" type="file" accept="image/jpeg,image/png,image/webp" class="form-control border-0 rounded-0 bg-transparent" aria-describedby="guest-photo-hint guest-photo-error">
+                </div>
+                <p id="guest-photo-hint" class="form-text mb-2">JPG, PNG or WebP, up to 5 MB. The photo stays on this page.</p>
+                <p id="guest-photo-error" class="field-error hidden small mb-2"></p>
+                <div id="feedback-photo-preview" class="ratio ratio-16x9 border overflow-hidden bg-white mb-2 hidden"></div>
+                <button id="feedback-remove-photo" type="button" class="btn btn-outline-dark btn-sm rounded-0 hidden">Remove photo</button>
+              </div>
+
+              <label class="form-check-label d-flex align-items-start gap-2 mt-3" for="contact-permission">
+                <input id="contact-permission" type="checkbox" name="contact-permission" value="include" class="form-check-input flex-shrink-0" aria-describedby="contact-permission-error">
+                <span>Include my email and phone in my feedback summary.</span>
+              </label>
+              <p id="contact-permission-error" class="field-error hidden small mt-1 mb-0"></p>
+            </fieldset>
+
+            <p class="small text-body-secondary mb-3" id="submission-note">Your review appears on this page until you reload. Use the shop’s contact links to get in touch.</p>
+            <div class="d-grid d-sm-flex flex-wrap gap-2">
+              <button id="feedback-submit" class="btn btn-dark rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="submit" disabled>Post feedback</button>
+              <button id="feedback-reset" class="btn btn-outline-dark rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="reset">Clear form</button>
+            </div>
+          </form>
+          <section id="feedback-confirmation" class="hidden success border p-3 mb-3" aria-labelledby="feedback-confirmation-title" aria-live="polite" tabindex="-1">
+            <h2 id="feedback-confirmation-title" class="h5 fw-bold text-uppercase mb-2">Feedback added</h2>
+            <p class="small mb-2">Your review is below. It stays on this page until you reload.</p>
+            <details class="small">
+              <summary class="fw-semibold">Copy or save your summary</summary>
+              <div class="pt-3">
+                <label for="feedback-share-text" class="form-label">Your feedback summary</label>
+                <textarea id="feedback-share-text" class="form-control rounded-0 bg-white feedback-message mb-3" rows="6" readonly></textarea>
+                <div class="d-flex flex-wrap gap-2">
+                  <button id="feedback-copy" type="button" class="btn btn-outline-dark rounded-0">Copy summary</button>
+                  <a id="feedback-download" class="btn btn-outline-dark rounded-0">Save summary as text</a>
+                </div>
+                <p id="feedback-copy-status" class="hidden small mt-2 mb-0" role="status" aria-live="polite"></p>
+                <p id="feedback-copy-error" class="hidden error small mt-2 mb-0" role="alert">Copying is unavailable. Select the summary above and copy it manually.</p>
+              </div>
+            </details>
+            <p class="small mt-2 mb-0"><a id="feedback-restart" href="#guest-name">Back to the feedback form</a> · <a href="about.html#details">View visit details</a></p>
+          </section>
+        </div>
         <div class="col-12 col-lg-4">
-          <article class="feedback-prompt rounded-0 p-4 bg-warning border border-2 border-dark">
-            <p class="eyebrow small text-uppercase fw-bold mb-3">Your visit</p>
-            <h2 class="fw-bold mb-3 display-6 text-uppercase lh-1">What should we know?</h2>
-            <p>You can write about your sandwich, waiting time, service or the seating area.</p>
+          <aside class="feedback-prompt bg-white border border-dark border-2 p-3" aria-labelledby="feedback-contact-title">
+            <h2 id="feedback-contact-title" class="h4 fw-bold text-uppercase mb-3">Contact the shop</h2>
+            <p class="small mb-3">For a reply about your visit, message or call Kent Sandwich.</p>
             <blockquote class="border-top border-dark pt-3 my-4">
               <p><q lang="ru">Классное место с приятными ценами и оригинальным решением в интерьере) Для студентов самое то</q></p>
               <cite class="small">Диас Турлугулов, <time datetime="2026-07-20">20 July 2026</time> — <a href="https://2gis.kz/astana/firm/70000001114376342/tab/reviews" target="_blank" rel="noopener noreferrer">2GIS review</a></cite>
             </blockquote>
             <div class="ratio ratio-4x3 rounded-0 overflow-hidden"><img src="images/kent-table.jpg" alt="Kent Sandwich package and drinks arranged on a wood table" class="w-100 h-100 object-fit-cover" loading="lazy"></div>
-            <p class="small mt-3 mb-0">Need a reply from the shop? <a href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer">Contact Kent on Instagram</a> or <a href="tel:+77083461899">call +7 708 346 18 99</a>.</p>
-          </article>
-        </div>
-        <div class="col-12 col-lg-8">
-          <!-- Native non-modal dialog: valid submission closes it without any request or script. -->
-          <dialog id="feedback-dialog" class="feedback-dialog" aria-labelledby="feedback-title" open>
-            <form id="feedback-form" class="feedback-form bg-white border rounded-0 p-3 p-md-4 border-2" method="dialog" aria-describedby="submission-note">
-              <h2 id="feedback-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Leave feedback</h2>
-              <p class="required-note small text-body-secondary">Fields marked * are required.</p>
-              <section id="feedback-errors" class="hidden error border rounded-0 p-3 mb-4" role="alert" aria-labelledby="feedback-errors-title" tabindex="-1">
-                <h3 id="feedback-errors-title" class="h6 fw-bold">Check the highlighted fields</h3>
-                <ul id="feedback-error-list" class="mb-0"></ul>
-              </section>
-              <!-- This row nests inside the main Bootstrap form column. -->
-              <div class="feedback-fields row g-3 mb-4">
-                <div class="col-12 col-md-6">
-                  <label for="guest-name" class="form-label">Name *</label>
-                  <input id="guest-name" name="guest-name" type="text" autocomplete="name" minlength="2" maxlength="80" required class="form-control rounded-0 bg-white" aria-describedby="guest-name-error">
-                  <p id="guest-name-error" class="field-error hidden small mt-1 mb-0">Enter a name between 2 and 80 characters.</p>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label for="guest-email" class="form-label">Email</label>
-                  <input id="guest-email" name="guest-email" type="email" autocomplete="email" maxlength="254" class="form-control rounded-0 bg-white" aria-describedby="guest-email-error">
-                  <p id="guest-email-error" class="field-error hidden small mt-1 mb-0">Enter a valid email address, or leave this field empty.</p>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label for="guest-phone" class="form-label">Phone</label>
-                  <input id="guest-phone" name="guest-phone" type="tel" autocomplete="tel" placeholder="+7 700 000 00 00" maxlength="30" pattern="\+?[0-9](?:[ \(\)\-]*[0-9]){9,14}" class="form-control rounded-0 bg-white" title="Use 10 to 15 digits, with optional +, spaces, brackets or hyphens." aria-describedby="guest-phone-hint guest-phone-error">
-                  <p id="guest-phone-hint" class="form-text mb-0">Use 10–15 digits; spaces, brackets and hyphens are allowed.</p>
-                  <p id="guest-phone-error" class="field-error hidden small mt-1 mb-0">Enter a phone number with 10–15 digits, or leave this field empty.</p>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label for="group-size" class="form-label">People in your group</label>
-                  <input id="group-size" name="group-size" type="number" min="1" max="20" step="1" value="1" class="form-control rounded-0 bg-white" aria-describedby="group-size-error">
-                  <p id="group-size-error" class="field-error hidden small mt-1 mb-0">Choose a whole number between 1 and 20.</p>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label for="visit-date" class="form-label">Visit date *</label>
-                  <input id="visit-date" name="visit-date" type="date" data-max-date="today" required class="form-control rounded-0 bg-white" aria-describedby="visit-date-hint visit-date-error">
-                  <p id="visit-date-hint" class="form-text mb-0">Choose the date of your visit.</p>
-                  <p id="visit-date-error" class="field-error hidden small mt-1 mb-0">Choose a visit date that is not in the future.</p>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label for="ordered-item" class="form-label">What did you order?</label>
-                  <select id="ordered-item" name="ordered-item" class="form-select rounded-0 bg-white">
-                    <option value="">Another item / not sure</option>
-                    <option value="mini">Mini sandwich</option>
-                    <option value="chicken">Chicken</option>
-                    <option value="classic">Classic</option>
-                    <option value="cheese">Cheese</option>
-                    <option value="cutlet">Cutlet</option>
-                    <option value="spicy-cutlet">Spicy cutlet</option>
-                    <option value="hot-dog">Hot dog</option>
-                    <option value="spicy">Spicy</option>
-                  </select>
-                </div>
-              </div>
-              <fieldset id="feedback-rating" class="rating-fieldset border rounded-0 p-3 mb-4" aria-describedby="rating-error">
-                <legend class="float-none w-auto px-2 fs-6 fw-semibold">Overall rating *</legend>
-                <div class="rating-row row g-2">
-                  <div class="col-6 col-md-4 col-xl"><label id="rating-choice-1" for="rating-1" class="rating-choice form-check-label d-block border border-2 rounded-0 p-3 h-100"><input id="rating-1" type="radio" name="rating" value="1" required class="form-check-input me-2"><span>1<small class="d-block text-body-secondary">Poor</small></span></label></div>
-                  <div class="col-6 col-md-4 col-xl"><label id="rating-choice-2" for="rating-2" class="rating-choice form-check-label d-block border border-2 rounded-0 p-3 h-100"><input id="rating-2" type="radio" name="rating" value="2" class="form-check-input me-2"><span>2<small class="d-block text-body-secondary">Fair</small></span></label></div>
-                  <div class="col-6 col-md-4 col-xl"><label id="rating-choice-3" for="rating-3" class="rating-choice form-check-label d-block border border-2 rounded-0 p-3 h-100"><input id="rating-3" type="radio" name="rating" value="3" class="form-check-input me-2"><span>3<small class="d-block text-body-secondary">Good</small></span></label></div>
-                  <div class="col-6 col-md-4 col-xl"><label id="rating-choice-4" for="rating-4" class="rating-choice form-check-label d-block border border-2 rounded-0 p-3 h-100"><input id="rating-4" type="radio" name="rating" value="4" class="form-check-input me-2"><span>4<small class="d-block text-body-secondary">Great</small></span></label></div>
-                  <div class="col-6 col-md-4 col-xl"><label id="rating-choice-5" for="rating-5" class="rating-choice form-check-label d-block border border-2 rounded-0 p-3 h-100"><input id="rating-5" type="radio" name="rating" value="5" class="form-check-input me-2"><span>5<small class="d-block text-body-secondary">Excellent</small></span></label></div>
-                </div>
-                <p id="rating-error" class="field-error hidden small mt-2 mb-0">Choose a rating from 1 to 5.</p>
-              </fieldset>
-              <label class="form-label" for="guest-message">Your feedback *</label>
-              <textarea id="guest-message" name="guest-message" rows="7" minlength="20" maxlength="600" required placeholder="Tell us what happened during your visit" class="form-control rounded-0 bg-white" aria-describedby="guest-message-hint guest-message-error"></textarea>
-              <p id="guest-message-hint" class="form-text mb-0">Write 20–600 characters about your visit.</p>
-              <p id="guest-message-error" class="field-error hidden small mt-1 mb-0">Write between 20 and 600 characters, including at least 20 after trimming spaces.</p>
-              <p id="feedback-count-row" class="hidden small text-end mt-1"><output id="feedback-character-count" for="guest-message">0</output> / 600 characters</p>
-              <label class="form-check-label d-block my-3" for="contact-permission"><input id="contact-permission" type="checkbox" name="contact-permission" value="include" class="form-check-input me-2" aria-describedby="contact-permission-error">Include my email and phone when I share this feedback.</label>
-              <p id="contact-permission-error" class="field-error hidden small mb-3">Add an email address or phone number, or untick the contact-details box.</p>
-              <p class="form-note small text-body-secondary mb-3" id="submission-note">Complete the required fields, then choose Complete feedback. A confirmation will replace the form here. Nothing is sent to Kent Sandwich.</p>
-              <button id="feedback-submit" class="btn btn-dark me-2 mb-2 rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="submit" value="complete">Complete feedback</button>
-              <button id="feedback-reset" class="btn btn-outline-dark mb-2 rounded-0 border-2 text-uppercase fw-bold px-4 py-3 small" type="reset">Clear form</button>
-            </form>
-            <!-- Hidden future review state; scripts populate existing outputs with textContent. -->
-            <section id="feedback-review" class="hidden border border-2 rounded-0 p-3 p-md-4 bg-white" aria-labelledby="feedback-review-title" tabindex="-1">
-              <h2 id="feedback-review-title" class="fw-bold display-6 text-uppercase lh-1 mb-3">Review your feedback</h2>
-              <dl class="feedback-summary mb-4">
-                <dt>Name</dt><dd><output id="feedback-review-name" for="guest-name"></output></dd>
-                <dt>Visit date</dt><dd><output id="feedback-review-date" for="visit-date"></output></dd>
-                <dt>Group size</dt><dd><output id="feedback-review-group" for="group-size"></output></dd>
-                <dt>Sandwich</dt><dd><output id="feedback-review-item" for="ordered-item"></output></dd>
-                <dt>Rating</dt><dd><output id="feedback-review-rating" for="rating-1 rating-2 rating-3 rating-4 rating-5"></output></dd>
-                <dt>Feedback</dt><dd><output id="feedback-review-message" class="feedback-message" for="guest-message"></output></dd>
-                <dt>Contact details</dt><dd><output id="feedback-review-contact" for="guest-email guest-phone contact-permission"></output></dd>
-              </dl>
-              <p class="small">Confirming prepares your summary on this screen. It does not send it to the shop.</p>
-              <button id="feedback-confirm" type="button" class="btn btn-dark rounded-0 border-2 me-2 mb-2">Confirm summary</button>
-              <button id="feedback-edit" type="button" class="btn btn-outline-dark rounded-0 border-2 mb-2">Edit feedback</button>
-            </section>
-          </dialog>
-          <!-- CSS reveals this when the native dialog closes; no fake delivery claim. -->
-          <section id="feedback-confirmation" class="feedback-confirmation success border border-2 rounded-0 p-3 p-md-4" aria-labelledby="feedback-confirmation-title" aria-live="polite" tabindex="-1">
-            <h2 id="feedback-confirmation-title" class="fw-bold mb-3 display-6 text-uppercase lh-1">Feedback form completed</h2>
-            <p id="feedback-confirmation-message">Your feedback has not been sent to Kent Sandwich. To share it with the shop, use its official contacts below.</p>
-            <!-- Populated only when the later script prepares the actual feedback summary. -->
-            <div id="feedback-share" class="hidden mb-4">
-              <label for="feedback-share-text" class="form-label">Your feedback summary</label>
-              <textarea id="feedback-share-text" class="form-control rounded-0 feedback-message mb-3" rows="10" readonly></textarea>
-              <button id="feedback-copy" type="button" class="btn btn-outline-dark rounded-0 border-2">Copy summary</button>
-              <p id="feedback-copy-status" class="hidden small mt-2 mb-0" role="status" aria-live="polite"></p>
-              <p id="feedback-copy-error" class="hidden error small mt-2 mb-0" role="alert">Copying is unavailable. Select the summary above and copy it manually.</p>
+            <div class="d-flex flex-wrap gap-2 mt-3">
+              <a id="feedback-shop-instagram" href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="btn btn-dark rounded-0 btn-sm">Instagram ↗</a>
+              <a id="feedback-shop-phone" href="tel:+77083461899" class="btn btn-outline-dark rounded-0 btn-sm">Call the shop</a>
             </div>
-            <div class="d-flex flex-wrap gap-2 mb-3">
-              <a id="feedback-shop-instagram" href="https://www.instagram.com/kentsandwich.kz/" target="_blank" rel="noopener noreferrer" class="btn btn-dark rounded-0 border-2">Contact on Instagram ↗</a>
-              <a id="feedback-shop-phone" href="tel:+77083461899" class="btn btn-outline-dark rounded-0 border-2">Call the shop</a>
-            </div>
-            <p class="mb-0"><a id="feedback-restart" href="feedback.html">Start another feedback form</a> · <a href="about.html#details">View visit details</a></p>
-          </section>
+          </aside>
         </div>
       </div>
       <template id="feedback-error-item"><li><a href="#feedback-form" class="link-dark"></a></li></template>

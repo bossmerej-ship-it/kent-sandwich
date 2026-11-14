@@ -28,9 +28,7 @@ const path = require('node:path');
     assert.equal(await page.locator('.feedback-intro').getByText('This form completes on your screen. It does not send your feedback to the shop.').count(), 0);
     assert.equal(await page.locator('#review-list a[href*="tab/reviews"]').count(), 0);
     const yellow = await page.locator('.source-tab').evaluate(element => getComputedStyle(element).backgroundColor);
-    for (const selector of ['.feedback-prompt', '#feedback-submit']) {
-      assert.equal(await page.locator(selector).evaluate(element => getComputedStyle(element).backgroundColor), yellow);
-    }
+    assert.equal(await page.locator('.feedback-upload-icon').evaluate(element => getComputedStyle(element).backgroundColor), yellow);
     assert.equal(await page.locator('#guest-phone').inputValue(), '');
     assert.equal(await page.locator('#visit-date').evaluate(input => input.required), false);
     assert.equal(await page.locator('#guest-photo').getAttribute('type'), 'file');
@@ -153,6 +151,10 @@ const path = require('node:path');
     await page.locator('#rating-2').check();
     await page.locator('#guest-message').fill('The cheese sandwich was warm, but the wait was long.');
     const photoInput = page.locator('#guest-photo');
+    const fileChooser = page.waitForEvent('filechooser');
+    await page.locator('.feedback-upload-icon').click();
+    await (await fileChooser).setFiles(path.join(__dirname, '../images/kent-sandwich.jpg'));
+    await visible('#feedback-photo-preview');
     await photoInput.setInputFiles({ name: 'notes.txt', mimeType: 'text/plain', buffer: Buffer.from('Not a photo') });
     await visible('#guest-photo-error');
     await photoInput.setInputFiles({ name: 'large.jpg', mimeType: 'image/jpeg', buffer: Buffer.alloc(5 * 1024 * 1024 + 1) });

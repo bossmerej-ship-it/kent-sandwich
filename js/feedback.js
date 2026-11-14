@@ -213,16 +213,9 @@ jQuery(function ($) {
   const copyStatus = $('#feedback-copy-status');
   const copyError = $('#feedback-copy-error');
   const groupInput = $('#group-size');
-  const totalInput = createTimurElement('input', 'form-control rounded-0 bg-white');
-  totalInput.attr({ id: 'order-total', name: 'order-total', type: 'number', min: 1, step: 1,
-    placeholder: 'e.g. 1400', 'aria-describedby': 'order-total-hint order-total-error' });
-  $('#ordered-item').replaceWith(totalInput);
-  $('label[for="ordered-item"]').attr('for', 'order-total').text('Order total (₸)');
-  const totalHint = createTimurElement('p', 'form-text mb-0');
-  totalHint.attr('id', 'order-total-hint').insertAfter(totalInput);
+  const totalInput = $('#order-total');
+  const totalHint = $('#order-total-hint');
   const phoneInput = $('#guest-phone');
-  phoneInput.attr({ placeholder: phoneExample, title: phoneHelp }).removeAttr('pattern');
-  $('#guest-phone-hint, #guest-phone-error').text(phoneHelp);
   phoneInput.on('input change', function () {
     const value = phoneInput.val();
     const formatted = formatFeedbackPhone(value);
@@ -242,46 +235,15 @@ jQuery(function ($) {
     position = Math.max(position, 2);
     this.setSelectionRange(position, position);
   });
-  $('#visit-date').prop('required', false);
-  $('label[for="visit-date"]').text('Visit date (optional)');
-  $('#visit-date-hint').text('Include the date if you remember it.');
-  groupInput.val('').prop('defaultValue', '');
-  $('label[for="group-size"]').text('People in your group (optional)');
-  const totalError = createTimurElement('p', 'field-error hidden small mt-1 mb-0');
-  totalError.attr('id', 'order-total-error').insertAfter(totalHint);
-  const photoField = createTimurElement('div', 'rounded-3 border bg-light p-3 my-4');
-  const photoLabel = createTimurElement('label', 'form-label fw-semibold', 'Photo (optional)').attr('for', 'guest-photo');
-  photoLabel.prepend(feedbackIcon('▧', 'me-2'));
-  const photoInput = createTimurElement('input', 'form-control rounded-3 bg-white');
-  photoInput.attr({ id: 'guest-photo', name: 'guest-photo', type: 'file',
-    accept: 'image/jpeg,image/png,image/webp', 'aria-describedby': 'guest-photo-hint guest-photo-error' });
-  const photoHelp = 'JPG, PNG or WebP, up to 5 MB. The photo stays on this page only.';
-  const photoHint = createTimurElement('p', 'form-text mb-2', photoHelp).attr('id', 'guest-photo-hint');
-  const photoErrorText = createTimurElement('p', 'field-error hidden small mb-2').attr('id', 'guest-photo-error');
-  const photoPreview = createTimurElement('div', 'ratio ratio-16x9 border rounded-3 overflow-hidden bg-white mb-3 hidden')
-    .attr('id', 'feedback-photo-preview');
-  const removePhoto = createTimurElement('button', 'btn btn-outline-dark btn-sm rounded-3 hidden', 'Remove photo');
-  removePhoto.attr({ id: 'feedback-remove-photo', type: 'button' });
-  photoField.append(photoLabel, photoInput, photoHint, photoErrorText, photoPreview, removePhoto)
-    .insertBefore($('#contact-permission').closest('label'));
-  const download = createTimurElement('a', 'btn btn-outline-dark rounded-3', 'Save summary as text');
-  download.attr('id', 'feedback-download').prepend(feedbackIcon('↓', 'me-2'));
-  const share = createTimurElement('details', 'small');
-  share.append(createTimurElement('summary', 'fw-semibold', 'Copy or save your summary'));
-  const shareContent = $('#feedback-share').removeClass('hidden mb-4').addClass('pt-3');
-  shareText.attr('rows', 6).removeClass('rounded-0').addClass('rounded-3 bg-white');
-  copyButton.removeClass('rounded-0 border-2').addClass('rounded-3').prepend(feedbackIcon('▣', 'me-2'));
-  const shareActions = createTimurElement('div', 'd-flex flex-wrap gap-2');
-  shareActions.insertBefore(copyButton).append(copyButton, download);
-  share.append(shareContent);
-  confirmation.removeClass('border-2 rounded-0 p-md-4').addClass('hidden rounded-4 mb-3');
-  $('#feedback-confirmation-title').removeClass('display-6 text-uppercase lh-1 mb-3').addClass('h5 mb-2')
-    .text('Feedback added').prepend(feedbackIcon('✓', 'me-2'));
-  $('#feedback-confirmation-message').addClass('small mb-2');
-  const shopLinks = $('#feedback-shop-instagram').parent().detach();
-  const restart = $('#feedback-restart').attr('href', '#guest-name').text('Back to the feedback form');
-  restart.parent().addClass('small mt-2');
-  share.insertBefore(restart.parent());
+  const photoInput = $('#guest-photo');
+  const photoHint = $('#guest-photo-hint');
+  const photoHelp = photoHint.text();
+  const photoErrorText = $('#guest-photo-error');
+  const photoPreview = $('#feedback-photo-preview');
+  const removePhoto = $('#feedback-remove-photo');
+  const download = $('#feedback-download');
+  const share = confirmation.find('details');
+  const restart = $('#feedback-restart');
   let submitted = false;
   let copyVersion = 0;
   let summaryUrl = null;
@@ -334,54 +296,14 @@ jQuery(function ($) {
     updateForm();
   });
 
-  // Replace the old review dialog with the inline form.
-  $('#feedback-dialog').replaceWith(form.detach());
-  form.attr('aria-labelledby', 'feedback-title').prop('noValidate', true);
-  // Delegation catches links created on each validation attempt; a direct binding
-  // now would miss them because the error list is initially empty.
+  form.prop('noValidate', true);
   errorList.on('click', 'a[href^="#"]', function (event) {
     event.preventDefault(); // Keep focus on the field instead of only jumping to an anchor.
     $($(this).attr('href')).trigger('focus');
   });
 
-  const intro = $('.feedback-intro');
-  intro.removeClass('border-bottom border-dark border-2 mb-4').addClass('mb-2');
-  intro.find('h1').removeClass('display-2 text-uppercase mb-4').addClass('display-4 mb-0');
-  intro.find('.lead').text('Tell us about the food, service or space.').addClass('mb-0');
-  intro.find('.small.mb-0').remove();
-  $('.feedback-layout').removeClass('py-4').addClass('pb-4');
-  form.removeClass('rounded-0 border-2 p-md-4').addClass('rounded-4 shadow-sm p-sm-4 p-xl-5');
-  form.find('.feedback-fields .form-control').removeClass('rounded-0').addClass('rounded-3 py-2');
-  form.find('.feedback-fields label, label[for="guest-message"]').addClass('fw-semibold');
-  $('#feedback-title').removeClass('display-6 text-uppercase').addClass('h2');
-  $('#feedback-title').addClass('d-flex align-items-center gap-3')
-    .prepend(feedbackIcon('✎', 'bg-body-tertiary rounded-3 px-3 py-2 fs-5'));
-  message.removeClass('rounded-0').addClass('rounded-3').attr('rows', 4);
-  const counterRow = $('#feedback-count-row').removeClass('hidden mt-1').addClass('mb-0 ms-auto');
-  const messageHelp = createTimurElement('div', 'd-flex flex-wrap align-items-baseline gap-2 mt-2');
-  messageHelp.insertAfter(message).append($('#guest-message-hint').removeClass('mt-1'), counterRow);
-  $('#feedback-errors').removeClass('rounded-0').addClass('rounded-3');
-  $('#feedback-rating').removeClass('border rounded-0 p-3').addClass('border-0 p-0');
-  $('#feedback-rating legend').removeClass('px-2');
-  form.find('.rating-row > div').removeClass('col-6 col-md-4 col-xl').addClass('col');
-  form.find('.rating-choice').removeClass('d-block border-2 rounded-0 p-3')
-    .addClass('d-flex flex-column align-items-center border rounded-3 p-2');
-  form.find('.rating-choice > span').addClass('small text-center');
-  form.find('.rating-choice small').removeClass('d-block').addClass('d-none d-md-block');
-  form.find('.rating-choice input').removeClass('me-2');
-  form.find('.rating-choice').prepend(feedbackIcon('★', 'mb-1'));
-  $('#submission-note').text('Your review appears on this page until you reload. To reach the shop, use its contact links.');
-  const submit = $('#feedback-submit').removeClass('btn-dark me-2 mb-2 rounded-0 border-2 text-uppercase px-4 py-3')
-    .addClass('btn-warning rounded-3 px-4 py-2').text('Post feedback').prepend(feedbackIcon('↗', 'me-2'));
-  const clear = $('#feedback-reset').removeClass('mb-2 rounded-0 border-2 text-uppercase px-4 py-3')
-    .addClass('rounded-3 px-4 py-2').prepend(feedbackIcon('↺', 'me-2'));
-  const formActions = createTimurElement('div', 'd-grid d-sm-flex flex-wrap gap-2');
-  formActions.insertBefore(submit).append(submit, clear);
-
   // Preserve the actual existing review. Its source does not specify a rating.
-  const prompt = $('.feedback-prompt');
-  form.parent().insertBefore(prompt.parent());
-  const quote = prompt.find('blockquote');
+  const quote = $('.feedback-prompt blockquote');
   const reviews = [{
     id: 'source', name: quote.find('cite').clone().children().remove().end().text().trim().replace(/[,\s—–-]+$/, ''),
     text: quote.find('q').text(), language: quote.find('q').attr('lang'),
@@ -389,24 +311,17 @@ jQuery(function ($) {
     date: quote.find('time').attr('datetime'), source: quote.find('a').attr('href')
   }];
   quote.remove();
-  prompt.removeClass('rounded-0 border-2 border-dark p-4 bg-warning').addClass('rounded-4 p-3 p-md-4 bg-body-tertiary');
-  prompt.children('.eyebrow, p:last-child').remove();
-  prompt.find('h2').removeClass('display-6 text-uppercase').addClass('h4');
-  prompt.find('.ratio').removeClass('rounded-0').addClass('rounded-3');
-  shopLinks.removeClass('mb-3').addClass('mt-3 mb-0');
-  shopLinks.find('a').removeClass('rounded-0 border-2').addClass('rounded-3 btn-sm');
-  prompt.append(shopLinks);
 
-  const section = createTimurElement('section', 'py-4 mt-4 border-top border-dark');
+  const section = createTimurElement('section', 'py-4 border-top border-dark border-2');
   section.attr('id', 'visitor-reviews');
   section.attr('aria-labelledby', 'visitor-reviews-title');
-  const heading = createTimurElement('h2', 'fw-bold h2', 'Visitor reviews');
+  const heading = createTimurElement('h2', 'fw-bold h2 text-uppercase', 'Visitor reviews');
   heading.attr('id', 'visitor-reviews-title');
-  const averageCheck = createTimurElement('p', 'small fw-semibold border rounded-3 bg-white p-3 mb-3');
+  const averageCheck = createTimurElement('p', 'small fw-semibold border bg-white p-3 mb-3');
   averageCheck.attr('id', 'review-average-check');
   section.append(heading, createTimurElement('p', 'small',
     'The source review is credited below. New reviews stay on this page only and disappear when you reload.'), averageCheck);
-  const filterPanel = createTimurElement('div', 'border rounded-4 bg-white p-3 p-md-4 mb-3');
+  const filterPanel = createTimurElement('div', 'border bg-white p-3 p-md-4 mb-3');
   const filters = createTimurElement('form', 'row g-3');
   filters.attr('aria-label', 'Filter visitor reviews');
 
@@ -414,7 +329,7 @@ jQuery(function ($) {
     const column = createTimurElement('div', 'col-12 col-md-6 col-lg-3');
     const label = createTimurElement('label', 'form-label fw-semibold', labelText);
     label.attr('for', id).addClass('small');
-    control.attr('id', id).removeClass('rounded-0').addClass('rounded-3 bg-white');
+    control.attr('id', id).addClass('bg-white');
     column.append(label, control);
     filters.append(column);
     return control;
@@ -447,7 +362,7 @@ jQuery(function ($) {
   ]) {
     totalFilter.append(createTimurElement('option', '', option.label).val(option.value));
   }
-  const reset = createTimurElement('button', 'btn btn-outline-dark rounded-3', 'Reset filters');
+  const reset = createTimurElement('button', 'btn btn-outline-dark rounded-0', 'Reset filters');
   reset.attr('type', 'reset').prepend(feedbackIcon('↺', 'me-2'));
   const actions = createTimurElement('div', 'col-12 d-flex justify-content-end');
   actions.append(reset);
@@ -605,7 +520,6 @@ jQuery(function ($) {
     copyError.addClass('hidden');
     copyButton.removeClass('pending').prop('disabled', false);
     share.prop('open', false);
-    $('#feedback-confirmation-message').text('Your review is below. It stays on this page until you reload.');
     confirmation.removeClass('hidden').trigger('focus');
   });
 
@@ -620,6 +534,7 @@ jQuery(function ($) {
     event.preventDefault();
     $('#guest-name').trigger('focus');
   });
+  $('#feedback-submit').prop('disabled', false);
   copyButton.on('click', async function () {
     const version = copyVersion;
     copyButton.prop('disabled', true);

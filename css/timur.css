@@ -40,6 +40,36 @@
   --bs-border-color: #141414;
   background-color: #f4e70c;
 }
+.page-feedback .rating-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  height: 100%;
+  min-height: 4rem;
+  padding: .5rem .25rem;
+  cursor: pointer;
+}
+.page-feedback .rating-choice:has(:focus-visible) {
+  outline: 2px solid var(--bs-body-color);
+  outline-offset: 2px;
+}
+.feedback-upload-icon {
+  width: 2.75rem;
+  place-items: center;
+  cursor: pointer;
+}
+.feedback-upload input {
+  min-width: 0;
+}
+.feedback-upload input::file-selector-button {
+  background-color: var(--bs-body-bg);
+}
+.page-feedback #feedback-form .form-control:focus:not(.error) {
+  border-color: var(--bs-tertiary-bg);
+  box-shadow: 0 0 0 .25rem rgba(var(--bs-tertiary-bg-rgb), .35);
+}
 .page-feedback :is(input, select, textarea).error,
 .page-feedback :is(input, select, textarea)[aria-invalid="true"],
 .page-feedback :is(input, select, textarea):user-invalid {
@@ -53,32 +83,12 @@
 .page .site-footer a:focus-visible {
   outline-color: #f4e70c;
 }
-.rating-choice {
-  cursor: pointer;
-}
 .page :is(.page-jumps a, .gallery-dialog button) {
   min-height: 2.75rem;
 }
-.feedback-summary dd, .feedback-message {
-  overflow-wrap: anywhere;
-}
 .feedback-message {
+  overflow-wrap: anywhere;
   white-space: pre-wrap;
-}
-
-/* A non-modal HTML dialog keeps the form inline. method="dialog" closes it. */
-.feedback-dialog {
-  position: static;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-}
-.feedback-dialog[open] + .feedback-confirmation {
-  display: none;
 }
 
 /* Native showModal() will own focus, Escape and the background interaction. */
