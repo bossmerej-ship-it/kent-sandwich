@@ -1,28 +1,22 @@
 # AI Assistance & Usage Log
 
-## Final project assistance on 14 November 2026
-
-OpenAI Codex implemented the requested menu card, basket, order form and shared footer changes from Timur's feedback. The built-in image generator created eight food illustrations. The prompts described each of the existing menu items and asked for food only against a warm ivory background with a consistent line style. Each image was reviewed, given descriptive alt text and exported to WebP. The illustrations show suggested appearances rather than verified ingredients or photographs of the shop's actual food.
-
-The shared image prompt requested a horizontal 3:2 editorial illustration with a warm ivory background, an overhead three-quarter view, linocut-style detail, paper grain and golden-brown colours. It excluded text, logos, people and props. The eight subjects were a short toasted sandwich, sliced chicken, two halves with folded filling, melted cheese, a breaded cutlet, a breaded cutlet with chilli, a hot dog and a sandwich with red pepper.
-
-Codex also checked source references, reduced the size of the existing photographs and ran validation and browser checks. The student is responsible for the physical phone check and for explaining the submitted code at the defence.
-
-In a follow-up, Codex used the shared basket state to style selected menu cards and let visitors decrease quantities on Menu. It also formatted the Order phone field with a preset +7 based on the Feedback example and checked that incomplete and invalid numbers still fail validation.
-
-## Endterm assistance on 8 November 2026
+**Developer:** Merey Kuatbay
 
 ## Earlier assignments
 
-**Developer:** Merey Kuatbay
+I used Claude 3.5 Sonnet (Anthropic) as a reference during the earlier assignments listed below. I asked for explanations and examples about HTML, Bootstrap, accessibility, Git and W3C validation. The September entries record those questions and how the advice was applied.
 
-**AI Model Used:** Claude 3.5 Sonnet (Anthropic)
+## Menu illustrations on 14 November 2026
 
-**Academic Honesty Statement:** Claude was employed as a technical reference and workflow assistant for semantic validation, Git recovery, CSS architecture, accessibility compliance, and layout planning. All code output and style rules were manually evaluated, integrated, tested against course constraints, and checked via official W3C validators.
+I used OpenAI's image generator during the final stage to create eight menu illustrations. The prompts requested a consistent warm background and a separate illustration for each menu item. The images were resized to 720 × 480 pixels, saved as WebP and added with descriptive alt text. The menu identifies them as illustrations for reference.
+
+## Code and testing assistance during endterm and final revisions
+
+I used Codex to help revise the existing Menu cards, basket controls, Order quantity buttons and phone field. It also helped align the shared footer and navigation, resize existing images and check the site with the W3C validator and desktop browsers.
 
 ---
 
-## Log of Interactions
+## Claude interaction log
 
 | Date | Intent & User Prompt | AI Output & Recommended Solution | Critical Evaluation & Student Implementation |
 | --- | --- | --- | --- |
