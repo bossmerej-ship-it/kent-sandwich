@@ -48,6 +48,37 @@ if (!prepareTimurHeader()) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  const { page } = document.body.dataset;
+  const intro = document.querySelector('.page-intro');
+  const phone = window.matchMedia('(max-width: 575.98px)');
+
+  if (page === 'feedback') {
+    for (const group of document.querySelectorAll('#feedback-form fieldset')) {
+      group.classList.replace('p-3', 'p-2');
+      group.classList.add('p-sm-3');
+    }
+  }
+  if (page === 'about' || page === 'colophon') {
+    intro.querySelector('.row').classList.replace('g-4', 'g-3');
+    intro.querySelector('.row').classList.add('g-lg-4');
+    intro.querySelector('h1').classList.replace('mb-4', 'mb-0');
+  }
+
+  function updatePhoneLayout() {
+    intro.classList.toggle('py-3', phone.matches);
+    intro.classList.toggle('py-4', !phone.matches);
+    intro.querySelector('h1').classList.toggle('display-2', !phone.matches);
+    intro.querySelector('h1').classList.toggle('display-5', phone.matches);
+
+    if (page === 'feedback') {
+      const photo = document.querySelector('.feedback-prompt .ratio');
+      photo.classList.toggle('ratio-21x9', phone.matches);
+      photo.classList.toggle('ratio-4x3', !phone.matches);
+    }
+  }
+  updatePhoneLayout();
+  phone.addEventListener('change', updatePhoneLayout);
+
   if (document.body.dataset.page === 'colophon') {
     document.getElementById('build-form-description').textContent =
       'Bootstrap opens the mobile menu. Feedback checks each field, then offers a review step and local confirmation.';
