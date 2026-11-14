@@ -53,14 +53,16 @@
   ]);
   const landlinePrefix = /^(?:71[0-68][2-9]|7172|72[1-9][2-9])/;
   const phonePrefix = '+7';
+  const phoneExample = '+7-(747)-123-1212';
 
   function formatOrderPhone(value) {
     const compact = value.replace(/[\s()-]/g, '');
     if (!compact || compact === '+') return phonePrefix;
 
     // A full pasted number may already include +7 or an initial 7 or 8.
-    const national = compact.replace(/^(?:\+7|[78](?=\d{10}$))/, '');
-    if (!/^\d{0,10}$/.test(national)) return value;
+    const digits = compact.replace(/^(?:\+7|[78](?=7\d{9,}$))/, '');
+    if (!/^\d*$/.test(digits)) return value.slice(0, phoneExample.length);
+    const national = digits.slice(0, 10);
     if (!national) return phonePrefix;
 
     let formatted = phonePrefix + '-(' + national.slice(0, 3);
@@ -75,7 +77,7 @@
     const compact = phone.replace(/[\s()-]/g, '');
     const match = compact.match(/^(?:\+7|[78])?(\d{10})$/);
     if (!match && /^\+?\d*$/.test(compact)) {
-      return 'Enter 10 digits after +7, for example +7-(747)-123-1212.';
+      return 'Enter 10 digits after +7, for example ' + phoneExample + '.';
     }
     if (!match || !/^\+?(?:\d|\(\d+\))(?:[\s-]*(?:\d|\(\d+\)))*$/.test(phone)) {
       return 'Use digits, spaces, parentheses or hyphens. A plus sign can only go at the start.';
@@ -309,9 +311,10 @@
     });
     phone.on('paste', function (event) {
       const pasted = event.originalEvent?.clipboardData?.getData('text/plain');
-      if (!pasted || this.value !== phonePrefix) return;
+      const replacesNumber = this.selectionStart === 0 && this.selectionEnd === this.value.length;
+      if (!pasted || (!replacesNumber && this.value !== phonePrefix)) return;
       event.preventDefault();
-      // Insert the number in place of the preset prefix.
+      // Format the full number before the displayed length limit is applied.
       phone.val(pasted).trigger('input');
     });
     form.on('input change', 'input, select, textarea', function (event) {
